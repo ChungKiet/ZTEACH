@@ -1,16 +1,14 @@
-const express = require('express');
-const http = require('http');
-//const myRouter = require('./routes/router');
-const mongoConnect = require('./util/database');
+const express = require('express')
+const route = require('./routes')
+const db = require('./database')
+const app = express()
+const port = 8000
+
+route(app);
+
+db.connect();
 
 
-const app = express();
-app.use(express.urlencoded({extended:false}));
-//app.use(myRouter);
-
-app.use((req, res) => {
-    res.status(404).send('<h1>Page not found!</h1>');
-})
-
-
-app.listen(8080);
+app.listen(port, () => {
+  console.log(`App listening at http://localhost:${port}`);
+});
