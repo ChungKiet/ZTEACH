@@ -4,9 +4,7 @@ const Schema = mongoose.Schema;
 
 const Post = mongoose.Schema({
     // id_hv: {
-    //     type: String,
-    //     required: true,
-    //     ref: 'hoc_vien'
+    //     type: String, required: true, ref: 'hoc_vien'
     // },
     title: {
         type: String, required: true

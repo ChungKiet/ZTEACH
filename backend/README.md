@@ -1,4 +1,4 @@
-#ZTeach
+# ZTeach Backend : NodeJS + ExpressJS + MongoDB
 
 Project of ZTeam - Đồ án Nhập môn Công nghệ phần mềm
 
