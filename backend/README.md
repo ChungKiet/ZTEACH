@@ -2,9 +2,9 @@
 
 Project of ZTeam - Đồ án Nhập môn Công nghệ phần mềm
 
-Thực hiện các lệnh trong requirements.txt
+Thực hiện các lệnh trong backend_requirements.txt
 
-Để chạy app, thực hiện lệnh:
+Để run Server, thực hiện lệnh:
 
-- tại thư mục ZTEACH> npm --prefix ./backend/ start
-- tại thư mục ZTEACH/backend> npm start
+- Tại thư mục ZTEACH> npm --prefix ./backend/ start
+- Tại thư mục ZTEACH/backend> npm start

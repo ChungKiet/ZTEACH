@@ -10,10 +10,10 @@ const User = mongoose.Schema({
         type: String, required: true, default : 'Không yêu cầu'
     }, 
     birth: {
-        type: Date, required: true
+        type: Date, required: true, default : '2001-01-09T17:00:00.000Z'
     },
     user_name : {
-        type : String, required: true
+        type : String, required: true, unique: true
     },
     password : {
         type : String, required: true

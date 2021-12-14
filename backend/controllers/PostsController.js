@@ -4,7 +4,7 @@ class PostsController {
     
     // [Get] /posts
     index(req, res, next) {
-        Post.find({})
+        Post.find({}, {information : 0})
         .then(posts => res.json(posts))
         .catch(next);
     }
@@ -19,10 +19,15 @@ class PostsController {
 
     // [Get] /posts/search?<field>=<value>
     search(req, res, next) {
+        console.log(req.query);
+        if (req.query == {}) {
+            res.redirect('http://localhost:8000/posts');
+            console.log('True');
+        }
         Post.find({ 
             $or: [ 
-                { mon_hoc : req.query.mon_hoc },
-                { lop : req.query.lop } 
+                { subject : req.query.subject },
+                { grade : req.query.grade } 
             ]
         })
         .then(posts => res.json(posts))
