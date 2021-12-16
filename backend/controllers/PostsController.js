@@ -18,20 +18,55 @@ class PostsController {
     }
 
     // [Get] /posts/search?<field>=<value>
-    search(req, res, next) {
+    async search(req, res, next) {
         console.log(req.query);
-        if (req.query == {}) {
-            res.redirect('http://localhost:8000/posts');
-            console.log('True');
+        const query = req.query;
+        const find = Post.find({});
+        //find.getFilter();
+     
+        if (query.less) {
+            find.find({ fee : {$lte : query.less}});
+            delete query.less;
         }
-        Post.find({ 
-            $or: [ 
-                { subject : req.query.subject },
-                { grade : req.query.grade } 
-            ]
-        })
-        .then(posts => res.json(posts))
-        .catch(next);
+        if (query.greater) {
+            find.find({ fee : {$gte : query.greater}});
+            delete query.greater;
+        }
+        Object.keys(query)
+            .reduce((key) => {
+                if (query[key]) {
+                    find.find({ key : query[key]});
+                }
+            });
+        // const conditions = Object.keys(query)
+        //     .reduce((result, key) => {
+        //         if (query[key]) {
+        //             result[key] = query[key];
+        //         }
+        //         return result;
+        //     }, {});
+        // find.find(conditions);
+        // find.getFilter();
+        
+        const posts = await find.exec();
+        if (posts) {
+            res.status(200).json(posts);
+        }
+        else {
+            res.status(404).send({
+                "error": {
+                    "errors": [
+                    {
+                    "domain": "global",
+                    "reason": "notFound",
+                    "message": "Not Found"
+                    }
+                    ],
+                "code": 404,
+                "message": "Not Found"
+                }
+            });
+        }
     }
     
     // [Get] /posts/sort (by fee)

@@ -8,10 +8,26 @@ class UsersController {
     }
 
     // [Get] /users/<user_name>
-    user_profile(req, res, next) {
-        User.findOne({ user_name : req.params.user_name })
-        .then(user => res.json(user))
-        .catch(next);
+    async user_profile(req, res, next) {
+        const user = await User.findOne({ user_name : req.params.user_name });
+        if (user) {
+            res.status(200).json(user);
+        }
+        else {
+            res.status(404).send({
+                "error": {
+                    "errors": [
+                    {
+                    "domain": "global",
+                    "reason": "notFound",
+                    "message": "Not Found"
+                    }
+                    ],
+                "code": 404,
+                "message": "Not Found"
+                }
+            });
+        }
     }
     
     async register(req, res, next) {
@@ -20,8 +36,19 @@ class UsersController {
 
         const userExists = await User.findOne({ user_name });
         if (userExists) {
-            res.status(400).send('<h3>Tên tài khoản đã được sử dụng.</h3>');
-            // // throw new Error('User_name already exists.')
+            res.status(401).send({
+                "error": {
+                    "errors": [
+                    {
+                    "domain": "global",
+                    "reason": "conflict",
+                    "message": "This name is already in use. Please select another name."
+                    }
+                    ],
+                "code": 409,
+                "message": "This name is already in use. Please select another name."
+                }
+            });
         }
 
         const user = await User.create({
@@ -30,14 +57,7 @@ class UsersController {
             user_name,
             password
         });
-
-        if (user) {
-            res.status(201).redirect('http://localhost:8000/users/' + user.user_name);
-        } 
-        else {
-            res.status(400).send('<h3>Invalid user data.</h3>');
-            // throw new Error('Invalid user data.');
-        }
+        res.status(201).redirect('http://localhost:8000/users/' + user.user_name);
     }
 
     async login(req, res, next) {
@@ -46,10 +66,24 @@ class UsersController {
 
         const user = await User.findOne({ user_name });
         if (user && user.password === password) {
-            res.status(201).redirect('http://localhost:8000/users/' + user.user_name);
+            res.status(200).redirect('http://localhost:8000/users/' + user.user_name);
         }
         else {
-            res.status(400).send('<h3>Đăng nhập thất bại.</h3>');
+            res.status(401).send({
+                "error": {
+                    "errors": [
+                    {
+                    "domain": "global",
+                    "reason": "required",
+                    "message": "Login Fails, wrong username or password",
+                    "locationType": "header",
+                    "location": "Authorization"
+                    }
+                    ],
+                "code": 401,
+                "message": "Login Fails, wrong username or password"
+                }
+            });
             // throw new Error('Invalid user_name or password');
         }
     }

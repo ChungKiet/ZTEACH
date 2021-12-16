@@ -3,11 +3,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const User = mongoose.Schema({
+    user_type: {
+        type: String, required: true, default: 'Học viên'
+    },
     name: {
         type: String, required: true
     }, 
     gender: {
-        type: String, required: true, default : 'Không yêu cầu'
+        type: String, required: true, default : 'Không có'
     }, 
     birth: {
         type: Date, required: true, default : '2001-01-09T17:00:00.000Z'
