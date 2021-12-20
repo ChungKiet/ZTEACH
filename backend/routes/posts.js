@@ -5,7 +5,7 @@ const postsController = require('../controllers/PostsController');
 
 route.get('/search', postsController.search);
 
-route.get('/sort', postsController.sort);
+// route.get('/sort', postsController.sort);
 
 route.get('/:id', postsController.post_detail);
 

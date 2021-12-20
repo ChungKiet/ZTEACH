@@ -1,20 +1,37 @@
 const Post = require('../models/posts');
 
 class PostsController {
-    
+
     // [Get] /posts
-    index(req, res, next) {
-        Post.find({}, {information : 0})
-        .then(posts => res.json(posts))
-        .catch(next);
+    async index(req, res, next) {
+        try {
+            const posts = await Post.find({}, { information: 0 });
+            res.status(200).json(posts);
+        }
+        catch (err) {
+            res.status(404).send({
+                "error": {
+                    "code": 404,
+                    "message": "Not Found"
+                }
+            });
+        }
     }
 
     // [Get] /posts/<post_id>
-    post_detail(req, res, next) {
-    //  Post.findOne({ id : req.params.id })
-        Post.findById(req.params.id)
-        .then(post => res.json(post))
-        .catch(next);
+    async post_detail(req, res, next) {
+        try {
+            const post = await Post.findById(req.params.id);
+            res.status(200).json(post);
+        }
+        catch (err) {
+            res.status(404).send({
+                "error": {
+                    "code": 404,
+                    "message": "Not Found"
+                }
+            });
+        }
     }
 
     // [Get] /posts/search?<field>=<value>
@@ -23,31 +40,23 @@ class PostsController {
         const query = req.query;
         const find = Post.find({});
         //find.getFilter();
-     
+
         if (query.less) {
-            find.find({ fee : {$lte : query.less}});
+            find.find({ fee: { $lte: query.less } });
             delete query.less;
         }
         if (query.greater) {
-            find.find({ fee : {$gte : query.greater}});
+            find.find({ fee: { $gte: query.greater } });
             delete query.greater;
         }
-        Object.keys(query)
-            .reduce((key) => {
+        find.find(Object.keys(query)
+            .reduce((result, key) => {
                 if (query[key]) {
-                    find.find({ key : query[key]});
+                    result[key] = query[key];
                 }
-            });
-        // const conditions = Object.keys(query)
-        //     .reduce((result, key) => {
-        //         if (query[key]) {
-        //             result[key] = query[key];
-        //         }
-        //         return result;
-        //     }, {});
-        // find.find(conditions);
-        // find.getFilter();
-        
+                return result;
+            }, {}));
+
         const posts = await find.exec();
         if (posts) {
             res.status(200).json(posts);
@@ -55,27 +64,20 @@ class PostsController {
         else {
             res.status(404).send({
                 "error": {
-                    "errors": [
-                    {
-                    "domain": "global",
-                    "reason": "notFound",
+                    "code": 404,
                     "message": "Not Found"
-                    }
-                    ],
-                "code": 404,
-                "message": "Not Found"
                 }
             });
         }
     }
-    
+
     // [Get] /posts/sort (by fee)
-    sort(req, res, next) {
-        Post.find({})
-        .sort({ fee : 1 })
-        .then(posts => res.json(posts))
-        .catch(next);
-    }
+    // sort(req, res, next) {
+    //     Post.find({})
+    //         .sort({ fee: 1 })
+    //         .then(posts => res.json(posts))
+    //         .catch(next);
+    // }
 }
 
 module.exports = new PostsController;

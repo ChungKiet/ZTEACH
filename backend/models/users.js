@@ -8,10 +8,10 @@ const User = mongoose.Schema({
     },
     name: {
         type: String, required: true
-    }, 
+    },
     gender: {
         type: String, required: true, default : 'Không có'
-    }, 
+    },
     birth: {
         type: Date, required: true, default : '2001-01-09T17:00:00.000Z'
     },
@@ -29,6 +29,9 @@ const User = mongoose.Schema({
     }, 
     phone: {
         type: String, required: false
+    },
+    introduce: {
+        type: String, required: false, max: 255
     }
 });
 
