@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+  </head>
+  <body style="margin-left: 25px; background-color: rgb(255, 255, 255); color : rgb(0, 0, 0);">
+    <form action="/users/edit?_method=PUT" method="POST">
+      <h1>Chỉnh sửa hồ sơ</h1>
+
+      <label>Tên đăng nhập</label><br>
+      <input type="text" size="25" id="user_name" name="user_name" /><br><br>
+
+      <label">Giới thiệu về bản thân</label><br>
+      <input type="text" size="25" id="introduce" name="introduce"/><br><br>
+
+      <label>Họ và tên</label><br>
+      <input type="text" size="25" id="name" name="name" /><br><br>
+
+      <label>Giới tính</label><br>
+      <input type="text" size="25" id="gender" name="gender"/><br><br>
+
+      <label>Ngày sinh</label><br>
+      <input type="text" size="25" id="birth" name="birth"/><br><br>
+
+      <label>Địa chỉ</label><br>
+      <input type="text" size="25" id="address" name="address"/><br><br>
+
+      <label>Số điện thoại</label><br>
+      <input type="text" size="25" id="phone" name="phone"/><br><br>
+
+      <label">Thông tin liên lạc khác</label><br>
+      <input type="text" size="25" id="contact" name="contact"/><br><br>
+
+      <button type="submit">Cập nhật</button>
+    </form>
+  </body>
+</html>

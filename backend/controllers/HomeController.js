@@ -6,11 +6,23 @@ class HomeController {
         res.status(200).json({ page: 'Home page' });
     }
 
-    register(req, res, next) {
+    register(req, res) {
         res.status(200).render("signup.html");
     }
-    login(req, res, next) {
+    login(req, res) {
         res.status(200).render("login.html");
+    }
+    edit(req, res) {
+        res.status(200).render("edit.html");
+    }
+    new_post(req, res) {
+        res.status(200).render("new_post.html");
+    }
+    post_new_connect(req, res) {
+        res.status(200).render("post_new_connect.html");
+    }
+    post_delete_connect(req, res) {
+        res.status(200).render("post_delete_connect.html");
     }
 
     not_found(req, res) {
