@@ -1,0 +1,28 @@
+.bg1 {
+    /* The image used */
+    background-image: url("../images/phone.png");
+  
+    /* Full height */
+    position: fixed;
+    min-width: 100%;
+    min-height: 100%;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .navbar-logo {
+    color: #FE9312;
+    display: flex;
+    max-width: 50px;
+    justify-self: start;
+    margin-left: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 10px;
+    left:10px;
+  }
