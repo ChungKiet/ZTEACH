@@ -1,5 +1,0 @@
-npm install --save express
-npm install --save mongodb
-npm install --save mongoose
-npm install --save-dev nodemon
-npm install --save-dev ejs
