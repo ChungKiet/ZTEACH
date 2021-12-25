@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route, Routes } from 'react-router-dom
 import HomePage from './components/pages/HomePage';
 import LoginPage from './components/pages/LoginPage';
 import SignupPage from './components/pages/SignupPage';
+import NewPostPage from './components/pages/NewPostPage';
 import GlobalVar from './GlobalVar';
 
 global.isLogin = true;
@@ -16,6 +17,7 @@ function App() {
       <Route path="/" exact element={<HomePage/>}/>
       <Route path="/login" element={<LoginPage/>}/>
       <Route path="/signup" element={<SignupPage/>}/>
+      <Route path="/new-post" element={<NewPostPage/>}/>
     </Routes>
     </div>
     </Router>
