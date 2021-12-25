@@ -39,8 +39,6 @@ function Form() {
               <Link to="/signup"><button className='form-input-btn2'>Đăng ký</button></Link>
               <a href="#">Quên mật khẩu?</a>
             </div>
-           
- 
          </form>
        </div>
     </div>
