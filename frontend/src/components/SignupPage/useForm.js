@@ -27,7 +27,10 @@ const useForm = (callback, validate) => {
 
     setErrors(validate(values));
     setIsSubmitting(true);
-    console.log(values)
+    //console.log(values);
+    if(!errors.isError){
+      
+    }
   };
 
   useEffect(

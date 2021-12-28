@@ -28,7 +28,7 @@ function Navbar() {
 
   return (
     <>
-      <nav className='navbar'>
+      <nav className='navbar447'>
         <div className='navbar-container'>
           <Link to='/' className='navbar-logo1' onClick={closeMobileMenu}>
             <img class="logo" src={logo} height="40px" width="40px"/>
@@ -48,7 +48,7 @@ function Navbar() {
               </Link>
             </li>
           </ul>)}
-          {!GlobalVar.isLogin && button && <Link to="/signup"><Button buttonStyle='btn--outline'>ĐĂNG KÝ</Button></Link>}
+          {!GlobalVar.isLogin && button && <Link to="/signup"><Button buttonStyle='btn--outline1'>ĐĂNG KÝ</Button></Link>}
           {GlobalVar.isLogin && <Profile/>}
         </div>
       </nav>
