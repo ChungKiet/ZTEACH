@@ -1,23 +1,10 @@
 import React, { Component, useState, findDOMNode } from "react";
-import { Nav, NavItem, NavDropdown, Form, Button, Dropdown } from 'react-bootstrap';
+import { Form, Button} from 'react-bootstrap';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 import 'bootstrap/dist/css/bootstrap.css';
-import { MultiSelect } from "react-multi-select-component";
-import Container from 'react-bootstrap/Container';
 
-import logo from '../images/logo.png';
-import profile from '../images/profile.png';
-import background from '../images/background.png';
-import toprightimage from '../images/topRight.png';
-import bottomrightimage from '../images/bottomRight.png';
-import tutorprofile from '../images/tutorProfile2.png';
 import './NewPost.css';
-import addressImg from '../images/address.png';
-import emailImg from '../images/email.png';
-import classImg from '../images/class.png';
-import phonecall from '../images/phonecall.png';
-import subject from '../images/subject.png';
 
 
 var ReactDOM = require('react-dom');
@@ -39,29 +26,54 @@ class NewPost extends Component {
 
     optionSelect = {
         subject: [
-            { name: 'Toán', id: "Toán" },
-            { name: 'Lý', id: "Lý" },
-            { name: 'Hóa', id: "Hóa" },
-            { name: 'Sinh', id: "Sinh" },
-            { name: 'Văn', id: "Văn" },
-            { name: 'Sử', id: "Sử" }
+            { name: 'Toán', id: "MTH" },
+            { name: 'Lý', id: "PHY" },
+            { name: 'Hóa', id: "CHE" },
+            { name: 'Sinh', id: "BIO" },
+            { name: 'Văn', id: "LIT" },
+            { name: 'Sử', id: "HIS" },
+            { name: 'Địa', id: "GEO" },
+            { name: 'KHTN', id: "SCI" },
+            { name: 'KHXH', id: "SOC" }
+
         ],
 
         grade: [
-            { name: '8', id: "8" },
-            { name: '9', id: "9" },
-            { name: '10', id: "10" },
-            { name: '11', id: "11" },
-            { name: '12', id: "12" },
-            { name: 'LTDH', id: "LTDH" }
+            { name: 'Lớp 5', id: "5" },
+            { name: 'Lớp 6', id: "6" },
+            { name: 'Lớp 7', id: "7" },
+            { name: 'Lớp 8', id: "8" },
+            { name: 'Lớp 9', id: "9" },
+            { name: 'Lớp 10', id: "10" },
+            { name: 'Lớp 11', id: "11" },
+            { name: 'Lớp 12', id: "12" },
         ],
 
         place: [
-            { name: 'Q1', id: "Q1" },
-            { name: 'Q2', id: "Q2" },
-            { name: 'Q3', id: "Q3" },
-            { name: 'Q4', id: "Q4" },
-            { name: 'Q5', id: "Q5" },
+            { name: 'Q1', id: "Q01" },
+            { name: 'Q2', id: "Q02" },
+            { name: 'Q3', id: "Q03" },
+            { name: 'Q4', id: "Q04" },
+            { name: 'Q5', id: "Q05" },
+            { name: 'Q6', id: "Q06" },
+            { name: 'Q7', id: "Q07" },
+            { name: 'Q8', id: "Q08" },
+            { name: 'Q9', id: "Q09" },
+            { name: 'Q10', id: "Q10" },
+            { name: 'Q11', id: "Q11" },
+            { name: 'Q12', id: "Q12" },
+            { name: 'Bình Chánh', id: "Bình Chánh" },
+            { name: 'Bình Thạnh', id: "Bình Thạnh" },
+            { name: 'Bình Tân', id: "Bình Tân" },
+            { name: 'Cần Giờ', id: "Cần Giờ" },
+            { name: 'Củ Chi', id: "Củ Chi" },
+            { name: 'Gò Vấp', id: "Gò Vấp" },
+            { name: 'Hóc Môn', id: "Hóc Môn" },
+            { name: 'Nhà Bè', id: "Nhà Bè" },
+            { name: 'Phú Nhuận', id: "Phú Nhuận" },
+            { name: 'Tân Bình', id: "Tân Bình" },
+            { name: 'Tân Phú', id: "Tân Phú" },
+            { name: 'Thủ Đức', id: "Thủ Đức" },
             { name: 'Online', id: "Online" }
         ],
 
@@ -71,21 +83,22 @@ class NewPost extends Component {
             { name: '3', id: "3" },
             { name: '4', id: "4" },
             { name: '5', id: "5" },
-            { name: '6', id: "6" }
+            { name: '6', id: "6" },
+            { name: '7', id: "7" }
         ],
 
         duration: [
-            { name: '1', id: "1" },
-            { name: '1.5', id: "1.5" },
-            { name: '2', id: "2" },
-            { name: '2.5', id: "2.5" },
-            { name: '3', id: "3" },
-            { name: '4', id: "4" }
+            { name: '1h', id: "1" },
+            { name: '1.5h', id: "1.5" },
+            { name: '2h', id: "2" },
+            { name: '2.5h', id: "2.5" },
+            { name: '3h', id: "3" },
+            { name: '4h', id: "4" }
         ],
 
         tutor_gender: [
-            { name: 'Nam', id: "Nam" },
-            { name: 'Nữ', id: "Nữ" },
+            { name: 'Nam', id: "0" },
+            { name: 'Nữ', id: "1" },
             { name: 'Khác', id: "Khác" }
         ],
         tutor_level: [
@@ -184,57 +197,40 @@ class NewPost extends Component {
         ));
 
         return (
-            <div className="NewPost" style={{
-                backgroundImage: `url(${background})`,
-            }}>
+            <div className="NewPost">
                 <Navbar />
-                <img src={toprightimage} style={{ position: 'absolute', right: '0', width: '200px' }} />
-                <Form className='form-new-post'>
 
+                <div className="label-dangbaitimkiemgiasu">
+                    <div>ĐĂNG BÀI TÌM KIẾM GIA SƯ</div>
+                </div>
 
-                    <Form.Group>
-                        <div className="intro-info">
-                            Đăng bài tìm kiếm gia sư
-                        </div>
-
-                        <div className='label-post'>
+                {/* Group 1 - Class */}
+                <div className="group-view-thongtin">
+                    <div className="overlap-group">
+                        <div className='label-thongtin'>
                             Thông tin về lớp học
                         </div>
+                    </div>
+                    <div className="flex-row">
                         {/* Subject */}
-                        <div >
-                            <select id="id-select-subject"
-                                className='class-select-subject'
-                                value={this.state.subject}
-                                onChange={e => this.setState({ subject: e.target.value })}
-                                style={{
-                                    width: '184px',
-                                    height: '30px',
-                                    borderRadius: '3%',
-                                    marginLeft: '45px',
-                                    boxShadow: "1px 3px 1px #9E9E9E",
-              
-                                }}
-                            >
-                                {optionSubject}
-                                <option value="" disabled>
-                                    Chọn môn học
-                                </option>
-                            </select>
-                        </div>
+                        <select id="id-select-subject"
+                            className='text-occupation'
+                            value={this.state.subject}
+
+                            onChange={e => this.setState({ subject: e.target.value })}
+                        >
+                            {optionSubject}
+                            <option value="" disabled >
+                                Chọn môn học
+                            </option>
+                        </select>
 
                         {/* Grade */}
                         <div >
                             <select id="id-select-grade"
-                                className='class-select-grade'
+                                className='text-occupation'
                                 value={this.state.grade}
                                 onChange={e => this.setState({ grade: e.target.value })}
-                                style={{
-                                    width: '184px',
-                                    height: '30px',
-                                    borderRadius: '3%',
-                                    marginLeft: '45px',
-                                    boxShadow: "1px 3px 1px #9E9E9E",
-                                }}
                             >
                                 {optionGrade}
                                 <option value="" disabled>
@@ -246,16 +242,10 @@ class NewPost extends Component {
                         {/* Place */}
                         <div >
                             <select id="id-select-place"
-                                className='class-select-place'
+                                className='text-occupation'
                                 value={this.state.place}
                                 onChange={e => this.setState({ place: e.target.value })}
-                                style={{
-                                    width: '184px',
-                                    height: '30px',
-                                    borderRadius: '3%',
-                                    marginLeft: '45px',
-                                    boxShadow: "1px 3px 1px #9E9E9E",
-                                }}
+
                             >
                                 {optionPlace}
                                 <option value="" disabled>
@@ -263,41 +253,33 @@ class NewPost extends Component {
                                 </option>
                             </select>
                         </div>
-
+                    </div>
+                    <div className="flex-row">
                         {/* DaysPerWeek */}
+
                         <div >
                             <select id="id-select-dpw"
-                                className='class-select-dpw'
+                                className='text-occupation'
                                 value={this.state.daysperweek}
                                 onChange={e => this.setState({ daysperweek: e.target.value })}
-                                style={{
-                                    width: '184px',
-                                    height: '30px',
-                                    borderRadius: '3%',
-                                    marginLeft: '45px',
-                                    boxShadow: "1px 3px 1px #9E9E9E",
-                                }}
+
                             >
-                                {optionDPW}
+                                {optionDPW} 
                                 <option value="" disabled>
                                     Chọn số buổi / tuần
                                 </option>
                             </select>
                         </div>
 
+
                         {/* Duration */}
+
                         <div >
                             <select id="id-select-duration"
-                                className='class-select-duration'
+                                className='text-occupation'
                                 value={this.state.duration}
                                 onChange={e => this.setState({ duration: e.target.value })}
-                                style={{
-                                    width: '184px',
-                                    height: '30px',
-                                    borderRadius: '3%',
-                                    marginLeft: '45px',
-                                    boxShadow: "1px 3px 1px #9E9E9E",
-                                }}
+
                             >
                                 {optionDuration}
                                 <option value="" disabled>
@@ -306,81 +288,87 @@ class NewPost extends Component {
                             </select>
                         </div>
 
-                        {/* start_date */}
-                        <Form.Control required controlId="duedate" style={{
-                            marginLeft: "-200px",
-                            width: "200px",
-                        }}
-                            onChange={(e) => this.setState({ start_date: e.target.value })}
-                            type="date"
-                            name="duedate"
-                            placeholder="Ngày bắt đầu học"
-                        />
 
-                        {/* Title */}
-                        <Form.Control type='text' className="class-title" placeholder='Thêm tiêu đề...'
-                            value={this.state.title}
-                            onChange={e => this.setState({ title: e.target.value })}
-                            style={{
-                                width: '184px',
-                                height: '30px',
-                                borderRadius: '3%',
-                                marginLeft: '45px',
-                                boxShadow: "1px 3px 1px #9E9E9E",
-                            }}>
-                        </Form.Control>
+                        <div className="list-box-thoigianbatdau">
+                            {/* start_date */}
+                            <Form.Control required controlId="duedate"
+                                onChange={(e) => this.setState({ start_date: e.target.value })}
+                                type="date"
+                                name="duedate"
+                                placeholder="Ngày bắt đầu học"
+                            />
+                        </div>
+                    </div>
+                    {/* END FLEX ROW */}
 
-                        {/* Place */}
-                        <Form.Control type='text' className="class-detail" placeholder='Thêm thông tin chi tiết...'
-                            value={this.state.detail}
-                            onChange={e => this.setState({ place: e.target.value })}
-                            style={{
-                                width: '184px',
-                                height: '30px',
-                                borderRadius: '3%',
-                                marginLeft: '45px',
-                                boxShadow: "1px 3px 1px #9E9E9E",
-                            }}>
-                        </Form.Control>
+                    {/* Title */}
+                    <Form.Control type='text' className="class-title" placeholder='Thêm tiêu đề...'
+                        value={this.state.title}
+                        onChange={e => this.setState({ title: e.target.value })}
+                        style={{
+                            width: '500px',
+                            height: '40px',
+                            borderRadius: '10px',
+                            textAlign: 'left',
+                            marginTop: '5%',
+                            marginLeft: '30px',
+                            boxShadow: '1px 3px 3px 1px #9E9E9E',
 
-                        <div className='label-tutor'>
+                        }}>
+                    </Form.Control>
+
+                    {/* Detail */}
+
+                    <Form.Control as='textarea' className="class-detail" placeholder='Thêm thông tin chi tiết...'
+                        value={this.state.detail}
+                        onChange={e => this.setState({ detail: e.target.value })}
+                        style={{
+                            height: '150px',
+                            borderRadius: '10px',
+                            textAlign: 'left-top',
+                            marginTop: '1%',
+                            marginLeft: '30px',
+                            boxShadow: '1px 3px 3px 1px #9E9E9E',
+                        }}>
+                    </Form.Control>
+                </div>
+
+
+                {/* Group 2 - Tutor */}
+
+                <div className="group-view-thongtin">
+                    <div className="overlap-group">
+                        <div className='label-thongtin'>
                             Thông tin về gia sư
                         </div>
+                    </div>
 
+                    <div className="flex-row">
                         {/* tutor_level */}
-                        <div >
-                            <select id="id-select-level"
-                                className='class-select-level'
-                                value={this.state.tutor_level}
-                                onChange={e => this.setState({ tutor_level: e.target.value })}
-                                style={{
-                                    width: '184px',
-                                    height: '30px',
-                                    borderRadius: '3%',
-                                    marginLeft: '45px',
-                                    boxShadow: "1px 3px 1px #9E9E9E",
-                                }}
-                            >
-                                {optionLevel}
-                                <option value="" disabled>
-                                    Trình độ
-                                </option>
-                            </select>
+                        <div className="list-box-lop">
+                            <div >
+                                <select id="id-select-level"
+                                    className='text-occupation'
+                                    value={this.state.tutor_level}
+                                    onChange={e => this.setState({ tutor_level: e.target.value })}
+
+                                >
+                                    {optionLevel}
+                                    <option value="" disabled>
+                                        Trình độ
+                                    </option>
+                                </select>
+                            </div>
                         </div>
 
                         {/* tutor_gender */}
+
                         <div >
                             <select id="id-select-gender"
-                                className='class-select-gender'
+                                className='text-occupation'
                                 value={this.state.tutor_gender}
                                 onChange={e => this.setState({ tutor_gender: e.target.value })}
-                                style={{
-                                    width: '184px',
-                                    height: '30px',
-                                    borderRadius: '3%',
-                                    marginLeft: '45px',
-                                    boxShadow: "1px 3px 1px #9E9E9E",
-                                }}
+
                             >
                                 {optionGender}
                                 <option value="" disabled>
@@ -389,42 +377,38 @@ class NewPost extends Component {
                             </select>
                         </div>
 
+
                         {/* salary */}
-                        <Form.Control type='text' className="class-salary" placeholder='Mức lương'
+
+                        <Form.Control type='text' className="text-occupation" placeholder='Mức lương (/buổi)'
                             value={this.state.salary}
                             onChange={e => this.setState({ salary: e.target.value })}
-                            style={{
-                                width: '184px',
-                                height: '30px',
-                                borderRadius: '3%',
-                                marginLeft: '45px',
-                                boxShadow: "1px 3px 1px #9E9E9E",
-                            }}>
+                        >
                         </Form.Control>
 
+                    </div>
+                </div>
 
 
-                        <Button variant="warning" style={{
-                            borderRadius: '3%',
-                            marginLeft: '85px',
-                            boxShadow: "1px 3px 1px #9E9E9E"
-                        }} type="submit">
-                            Submit
+                    <div className="flex-row">
+                        <Button variant="warning" className="button-occupation" type="submit">
+                            <h1 className="medium-button montserrat-semi-bold-white-30px">
+                                Đăng
+                            </h1>
                         </Button>
-                        <Button variant="dark" className="row ml-n3" style={{
-                            marginTop: "1px",
-                            borderRadius: '3%',
-                            marginLeft: '75px',
-                            boxShadow: "1px 3px 1px #9E9E9E"
-                        }}>
-                            Hủy
+                        <Button variant="dark" className="button-occupation" >
+                            <h1 className="medium-button montserrat-semi-bold-white-30px">
+                                Hủy
+                            </h1>
                         </Button>
-                    </Form.Group>
+                    </div>
 
 
-                </Form>
-                <img src={bottomrightimage} style={{ position: "absolute", right: "0", width: '200px' }} />
-                <div style={{ marginTop: "150px", marginBottom: "0px", bottom: "0" }}>
+
+
+
+
+                <div style={{position: 'fixed', marginBottom: "0px", bottom: "0", width: '100%' }}>
                     <Footer />
                 </div>
             </div>
@@ -436,5 +420,6 @@ class NewPost extends Component {
 
 
 }
+
 
 export default NewPost

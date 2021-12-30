@@ -1,0 +1,161 @@
+
+
+.newpostpage {
+    align-items: center;
+    background-color: var(--white);
+    display: flex;
+    flex-direction: column;
+    height: 1080px;
+    padding: 168.3px 106px;
+    width: 1920px;
+  }
+  
+  .label-dangbaitimkiemgiasu {
+    font-size:      40px;
+    font-weight:    bold;
+
+    align-items: flex-start;
+    align-self: flex-start;
+    display: flex;
+    position: relative;
+    margin-top: 1%;
+    margin-left: 2%;    
+  }
+
+  .label-thongtin {
+    font-family:    Montserrat, sans-serif;
+    font-size:      30px;
+    font-weight:    normal;
+
+    align-items: flex-start;
+    align-self: flex-start;
+    display: flex;
+    position: relative;
+  }
+  
+  .group-view-thongtin {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    margin-left: 2%;
+    margin-top: 1%;
+    position: relative;
+    width: 60%;
+  }
+  
+  .flex-row {
+    align-items: flex-end;
+    display: flex;
+    position: relative;
+    min-width: 40px;
+  }
+  
+  .overlap-group {
+    height: 50px;
+    position: relative;
+  }  
+
+  .text-occupation {
+   min-width: 280px;
+   max-width: 300px;
+   height: 40px;
+   border: normal;
+   border-radius: 10px;
+   text-align: center;
+   margin-left: 30px;
+   box-shadow: 1px 3px 3px 1px #9E9E9E;
+  }
+
+  .button-occupation {
+    width: 200px;
+    height: 60px;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 1%;
+    margin-left: 200px;
+    box-shadow: 1px 3px 3px 1px #9E9E9E;
+   }
+
+  
+  .list-box-thoigianbatdau {
+    align-items: center;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0px 4px 14px 
+  #0000001a;
+    display: flex;
+    height: 40px;
+    justify-content: flex-end;
+    margin-left: 30px;
+    margin-top: 30px;
+    min-width: 280px;
+    padding: 3.7px 5px;
+    position: relative;
+  }
+
+  .text-box-tieude {
+    align-items: flex-end;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0px 4px 14px 
+  #0000001a;
+    display: flex;
+    height: 54px;
+    min-width: 998px;
+    padding: 18.0px 16px;
+    position: relative;
+  }
+
+  .text-box-thongtinthem {
+    align-items: flex-start;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0px 4px 14px 
+  #0000001a;
+    display: flex;
+    height: 163px;
+    min-width: 998px;
+    padding: 18.3px 16px;
+    position: relative;
+  }
+  
+  
+  .fecalendar {
+    align-self: flex-end;
+    height: 46px;
+    margin-left: 30px;
+    width: 45px;
+  }
+  
+  .text-occupation.label-thongtin {
+    align-items: flex-start;
+    height: 1%;
+    padding: 18.3px 16px;
+  }
+  
+  
+  .screen a {
+    display: contents;
+    text-decoration: none;
+  }
+  
+  .container-center-horizontal {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    pointer-events: none;
+    width: 100%;
+  }
+  
+  .container-center-horizontal > * {
+    flex-shrink: 0;
+    pointer-events: auto;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+
+  @import url("https://fonts.googleapis.com/css?family=Montserrat:400,600");
+  @import url("https://fonts.googleapis.com/css?family=Cambria:400,700");
