@@ -1,162 +1,246 @@
+.flex-col {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  min-height: 321px;
+  width: 1098px;
+}
+
+.overlap-group-container {
+  align-items: flex-start;
+  display: flex;
+  min-width: 1098px;
+}
+
+.overlap-group1 {
+  height: 85px;
+  position: relative;
+  width: 766px;
+}
 
 
-.newpostpage {
-    align-items: center;
-    background-color: var(--white);
-    display: flex;
-    flex-direction: column;
-    height: 1080px;
-    padding: 168.3px 106px;
-    width: 1920px;
-  }
-  
-  .label-dangbaitimkiemgiasu {
-    font-size:      40px;
-    font-weight:    bold;
+.placeholder-title {
+  align-items: flex-start;
+  display: flex;
+  height: 59px;
+  min-width: 744px;
+}
 
-    align-items: flex-start;
-    align-self: flex-start;
-    display: flex;
-    position: relative;
-    margin-top: 1%;
-    margin-left: 2%;    
-  }
+.title-occupation {
+  letter-spacing: 0;
+  line-height: 50px;
+  min-height: 20px;
+  white-space: nowrap;
 
-  .label-thongtin {
-    font-family:    Montserrat, sans-serif;
-    font-size:      30px;
-    font-weight:    normal;
+  font-size:      40px;
+  font-weight:    bold;
+}
 
-    align-items: flex-start;
-    align-self: flex-start;
-    display: flex;
-    position: relative;
-  }
-  
-  .group-view-thongtin {
-    align-items: flex-start;
-    display: flex;
-    flex-direction: column;
-    margin-left: 2%;
-    margin-top: 1%;
-    position: relative;
-    width: 60%;
-  }
-  
-  .flex-row {
-    align-items: flex-end;
-    display: flex;
-    position: relative;
-    min-width: 40px;
-  }
-  
-  .overlap-group {
-    height: 50px;
-    position: relative;
-  }  
+.tutor-profile-1 {
+  height: 50px;
+  left: 25px;
+  object-fit: scale-down;
+  position: absolute;
+  top: 11px;
+  width: 45px;
+}
 
-  .text-occupation {
-   min-width: 280px;
-   max-width: 300px;
-   height: 40px;
-   border: normal;
-   border-radius: 10px;
-   text-align: center;
-   margin-top: 1%;
-   margin-left: 30px;
-   box-shadow: 1px 3px 3px 1px #9E9E9E;
-  }
 
-  .button-occupation {
-    width: 200px;
-    height: 60px;
-    border-radius: 10px;
-    text-align: center;
-    margin-top: 1%;
-    margin-left: 200px;
-    box-shadow: 1px 3px 3px 1px #9E9E9E;
-   }
+.flex-row {
+  align-items: flex-start;
+  display: flex;
+  margin-top: 20px;
+  margin-left: 5%;
+}
+
+.img-label-detail {
+  align-items: center;
+  display: flex;
+  min-width: 320px;
+  width: 100;
+  height: 100;
+}
+
+.img-post {
+  height: 70px;
+  width: 70px;
+  object-fit: fit;
+}
+
+.placeholder-text-container {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8.65px;
+  margin-left: 10px;
+  min-height: 43px;
+  position: relative;
+  width: 230px;
+}
+
+.placeholder-text {
+  align-items: flex-end;
+  display: flex;
+  height: 15px;
+  min-width: 229px;
+}
+
+.select-occupation {
+  letter-spacing: 0;
+  line-height: 20px;
+  margin-bottom: -5.24px;
+  min-height: 20px;
+  min-width: 88px;
+  white-space: nowrap;
+
+  color: gray;
+  font-family: montserrat;
+  font-size: 20px;
+  font-weight: 400;
+  font-style: normal;
 
   
-  .list-box-thoigianbatdau {
-    align-items: center;
-    background-color: var(--white);
-    border-radius: 8px;
-    box-shadow: 0px 4px 14px 
-  #0000001a;
-    display: flex;
-    height: 40px;
-    justify-content: flex-end;
-    margin-left: 30px;
-    margin-top: 30px;
-    min-width: 280px;
-    padding: 3.7px 5px;
-    position: relative;
-  }
+}
 
-  .text-box-tieude {
-    align-items: flex-end;
-    background-color: var(--white);
-    border-radius: 8px;
-    box-shadow: 0px 4px 14px 
-  #0000001a;
-    display: flex;
-    height: 54px;
-    min-width: 998px;
-    padding: 18.0px 16px;
-    position: relative;
-  }
+.placeholder-text-1 {
+  align-items: flex-end;
+  display: flex;
+  height: 15px;
+  margin-left: 1.03px;
+  margin-top: 14px;
+  min-width: 229px;
 
-  .text-box-thongtinthem {
-    align-items: flex-start;
-    background-color: var(--white);
-    border-radius: 8px;
-    box-shadow: 0px 4px 14px 
-  #0000001a;
-    display: flex;
-    height: 163px;
-    min-width: 998px;
-    padding: 18.3px 16px;
-    position: relative;
-  }
-  
-  
-  .fecalendar {
-    align-self: flex-end;
-    height: 46px;
-    margin-left: 30px;
-    width: 45px;
-  }
-  
-  .text-occupation.label-thongtin {
-    align-items: flex-start;
-    height: 1%;
-    padding: 18.3px 16px;
-  }
-  
-  
-  .screen a {
-    display: contents;
-    text-decoration: none;
-  }
-  
-  .container-center-horizontal {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    pointer-events: none;
-    width: 100%;
-  }
-  
-  .container-center-horizontal > * {
-    flex-shrink: 0;
-    pointer-events: auto;
-  }
-  
-  * {
-    box-sizing: border-box;
-  }
-  
+  color: rgb(105, 102, 102);
+  font-family: montserrat;
+  font-size: 30px;
+  font-weight: 600;
+  font-style: normal;
+}
 
-  @import url("https://fonts.googleapis.com/css?family=Montserrat:400,600");
-  @import url("https://fonts.googleapis.com/css?family=Cambria:400,700");
+.select-occupation-1 {
+  letter-spacing: 0;
+  line-height: 20px;
+  margin-bottom: -5.24px;
+  min-height: 20px;
+  min-width: 131px;
+  white-space: nowrap;
+}
+
+
+.flex-col-1 {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  margin-left: 65px;
+  min-height: 316px;
+  position: relative;
+  width: 320px;
+}
+
+.button-connect {
+  align-items: center;
+  background-color: var(--west-side);
+  border-radius: 8px;
+  box-shadow: 2px 7px 5px 
+#00000040;
+  display: flex;
+  height: 65px;
+  min-width: 280px;
+  padding: 0 66.5px;
+}
+
+.medium-button {
+  height: 30px;
+  letter-spacing: 0;
+  line-height: 30px;
+  min-width: 147px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.valign-text-bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.duration-text-container {
+  align-items: flex-start;
+  display: flex;
+  margin-left: 2%;
+  flex-direction: row;
+  position: relative;
+  width: 80%;
+}
+
+.duration-label {
+  letter-spacing: 0;
+  line-height: 30px;
+  margin-top: 2%;
+  margin-bottom: 1%;
+  min-width: 150px;
+  white-space: nowrap;
+
+  color: black;
+  font-family: montserrat;
+  font-size: 30px;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.duration {
+  letter-spacing: 0;
+  line-height: 30px;
+  margin-top: 2%;
+  margin-bottom: 1%;
+  margin-left: 5%;
+  min-width: 100px;
+  white-space: nowrap;
+
+  color: gray;
+  font-family: montserrat;
+  font-size: 30px;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.more-detail-label {
+  letter-spacing: 0;
+  line-height: 30px;
+  margin-top: 1%;
+  margin-left: 5%;
+  margin-bottom: 1%;
+  min-width: 150px;
+  white-space: nowrap;
+
+  color: black;
+  font-family: montserrat;
+  font-size: 30px;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.detail-script {
+  letter-spacing: 0;
+  line-height: 30px;
+  margin-bottom: 1%;
+  margin-left: 5%;
+  min-width: 100px;
+  white-space: nowrap;
+
+  color: gray;
+  font-family: montserrat;
+  font-size: 30px;
+  font-weight: 500;
+  font-style: normal;
+}
+
+
+
+
+
+
+
+
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,600");
+
