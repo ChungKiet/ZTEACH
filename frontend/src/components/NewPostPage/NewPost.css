@@ -44,10 +44,10 @@
   }
   
   .flex-row {
-    align-items: flex-end;
+    /*align-items: flex-end;*/
     display: flex;
     position: relative;
-    min-width: 40px;
+    /*min-width: 40px;*/
   }
   
   .overlap-group {
@@ -64,12 +64,40 @@
    text-align: center;
    margin-top: 1%;
    margin-left: 30px;
-   box-shadow: 1px 3px 3px 1px #9E9E9E;
+   box-shadow: 1px 1px 1px 1px #9E9E9E;
   }
+
+
+  .class-title {
+    width: 900px;
+    height: 40px;
+    border: normal;
+    border-radius: 10px;
+    text-align: left;
+    margin-top: 1%;
+    margin-left: 30px;
+    box-shadow: 1px 1px 1px 1px #9E9E9E;
+   }
+
+
+  .class-detail {
+    width: 900px;
+    height: 120px;
+    border: normal;
+    border-radius: 10px;
+    text-align: left;
+    margin-top: 1%;
+    margin-left: 30px;
+    box-shadow: 1px 1px 1px 1px #9E9E9E;
+    padding-left: 0;
+    padding-top: 0;
+   }
+
+  
 
   .button-occupation {
     width: 200px;
-    height: 60px;
+    height: 50px;
     border-radius: 10px;
     text-align: center;
     margin-top: 1%;
@@ -133,6 +161,15 @@
     height: 1%;
     padding: 18.3px 16px;
   }
+
+  .medium-button {
+    letter-spacing: 0;
+    line-height: 30px;
+    min-height: 30px;
+    min-width: 141px;
+    text-align: center;
+    white-space: nowrap;
+  }
   
   
   .screen a {
@@ -159,4 +196,3 @@
   
 
   @import url("https://fonts.googleapis.com/css?family=Montserrat:400,600");
-  @import url("https://fonts.googleapis.com/css?family=Cambria:400,700");
