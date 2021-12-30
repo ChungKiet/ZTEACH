@@ -4,12 +4,12 @@ import Navbar from '../Navbar';
 import Footer from '../Footer';
 import 'bootstrap/dist/css/bootstrap.css';
 
-import './NewPost.css';
+import './Post.css';
 
 
 var ReactDOM = require('react-dom');
 
-class NewPost extends Component {
+class Post extends Component {
     state = {
         subject: "",
         grade: "",
@@ -201,7 +201,7 @@ class NewPost extends Component {
                 <Navbar />
 
                 <div className="label-dangbaitimkiemgiasu">
-                    <div>ĐĂNG BÀI TÌM KIẾM GIA SƯ</div>
+                    <div>TRANG BÀI ĐĂNG CHI TIẾT</div>
                 </div>
 
                 {/* Group 1 - Class */}
@@ -423,6 +423,4 @@ class NewPost extends Component {
 
 }
 
-
-
-export default NewPost
+export default Post
