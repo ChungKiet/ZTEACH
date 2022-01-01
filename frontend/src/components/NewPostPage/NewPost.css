@@ -93,9 +93,8 @@
     padding-top: 0;
    }
 
-  
-
-  .button-occupation {
+   .button-occupation-ok {
+    background-color: #FE9312;
     width: 200px;
     height: 50px;
     border-radius: 10px;
@@ -104,6 +103,20 @@
     margin-left: 200px;
     box-shadow: 1px 3px 3px 1px #9E9E9E;
    }
+  
+
+  .button-occupation-cancel {
+    background-color: gray;
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 1%;
+    margin-left: 200px;
+    box-shadow: 1px 3px 3px 1px #9E9E9E;
+   }
+
+ 
 
   
   .list-box-thoigianbatdau {

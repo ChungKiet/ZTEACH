@@ -19,13 +19,13 @@ function NewPost() {
     );
 
     const optionSelect = {
-        subject: ['Toán', 'Lý', 'Hóa'],
-        grade: ['10', '11', '12'],
-        place: ['Q1', 'Q2'],
-        daysperweek: [1, 2, 3, 4],
-        duration: [1, 1.5, 2],
+        subject: ['Toán', 'Lý', 'Hóa', 'Sinh', 'Văn', 'Sử', 'Địa', 'Anh', 'KHTN', 'KHXH'],
+        grade: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+        place: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7', 'Q8', 'Q9', 'Q10', 'Q11', 'Q12', 'Bình Chánh', 'Bình Tân', 'Bình Thạnh', 'Cần Giờ', 'Củ Chi', 'Gò Vấp', 'Hóc Môn', 'Nhà Bè', 'Phú Nhuận', 'Tân Bình', 'Tân Phú', 'Thủ Đức', 'ONLINE'],
+        daysperweek: [1, 2, 3, 4, 5, 6, 7],
+        duration: ['1h', '1.5h', '2h', '2.5h', '3h', '3.5h', '4h'],
         tutor_gender: ['Nam', 'Nữ', 'Khác'],
-        tutor_level: ['Sinh viên', 'Giảng viên']
+        tutor_level: ['Sinh viên', 'Giáo viên']
     }
 
     return (
@@ -35,7 +35,7 @@ function NewPost() {
 
 
             <div className="label-dangbaitimkiemgiasu">
-                <div>ĐĂNG BÀI TÌM KIẾM GIA SƯ</div>
+                <div>ĐĂNG BÀI TÌM GIA SƯ</div>
             </div>
 
             {/* Group 1 - Class */}
@@ -182,12 +182,12 @@ function NewPost() {
 
 
             <div className="flex-row">
-                <button className="button-occupation" type="submit" >
+                <button className="button-occupation-ok" type="submit" >
                     <h1 className="medium-button montserrat-semi-bold-white-30px">
                         Đăng
                     </h1>
                 </button>
-                <button className="button-occupation">
+                <button className="button-occupation-cancel">
                     <h1 className="medium-button montserrat-semi-bold-white-30px">
                         Hủy
                     </h1>
@@ -197,7 +197,7 @@ function NewPost() {
 
 
 
-            <div style={{ position: 'flex', marginTop: "1%", marginBottom: "0px", bottom: "0", width: '100%' }}>
+            <div style={{ position: 'fixed', marginTop: "1%", marginBottom: "0px", bottom: "0", width: '100%' }}>
                 <Footer />
             </div>
         </form>

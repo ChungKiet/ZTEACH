@@ -34,7 +34,7 @@ const useForm = (callback, validate) => {
     console.log(values);
     if(true){
     //if (!errors.isError) {
-      axios.post("http://localhost:8000/new-post", values).then(res => {
+      axios.post("http://localhost:8000/post", values).then(res => {
         console.log(res)
         const { isSucceeded } = res.data;
         if (isSucceeded === true) {
