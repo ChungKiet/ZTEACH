@@ -1,9 +1,7 @@
-import React, { Component, useState, findDOMNode } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 import 'bootstrap/dist/css/bootstrap.css';
-
-
 
 import img_connected from '../images/postimg/connected.png';
 import img_date from '../images/postimg/date.png';
@@ -16,18 +14,105 @@ import img_subject from '../images/postimg/subject.png';
 import img_tutor from '../images/postimg/tutor.png';
 
 import './Post.css';
-import useForm from './useForm';
-import validate from './validateInfo';
+
+
+import axios from "axios";
+import { map } from "jquery";
 
 
 function Post() {
-    const submitForm = () => {
-        console.log("Submitted");
+    const [values, setValues] = useState({
+        subject: "Hóa học",
+        grade: "Lớp 8",
+        place: "Quận 5",
+        daysperweek: "3",
+        duration: "2h",
+        start_date: "01-01-2021",
+        title: "Default title",
+        detail: "Cần tìm gia sư dạy giỏi môn hóa, lương cao",
+        tutor_level: "Sinh viên",
+        tutor_gender: "Nữ",
+        salary: "300000",
+        connected: "2",
+
+        own_username: "admin",
+        own_user_id: "u1709",
+        is_connected: "0",
+        is_requested: "0"
+    });
+
+
+    useEffect(() => {
+        const fetchData = async() => {
+            const result = await axios('http://localhost:8000/post');
+            const dt = result.data;
+            setValues({
+                title : dt.title, 
+                detail: dt.detail,
+                subject: dt.subject,
+                grade: dt.grade,
+                place: dt.place,
+                start_date: dt.start_date,
+                tutor_level: dt.tutor_level,
+                tutor_gender: dt.tutor_gender,
+                salary: dt.salary,
+                connected: dt.connected,
+                daysperweek: dt.daysperweek,
+                duration: dt.duration,
+
+                own_username: dt.own_username,
+                own_user_id: dt.own_user_id,
+                is_connected: dt.is_connected,
+                is_requested: dt.is_requested
+
+            });
+        };
+        fetchData();
+        
+    }, []);
+    
+    const handleChange = e => {
+        const { name, value } = e.target;
+        setValues({
+          ...values,
+          [name]: value
+        });
+    };
+
+    function RenderButton(props){
+        const is_connected = props.is_connected;
+        const is_requested = props.is_requested;
+        if (is_connected === "1")
+            return(
+                <button className="button-connected">
+                    <div className="button-connect-text">
+                        Đã kết nối
+                    </div>
+                </button>
+            )
+        else if(is_requested === "0"){
+            return(
+                <button className="button-connect">
+                    <div className="button-connect-text">
+                        Kết nối
+                    </div>
+                </button>
+            );
+        }
+        else{
+            return(
+                <button className="button-requested">
+                    <div className="button-connect-text">
+                        Đã yêu cầu
+                    </div>
+                </button>
+            );
+        }
+
     }
-    const { handleChange, handleSubmit, values, errors } = useForm(
-        submitForm,
-        validate
-    );
+
+
+
 
     return (
         <div className="Post">
@@ -38,8 +123,7 @@ function Post() {
 
                     <div className="placeholder-title-head">
                         <div className="text-title-head">
-                            Tìm gia sư dạy hóa lớp 8
-
+                            {values.title}
                         </div>
                     </div>
                 </div>
@@ -50,15 +134,11 @@ function Post() {
                             <img className="user-img-head" src={img_tutor} />
                         </div>
                         <div className="text-username">
-                            <a href="http://hcmus.edu.vn" style={{ 'text-decoration': 'none' }}>AnnieLe09</a>
+                            <a href={`http://localhost:3000/user?id=${values.own_user_id}`} style={{ 'text-decoration': 'none' }}>{values.own_username}</a>
                         </div>
                     </div>
                 </div>
-                <button className="button-connect">
-                    <div className="button-connect-text">
-                        Kết nối
-                    </div>
-                </button>
+                <RenderButton is_connected={values.is_connected} is_requested={values.is_requested}/>
             </div>
 
 
@@ -78,7 +158,7 @@ function Post() {
                         </div>
                         <div className="placeholder-text-1">
                             <div className="select-occupation-1">
-                                Hóa học
+                                {values.subject}
                             </div>
                         </div>
                     </div>
@@ -95,7 +175,7 @@ function Post() {
                         </div>
                         <div className="placeholder-text-1">
                             <div className="select-occupation-1">
-                                Lớp 8
+                                {values.grade}
                             </div>
                         </div>
                     </div>
@@ -107,12 +187,12 @@ function Post() {
                     <div className="placeholder-text-container">
                         <div className="placeholder-text">
                             <div className="select-occupation">
-                                Hình thức học
+                                Địa điểm học
                             </div>
                         </div>
                         <div className="placeholder-text-1">
                             <div className="select-occupation-1">
-                                Quận 5
+                                {values.place}
                             </div>
                         </div>
                     </div>
@@ -129,7 +209,7 @@ function Post() {
                         </div>
                         <div className="placeholder-text-1">
                             <div className="select-occupation-1">
-                                01-01-2021
+                                {values.start_date}
                             </div>
                         </div>
                     </div>
@@ -149,7 +229,7 @@ function Post() {
                         </div>
                         <div className="placeholder-text-1">
                             <div className="select-occupation-1">
-                                Sinh viên
+                                {values.tutor_level}
                             </div>
                         </div>
                     </div>
@@ -166,7 +246,7 @@ function Post() {
                         </div>
                         <div className="placeholder-text-1">
                             <div className="select-occupation-1">
-                                Nữ
+                                {values.tutor_gender}
                             </div>
                         </div>
                     </div>
@@ -183,7 +263,7 @@ function Post() {
                         </div>
                         <div className="placeholder-text-1">
                             <div className="select-occupation-1">
-                                3000000
+                                {values.salary}đ/buổi
                             </div>
                         </div>
                     </div>
@@ -200,7 +280,7 @@ function Post() {
                         </div>
                         <div className="placeholder-text-1">
                             <div className="select-occupation-1">
-                                2 yêu cầu
+                                {values.connected} yêu cầu
                             </div>
                         </div>
                     </div>
@@ -212,7 +292,7 @@ function Post() {
                     Thời lượng học:
                 </div>
                 <div className="duration">
-                    3 buổi/tuần x 2h/buổi
+                    {values.daysperweek} buổi/tuần x {values.duration}/buổi
                 </div>
             </div>
 
@@ -221,11 +301,8 @@ function Post() {
 
             <div className="overlap-group-more-info">
                 <div className="box-more-info"></div>
-                <div className="detail-script">Cần tìm gia sư VIP, luyện thi VIP, cho học sinh vip. Đoạn văn bản này dài để test thử việc hiển thị văn bản dài do người dùng vô tình hoặc cố tình "test"
-                </div>
+                <div className="detail-script">{values.detail}</div>
             </div>
-
-
 
 
             <div style={{ position: 'fixed', marginBottom: "0px", bottom: "0", width: '100%' }}>
