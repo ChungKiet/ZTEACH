@@ -40,11 +40,11 @@ function NewPost() {
 
             {/* Group 1 - Class */}
             <div className="group-view-thongtin">
-                <div className="overlap-group">
+     
                     <div className='label-thongtin'>
                         Thông tin về lớp học
                     </div>
-                </div>
+
                 <div className="flex-row">
                     {/* Subject */}
                     <Dropdown id="id-select-subject"
@@ -137,15 +137,15 @@ function NewPost() {
             {/* Group 2 - Tutor */}
 
             <div className="group-view-thongtin">
-                <div className="overlap-group">
+            
                     <div className='label-thongtin'>
                         Thông tin về gia sư
                     </div>
-                </div>
+           
 
                 <div className="flex-row">
                     {/* tutor_level */}
-                    <div className="list-box-lop">
+                    
                         <Dropdown id="id-select-level"
                             className='text-occupation'
                             values={optionSelect.tutor_level}
@@ -153,10 +153,10 @@ function NewPost() {
                             placeholder="Chọn trình độ gia sư"
                             onChange={handleChange}
                         />
-                    </div>
+                    
 
                     {/* tutor_gender */}
-                    <div >
+                    
                         <Dropdown id="id-select-gender"
                             className='text-occupation'
                             values={optionSelect.tutor_gender}
@@ -164,10 +164,11 @@ function NewPost() {
                             placeholder="Chọn giới tính gia sư"
                             onChange={handleChange}
                         />
-                    </div>
+                    
 
 
                     {/* salary */}
+                    
                     <input id="id-salary"
                         type='text'
                         className="text-occupation"
@@ -183,18 +184,16 @@ function NewPost() {
 
             <div className="flex-row">
                 <button className="button-occupation-ok" type="submit" >
-                    <h1 className="medium-button montserrat-semi-bold-white-30px">
+                    <div className="medium-button">
                         Đăng
-                    </h1>
+                    </div>
                 </button>
                 <button className="button-occupation-cancel">
-                    <h1 className="medium-button montserrat-semi-bold-white-30px">
+                    <div className="medium-button">
                         Hủy
-                    </h1>
+                    </div>
                 </button>
             </div>
-
-
 
 
             <div style={{ position: 'fixed', marginTop: "1%", marginBottom: "0px", bottom: "0", width: '100%' }}>
