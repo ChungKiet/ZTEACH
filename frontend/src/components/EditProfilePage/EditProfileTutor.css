@@ -1,27 +1,15 @@
-.EditProfileTutor {
+.EditProfile{
    background-size: 100% 50%;
    background-position: center bottom;
    background-repeat: no-repeat;
    min-height: 1000px;
-   height: 100%;
- }
- 
- .EditProfileTutor-logo {
-   height: 40vmin;
-   pointer-events: none;
- }
- 
- @media (prefers-reduced-motion: no-preference) {
-   .EditProfileTutor-logo {
-     animation: EditProfileTutor-logo-spin infinite 20s linear;
-   }
- }
- 
- .navbar {
+}
+
+.navbar {
    background-color: #FE9312 !important;
- }
- 
- .EditProfileTutor-header {
+}
+
+.EditProfile-header {
    background-color: #282c34;
    min-height: 100vh;
    display: flex;
@@ -30,9 +18,9 @@
    justify-content: center;
    font-size: calc(10px + 2vmin);
    color: white;
- }
- 
- .EditProfileTutor-link {
+}
+
+.EditProfile-link {
    color: #61dafb;
  }
  
@@ -45,21 +33,31 @@
    }
  }
 
- .Avatar {width: 120px;
-   height: 120px;
+ .Avatar-tutor {
+   width: 6.25%;
+   height: 11.1%;
    background: white;
    align-items: center;
-   margin-top: 20px;
-   margin-left: 40px;
+   margin-top: 10.85%;
+   margin-left: 45.08%;
+   margin-bottom: 9%;
 }
 
 .Avatar_label {
-   width: 120px;
-   height: 120px;
+   width: 6.25%;
+   height: 11.1%;
    background: #9E9E9E;
    align-items: center;
    border-radius: 50%;
-   margin-left: 50px;
+   margin-left: 12.6%;
+}
+
+.Avatar-student{
+   width: 100.25%;
+   background: #9E9E9E;
+   align-items: center;
+   border-radius: 50%;
+   margin-left: 42.6%;
 }
 
 .Avatar-input {
@@ -67,44 +65,44 @@
 }
 
 .user_type {
-   width: 100px;
-   height: 40px;
+   width: 5.21%;
+   height: 3.7%;
    background: #FE9312;
    border-radius: 100px;
    align-items: center;
-   margin-top: 10px;
-   margin-left: 45px;
+   margin-top: 1%;
+   margin-left: 2.34%;
    text-align: center;
    padding: 7px;
    color:white;
 }
 
 .user_name {
-   width: 200px;
-   height: 40px;
+   width: 10.41%;
+   height: 3.7%;
    background: #FE9312;
    border-radius: 100px;
-   margin-top: 50px;
-   margin-left: 40px;
+   margin-top: 4.63%;
+   margin-left: 2.1%;
    text-align: center;
    color:white;
    padding: 7px;
 }
 
 .label-intro{
-   margin-top: 70px;
-   margin-left: 45px;
-   margin-bottom: 5px;
+   margin-top: 10%;
+   margin-left: 2.34%;
+   margin-bottom: 0.5%;
 }
 
 .input-label {
-   margin-left: 45px;
+   margin-left: 2.34%;
+   margin-top: 1%;
 }
 
-.gender {
-   width: 90px;
-   margin-left: 45px;
-   margin-bottom: 15px;
+.option-gender {
+   width: 35%;
+   margin-left: 12.1%;
    height: 40px;
    text-align: center;
    border-radius: 10px;
@@ -112,31 +110,50 @@
    box-shadow: 1px 2px 2px 1px #9E9E9E;
 }
 
+.top-right-image {
+   position: absolute;
+   right: 0;
+   width: 10.41%;
+}
+
 .updateToTutor {
-   margin-left:-200px;
-   margin-bottom: 50px; 
-   margin-top: 50px;
+   margin-left:-10.42%;
+   margin-bottom: 4.63%; 
+   margin-top: 4.63%;
    border-radius: 100px;
-   height: 40px;
-   width: 200px;
+   height: 3.7%;
+   width: 10.42%;
    background: #FE9312;
    border: none;
    color: white;
 }
 
-.gender-secure {
-   margin-top: 325px;
-   margin-left: -100px;
+.gender-secure-label {
+   margin-top: 2.1%;
+   margin-left: 12.21%;
 }
 
-.secure-label {
-   margin-left: -100px;
-   margin-top: 10px;
+.option-secure-label {
+   margin-left: 70%;
+   margin-top: 2%;
+   width: 100%;
 }
 
-.secure-select {
-   width: 100px;
-   margin-left:-100px;
+.first-secure-label {
+   margin-left: 135%;
+   margin-top: 304%;
+   width: 100%;
+}
+
+.option-secure-student-label {
+   margin-left: 135%;
+   margin-top: 2%;
+   width: 100%;
+}
+
+.option-secure-select {
+   width: 50%;
+   margin-left: 65.21%;
    height: 40px;
    border: none;
    border-radius: 10px;
@@ -144,10 +161,9 @@
    box-shadow: 1px 3px 3px 1px #9E9E9E;
 }
 
-.level-select {
-   width: 100px;
-   margin-top: -4px;
-   margin-left:-100px;
+.first-secure-select  {
+   width: 100%;
+   margin-left: 122.5%;
    height: 40px;
    border: none;
    border-radius: 10px;
@@ -155,23 +171,209 @@
    box-shadow: 1px 3px 3px 1px #9E9E9E;
 }
 
-.birth_day{
-   margin-left:-180px;
-   margin-top: 347px;
-   margin-bottom: 5px;
+.option-secure-student-select {
+   width: 100%;
+   margin-left: 122.5%;
+   height: 40px;
+   border: none;
+   border-radius: 10px;
+   text-align: center;
+   box-shadow: 1px 3px 3px 1px #9E9E9E;
+}
+.level_select {
+   width: 50%;
+   margin-top: 0.37%;
+   margin-left: 65.21%;
+   height: 40px;
+   border: none;
+   border-radius: 10px;
+   text-align: center;
+   box-shadow: 1px 3px 3px 1px #9E9E9E;
 }
 
-.class-select{
-   margin-left: -150px;
-   margin-top: 15px;
+.birthDay{
+   margin-left: 25%;
+   margin-top: 152%;
+   margin-bottom: 0.5%;
+   width: 100%;
 }
 
-.multi-select{
-   margin-left: -150px;
-   width: 150px;
+.birth-student{
+   margin-left: 13%;
+   margin-bottom: 0.5%;
+   width: 100%;
+}
+
+.class-select-label{
+   margin-left: 40.81%;
+   margin-top: 1.4%;
+   width: 100%;
+}
+
+.option-multiple-select{
+   margin-left: 45.81%;
+   width: 70%;
    max-width: 200px;
    box-shadow: 1px 3px 1px #9E9E9E;
    border-radius: 10px;
    border: none;
-   margin-top: 3px;
+   margin-top: 0.28%;
+}
+
+.salary_control{
+   width: 90%;
+   height: 40px;
+   border-radius: 3%;
+   margin-left: 12.1%;
+   box-shadow: 1px 3px 1px #9E9E9E;   
+}
+
+.intro-control {
+   width: 165%;
+   height: 3.7%;
+   border-radius: 3%;
+   margin-left: 12%;
+   box-shadow: 1px 3px 1px #9E9E9E;   
+}
+
+.intro-student-control {
+   width: 180%;
+   height: 6%;
+   border-radius: 3%;
+   margin-left: 12%;
+   box-shadow: 1px 3px 1px #9E9E9E;   
+}
+
+.username-control {
+   width: 100%;
+   height: 40px;
+   border-radius: 3%;
+   margin-left: 12%;
+   box-shadow: 1px 3px 1px #9E9E9E;
+}
+
+.major-control {
+   width: 90%;
+   height: 40px;
+   border-radius: 3%;
+   margin-left: 12%;
+   box-shadow: 1px 3px 1px #9E9E9E;
+}
+
+.address-control {
+   width: 10.41%;
+   height: 40px;
+   border-radius: 3%;
+   margin-left: 12%;
+   box-shadow: 1px 3px 1px #9E9E9E;
+}
+
+.address-student-control {
+   width: 115%;
+   height: 40px;
+   border-radius: 3%;
+   margin-left: 12%;
+   box-shadow: 1px 3px 1px #9E9E9E;
+}
+
+.email_control {
+   width: 90%;
+   height: 40px;
+   border-radius: 3%;
+   margin-left: 12%;
+   box-shadow: 1px 3px 1px #9E9E9E;
+}
+
+.email-student-control {
+   width: 115%;
+   height: 40px;
+   border-radius: 3%;
+   margin-left: 12%;
+   box-shadow: 1px 3px 1px #9E9E9E;
+}
+
+.other-info-control {
+   width: 90%;
+   height: 40px;
+   border-radius: 3%;
+   margin-left: 12%;
+   box-shadow: 1px 3px 1px #9E9E9E;
+}
+
+.other-info-student-control {
+   width: 115%;
+   height: 40px;
+   border-radius: 3%;
+   margin-left: 12%;
+   box-shadow: 1px 3px 1px #9E9E9E;
+}
+
+.form-control:focus{
+   box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+}
+
+.cert-input {
+   width: 90%;
+   background: white;
+   height: 180px;
+   border-radius: 3%;
+   margin-left: 12%;
+   margin-bottom: 3.85%;
+   text-align: center;
+   align-items: center;
+   align-content: center;
+   box-shadow: 1px 3px 1px #9E9E9E;
+}
+
+.cert-label {
+   margin-top: 65px;
+   height: 180px;
+   color: #9E9E9E;
+}
+
+.submit-btn {
+   border-radius: 3%;
+   margin-left: 85px;
+   box-shadow: 1px 3px 1px #9E9E9E;
+}
+
+.student-submit-btn {
+   border-radius: 3%;
+   margin-left: 25%;
+   margin-top: 6%;
+   box-shadow: 1px 3px 1px #9E9E9E;
+}
+
+.cancal-btn {
+   margin-top: 1px;
+   border-radius: 3%;
+   margin-left: 30px;
+   box-shadow: 1px 3px 1px #9E9E9E;
+}
+
+.student-cancal-btn {
+   margin-top: 6%;
+   border-radius: 3%;
+   margin-left: 20%;
+   box-shadow: 1px 3px 1px #9E9E9E;
+}
+
+.birth-day-select { 
+   margin-left: 15%; 
+   border-radius: 10px;
+   box-shadow: 1px 3px 1px #9E9E9E;
+}
+
+.birth-day-student-select { 
+   margin-left: 12%; 
+   width: 80%;
+   border-radius: 10px;
+   box-shadow: 1px 3px 1px #9E9E9E;
+}
+
+.bottom-right-image {
+   position: absolute;
+   right: 0;
+   width: 11.5%;
+   margin-top: 1.5%;
 }

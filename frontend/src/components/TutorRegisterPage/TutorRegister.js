@@ -1,23 +1,17 @@
 import logo from '../images/logo.png';
-import profile from '../images/profile.png';
 import background from '../images/background.png';
 import toprightimage from '../images/topRight.png';
 import bottomrightimage from '../images/bottomRight.png';
-import tutorprofile from '../images/tutorProfile2.png';
 import './TutorRegister.css';
-import addressImg from '../images/address.png';
-import emailImg from '../images/email.png';
-import classImg from '../images/class.png';
-import phonecall from '../images/phonecall.png';
-import subject from '../images/subject.png';
-import {Nav, NavItem, NavDropdown, Form, Button, Dropdown} from 'react-bootstrap';
+import {Form, Button} from 'react-bootstrap';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
+// import ClassDropdown from './ClassDropDown';
 import 'bootstrap/dist/css/bootstrap.css';
 import {MultiSelect} from "react-multi-select-component";
-import Container from 'react-bootstrap/Container';
+// import Container from 'react-bootstrap/Container';
 // import { LinkContainer } from 'react-router-bootstrap';
-import React, { Component, useState, findDOMNode } from "react";
+import React, { Component, useState } from "react";
 // import { axios } from 'axios';
 // import { CheckBoxSelection, Inject, MultiSelectComponent } from '@syncfusion/ej2-react-dropdowns';
 
@@ -188,12 +182,12 @@ class TutorRegister extends Component {
         backgroundImage: `url(${background})` ,
      }}>
         <Navbar/>
-        <img src={toprightimage} style={{position: 'absolute', right:'0', width:'200px'}}/>
+        <img src={toprightimage} className='top-right-image'/>
         <Form className='d-flex'>
           <Form.Group controlId="formFile" className="mb-3" >
-          <div class="image-upload" className='Avatar'>
+            <div class="image-upload" className='AvatarTest'>
               <label for="file-input">
-                  <img src={logo} className='Avatar-label'/>
+                  <img src={logo} className='Avatar_label'/>
               </label>
               <input id="file-input" type="file" className='Avatar-input'/>
             </div>
@@ -202,43 +196,32 @@ class TutorRegister extends Component {
             </div>
           </Form.Group>
           <Form.Group>
-            <div type='text' className="user-name" id='username' disabled>
+            <div type='text' className="user_name" id='username' disabled>
                {this.state.username}
             </div>
             <div className='label-intro'>
               Giới thiệu về bản thân bạn
             </div>
-            <Form.Control type='text' className="mb-3" 
+            <Form.Control type='text' 
             value={this.state.intro}
             onChange={e => this.setState({intro: e.target.value})}
             placeholder='Giới thiệu ngắn gọn về bản thân bạn' 
-            style={{width: '550px',
-               height: '40px',
-               borderRadius: '3%',
-               marginLeft: '45px',
-               boxShadow: "1px 3px 1px #9E9E9E",
-               hint:'sdfsf'
-               }}>
+            className='intro-control'>
             </Form.Control>
             <div className='input-label'>
                Họ và tên
             </div>
-            <Form.Control type='text' className="mb-3" placeholder='Nhập họ và tên' 
-            style={{width: '320px',
-              height: '40px',
-              borderRadius: '3%',
-              marginLeft: '45px',
-              boxShadow: "1px 3px 1px #9E9E9E"
-              }}
+            <Form.Control type='text' placeholder='Nhập họ và tên' 
+            className='username-control'
             value={this.state.name}
             onChange={e => this.setState({name: e.target.value})}>
             </Form.Control>
-            <div className='input-label'>
+            <div className='gender-secure-label'>
                Giới tính
             </div>
             <div >
                <select id="gender" 
-               className='gender_select'
+               className='option-gender'
                onChange={e => this.updateGender(e.target.value)}>
                {optionGender}
                </select>
@@ -246,146 +229,103 @@ class TutorRegister extends Component {
             <div className='input-label'>
                Chuyên ngành
             </div>
-            <Form.Control type='text' className="mb-3" placeholder='Nhập chuyên ngành của bạn' 
-            style={{width: '320px',
-               height: '40px',
-               borderRadius: '3%',
-               marginLeft: '45px',
-               boxShadow: "1px 3px 1px #9E9E9E"
-               }}
+            <Form.Control type='text' placeholder='Nhập chuyên ngành của bạn' 
+            className='major-control'
             onChange={e => this.setState({major: e.target.value})}>
             </Form.Control>
             <div className='input-label'>
-               Địa chỉ
+              Địa chỉ
             </div>
-            <Form.Control type='text' className="mb-3" 
+            <Form.Control type='text'
             placeholder='Nhập thông tin địa chỉ nơi bạn ở' 
-            style={{width: '320px',
-               height: '40px',
-               borderRadius: '3%',
-               marginLeft: '45px',
-               boxShadow: "1px 3px 1px #9E9E9E"
-               }}
+            className='address-control'
             onChange={e => this.updateAddress(e.target.value)}>
             </Form.Control>
             <div className='input-label'>
-               Email
+              Email
             </div>
-            <Form.Control type='email' className="mb-3" placeholder='example@gmail.com' 
-            style={{width: '320px',
-              height: '40px',
-              borderRadius: '3%',
-              marginLeft: '45px',
-              boxShadow: "1px 3px 1px #9E9E9E"
-              }}
-            onChange={e => this.updateEmail(e.target.value)}>
+            <Form.Control type='email' placeholder='example@gmail.com' 
+              className='email_control'
+              onChange={e => this.updateEmail(e.target.value)}>
             </Form.Control>
             <div className='input-label'>
-               Thông tin liên lạc khác
+              Thông tin liên lạc khác
             </div>
-            <Form.Control type='text' className="mb-3"
+            <Form.Control type='text'
             placeholder='Số điện thoại, link facebook, ...' 
-            style={{width: '320px',
-               height: '40px',
-               borderRadius: '3%',
-               marginLeft: '45px',
-               boxShadow: "1px 3px 1px #9E9E9E"
-               }}
+            className='other-info-control'
             onChange={e => this.updateOtherInfo(e.target.value)}>
             </Form.Control>
             <div className='input-label'>
-               Cập nhật thông tin bằng cấp
+              Cập nhật thông tin bằng cấp
             </div>
-            <div class="image-upload" style={{width: '320px',
-               background: 'white',
-               height: '180px',
-               borderRadius: '3%',
-               marginLeft: '45px',
-               marginBottom: '20px',
-               textAlign: 'center',
-               alignItems: 'center',
-               alignContent: 'center',
-               boxShadow: "1px 3px 1px #9E9E9E",
-               }}>
-               <label for="file-input">
-                  <div style={{marginTop: '65px', height: '180px', color: '#9E9E9E'}}> 
+            <div className='cert-input'>
+                <label for="file-input">
+                  <div className='cert-label'> 
                     Cập nhật thông tin bằng cấp, chứng chỉ
                   </div> 
-               </label>
-               <input id="file-input" type="file" accept=".png,.jpg,.jpeg" multiple style={{display: 'none'}}/>
+                </label>
+              <input id="file-input" type="file" accept=".png,.jpg,.jpeg" multiple style={{display: 'none'}}/>
             </div>
-            <Button variant="warning" style={{
-               borderRadius: '3%',
-               marginLeft: '85px',
-               boxShadow: "1px 3px 1px #9E9E9E"
-               }} type="submit">
-               Submit
+            <Button variant="warning" className='submit-btn' type="submit">
+              Submit
             </Button>
-            <Button variant="dark" className="row ml-n3" style={{
-               marginTop: "1px",
-               borderRadius: '3%',
-               marginLeft: '75px',
-               boxShadow: "1px 3px 1px #9E9E9E"
-               }}>
-               Hủy
+            <Button variant="dark" className='cancal-btn'>
+              Hủy
             </Button>
-         </Form.Group>
-         <Form.Group>
-            <div className="birth_day">
-               Ngày tháng năm sinh
+          </Form.Group>
+          <Form.Group>
+            <div className='birthDay' >
+              Ngày tháng năm sinh
             </div>
-            <Form.Control required controlId="duedate" style={{ marginLeft:"-200px", 
-               width: "200px",
-               }}
-               onChange={(e) => this.updateBirthDay(e.target.value)}
-               type="date"
-               name="duedate"
-               placeholder="Due date"
+            <Form.Control required controlId="duedate" className='birth-day-select'
+              onChange={(e) => this.updateBirthDay(e.target.value)}
+              type="date"
+              name="duedate"
+              placeholder="Due date"
             />
-            <div className='secure_label'>
-               Trình độ
+            <div className='option-secure-label'>
+              Trình độ
             </div>
             <div>
-               <select id="gender" 
-                  className='level-select'
-               onChange={e => this.setState({level: e.target.value})}>
-               {optionLevel}
-               </select>
+              <select id="gender" className='level_select'
+                onChange={e => this.setState({level: e.target.value})}>
+                {optionLevel}
+              </select>
             </div>
-            <div className='secure_label'>
+            <div className='option-secure-label'>
                Trạng thái
             </div>
             <div>
-            <select id="gender" 
-               className='secure-select'
-               onChange={e => this.updateGenderSecure(e.target.value)}>
-               {optionSecure}
+            <select id="gender" className='option-secure-select'
+              onChange={e => this.updateGenderSecure(e.target.value)}>
+              {optionSecure}
             </select>
             </div>
-            <div className='secure_label'>
-               Trạng thái
+            <div className='option-secure-label'>
+              Trạng thái
             </div>
             <div>
             <select id="gender" 
-               className='secure-select'
-               onChange={e => this.updateGenderSecure(e.target.value)}>
-               {optionSecure}
+              className='option-secure-select'
+              onChange={e => this.updateGenderSecure(e.target.value)}>
+              {optionSecure}
             </select>
             </div>
-            <div className='secure_label'>
-               Trạng thái
+            <div className='option-secure-label'>
+              Trạng thái
             </div>
             <div>
-            <select id="gender" 
-               className='secure-select'
-               onChange={e => this.updateGenderSecure(e.target.value)}>
-               {optionSecure}
+            <select id="gender" className='option-secure-select'
+              onChange={e => this.updateGenderSecure(e.target.value)}>
+              {optionSecure}
             </select>
             </div>
           </Form.Group>
         </Form>
-        <img src={bottomrightimage} style={{position: "absolute", right:"0", width:'200px'}}/>
-        <div style={{marginTop: "150px", marginBottom: "0px", bottom: "0"}}>
+        <img src={bottomrightimage} className='bottom-right-image'/>
+        
+        <div style={{ marginTop: "10%",marginBottom:"0", bottom: "0", width: '100%' }}>
           <Footer/>
         </div>
       </div>
