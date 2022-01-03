@@ -14,9 +14,9 @@ import React from 'react';
 import './Button.css';
 import { Link } from 'react-router-dom';
 
-const STYLES = ['btn--primary', 'btn--outline', 'btn--test'];
+const STYLES = ['btn--primary1', 'btn--outline1', 'btn--test1'];
 
-const SIZES = ['btn--medium', 'btn--large'];
+const SIZES = ['btn--medium1', 'btn--large1'];
 
 export const Button = ({
   children,
@@ -34,7 +34,7 @@ export const Button = ({
   return (
     <Link to='/signup' className='btn-mobile'>
       <button
-        className={`btn ${checkButtonStyle} ${checkButtonSize}`}
+        className={`btn3 ${checkButtonStyle} ${checkButtonSize}`}
         onClick={onClick}
         type={type}
       >

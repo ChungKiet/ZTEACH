@@ -1,15 +1,19 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const useForm = (callback, validate) => {
-  //Date birth = new Date(2000, 1, 1);
   const [values, setValues] = useState({
-    name: '',
-    gender: 'Nam',
-    birthday: '',
-    username: '',
-    email: '',
-    password: '',
-    password2: ''
+    subject: "",
+    grade: "",
+    place: "",
+    daysperweek: "",
+    duration: "",
+    start_date: "",
+    title: "",
+    detail: "",
+    tutor_level: "",
+    tutor_gender: "",
+    salary: ""
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,9 +31,19 @@ const useForm = (callback, validate) => {
 
     setErrors(validate(values));
     setIsSubmitting(true);
-    //console.log(values);
-    if(!errors.isError){
-      
+    console.log(values);
+    if(true){
+    //if (!errors.isError) {
+      axios.post("http://localhost:8000/new-post", values).then(res => {
+        console.log(res)
+        const { isSucceeded } = res.data;
+        if (isSucceeded === true) {
+            alert("Thành công rồi nha!")
+        }
+        else{
+          alert("Thất bại!")
+        }
+    });
     }
   };
 
