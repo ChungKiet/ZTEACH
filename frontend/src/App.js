@@ -11,7 +11,7 @@ import TutorRegisterPage from './components/pages/TutorRegisterPage';
 import ProfilePage from './components/pages/ProfilePage';
 import GlobalVar from './GlobalVar';
 
-global.isLogin = true;
+GlobalVar.isLogin = true;
 var a;
 function App() {
   return (

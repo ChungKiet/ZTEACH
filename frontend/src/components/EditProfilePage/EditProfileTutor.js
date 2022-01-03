@@ -8,22 +8,15 @@ import Navbar from '../Navbar';
 import Footer from '../Footer';
 import validateInfo from './validateInfo';
 import useForm from './useForm';
-// import ClassDropdown from './ClassDropDown';
 import 'bootstrap/dist/css/bootstrap.css';
 import {MultiSelect} from "react-multi-select-component";
-// import Container from 'react-bootstrap/Container';
-// import { LinkContainer } from 'react-router-bootstrap';
 import React, { Component, useState } from "react";
-// import { axios } from 'axios';
-// import { CheckBoxSelection, Inject, MultiSelectComponent } from '@syncfusion/ej2-react-dropdowns';
-
-var ReactDOM = require('react-dom');
 
 function EditProfileTutor(){
   const submitForm = () => {
     console.log("Submitted");
   }
-  const { handleChange, handleSubmit, values, errors } = useForm(
+  const { handleChange, handleSubmit, classesChange, salaryChange, values, errors } = useForm(
       submitForm,
       validateInfo
   );
@@ -140,10 +133,10 @@ function EditProfileTutor(){
             <div className='input-label'>
                Mức lương
             </div>
-            <Form.Control type='text' 
+            <Form.Control type='text'
               placeholder='Mức lương bạn mong muốn' 
               name='salary'
-              onChange={handleChange}
+              onChange={salaryChange}
               value={values.salary}
               className='salary_control'>
             </Form.Control>
@@ -191,17 +184,16 @@ function EditProfileTutor(){
                 accept=".png,.jpg,.jpeg" multiple 
                 style={{display: 'none'}}/>
             </div>
-            <Button 
-              variant="warning" 
+            <button 
               className='submit-btn' 
-              type="submit">
-              Submit
-            </Button>
-            <Button 
-              variant="dark" 
-              className='cancal-btn'>
+              type="submit"
+              onClick={handleSubmit}>
+              Gửi
+            </button>
+            <button 
+              className='cancel-btn'>
               Hủy
-            </Button>
+            </button>
           </Form.Group>
           <Form.Group>
             <div className='birthDay' >
@@ -223,19 +215,18 @@ function EditProfileTutor(){
                 className='level_select'
                 name='literacy'
                 value={values.literacy}
-                onChange={handleChange}>
+                onChange={classesChange}>
                 {optionLevel}
               </select>
             </div>
             <div className='class-select-label'>
               Lớp bạn có thể dạy
             </div>
-            {/* <ClassDropdown/> */}
             <MultiSelect
               options={optionSelect.options}
               value={values.classes}
               name='classes'
-              onChange={handleChange}
+              onChange={classesChange}
               labelledBy="Lớp"
               className='option-multiple-select'
             />
