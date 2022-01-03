@@ -8,6 +8,7 @@ import NewPostPage from './components/pages/NewPostPage';
 import EditProfilePage from './components/pages/EditProfilePage';
 import TutorRegisterPage from './components/pages/TutorRegisterPage';
 import ProfilePage from './components/pages/ProfilePage';
+import PostListPage from './components/pages/PostListPage';
 import GlobalVar from './GlobalVar';
 
 global.isLogin = true;
@@ -24,6 +25,7 @@ function App() {
       <Route path="/editprofile" element={<EditProfilePage/>}/>
       <Route path="/updatetotutor" element={<TutorRegisterPage/>}/>
       <Route path="/profileuser" element={<ProfilePage/>}/>
+      <Route path="/post-list" element={<PostListPage/>}/>
     </Routes>
     </div>
     </Router>
