@@ -6,24 +6,17 @@ import './TutorRegister.css';
 import {Form, Button} from 'react-bootstrap';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
-// import ClassDropdown from './ClassDropDown';
 import 'bootstrap/dist/css/bootstrap.css';
 import {MultiSelect} from "react-multi-select-component";
-// import Container from 'react-bootstrap/Container';
-// import { LinkContainer } from 'react-router-bootstrap';
 import React, { Component, useState } from "react";
 import validateInfo from './validateInfo';
 import useForm from './useForm';
-// import { axios } from 'axios';
-// import { CheckBoxSelection, Inject, MultiSelectComponent } from '@syncfusion/ej2-react-dropdowns';
-
-var ReactDOM = require('react-dom');
 
 function TutorRegister(){
   const submitForm = () => {
     console.log("Submitted");
   }
-  const { handleChange, handleSubmit, values, errors } = useForm(
+  const { handleChange, handleSubmit, classesChange, values, errors } = useForm(
       submitForm,
       validateInfo
   );
@@ -235,7 +228,7 @@ function TutorRegister(){
               options={optionSelect.options}
               value={values.classes}
               name='classes'
-              onChange={handleChange}
+              onChange={classesChange}
               labelledBy="Lớp"
               className='option-multiple-select'
             />

@@ -12,7 +12,7 @@ import ProfilePage from './components/pages/ProfilePage';
 import PostListPage from './components/pages/PostListPage';
 import GlobalVar from './GlobalVar';
 
-global.isLogin = true;
+GlobalVar.isLogin = true;
 var a;
 function App() {
   return (

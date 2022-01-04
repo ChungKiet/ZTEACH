@@ -5,16 +5,16 @@ const useForm = (callback, validate) => {
   const [values, setValues] = useState({
    username: "KietChung",
    intro: "No intro",
-   name: "",
+   name: "Chung Kiệt",
    user_type: "Học viên",
    gender: "Nam",
    gender_secure: "Công khai",
-   birth_day: "",
+   birth_day: "2001-12-17",
    birth_day_secure: "Riêng tư",
    classes: [],
-   major: "",
-   literacy: "",
-   salary: "",
+   major: "CNTT",
+   literacy: "Sinh viên",
+   salary: "1000000",
    address: "No address",
    address_secure: "Riêng tư",
    email: "No email",
@@ -33,12 +33,12 @@ const useForm = (callback, validate) => {
     });
   };
 
-//   const classesChange = e => {
-//    setValues({
-//      ...values,
-//      [classes]: e
-//    });
-//  };
+  const classesChange = e => {
+   setValues({
+     ...values,
+     ["classes"]: e
+   });
+ };
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -90,7 +90,7 @@ const useForm = (callback, validate) => {
    
 }, []);
 
-  return { handleChange, handleSubmit, values, errors };
+  return { handleChange, handleSubmit,classesChange, values, errors };
 };
 
 export default useForm;

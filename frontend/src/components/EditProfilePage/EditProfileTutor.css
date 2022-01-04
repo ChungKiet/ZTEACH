@@ -139,14 +139,14 @@
    width: 100%;
 }
 
-.first-secure-label {
-   margin-left: 135%;
-   margin-top: 304%;
+.first_secure_label {
+   margin-left: 85%;
+   margin-top: 135%;
    width: 100%;
 }
 
-.option-secure-student-label {
-   margin-left: 135%;
+.option_secure_student_label {
+   margin-left: 85%;
    margin-top: 2%;
    width: 100%;
 }
@@ -171,9 +171,9 @@
    box-shadow: 1px 3px 3px 1px #9E9E9E;
 }
 
-.option-secure-student-select {
-   width: 100%;
-   margin-left: 122.5%;
+.option_secure_student_select {
+   width: 70%;
+   margin-left: 75.5%;
    height: 40px;
    border: none;
    border-radius: 10px;
@@ -261,7 +261,7 @@
 }
 
 .address-control {
-   width: 10.41%;
+   width: 90%;
    height: 40px;
    border-radius: 3%;
    margin-left: 12%;
@@ -331,9 +331,25 @@
    color: #9E9E9E;
 }
 
+.update-to-tutor-btn {
+   margin-top: 45%;
+   margin-left: 28%;
+   background-color: #FE9312;
+   height: 35px;
+   border-radius: 100px;
+   border: none;
+   width: 130%;
+   color: white;
+}
+
 .submit-btn {
    border-radius: 3%;
    margin-left: 85px;
+   background-color: #FE9312;
+   border: none;
+   color: white;
+   height: 35px;
+   width: 18%;
    box-shadow: 1px 3px 1px #9E9E9E;
 }
 
@@ -341,20 +357,34 @@
    border-radius: 3%;
    margin-left: 25%;
    margin-top: 6%;
+   background-color: #FE9312;
+   color: white;
+   height: 35px;
+   border: none;
+   width: 30%;
    box-shadow: 1px 3px 1px #9E9E9E;
 }
 
-.cancal-btn {
+.cancel-btn {
    margin-top: 1px;
    border-radius: 3%;
    margin-left: 30px;
+   height: 35px;
+   background-color: #282c34;
+   width: 18%;
+   color: white;
+   border: none;
    box-shadow: 1px 3px 1px #9E9E9E;
 }
 
-.student-cancal-btn {
+.student-cancel-btn {
    margin-top: 6%;
    border-radius: 3%;
    margin-left: 20%;
+   background-color: #282c34;
+   height: 35px;
+   width: 20%;
+   color: white;
    box-shadow: 1px 3px 1px #9E9E9E;
 }
 

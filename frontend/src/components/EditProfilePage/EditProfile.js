@@ -6,27 +6,22 @@ import './EditProfileTutor.css';
 import {Form, Button} from 'react-bootstrap';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
-// import ClassDropdown from './ClassDropDown';
 import 'bootstrap/dist/css/bootstrap.css';
 import {MultiSelect} from "react-multi-select-component";
 import validateInfo from './validateInfo';
 import useForm from './useForm';
-// import Container from 'react-bootstrap/Container';
-// import { LinkContainer } from 'react-router-bootstrap';
 import React, { Component, useState } from "react";
-// import { axios } from 'axios';
-// import { CheckBoxSelection, Inject, MultiSelectComponent } from '@syncfusion/ej2-react-dropdowns';
-
-var ReactDOM = require('react-dom');
 
 function EditProfile(){
   const submitForm = () => {
     console.log("Submitted");
   }
-  const { handleChange, handleSubmit, values, errors } = useForm(
+
+  const { handleChange, handleSubmit, classesChange, values, errors } = useForm(
       submitForm,
       validateInfo
   );
+
   const optionSelect = {
     gender: [
       { name: 'Nam', id: "Nam" },
@@ -58,7 +53,7 @@ function EditProfile(){
     ],
   }
   
-   let optionGender = optionSelect.gender.map(v => (
+    let optionGender = optionSelect.gender.map(v => (
       <option value={v.id}>{v.name}</option>
     ));
 
@@ -105,7 +100,8 @@ function EditProfile(){
             <div className='input-label'>
                Họ và tên
             </div>
-            <Form.Control type='text' placeholder='Nhập họ và tên' 
+            <Form.Control type='text' 
+            placeholder='Nhập họ và tên' 
             className='username-control'
             value={values.name}
             name='name'
@@ -126,7 +122,8 @@ function EditProfile(){
             <div className='birth-student' >
               Ngày tháng năm sinh
             </div>
-            <Form.Control required controlId="duedate" className='birth-day-student-select'
+            <Form.Control required controlId="duedate" 
+              className='birth-day-student-select'
               onChange={handleChange}
               type="date"
               name="birth_day"
@@ -162,64 +159,73 @@ function EditProfile(){
             value={values.contact}
             onChange={handleChange}>
             </Form.Control>
-            <Button variant="warning" className='student-submit-btn' type="submit">
-              Submit
-            </Button>
-            <Button variant="dark" className='student-cancal-btn'>
+            <button variant="warning" 
+              className='student-submit-btn' type="submit"
+              onClick={handleSubmit}>
+              Gửi
+            </button>
+            <button variant="dark" className='student-cancel-btn'>
               Hủy
-            </Button>
+            </button>
           </Form.Group>
           <Form.Group>
-            <div className='first-secure-label'>
+            <button variant="warning" className='update-to-tutor-btn'>
+              Đăng ký làm gia sư
+            </button>
+            <div className='first_secure_label'>
                Trạng thái
             </div>
             <div>
-            <select id="gender" className='option-secure-student-select'
+            <select id="gender" 
+              className='option_secure_student_select'
               name='gender_secure'
               value={values.gender_secure}
               onChange={handleChange}>
               {optionSecure}
             </select>
             </div>
-            <div className='option-secure-student-label'>
+            <div className='option_secure_student_label'>
               Trạng thái
             </div>
             <div>
             <select id="gender" 
-              className='option-secure-student-select'
+              className='option_secure_student_select'
               name='birth_day_secure'
               value={values.birth_day_secure}
               onChange={handleChange}>
               {optionSecure}
             </select>
             </div>
-            <div className='option-secure-student-label'>
+            <div className='option_secure_student_label'>
               Trạng thái
             </div>
             <div>
-            <select id="gender" className='option-secure-student-select'
+            <select id="gender" 
+              className='option_secure_student_select'
               name='address_secure'
               value={values.address_secure}
               onChange={handleChange}>
               {optionSecure}
             </select>
             </div>
-            <div className='option-secure-student-label'>
+            <div className='option_secure_student_label'>
               Trạng thái
             </div>
             <div>
-            <select id="gender" className='option-secure-student-select'
+            <select id="gender" 
+              className='option_secure_student_select'
               name='email_secure'
               value={values.email_secure}
               onChange={handleChange}>
               {optionSecure}
             </select>
             </div>
-            <div className='option-secure-student-label'>
+            <div className='option_secure_student_label'>
               Trạng thái
             </div>
             <div>
-            <select id="gender" className='option-secure-student-select'
+            <select id="gender" 
+              className='option_secure_student_select'
               name='contact_secure'
               value={values.contact_secure}
               onChange={handleChange}>
