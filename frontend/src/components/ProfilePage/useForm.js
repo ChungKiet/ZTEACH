@@ -11,10 +11,14 @@ const useForm = (callback, validate) => {
    gender: "Nam",
    gender_secure: "Công khai",
    birth_day: "2001-12-17",
+   voting: "4.5",
+   evaluate: "10",
+   dayreg: "2022-01-04",
    birth_day_secure: "Riêng tư",
-   classes: [],
-   major: "",
-   literacy: "",
+   subject: ["Toán, Lý"],
+   classes: ["Lớp 1", "Lớp 2"],
+   major: "CNTT",
+   literacy: "Sinh viên",
    salary: "",
    address: "No address",
    address_secure: "Riêng tư",
@@ -26,31 +30,6 @@ const useForm = (callback, validate) => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value
-    });
-  };
-
-  const classesChange = e => {
-   setValues({
-     ...values,
-     ["classes"]: e
-   });
- };
-
- const salaryChange = e => {
-  const value = e.target.value.replace(/\D/g, "");
-  const re = /^[0-9\b]+$/;
-  if (e.target.value === '' || re.test(e.target.value)) {
-    setValues({
-      ...values,
-      ["salary"]: value
-    });
-  }
-};
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -60,14 +39,15 @@ const useForm = (callback, validate) => {
     console.log(values);
     if(true){
     //if (!errors.isError) {
-      axios('http://localhost:8000/' + GlobalVar.user.username + '/register-tutor', values).then(res => {
+      const user_type = GlobalVar.user.user_type === "Học viên"? "users": "tutors";
+      axios.post("http://localhost:8000/" + user_type + GlobalVar.user.username, values).then(res => {
         console.log(res)
         const { isSucceeded } = res.data;
         if (isSucceeded === true) {
-            alert("Cập nhật thành công")
+            alert("Thành công rồi nha!")
         }
         else{
-          alert("Thất bại")
+          alert("Thất bại!")
         }
     });
     }
@@ -75,7 +55,8 @@ const useForm = (callback, validate) => {
 
   useEffect(() => {
    const fetchData = async() => {
-       const result = await axios('http://localhost:8000/' + GlobalVar.user.username + '/register-tutor');
+       const user_type = GlobalVar.user.user_type === "Học viên"? "users": "tutors";
+       const result = await axios.post("http://localhost:8000/" + user_type + "/" + GlobalVar.user.username);
        const dt = result.data;
        setValues({
          username: dt.username,
@@ -86,7 +67,10 @@ const useForm = (callback, validate) => {
          gender_secure: dt.gender.state,
          birth_day: dt.birth.value,
          birth_day_secure: dt.birth.state,
-         classes: [],
+         classes: dt.classes,
+         voting: dt.voting,
+         evaluate: dt.evaluate,
+         dayreg: dt.dayreg,
          major: dt.major,
          literacy: dt.literacy,
          salary: dt.fee,
@@ -102,7 +86,7 @@ const useForm = (callback, validate) => {
    
 }, []);
 
-  return { handleChange, handleSubmit, classesChange,salaryChange,  values, errors };
+  return { handleSubmit, values, errors };
 };
 
 export default useForm;

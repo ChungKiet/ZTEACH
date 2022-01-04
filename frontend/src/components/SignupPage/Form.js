@@ -58,8 +58,6 @@ function Form() {
               <button className='form-input-btn22'>Đăng ký</button>
               <a href="/login">Đã có tài khoản?</a>
             </div>
-           
- 
          </form>
        </div>
     </div>

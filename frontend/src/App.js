@@ -25,8 +25,8 @@ function App() {
       <Route path="/new-post" element={<NewPostPage/>}/>
       <Route path="/post" element={<PostPage/>}/>
       <Route path="/editprofile" element={<EditProfilePage/>}/>
-      <Route path="/updatetotutor" element={<TutorRegisterPage/>}/>
-      <Route path="/profileuser" element={<ProfilePage/>}/>
+      <Route path="/register-tutor" element={<TutorRegisterPage/>}/>
+      <Route path="/profile" element={<ProfilePage/>}/>
       <Route path="/post-list" element={<PostListPage/>}/>
     </Routes>
     </div>
