@@ -170,7 +170,7 @@ function EditProfile(){
           </Form.Group>
           <Form.Group>
             <button variant="warning" className='update-to-tutor-btn'>
-              Đăng ký làm gia sư
+              <a href='/register-tutor'>Đăng ký làm gia sư</a>
             </button>
             <div className='first_secure_label'>
                Trạng thái

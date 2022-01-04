@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import GlobalVar from '../../GlobalVar';
 
 const useForm = (callback, validate) => {
   const [values, setValues] = useState({
@@ -59,14 +60,15 @@ const useForm = (callback, validate) => {
     console.log(values);
     if(true){
     //if (!errors.isError) {
-      axios.post("http://localhost:8000/edit", values).then(res => {
+      const usertype = GlobalVar.user.user_type === "Học viên"? "user" : "tutor";
+      axios.post('http://localhost:8000/' + usertype + '/edit?_method=PUT', values).then(res => {
         console.log(res)
         const { isSucceeded } = res.data;
         if (isSucceeded === true) {
-            alert("Thành công rồi nha!")
+            alert("Cập nhật thành công")
         }
         else{
-          alert("Thất bại!")
+          alert("Thất bại")
         }
     });
     }
@@ -74,7 +76,8 @@ const useForm = (callback, validate) => {
 
   useEffect(() => {
    const fetchData = async() => {
-       const result = await axios('http://localhost:8000/edit');
+       const usertype = GlobalVar.user.user_type === "Học viên"? "user" : "tutor";
+       const result = await axios('http://localhost:8000/' + usertype + '/edit?_method=PUT');
        const dt = result.data;
        setValues({
          username: dt.username,
