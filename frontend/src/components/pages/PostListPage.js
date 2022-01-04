@@ -1,12 +1,13 @@
 import React from 'react';
 import '../../App.css';
-import HeroSection from '../HomePage/HeroSection';
 import Navbar from '../Navbar';
+import Search from '../PostListPage/Search';
+import Posts from '../PostListPage/Posts';
 function HomePage() {
   return (
     <>
       <Navbar/>
-      <HeroSection />
+      <Search/>
     </>
   );
 }
