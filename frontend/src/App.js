@@ -9,9 +9,10 @@ import PostPage from './components/pages/PostPage';
 import EditProfilePage from './components/pages/EditProfilePage';
 import TutorRegisterPage from './components/pages/TutorRegisterPage';
 import ProfilePage from './components/pages/ProfilePage';
+import PostListPage from './components/pages/PostListPage';
 import GlobalVar from './GlobalVar';
 
-global.isLogin = true;
+GlobalVar.isLogin = true;
 var a;
 function App() {
   return (
@@ -24,8 +25,9 @@ function App() {
       <Route path="/new-post" element={<NewPostPage/>}/>
       <Route path="/post" element={<PostPage/>}/>
       <Route path="/editprofile" element={<EditProfilePage/>}/>
-      <Route path="/updatetotutor" element={<TutorRegisterPage/>}/>
-      <Route path="/profileuser" element={<ProfilePage/>}/>
+      <Route path="/register-tutor" element={<TutorRegisterPage/>}/>
+      <Route path="/profile" element={<ProfilePage/>}/>
+      <Route path="/post-list" element={<PostListPage/>}/>
     </Routes>
     </div>
     </Router>

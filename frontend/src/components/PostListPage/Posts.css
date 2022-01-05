@@ -1,0 +1,6 @@
+.posts-grid-layout40 {
+    display: grid;
+    grid-template-columns: 1000px;
+    grid-template-rows: 300px 300px 300px 300px 300px 300px 300px 300px 300px 300px;
+    align-items: center;
+}

@@ -45,17 +45,16 @@
    }
  }
 
- .Avatar {width: 120px;
-   height: 120px;
+ .Avatar {
+   width: 120px;
    background: white;
    align-items: center;
-   margin-top: 20px;
-   margin-left: 40px;
+   margin-top: 30px;
+   margin-left: 5%;
 }
 
 .Avatar_label {
    width: 120px;
-   height: 120px;
    background: #9E9E9E;
    align-items: center;
    margin-left: 0px;
@@ -73,7 +72,7 @@
    border-radius: 100px;
    align-items: center;
    margin-top: 10px;
-   margin-left: 100px;
+   margin-left: 6.5%;
    text-align: center;
    padding: 7px;
    color:white;
@@ -92,8 +91,8 @@
 }
 
 .column-info{
-   margin-left: 200px;
-   margin-top: 50px;
+   margin-left: 15%;
+   margin-top: 6%;
    border: 5px;
    border-radius: 2%;
 }
@@ -104,7 +103,7 @@
    background: #FE9312;
    color: white;
    margin-left: 35px;
-   margin-top: 70px;
+   margin-top: 5%;
    border: 1px;
    padding: 4px;
    border-radius: 100px;
@@ -113,13 +112,49 @@
 }
 
 .label-intro{
-   margin-top: 70px;
-   margin-left: 45px;
+   margin-top: 6%;
+   margin-left: 10%;
    margin-bottom: 5px;
 }
 
 .input-label {
    margin-left: 45px;
+}
+
+.tutor-literacy { 
+   margin-left: 43%;
+   margin-top: 30px;
+}
+
+.tutor-voting { 
+   margin-left: 43%;
+   width: 400px;
+}
+
+.tutor-dayreg { 
+   margin-left: 43%;
+}
+
+.top-right-img {
+   margin-left: 8%;
+   margin-top: 15px;
+   width: 120px;
+}
+
+.user-gender{
+   margin-top: 10px;
+}
+
+.intro-label{
+   font-size: 20px;
+   width: 20%;
+   margin-top:30px;
+}
+
+.tutor-cert-img {
+   font-size: 20px;
+   width: 20%;
+   margin-top:30px;
 }
 
 .gender {
