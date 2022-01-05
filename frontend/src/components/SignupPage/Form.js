@@ -25,7 +25,7 @@ function Form() {
             <div className='signup-area2'>
             <div className='form-inputs3'>
               <label className='form-label2'>Giới tính</label>
-              <Dropdown className='form-input2' values={['Nam', 'Nữ']} name='gender' onChange={handleChange}/>
+              <Dropdown className='form-input2' values={['Nam', 'Nữ']} placeholder = 'Giới tính' name='gender' onChange={handleChange}/>
             </div>
             <div className='form-inputs4'>
                <label className='form-label2'>Ngày sinh</label>

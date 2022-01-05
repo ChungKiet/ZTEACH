@@ -13,10 +13,16 @@ function Form() {
   const onHandleSubmit = (data) =>{
     axios.post("http://localhost:8000/login", data).then(res=>{
       const {isLogin, user} = res.data;
-      if(isLogin){
+      if(isLogin === 1){
         GlobalVar.changeLogin();
         GlobalVar.setUser(user);
         navigate('/');
+      }
+      else if(isLogin === 2){
+        alert("Không tồn tại tên đăng nhập!");
+      }
+      else{
+        alert("Sai mật khẩu!");
       }
     });
   }

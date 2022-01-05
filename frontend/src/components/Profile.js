@@ -2,6 +2,7 @@ import React from 'react';
 import './Profile.css';
 import profile from './images/profile.png';
 import GlobalVar from '../GlobalVar';
+import { Link } from 'react-router-dom';
 class Profile extends React.Component {
     constructor(props){
         super(props);
@@ -22,9 +23,9 @@ class Profile extends React.Component {
             {this.state.onClick && (<div class="menu">
                 <h3>Lan Anh</h3>
                 <ul>
-                    <li>Xem thông tin chi tiết</li>
+                    <Link to="/profileuser" className="link447"><li>Xem thông tin chi tiết</li></Link>
                     <li>Đổi mật khẩu</li>
-                    <li>Đăng xuất</li>
+                    <Link to="/login" className="link447"><li>Đăng xuất</li></Link>
                 </ul>
             </div>)}
         </div>  

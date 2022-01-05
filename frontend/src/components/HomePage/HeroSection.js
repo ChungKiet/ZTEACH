@@ -5,7 +5,7 @@ import './HeroSection.css';
 import banner from '../images/banner.png';
 import aboutus from '../images/aboutus.png';
 import GlobalVar from '../../GlobalVar';
-
+import { Link } from 'react-router-dom';
 function HeroSection() {
   return (
     <div>
@@ -14,7 +14,7 @@ function HeroSection() {
       <div className='row-div'>
         <button className='button-18'>Danh sách bài đăng</button>
         <button className='button-18'>Danh sách gia sư</button>
-        {GlobalVar.isLogin && <button className='button-17'>Đăng bài tìm gia sư</button>}
+        {GlobalVar.isLogin && <Link to="/new-post" className="link446"><button className='button-17'>Đăng bài tìm gia sư</button></Link>}
       </div>
     </div>
     <img src={aboutus} width="1920px"/>

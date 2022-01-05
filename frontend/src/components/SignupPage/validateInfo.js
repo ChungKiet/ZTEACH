@@ -1,21 +1,30 @@
 export default function validateInfo(values) {
   let errors = {isError: false};
-
   if (!values.name) {
     errors.name = 'Hãy nhập Họ và tên';
     alert("Hãy nhập Họ và tên");
     errors.isError = true;
   }  
+  else if (!values.gender) {
+    errors.gender = 'Hãy chọn giới tính';
+    alert("Hãy chọn giới tính");
+     errors.isError = true;
+  }
+  else if (!values.birthday) {
+    errors.birthday = 'Hãy chọn ngày sinh';
+    alert("Hãy chọn ngày sinh");
+     errors.isError = true;
+  }
   else if (!values.username) {
     errors.username = 'Hãy nhập Tên đăng nhập';
     alert("Hãy nhập Tên đăng nhập");
      errors.isError = true;
   }
-  else if (!values.username.trim()) {
+  /*else if (!values.username.trim()) {
     errors.username = 'Hãy nhập Tên đăng nhập';
      errors.isError = true;
-  }
-  else if (!/^[A-Za-z]+/.test(values.name.trim())) {
+  }*/
+  else if (!/^[A-Za-z]+/.test(values.username.trim())) {
     errors.username = 'Tên đăng nhập không hợp lệ';
     alert("Tên đăng nhập không hợp lệ");
      errors.isError = true;

@@ -30,7 +30,7 @@
 .action .menu{
     position: absolute;
     top:80px;
-    right:-10px;
+    right:0px;
     padding:10px 20px;
     background:#EBE8E8;
     width:200px;
@@ -70,4 +70,11 @@
 li{
     text-align: center;
     cursor:pointer;
+}
+.action {
+    top: 0px;
+}
+.link447{
+    color:rgba(0, 0, 0, 1);
+    text-decoration: none;
 }

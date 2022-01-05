@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
-
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import GlobalVar from '../../GlobalVar';
 const useForm = (callback, validate) => {
   //Date birth = new Date(2000, 1, 1);
+  const navigate = useNavigate();
   const [values, setValues] = useState({
     name: '',
-    gender: 'Nam',
+    gender: '',
     birthday: '',
     username: '',
     email: '',
@@ -28,8 +31,22 @@ const useForm = (callback, validate) => {
     setErrors(validate(values));
     setIsSubmitting(true);
     //console.log(values);
-    if(!errors.isError){
-      
+    console.log(errors.isError);
+    if(errors.isError === false){
+      axios.post("http://localhost:8000/register", values).then(res=>{
+      const {msg} = res.data;
+      if(msg === 1){
+        GlobalVar.changeLogin();
+        GlobalVar.setUser(values);
+        navigate('/editprofile');
+      }
+      else if(msg === 2){
+        alert("Email đã tồn tại!");
+      }
+      else{
+        alert("Tên đăng nhập đã tồn tại!");
+      }
+    })
     }
   };
 
