@@ -32,21 +32,21 @@ const useForm = (callback, validate) => {
     setIsSubmitting(true);
     //console.log(values);
     console.log(errors.isError);
-    if(errors.isError === false){
-      axios.post("http://localhost:8000/register", values).then(res=>{
-      const {msg} = res.data;
-      if(msg === 1){
-        GlobalVar.changeLogin();
-        GlobalVar.setUser(values);
-        navigate('/editprofile');
-      }
-      else if(msg === 2){
-        alert("Email đã tồn tại!");
-      }
-      else{
-        alert("Tên đăng nhập đã tồn tại!");
-      }
-    })
+    if (errors.isError === false) {
+      axios.post("http://localhost:8000/users/register", values).then(res => {
+        const { msg } = res.data;
+        if (msg === 1) {
+          GlobalVar.changeLogin();
+          GlobalVar.setUser(values);
+          navigate('/editprofile');
+        }
+        else if (msg === 2) {
+          alert("Email đã tồn tại!");
+        }
+        else {
+          alert("Tên đăng nhập đã tồn tại!");
+        }
+      })
     }
   };
 

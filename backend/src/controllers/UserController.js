@@ -10,6 +10,8 @@ class UsersController {
     // [POST] /users/register
     async register(req, res, next) {
         const { name, gender, birthday, email, username, password } = req.body;
+        console.log({ name, gender, birthday, email, username, password });
+
         const userExists = await User.findOne({ username });
         if (userExists) {
             res.status(409).send({
@@ -32,7 +34,9 @@ class UsersController {
 
     // [POST] /users/login
     async login(req, res, next) {
-        const { user_name, password } = req.body;
+        const { username, password } = req.body;
+        console.log({ username, password });
+
         const user = await User.findOne({ user_name });
         if (!user) {
             res.status(400).send({
