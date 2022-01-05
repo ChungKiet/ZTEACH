@@ -1,5 +1,6 @@
 const express = require('express');
 const methodOverride = require('method-override');
+const multer = require('multer');
 const route = require('./routes');
 const db = require('./database');
 const app = express();
@@ -9,11 +10,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.engine("html", require("ejs").renderFile);
+app.set('views', './src/views')
 app.use(methodOverride('_method'));
 
 route(app);
 
 db.connect();
+
+
+
 
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);

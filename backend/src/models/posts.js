@@ -8,7 +8,7 @@ const Post = mongoose.Schema({
         type: String, required: true
     },
     information: {
-        type: String
+        type: String, max: 500
     },
     subject: {
         type: String, required: true
@@ -34,24 +34,9 @@ const Post = mongoose.Schema({
     time: {
         type: Number, required: true, default: 90
     },  // thời lượng buổi học
-
-    connect_count: {
+    request: {
         type: Number, required: true, default: 0
-    },
-
-    connect: [
-        {
-            tutor: {
-                type: mongoose.Schema.Types.ObjectId, required: false, unique: true, ref: 'User'
-            },
-            timec: {
-                type: Date, required: false
-            },
-            _id: {
-                type: mongoose.Schema.Types.ObjectId, required: false
-            }
-        }
-    ]
+    } // Số lượng yêu cầu kết nối
 },
     {
         timestamps: true, // thời gian tạo và thời gian cập nhật

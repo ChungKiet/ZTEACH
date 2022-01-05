@@ -16,7 +16,7 @@ route.put('/edit', usersController.edit_profile);
 route.get('/register-tutor', usersController.register_tutor);
 
 // http://localhost:8000/users/<user_name>
-route.get('/:user_name', usersController.user_profile);
+route.get('/:username', usersController.user_profile);
 
 // http://localhost:8000/users
 route.get('/', usersController.index);

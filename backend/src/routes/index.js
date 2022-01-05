@@ -2,6 +2,7 @@ const home = require('./home');
 const posts = require('./posts');
 const users = require('./users');
 const tutors = require('./tutors');
+const images = require('./images')
 
 function route(app) {
 
@@ -13,6 +14,9 @@ function route(app) {
 
     // Gia sư
     app.use('/tutors', tutors);
+
+    // Xử lý ảnh
+    app.use('/images', images);
 
     // Trang chủ
     app.use('/', home);

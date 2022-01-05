@@ -9,27 +9,23 @@ class UsersController {
 
     // [POST] /users/register
     async register(req, res, next) {
-        const { name, gender, birth, email, user_name, password } = req.body;
-        const userExists = await User.findOne({ user_name }, { user_name: 1 });
+        const { name, gender, birthday, email, username, password } = req.body;
+        const userExists = await User.findOne({ username });
         if (userExists) {
             res.status(409).send({
-                "error": {
-                    "code": 409,
-                    "message": "This user_name is already in use. Please select another user_name."
-                }
+                "msg": 3
+                // "error": { "code": 409, "message": "Username already exists" }
             });
             return;
         }
         try {
-            const user = await User.create({ name, gender, birth, email, user_name, password });
-            res.status(201).redirect('http://localhost:8000/users/' + user.user_name);
+            await User.create({ name, gender, birthday, email, username, password });
+            res.status(201).send({ "msg": 1 });
         }
         catch (err) {
             res.status(401).send({
-                "error": {
-                    "code": 401,
-                    "message": "Registration failed."
-                }
+                "msg": 0
+                // "error": { "code": 401, "message": "Registration failed." }
             });
         }
     }
@@ -38,37 +34,40 @@ class UsersController {
     async login(req, res, next) {
         const { user_name, password } = req.body;
         const user = await User.findOne({ user_name });
-        if (user && user.password === password) {
-            if (user.user_type === "student") {
-                res.status(200).redirect('http://localhost:8000/users/' + user_name);
-            }
-            else {
-                res.status(200).redirect('http://localhost:8000/tutors/' + user_name);
-            }
+        if (!user) {
+            res.status(400).send({
+                "isLogin": 2,
+                "user": null
+                // "error": { "code": 404, "message": "Usernam not found" }
+            });
+        }
+        else if (user.password === password) {
+            res.status(200).send({
+                "isLogin": 1,
+                "user": user
+            });
         }
         else {
             res.status(401).send({
-                "error": {
-                    "code": 401,
-                    "message": "Login fails, wrong username or password"
-                }
+                "isLogin": 3,
+                "user": null
+                // "error": { "code": 401, "message": "Wrong password" }
             });
         }
     }
 
-    // [GET] /users/<user_name>
+    // [POST] /users/<user_name>
     async user_profile(req, res, next) {
-        try {
-            const user_name = req.params.user_name;
-            const user = await User.findOne({ user_type: "student", user_name },
-                { major: 0, literacy: 0, classes: 0, fee: 0 });
+        const username = req.params.username;
+        const user = await User.findOne({ user_type: "student", username: username });
+        if (user) {
             res.status(200).json(user);
         }
-        catch (err) {
+        else {
             res.status(404).send({
                 "error": {
                     "code": 404,
-                    "message": "Not Found"
+                    "message": " User Not Found"
                 }
             });
         }

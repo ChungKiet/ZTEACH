@@ -7,11 +7,20 @@ const Connect = mongoose.Schema({
     tutor: {
         type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User'
     },
-    timec: {
+    post: {
+        type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Post', default: 'null'
+    },
+    accept: {
+        type: Boolean, require: true, default: false
+    },
+    timer: {
         type: Date, required: true, default: Date.now()
     },
+    timea: {
+        type: Date, required: false
+    },
     rate: {
-        type: Number, required: true
+        type: Number, required: false
     }
 });
 

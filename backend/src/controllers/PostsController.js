@@ -4,8 +4,15 @@ class PostsController {
 
     // [Get] /posts
     async index(req, res, next) {
+        const sort = req.query.sort || "5";
+        console.log(sort)
+
+        const size = 5;
+        const page = Number(req.query.page) || 1;
         try {
-            const posts = await Post.find({}, { information: 0 });
+            const posts = await Post.find({}, { information: 0 })
+                .limit(size)
+                .skip(size * (page - 1));
             res.status(200).json(posts);
         }
         catch (err) {
