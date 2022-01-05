@@ -14,7 +14,7 @@ class UsersController {
 
         const userExists = await User.findOne({ username });
         if (userExists) {
-            res.status(409).send({
+            res.send({
                 "msg": 3
                 // "error": { "code": 409, "message": "Username already exists" }
             });
@@ -22,7 +22,7 @@ class UsersController {
         }
         try {
             await User.create({ name, gender, birthday, email, username, password });
-            res.status(201).send({ "msg": 1 });
+            res.send({ "msg": 1 });
         }
         catch (err) {
             res.status(401).send({
@@ -37,22 +37,22 @@ class UsersController {
         const { username, password } = req.body;
         console.log({ username, password });
 
-        const user = await User.findOne({ user_name });
+        const user = await User.findOne({ username });
         if (!user) {
-            res.status(400).send({
+            res.send({
                 "isLogin": 2,
                 "user": null
                 // "error": { "code": 404, "message": "Usernam not found" }
             });
         }
         else if (user.password === password) {
-            res.status(200).send({
+            res.send({
                 "isLogin": 1,
                 "user": user
             });
         }
         else {
-            res.status(401).send({
+            res.send({
                 "isLogin": 3,
                 "user": null
                 // "error": { "code": 401, "message": "Wrong password" }
