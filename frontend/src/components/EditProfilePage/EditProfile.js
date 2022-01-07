@@ -71,7 +71,7 @@ function EditProfile(){
      }}>
         <Navbar/>
         <img src={toprightimage} className='top-right-image'/>
-        <Form className='d-flex'>
+        <Form className='d-flex' onSubmit={handleSubmit}>
           <Form.Group controlId="formFile">
             <div class="image-upload" className='Avatar'>
               <label for="file-input">
@@ -79,15 +79,15 @@ function EditProfile(){
               </label>
               <input id="file-input" type="file" className='Avatar-input'/>
             </div>
-            <div type='text' className="user_type" 
+            <div type='text' className="user_type_student" 
             disabled>{values.user_type}
             </div>
           </Form.Group>
           <Form.Group>
-            <div type='text' className="user_name" id='username' disabled>
+            <div type='text' className="user_name_student" id='username' disabled>
                {values.username}
             </div>
-            <div className='label-intro'>
+            <div className='label_intro_student'>
               Giới thiệu về bản thân bạn
             </div>
             <Form.Control type='text' 

@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import GlobalVar from '../../GlobalVar';
+import { useNavigate } from 'react-router-dom';
 
 const useForm = (callback, validate) => {
+  const navigate = useNavigate();
   const [values, setValues] = useState({
    username: "KietChung",
    intro: "No intro",
@@ -13,6 +15,7 @@ const useForm = (callback, validate) => {
    birth_day: "2001-12-17",
    birth_day_secure: "Riêng tư",
    classes: [],
+   subjects: [],
    major: "",
    literacy: "",
    salary: "",
@@ -41,6 +44,13 @@ const useForm = (callback, validate) => {
    });
  };
 
+ const subjectChange = e => {
+  setValues({
+    ...values,
+    ["subjects"]: e
+  });
+};
+
  const salaryChange = e => {
   const value = e.target.value.replace(/\D/g, "");
   const re = /^[0-9\b]+$/;
@@ -57,54 +67,69 @@ const useForm = (callback, validate) => {
 
     setErrors(validate(values));
     setIsSubmitting(true);
-    console.log(values);
-    if(true){
-    //if (!errors.isError) {
+    //console.log(values);
+    console.log(errors.isError);
+    if (errors.isError === false) {
       const usertype = GlobalVar.user.user_type === "Học viên"? "user" : "tutor";
-      axios.post('http://localhost:8000/' + usertype + '/edit?_method=PUT', values).then(res => {
-        console.log(res)
-        const { isSucceeded } = res.data;
-        if (isSucceeded === true) {
-            alert("Cập nhật thành công")
+      axios.post('http://localhost:8000/' + usertype + '/edit', values).then(res => {
+        const { msg } = res.data;
+        if (msg === 1) {
+          GlobalVar.setUser({
+            name:values.name,
+            email: values.email,
+            birthday: values.birth_day,
+            gender: values.gender,
+            user_type: values.user_type,
+            username: values.username,
+            password: GlobalVar.user.password,
+            password2: GlobalVar.user.password
+          });
+          navigate('/profile');
         }
-        else{
-          alert("Thất bại")
+        else if (msg === 2) {
+          alert("Email đã tồn tại!");
         }
-    });
+        else {
+          alert("Tên đăng nhập đã tồn tại!");
+        }
+      })
     }
   };
 
   useEffect(() => {
    const fetchData = async() => {
        const usertype = GlobalVar.user.user_type === "Học viên"? "user" : "tutor";
-       const result = await axios('http://localhost:8000/' + usertype + '/edit?_method=PUT');
+       const result = await axios('http://localhost:8000/' + usertype + '/edit');
        const dt = result.data;
        setValues({
          username: dt.username,
          intro: dt.introduce,
          name: dt.name,
          user_type: dt.user_type,
-         gender: dt.gender.value,
-         gender_secure: dt.gender.state,
-         birth_day: dt.birth.value,
-         birth_day_secure: dt.birth.state,
-         classes: [],
+         gender: dt.gender,
+         gender_secure: dt.gender_secure,
+         birth_day: dt.birth_day,
+         birth_day_secure: dt.birth_day_secure,
+         classes: dt.classes,
          major: dt.major,
          literacy: dt.literacy,
          salary: dt.fee,
-         address: dt.address.value,
-         address_secure: dt.address.state,
-         email: dt.email.value,
-         email_secure: dt.email.state,
-         contact: dt.contact.value,
-         contact_secure: dt.contact.state,
+         address: dt.address,
+         address_secure: dt.address_secure,
+         subjects: dt.subjects,
+         email: dt.email,
+         email_secure: dt.email_secure,
+         contact: dt.contact,
+         contact_secure: dt.contact_secure,
        });
    };
    fetchData();
-   
-}, []);
+   if (Object.keys(errors).length === 0 && isSubmitting) {
+    callback();
+  }   
+}, [errors]);
 
-  return { handleChange, handleSubmit, classesChange,salaryChange,  values, errors };
+  return { handleChange, handleSubmit, subjectChange, classesChange,salaryChange,  values, errors };
 };
 
 export default useForm;
