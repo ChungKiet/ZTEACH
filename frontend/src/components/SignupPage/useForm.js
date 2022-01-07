@@ -33,7 +33,7 @@ const useForm = (callback, validate) => {
     //console.log(values);
     console.log(errors.isError);
     if(errors.isError === false){
-      axios.post("http://localhost:8000/register", values).then(res=>{
+      axios.post("http://localhost:8000/users/register", values).then(res=>{
       const {msg} = res.data;
       if(msg === 1){
         GlobalVar.changeLogin();

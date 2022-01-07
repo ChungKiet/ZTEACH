@@ -11,7 +11,7 @@ function Form() {
   const {register, handleSubmit, errors} = useForm();
   const navigate = useNavigate();
   const onHandleSubmit = (data) =>{
-    axios.post("http://localhost:8000/login", data).then(res=>{
+    axios.post("http://localhost:8000/users/login", data).then(res=>{
       const {isLogin, user} = res.data;
       if(isLogin === 1){
         GlobalVar.changeLogin();

@@ -17,10 +17,10 @@ class Profile extends React.Component {
     render(){
     return (
           <div class="action">
-            <div class="profile" onClick={this.ClickListener}>
+            <div class="profile447" onClick={this.ClickListener}>
                 <img src={profile}/>
             </div>
-            {this.state.onClick && (<div class="menu">
+            {this.state.onClick && (<div class="menu447">
                 <h3>Lan Anh</h3>
                 <ul>
                     <Link to="/profileuser" className="link447"><li>Xem thông tin chi tiết</li></Link>

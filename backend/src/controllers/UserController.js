@@ -10,6 +10,7 @@ class UsersController {
     // [POST] /users/register
     async register(req, res, next) {
         const { name, gender, birthday, email, username, password } = req.body;
+        console.log(req.body);
         const userExists = await User.findOne({ username });
         if (userExists) {
             res.status(409).send({
