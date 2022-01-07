@@ -46,7 +46,7 @@ const useForm = (callback, validate) => {
       else{
         alert("Tên đăng nhập đã tồn tại!");
       }
-    })
+    });
     }
   };
 
