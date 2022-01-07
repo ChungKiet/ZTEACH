@@ -223,9 +223,9 @@
    box-shadow: 1px 3px 3px 1px #9E9E9E;
 }
 
-.birthDay{
+.birth-day-label{
    margin-left: 25%;
-   margin-top: 152%;
+   margin-top: 119%;
    margin-bottom: 0.5%;
    width: 100%;
 }
@@ -276,8 +276,8 @@
    box-shadow: 1px 3px 1px #9E9E9E;   
 }
 
-.username-control {
-   width: 100%;
+.username_control {
+   width: 90%;
    height: 40px;
    border-radius: 3%;
    margin-left: 12%;

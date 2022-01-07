@@ -16,7 +16,7 @@ function EditProfileTutor(){
   const submitForm = () => {
     console.log("Submitted");
   }
-  const { handleChange, handleSubmit, classesChange, salaryChange, values, errors } = useForm(
+  const { handleChange, handleSubmit, subjectChange,classesChange, salaryChange, values, errors } = useForm(
       submitForm,
       validateInfo
   );
@@ -48,6 +48,18 @@ function EditProfileTutor(){
       { label: "Lớp 10", value: "10" },
       { label: "Lớp 11", value: "11" },
       { label: "Lớp 12", value: "12" },
+    ],
+    subject: [
+      { label: "Toán", value: "Toán" },
+      { label: "Lý", value: "Lý" },
+      { label: "Hóa", value: "Hóa" },
+      { label: "Sinh", value: "Sinh" },
+      { label: "Văn", value: "Văn" },
+      { label: "Sử", value: "Sử" },
+      { label: "Địa", value: "Địa" },
+      { label: "Anh", value: "Anh" },
+      { label: "KHTN", value: "KHTN" },
+      { label: "KHXH", value: "KHXH" },
     ],
   }
   
@@ -103,7 +115,7 @@ function EditProfileTutor(){
             </div>
             <Form.Control type='text' 
             placeholder='Nhập họ và tên' 
-            className='username-control'
+            className='username_control'
             value={values.name}
             name='name'
             onChange={handleChange}>
@@ -196,7 +208,7 @@ function EditProfileTutor(){
             </button>
           </Form.Group>
           <Form.Group>
-            <div className='birthDay' >
+            <div className='birth-day-label' >
               Ngày tháng năm sinh
             </div>
             <Form.Control required controlId="duedate" 
@@ -227,6 +239,17 @@ function EditProfileTutor(){
               value={values.classes}
               name='classes'
               onChange={classesChange}
+              labelledBy="Lớp"
+              className='option-multiple-select'
+            />
+            <div className='class-select-label'>
+              Môn bạn có thể dạy
+            </div>
+            <MultiSelect
+              options={optionSelect.subject}
+              value={values.classes}
+              name='classes'
+              onChange={subjectChange}
               labelledBy="Lớp"
               className='option-multiple-select'
             />

@@ -15,6 +15,7 @@ const useForm = (callback, validate) => {
    birth_day: "2001-12-17",
    birth_day_secure: "Riêng tư",
    classes: [],
+   subjects: [],
    major: "",
    literacy: "",
    salary: "",
@@ -42,6 +43,13 @@ const useForm = (callback, validate) => {
      ["classes"]: e
    });
  };
+
+ const subjectChange = e => {
+  setValues({
+    ...values,
+    ["subjects"]: e
+  });
+};
 
  const salaryChange = e => {
   const value = e.target.value.replace(/\D/g, "");
@@ -108,6 +116,7 @@ const useForm = (callback, validate) => {
          salary: dt.fee,
          address: dt.address,
          address_secure: dt.address_secure,
+         subjects: dt.subjects,
          email: dt.email,
          email_secure: dt.email_secure,
          contact: dt.contact,
@@ -120,7 +129,7 @@ const useForm = (callback, validate) => {
   }   
 }, [errors]);
 
-  return { handleChange, handleSubmit, classesChange,salaryChange,  values, errors };
+  return { handleChange, handleSubmit, subjectChange, classesChange,salaryChange,  values, errors };
 };
 
 export default useForm;
