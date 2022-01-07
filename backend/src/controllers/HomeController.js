@@ -3,26 +3,10 @@ class HomeController {
 
     // [Get] /
     index(req, res) {
-        res.status(200).json({ page: 'Home page' });
-    }
-
-    register(req, res) {
-        res.status(200).render("signup.html");
-    }
-    login(req, res) {
-        res.status(200).render("login.html");
-    }
-    edit(req, res) {
-        res.status(200).render("edit.html");
-    }
-    new_post(req, res) {
-        res.status(200).render("new_post.html");
-    }
-    post_new_connect(req, res) {
-        res.status(200).render("post_new_connect.html");
-    }
-    post_delete_connect(req, res) {
-        res.status(200).render("post_delete_connect.html");
+        res.status(200).json({
+            "website": "Xin chào đến với ZTeach, \
+                    trang web tìm kiểm gia sư trực tuyến!"
+        });
     }
 
     not_found(req, res) {

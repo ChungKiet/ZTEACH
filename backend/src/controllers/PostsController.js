@@ -2,41 +2,56 @@ const Post = require('../models/posts');
 
 class PostsController {
 
-    // [Get] /posts
+    // [Get] /posts 
     async index(req, res, next) {
-        const sort = req.query.sort || "5";
-        console.log(sort)
-
         const size = 5;
         const page = Number(req.query.page) || 1;
+
+        const query = req.query;
+        const find = Post.find({}, 'user title subject grade \
+                                study_form literacy gender fee')
+            .limit(size)
+            .skip(size * (page - 1));
+
+        if (query.fee) {
+            find.find({ fee: { $gte: query.fee } });
+            delete query.fee;
+        }
+        find.find(Object.keys(query)
+            .reduce((result, key) => {
+                if (query[key]) {
+                    result[key] = query[key];
+                }
+                return result;
+            }, {}));
+
         try {
-            const posts = await Post.find({}, { information: 0 })
-                .limit(size)
-                .skip(size * (page - 1));
-            res.status(200).json(posts);
+            const posts = await find.exec();
+            res.json(posts);
         }
         catch (err) {
-            res.status(404).send({
-                "error": {
-                    "code": 404,
-                    "message": "Not Found"
-                }
-            });
+            res.json({ "message": "Not Found" });
         }
     }
 
-    // [POST] /posts/post
-    async post(req, res, next) {
+    user_post(req, res, next) {
+        const user = req.body.user;
+        const posts = Post.find({ user }, 'title createdAt');
+        res.json(posts);
+    }
+
+    // [POST] /posts/new-post
+    async new_post(req, res, next) {
         const { user, title, information, subject, grade, fee,
-            study_form, gender, literacy, lessons, time } = req.body;
+            study_form, gender, literacy, lessons, time, start } = req.body;
 
         try {
             const post = await Post.create({
                 user, title, information, subject, grade, fee,
-                study_form, gender, literacy, lessons, time
+                study_form, gender, literacy, lessons, time, start
             });
 
-            res.status(201).redirect('http://localhost:8000/posts/' + post._id);
+            res.json({ "message": "Success", "id": post._id });
         }
         catch (err) {
             res.status(500).send({
@@ -45,9 +60,7 @@ class PostsController {
                     "message": "Post creation failed."
                 }
             });
-            return;
         }
-
     }
 
     // [PUT] /posts/connect
@@ -117,7 +130,7 @@ class PostsController {
     async post_detail(req, res, next) {
         try {
             const post = await Post.findById(req.params.id);
-            res.status(200).json(post);
+            res.json(post);
         }
         catch (err) {
             res.status(404).send({
@@ -131,17 +144,18 @@ class PostsController {
 
     // [Get] /posts/search?<field>=<value>
     async search(req, res, next) {
-        console.log(req.query);
-        const query = req.query;
-        const find = Post.find({});
+        const size = 5;
+        const page = Number(req.query.page) || 1;
 
-        if (query.less) {
-            find.find({ fee: { $lte: query.less } });
-            delete query.less;
-        }
-        if (query.greater) {
-            find.find({ fee: { $gte: query.greater } });
-            delete query.greater;
+        const query = req.query;
+        const find = Post.find({}, 'user title subject grade \
+                                study_form literacy gender fee')
+            .limit(size)
+            .skip(size * (page - 1));
+
+        if (query.fee) {
+            find.find({ fee: { $gte: query.fee } });
+            delete query.fee;
         }
         find.find(Object.keys(query)
             .reduce((result, key) => {
@@ -151,11 +165,11 @@ class PostsController {
                 return result;
             }, {}));
 
-        const posts = await find.exec();
-        if (posts) {
-            res.status(200).json(posts);
+        try {
+            const posts = await find.exec();
+            res.json(posts);
         }
-        else {
+        catch (err) {
             res.status(404).send({
                 "error": {
                     "code": 404,
@@ -165,13 +179,45 @@ class PostsController {
         }
     }
 
-    // [Get] /posts/sort (by fee)
-    // sort(req, res, next) {
-    //     Post.find({})
-    //         .sort({ fee: 1 })
-    //         .then(posts => res.json(posts))
-    //         .catch(next);
-    // }
+    // [PUT] /posts/edit-post
+    async edit_post(req, res, next) {
+        const { id, title, information, subject, grade, fee,
+            study_form, gender, literacy, lessons, time, start } = req.body;
+
+        try {
+            await Post.updateOne({ _id: id }, {
+                title, information, subject, grade, fee,
+                study_form, gender, literacy, lessons, time, start
+            });
+            res.json({ "message": "Update Success", "id": id });
+        }
+        catch (err) {
+            res.status(500).send({
+                "error": {
+                    "code": 500,
+                    "message": "Post update failed."
+                }
+            });
+        }
+    }
+
+    // [DELETE] /posts/delete
+    async delete_post(req, res, next) {
+        const id = req.body.id;
+        try {
+            await Post.deleteOne({ _id: id });
+            res.json({ "message": "Delete post successfully." })
+        }
+        catch (err) {
+            res.status(500).send({
+                "error": {
+                    "code": 500,
+                    "message": "Delete post failed."
+                }
+            });
+        }
+    }
+
 }
 
 module.exports = new PostsController;

@@ -1,7 +1,5 @@
 const express = require('express');
-const methodOverride = require('method-override');
 const cors = require("cors");
-const multer = require('multer');
 const route = require('./routes');
 const db = require('./database');
 const app = express();
@@ -10,9 +8,8 @@ const port = 8000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.engine("html", require("ejs").renderFile);
-app.set('views', './src/views')
-app.use(methodOverride('_method'));
+// app.engine("html", require("ejs").renderFile);
+// app.set('views', './src/views')
 
 const corsOptions = {
   origin: '*',

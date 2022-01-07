@@ -18,38 +18,16 @@ class TutorsController {
         }
     }
 
-    // [Get] /tutors/<user_name>
-    async tutor_profile(req, res, next) {
-        try {
-            const user_name = req.params.user_name;
-            const tutor = await Tutor.findOne({ user_type: "tutor", user_name });
-
-            res.status(200).json(tutor);
-        }
-        catch (err) {
-            res.status(404).send({
-                "error": {
-                    "code": 404,
-                    "message": "Not Found"
-                }
-            });
-        }
-    }
-
     // [PUT] /tutors/register
     async register(req, res, next) {
-        console.log(req.body);
-        const { user_name, major, literacy, fee, classes } = req.body;
-
+        const { id, major, literacy, fee, subjects, classes } = req.body;
         try {
-            await Tutor.updateOne({ user_type: "student", user_name: user_name }, {
+            await Tutor.updateOne({ _id: id, user_type: "student" }, {
                 user_type: "tutor",
-                major,
-                literacy,
-                fee,
-                classes
+                gender_secure: "Công khai", birthday_secure: "Công khai",
+                major, literacy, fee, subjects, classes, rate: 5
             });
-            res.status(200).redirect('http://localhost:8000/tutors/' + user_name);
+            res.status(200).json({ "message": "Register Success." })
         }
         catch (err) {
             res.status(500).send({
@@ -61,49 +39,61 @@ class TutorsController {
         }
     }
 
-    // async login(req, res, next) {
-    //     console.log(req.body);
-    //     const { user_name, password } = req.body;
+    // [POST] /tutors/profile
+    async profile(req, res, next) {
+        try {
+            const id = req.body.id;
+            const tutor = await Tutor.findOne({ _id: id, user_type: "tutor" });
+            res.json(tutor);
+        }
+        catch (err) {
+            res.status(404).send({
+                "error": {
+                    "code": 404,
+                    "message": "Not Found"
+                }
+            });
+        }
+    }
 
-    //     const user = await Tutor.findOne({ user_name });
-    //     if (user && user.password === password) {
-    //         res.status(200).redirect('http://localhost:8000/users/' + user.user_name);
-    //     }
-    //     else {
-    //         res.status(401).send({
-    //             "error": {
-    //                 "code": 401,
-    //                 "message": "Login Fails, wrong username or password"
-    //             }
-    //         });
-    //     }
-    // }
+    async edit_profile(req, res, next) {
+        const { id, name, gender, email, email_secure, birthday,
+            address, address_secure, contact, contact_secure,
+            introduce, major, literacy, fee, subjects, classes } = req.body;
+        try {
+            await Tutor.updateOne({ _id: id, user_type: "tutor" }, {
+                name, gender, email, email_secure, birthday,
+                address, address_secure, contact, contact_secure,
+                introduce, major, literacy, fee, subjects, classes
+            });
+            res.json({ "message": "Tutor's profile update Success" });
+        }
+        catch (err) {
+            res.status(500).send({
+                "error": {
+                    "code": 500,
+                    "message": "Profile update failed."
+                }
+            });
+        }
+    }
 
-    // async edit_profile(req, res, next) {
-    //     console.log(req.body);
-    //     const { user_name, introduce, name, gender, birth, address, phone, contact } = req.body;
-
-    //     try {
-    //         await Tutor.updateOne({ user_name }, {
-    //             name,
-    //             gender,
-    //             birth,
-    //             address,
-    //             phone,
-    //             introduce,
-    //             contact
-    //         });
-    //         res.status(200).redirect('http://localhost:8000/users/' + user_name);
-    //     }
-    //     catch (err) {
-    //         res.status(500).send({
-    //             "error": {
-    //                 "code": 500,
-    //                 "message": "Profile update failed."
-    //             }
-    //         });
-    //     }
-    // }
+    // [DELETE] /users/delete
+    async delete_tutor(req, res, next) {
+        const id = req.body.id;
+        try {
+            await Tutor.deleteOne({ _id: id });
+            res.json({ "message": "Delete user successfully." })
+        }
+        catch (err) {
+            res.status(500).send({
+                "error": {
+                    "code": 500,
+                    "message": "Delete user failed."
+                }
+            });
+        }
+    }
 
 }
 

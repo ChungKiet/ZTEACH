@@ -35,8 +35,6 @@ class UsersController {
     // [POST] /users/login
     async login(req, res, next) {
         const { username, password } = req.body;
-        console.log({ username, password });
-
         const user = await User.findOne({ username });
         if (!user) {
             res.send({
@@ -60,12 +58,12 @@ class UsersController {
         }
     }
 
-    // [POST] /users/<user_name>
+    // [POST] /users/profile
     async user_profile(req, res, next) {
-        const username = req.params.username;
-        const user = await User.findOne({ user_type: "student", username: username });
+        const id = req.body.id;
+        const user = await User.findOne({ _id: id, user_type: "student" });
         if (user) {
-            res.status(200).json(user);
+            res.json(user);
         }
         else {
             res.status(404).send({
@@ -79,11 +77,16 @@ class UsersController {
 
     // [PUT] /users/edit
     async edit_profile(req, res, next) {
-        const user_name = req.body.user_name;
-        const user = req.body;
+        const { id, name, gender, gender_secure, email, email_secure,
+            birthday, birthday_secure, address, address_secure,
+            contact, contact_secure, introduce } = req.body;
         try {
-            await User.updateOne({ user_type: "student", user_name: user_name }, { user });
-            res.status(200).redirect('http://localhost:8000/users/' + user_name);
+            await User.updateOne({ _id: id, user_type: "student" }, {
+                name, gender, gender_secure, email, email_secure,
+                birthday, birthday_secure, address, address_secure,
+                contact, contact_secure, introduce
+            });
+            res.json({ "message": "Profile update Success" });
         }
         catch (err) {
             res.status(500).send({
@@ -95,11 +98,22 @@ class UsersController {
         }
     }
 
-    // [GET] /users/register-tutor
-    register_tutor(req, res) {
-        res.status(200).render("tutor_reg.html");
+    // [DELETE] /users/delete
+    async delete_user(req, res, next) {
+        const id = req.body.id;
+        try {
+            await User.deleteOne({ _id: id });
+            res.json({ "message": "Delete user successfully." })
+        }
+        catch (err) {
+            res.status(500).send({
+                "error": {
+                    "code": 500,
+                    "message": "Delete user failed."
+                }
+            });
+        }
     }
-
 }
 
 module.exports = new UsersController;

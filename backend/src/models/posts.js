@@ -32,8 +32,11 @@ const Post = mongoose.Schema({
         type: Number, required: true, default: 3
     }, // số lượng buổi học
     time: {
-        type: Number, required: true, default: 90
+        type: String, required: true, default: "1 giờ"
     },  // thời lượng buổi học
+    start: {
+        type: Date, required: true
+    }, // thời gian bắt đầu (dự kiến)
     request: {
         type: Number, required: true, default: 0
     } // Số lượng yêu cầu kết nối

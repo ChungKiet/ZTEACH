@@ -58,9 +58,15 @@ const User = mongoose.Schema({
     fee: {
         type: Number, required: false
     }, // mức lương
+    subjects: {
+        type: Array, required: false
+    },
     classes: {
         type: Array, require: false
     }, // các lớp có thể dạy
+    rate: {
+        type: Number, required: false
+    }
     // certificate: [
     //     {
     //         url: { type: String, require: false },
