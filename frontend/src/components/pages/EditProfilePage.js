@@ -5,8 +5,9 @@ import GlobalVar from '../../GlobalVar';
 function EditProfilePage() {
     return (
         <div>
-            {GlobalVar.isLogin && <EditProfileTutor />} {/*&& GlobalVar.user.type==="Học viên" */}
-            {GlobalVar.isLogin && GlobalVar.user.type==="Gia sư" && <EditProfileTutor />}
+            { GlobalVar.isLogin && <EditProfileTutor/>} {/* Test conect backend*/}
+            {/* {GlobalVar.isLogin && GlobalVar.user.type==="Học viên" && <EditProfile/> }
+            {GlobalVar.isLogin && GlobalVar.user.user_type==="Gia sư" && <EditProfileTutor/>} */}
         </div>
     )
 }

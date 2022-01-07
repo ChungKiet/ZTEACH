@@ -12,7 +12,8 @@ const useForm = (callback, validate) => {
     username: '',
     email: '',
     password: '',
-    password2: ''
+    password2: '',
+    user_type: 'Học viên'
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);

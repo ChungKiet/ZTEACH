@@ -79,16 +79,16 @@ function EditProfileTutor(){
               <input id="file-input" type="file" className='Avatar-input'/>
             </div>
             <div type='text' 
-              className="user_type" 
+              className="user_type_user" 
               disabled>
                 {values.user_type}
             </div>
           </Form.Group>
           <Form.Group>
-            <div type='text' className="user_name" id='username' disabled>
+            <div type='text' className="user_name_user" id='username' disabled>
                {values.username}
             </div>
-            <div className='label-intro'>
+            <div className='label_intro_user'>
               Giới thiệu về bản thân bạn
             </div>
             <Form.Control type='text' 
