@@ -11,7 +11,7 @@
     display: flex;
     justify-content: end;
 }
-.action .profile{
+.action .profile447{
     position: relative;
     width: 60px;
     height: 60px;
@@ -19,7 +19,7 @@
     overflow: hidden;
     cursor: pointer;
 }
-.action .profile img{
+.action .profile447 img{
     position: absolute;
     top:0;
     left:0;
@@ -27,7 +27,7 @@
     height:100%;
     object-fit:cover;
 }
-.action .menu{
+.action .menu447{
     position: absolute;
     top:80px;
     right:0px;
@@ -38,7 +38,7 @@
     border-radius: 15px;
     transition:0.5s;
 }
-.action .menu h3{
+.action .menu447 h3{
     width: 100%;
     text-align:center;
     font-size:18px;
@@ -48,7 +48,7 @@
     line-height:1.2em;
 
 }
-.action .menu::before{
+.action .menu447::before{
     content:'';
     position:absolute;
     top:-5px;
@@ -58,7 +58,7 @@
     background: #EBE8E8;
     transform: rotate(45deg);
 }
-.action .menu ul li{
+.action .menu447 ul li{
     list-style:none;
     padding:10px 0;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
