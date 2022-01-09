@@ -25,13 +25,8 @@ class PostsController {
                 return result;
             }, {}));
 
-        try {
-            const posts = await find.exec();
-            res.json(posts);
-        }
-        catch (err) {
-            res.json({ "message": "Not Found" });
-        }
+        const posts = await find.exec();
+        res.json(posts);
     }
 
     user_post(req, res, next) {

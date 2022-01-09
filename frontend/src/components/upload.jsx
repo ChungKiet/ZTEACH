@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { storage, storageRef } from '../firebase';
+import { storage } from '../firebase';
 
 class ImageUpload extends Component {
     constructor(props) {
@@ -9,9 +9,7 @@ class ImageUpload extends Component {
             url: '',
             progress: 0
         }
-        this.handleChange = this
-            .handleChange
-            .bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.handleUpload = this.handleUpload.bind(this);
     }
     handleChange = e => {
@@ -22,9 +20,9 @@ class ImageUpload extends Component {
         }
     }
     handleUpload = () => {
-        //setLoading(true);
         const { image } = this.state;
-        const uploadTask = storage.ref(`images/${image.name}`).put(image);
+        const name = image.name + '-' + Date.now();
+        const uploadTask = storage.ref(`images/${name}`).put(image);
         uploadTask.on('state_changed',
             (snapshot) => {
                 // progrss function ....
@@ -37,7 +35,7 @@ class ImageUpload extends Component {
             },
             () => {
                 // complete function ....
-                storage.ref('images').child(image.name).getDownloadURL().then(url => {
+                storage.ref('images').child(name).getDownloadURL().then(url => {
                     console.log(url);
                     this.setState({ url });
                 })
@@ -60,7 +58,7 @@ class ImageUpload extends Component {
                 <br />
                 <div>
                     <img src={this.state.url || 'https://firebasestorage.googleapis.com/v0/b/zteach-images.appspot.com/o/images%2FshalE.png?alt=media&token=f0ff8080-682c-453d-b29c-c2cd67ea4709'}
-                        alt="Uploaded images" height="400" border="5" margin-right="150" margin-left="150" />
+                        alt="Uploaded images" height="400" border="3" margin-right="150" margin-left="150" />
                 </div>
             </div>
         )

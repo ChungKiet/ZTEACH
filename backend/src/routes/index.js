@@ -20,7 +20,7 @@ function route(app) {
     app.use('/connects', connects);
 
     // Xử lý ảnh
-    app.use('/images', images);
+    // app.use('/images', images);
 
     // Trang chủ
     app.use('/', home);

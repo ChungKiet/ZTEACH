@@ -4,18 +4,45 @@ class TutorsController {
 
     // [Get] /tutors
     async index(req, res, next) {
-        try {
-            const tutors = await Tutor.find({ user_type: "tutor" });
-            res.status(200).json(tutors);
+        const size = 5;
+        const page = Number(req.query.page) || 1;
+
+        const query = req.query;
+        const find = Tutor.find({ user_type: "tutor" }, 'username name birthday \
+                            introduce literacy gender subjects classes fee rate')
+            .limit(size)
+            .skip(size * (page - 1));
+
+
+        const now = new Date();
+        if (query.younger) {
+            const bd = new Date(now.getFullYear() - Number(query.younger), 1, 1);
+            find.find({ birthday: { $gte: bd } });
+            delete query.younger;
         }
-        catch (err) {
-            res.status(404).send({
-                "error": {
-                    "code": 404,
-                    "message": "Not Found"
+        if (query.older) {
+            const bd = new Date(now.getFullYear() - Number(query.older), 1, 1);
+            find.find({ birthday: { $lte: bd } });
+            delete query.older;
+        }
+        if (query.fee) {
+            find.find({ fee: { $lte: query.fee } });
+            delete query.fee;
+        }
+        // if (query.<attribute>) {
+        //     find.find({ <attribute>: { $in: query.<attribute> } });
+        //     delete query.<attribute>;
+        // }
+        find.find(Object.keys(query)
+            .reduce((result, key) => {
+                if (query[key]) {
+                    result[key] = { $in: query[key] }; // query[key];
                 }
-            });
-        }
+                return result;
+            }, {}));
+
+        const tutors = await find.exec();
+        res.json(tutors);
     }
 
     // [PUT] /tutors/register
