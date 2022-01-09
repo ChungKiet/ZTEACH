@@ -34,7 +34,7 @@ class UsersController {
     // [POST] /users/login
     async login(req, res, next) {
         const { username, password } = req.body;
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ username }, { password: -1 });
         if (!user) {
             res.send({
                 "isLogin": 2,
@@ -112,6 +112,13 @@ class UsersController {
                 }
             });
         }
+    }
+
+    // [POST] /users/short-prof
+    async short_prof(req, res, next) {
+        const id = req.body.id;
+        const user = await User.findById({ _id: id }, '_id username name');
+        req.json(user);
     }
 }
 
