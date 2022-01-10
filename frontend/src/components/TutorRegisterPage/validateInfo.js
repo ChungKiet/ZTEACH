@@ -1,7 +1,7 @@
 export default function validateInfo(values) {
   let errors = {isError: false};
 
-  if (values.user_type==="Gia sư") {
+  if (values.user_type==="student") {
     // Name
     if (!values.name.trim()){
       errors.name = 'Hãy nhập tên của bạn';

@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import GlobalVar from '../../GlobalVar';
+import { useNavigate } from 'react-router-dom';
 
 const useForm = (callback, validate) => {
+  const navigate = useNavigate();
   const [values, setValues] = useState({
    username: "KietChung",
    intro: "No intro",
@@ -52,51 +54,61 @@ const useForm = (callback, validate) => {
   }
 };
 
+  // function add image : (only 1 image)
+
+
+
   const handleSubmit = e => {
     e.preventDefault();
 
     setErrors(validate(values));
     setIsSubmitting(true);
     console.log(values);
-    if(true){
-    //if (!errors.isError) {
-      axios('http://localhost:8000/' + GlobalVar.user.username + '/register-tutor', values).then(res => {
-        console.log(res)
-        const { isSucceeded } = res.data;
-        if (isSucceeded === true) {
-            alert("Cập nhật thành công")
+    //if(true){
+    if (!errors.isError) {
+      //const usertype = GlobalVar.user.user_type === "Học viên"? "user" : "tutor";
+      axios.put('http://localhost:8000/tutors/register', values).then(res => { // 'http://localhost:8000/' + usertype + '/edit', values
+        const msg = res.data;
+        if (!msg.error) {
+          alert("Cập nhật thành công!");
+          GlobalVar.setUser(
+            values
+          );
+          navigate('/profile');
         }
         else{
-          alert("Thất bại")
+          alert("Cập nhật thành công!");
         }
-    });
+      })
     }
   };
 
   useEffect(() => {
    const fetchData = async() => {
-       const result = await axios('http://localhost:8000/' + GlobalVar.user.username + '/register-tutor');
-       const dt = result.data;
-       setValues({
-         username: dt.username,
-         intro: dt.introduce,
-         name: dt.name,
-         user_type: dt.user_type,
-         gender: dt.gender.value,
-         gender_secure: dt.gender.state,
-         birth_day: dt.birth.value,
-         birth_day_secure: dt.birth.state,
-         classes: [],
-         major: dt.major,
-         literacy: dt.literacy,
-         salary: dt.fee,
-         address: dt.address.value,
-         address_secure: dt.address.state,
-         email: dt.email.value,
-         email_secure: dt.email.state,
-         contact: dt.contact.value,
-         contact_secure: dt.contact.state,
-       });
+    axios.post('http://localhost:8000/users/profile', {id: '61d63bc74ed1d19b0d4a8db9'}).then(res => {//   https://localhost:8000/ + user_type + edit
+    const dt = res.data;
+    setValues({
+      username: dt.username,
+      intro: dt.introduce,
+      name: dt.name,
+      user_type: dt.user_type,
+      gender: dt.gender,
+      gender_secure: dt.gender_secure,
+      birth_day: dt.birth_day,
+      birth_day_secure: dt.birth_day_secure,
+      classes: dt.classes,
+      major: dt.major,
+      literacy: dt.literacy,
+      salary: dt.fee,
+      address: dt.address,
+      address_secure: dt.address_secure,
+      subjects: dt.subjects,
+      email: dt.email,
+      email_secure: dt.email_secure,
+      contact: dt.contact,
+      contact_secure: dt.contact_secure,
+    });
+   })
    };
    fetchData();
    

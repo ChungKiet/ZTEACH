@@ -16,7 +16,7 @@ function TutorRegister(){
   const submitForm = () => {
     console.log("Submitted");
   }
-  const { handleChange, handleSubmit, classesChange, values, errors } = useForm(
+  const { handleChange, handleSubmit, classesChange, salaryChange, values, errors } = useForm(
       submitForm,
       validateInfo
   );
@@ -70,7 +70,7 @@ function TutorRegister(){
         <Navbar/>
         <img src={toprightimage} 
           className='top-right-image'/>
-        <Form className='d-flex'>
+        <Form className='d-flex' onSubmit={handleSubmit}>
           <Form.Group controlId="formFile" className="mb-3" >
             <div className='Avatar-tutor'>
               <label for="file-input">
@@ -79,16 +79,16 @@ function TutorRegister(){
               <input id="file-input" type="file" className='Avatar-input'/>
             </div>
             <div type='text' 
-              className="user_type" 
+              className="user_type_reg" 
               disabled>
                 {values.user_type}
             </div>
           </Form.Group>
           <Form.Group>
-            <div type='text' className="user_name" id='username' disabled>
+            <div type='text' className="user_name_reg" id='username' disabled>
                {values.username}
             </div>
-            <div className='label-intro'>
+            <div className='label_intro'>
               Giới thiệu về bản thân bạn
             </div>
             <Form.Control type='text' 
@@ -136,7 +136,7 @@ function TutorRegister(){
             <Form.Control type='text' 
               placeholder='Mức lương bạn mong muốn' 
               name='salary'
-              onChange={handleChange}
+              onChange={salaryChange}
               value={values.salary}
               className='salary_control'>
             </Form.Control>

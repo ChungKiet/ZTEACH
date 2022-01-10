@@ -55,32 +55,31 @@ const useForm = (callback, validate) => {
 
   useEffect(() => {
    const fetchData = async() => {
-       const user_type = GlobalVar.user.user_type === "Học viên"? "users": "tutors";
-       const result = await axios.post("http://localhost:8000/" + user_type + "/" + GlobalVar.user.username);
-       const dt = result.data;
-       setValues({
-         username: dt.username,
-         intro: dt.introduce,
-         name: dt.name,
-         user_type: dt.user_type,
-         gender: dt.gender.value,
-         gender_secure: dt.gender.state,
-         birth_day: dt.birth.value,
-         birth_day_secure: dt.birth.state,
-         classes: dt.classes,
-         voting: dt.voting,
-         evaluate: dt.evaluate,
-         dayreg: dt.dayreg,
-         major: dt.major,
-         literacy: dt.literacy,
-         salary: dt.fee,
-         address: dt.address.value,
-         address_secure: dt.address.state,
-         email: dt.email.value,
-         email_secure: dt.email.state,
-         contact: dt.contact.value,
-         contact_secure: dt.contact.state,
-       });
+       //const user_type = GlobalVar.user.user_type === "Học viên"? "users": "tutors";
+       axios.post('http://localhost:8000/users/profile', {id: '61d63bc74ed1d19b0d4a8db9'}).then(res => {//   https://localhost:8000/ + user_type + edit
+    const dt = res.data;
+    setValues({
+      username: dt.username,
+      intro: dt.introduce,
+      name: dt.name,
+      user_type: dt.user_type,
+      gender: dt.gender,
+      gender_secure: dt.gender_secure,
+      birth_day: dt.birth_day,
+      birth_day_secure: dt.birth_day_secure,
+      classes: dt.classes,
+      major: dt.major,
+      literacy: dt.literacy,
+      salary: dt.fee,
+      address: dt.address,
+      address_secure: dt.address_secure,
+      subjects: dt.subjects,
+      email: dt.email,
+      email_secure: dt.email_secure,
+      contact: dt.contact,
+      contact_secure: dt.contact_secure,
+    });
+   })
    };
    fetchData();
    

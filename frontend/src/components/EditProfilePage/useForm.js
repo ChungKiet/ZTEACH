@@ -12,8 +12,8 @@ const useForm = (callback, validate) => {
    user_type: "Học viên",
    gender: "Nam",
    gender_secure: "Công khai",
-   birth_day: "2001-12-17",
-   birth_day_secure: "Riêng tư",
+   birthday: "2001-12-17",
+   birthday_secure: "Riêng tư",
    classes: [],
    subjects: [],
    major: "",
@@ -62,45 +62,40 @@ const useForm = (callback, validate) => {
   }
 };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     setErrors(validate(values));
     setIsSubmitting(true);
     //console.log(values);
     console.log(errors.isError);
-    if (errors.isError === false) {
-      const usertype = GlobalVar.user.user_type === "Học viên"? "user" : "tutor";
-      axios.post('http://localhost:8000/' + usertype + '/edit', values).then(res => {
-        const { msg } = res.data;
-        if (msg === 1) {
-          GlobalVar.setUser({
-            name:values.name,
-            email: values.email,
-            birthday: values.birth_day,
-            gender: values.gender,
-            user_type: values.user_type,
-            username: values.username,
-            password: GlobalVar.user.password,
-            password2: GlobalVar.user.password
-          });
+    console.log(values);
+    alert("I'm here");
+    if (!errors.isError) {
+      //const usertype = GlobalVar.user.user_type === "Học viên"? "user" : "tutor";
+        axios.put('http://localhost:8000/users/edit', values).then(res => { // 'http://localhost:8000/' + usertype + '/edit', values
+        const msg = res.data;
+        alert("I'm here");
+        if (!msg.error) {
+          GlobalVar.setUser(
+            values
+          );
           navigate('/profile');
+          alert("Cập nhật thành công!");
         }
-        else if (msg === 2) {
-          alert("Email đã tồn tại!");
+        else{
+          alert("Cập nhật thất bại!");
         }
-        else {
-          alert("Tên đăng nhập đã tồn tại!");
-        }
+        //alert(msg);
       })
     }
   };
 
   useEffect(() => {
    const fetchData = async() => {
-       const usertype = GlobalVar.user.user_type === "Học viên"? "user" : "tutor";
-       const result = await axios('http://localhost:8000/' + usertype + '/edit');
-       const dt = result.data;
+       //const usertype = GlobalVar.user.user_type === "Học viên"? "user" : "tutor";
+       axios.post('http://localhost:8000/users/profile', {id: '61d63bc74ed1d19b0d4a8db9'}).then(res => {//   https://localhost:8000/ + user_type + edit
+       const dt = res.data;
        setValues({
          username: dt.username,
          intro: dt.introduce,
@@ -108,8 +103,8 @@ const useForm = (callback, validate) => {
          user_type: dt.user_type,
          gender: dt.gender,
          gender_secure: dt.gender_secure,
-         birth_day: dt.birth_day,
-         birth_day_secure: dt.birth_day_secure,
+         birth_day: dt.birthday,
+         birth_day_secure: dt.birthday_secure,
          classes: dt.classes,
          major: dt.major,
          literacy: dt.literacy,
@@ -122,6 +117,7 @@ const useForm = (callback, validate) => {
          contact: dt.contact,
          contact_secure: dt.contact_secure,
        });
+      })
    };
    fetchData();
    if (Object.keys(errors).length === 0 && isSubmitting) {

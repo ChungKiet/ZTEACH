@@ -4,7 +4,8 @@ import GlobalVar from '../../GlobalVar';
 function TutorRegisterPage() {
     return (
         <div>
-            {GlobalVar.isLogin && <TutorRegister />}
+            {<TutorRegister />}
+            {/* {GlobalVar.isLogin && GlobalVar.user.user_type==="Học viên" && <TutorRegister />} */}
         </div>
     )
 }

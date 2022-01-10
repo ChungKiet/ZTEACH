@@ -216,7 +216,7 @@ function EditProfileTutor(){
               onChange={handleChange}
               type="date"
               name="birth_day"
-              value={values.birth_day}
+              value={values.birthday}
               placeholder="Due date"
             />
             <div className='option-secure-label'>

@@ -13,7 +13,7 @@ import PostListPage from './components/pages/PostListPage';
 import ImageUpload from './components/upload';
 import GlobalVar from './GlobalVar';
 
-GlobalVar.isLogin = true;
+// GlobalVar.isLogin = true;
 var a;
 function App() {
   return (

@@ -23,7 +23,7 @@ class Profile extends React.Component {
             {this.state.onClick && (<div class="menu447">
                 <h3>Lan Anh</h3>
                 <ul>
-                    <Link to="/profileuser" className="link447"><li>Xem thông tin chi tiết</li></Link>
+                    <Link to="/profile" className="link447"><li>Xem thông tin chi tiết</li></Link>
                     <li>Đổi mật khẩu</li>
                     <Link to="/login" className="link447"><li>Đăng xuất</li></Link>
                 </ul>

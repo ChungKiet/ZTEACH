@@ -72,34 +72,34 @@
    display: none;
 }
 
-.user_type {
-   width: 5.21%;
+.user_type_reg {
+   width: 95.21%;
    height: 3.7%;
    background: #FE9312;
    border-radius: 100px;
    align-items: center;
-   margin-top: 1%;
-   margin-left: 2.34%;
+   margin-top: 14%;
+   margin-left: 46.34%;
    text-align: center;
    padding: 7px;
    color:white;
 }
 
-.user_name {
-   width: 10.41%;
+.user_name_reg {
+   width: 60.41%;
    height: 3.7%;
    background: #FE9312;
    border-radius: 100px;
-   margin-top: 4.63%;
-   margin-left: 2.1%;
+   margin-top: 15.63%;
+   margin-left: 22.1%;
    text-align: center;
    color:white;
    padding: 7px;
 }
 
-.label-intro{
-   margin-top: 10%;
-   margin-left: 2.34%;
+.label_intro{
+   margin-top: 29.8%;
+   margin-left: 12.34%;
    margin-bottom: 0.5%;
 }
 
