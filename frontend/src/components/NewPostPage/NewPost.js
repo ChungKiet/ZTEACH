@@ -30,7 +30,7 @@ function NewPost() {
 
     return (
 
-        <form className="new-post-form" onSubmit={handleSubmit}>
+        <form className="new-post-page" onSubmit={handleSubmit}>
             <Navbar />
 
 
@@ -122,14 +122,14 @@ function NewPost() {
                 <div className="flex-row">
                     {/* Detail */}
 
-                    <input
-                        type='textarea'
+                    <textarea
                         className="class-detail"
                         placeholder='Thêm thông tin chi tiết...'
                         name="detail"
                         onChange={handleChange}
                         onKeyPress={(e) => { e.target.keyCode === 13 && e.preventDefault(); }}>
-                    </input>
+                    </textarea>
+
                 </div>
             </div>
 
@@ -196,7 +196,7 @@ function NewPost() {
             </div>
 
 
-            <div style={{ position: 'fixed', marginTop: "1%", marginBottom: "0px", bottom: "0", width: '100%' }}>
+            <div style={{ alignItems:"flex-end", marginTop: "1.9%", width: '100%' }}>
                 <Footer />
             </div>
         </form>

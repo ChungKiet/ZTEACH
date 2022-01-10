@@ -1,13 +1,8 @@
 
 
-.newpostpage {
-    align-items: center;
-    background-color: var(--white);
-    display: flex;
-    flex-direction: column;
-    height: 1080px;
-    padding: 168.3px 106px;
-    width: 1920px;
+  .new-post-page {
+    min-height: 1080;
+    border: 1px
   }
   
   .label-dangbaitimkiemgiasu {
@@ -73,21 +68,22 @@
     text-align: left;
     margin-top: 1%;
     margin-left: 30px;
+    padding-left: 10px;
     box-shadow: 1px 1px 1px 1px #9E9E9E;
    }
 
 
   .class-detail {
     width: 900px;
-    height: 120px;
+    height: 180px;
     border: normal;
     border-radius: 10px;
     text-align: left;
     margin-top: 1%;
     margin-left: 30px;
     box-shadow: 1px 1px 1px 1px #9E9E9E;
-    padding-left: 0;
-    padding-top: 0;
+    padding-left: 10px;
+    padding-top: 10px;
    }
 
    .button-occupation-ok {

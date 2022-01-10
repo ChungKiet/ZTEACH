@@ -43,11 +43,11 @@ function Post() {
 
 
     useEffect(() => {
-        const fetchData = async() => {
+        const fetchData = async () => {
             const result = await axios('http://localhost:8000/post');
             const dt = result.data;
             setValues({
-                title : dt.title, 
+                title: dt.title,
                 detail: dt.detail,
                 subject: dt.subject,
                 grade: dt.grade,
@@ -68,30 +68,30 @@ function Post() {
             });
         };
         fetchData();
-        
+
     }, []);
-    
+
     const handleChange = e => {
         const { name, value } = e.target;
         setValues({
-          ...values,
-          [name]: value
+            ...values,
+            [name]: value
         });
     };
 
-    function RenderButton(props){
+    function RenderButton(props) {
         const is_connected = props.is_connected;
         const is_requested = props.is_requested;
         if (is_connected === "1")
-            return(
+            return (
                 <button className="button-connected">
                     <div className="button-connect-text">
                         Đã kết nối
                     </div>
                 </button>
             )
-        else if(is_requested === "0"){
-            return(
+        else if (is_requested === "0") {
+            return (
                 <button className="button-connect">
                     <div className="button-connect-text">
                         Kết nối
@@ -99,8 +99,8 @@ function Post() {
                 </button>
             );
         }
-        else{
-            return(
+        else {
+            return (
                 <button className="button-requested">
                     <div className="button-connect-text">
                         Đã yêu cầu
@@ -138,7 +138,7 @@ function Post() {
                         </div>
                     </div>
                 </div>
-                <RenderButton is_connected={values.is_connected} is_requested={values.is_requested}/>
+                <RenderButton is_connected={values.is_connected} is_requested={values.is_requested} />
             </div>
 
 
@@ -297,20 +297,67 @@ function Post() {
             </div>
 
 
-            <div className="more-detail-label">Thông tin thêm về lớp học</div>
+            <div className="more-detail-label">Thông tin thêm về lớp học:</div>
 
             <div className="overlap-group-more-info">
-                <div className="box-more-info"></div>
+                <div className="box-outline-735"></div>
                 <div className="detail-script">{values.detail}</div>
             </div>
 
 
-            <div style={{ position: 'fixed', marginBottom: "0px", bottom: "0", width: '100%' }}>
+            <div className="more-detail-label">Danh sách gia sư yêu cầu kết nối:</div>
+
+            <div className="overlap-group-requests">
+                <div className="box-outline-735"></div>
+                <div className="flex-request-heads">
+                    <div className="request-no-735">STT</div>
+                    <div className="request-username-735">Tên tài khoản</div>
+                    <div className="request-level-735">Trình độ</div>
+                    <div className="request-gender-735">Giới tính</div>
+                </div>
+                <div className="request-list-735">
+                    <RequestSummaryLine order="1" username="ThuyKhueChemist94" level="Giáo viên" gender="Nữ"></RequestSummaryLine>
+                    <RequestSummaryLine order="2" username="HoaiHuongPro" level="Sinh viên" gender="Nữ"></RequestSummaryLine>
+                    <RequestSummaryLine order="1" username="ThuyKhueChemist94" level="Giáo viên" gender="Nữ"></RequestSummaryLine>
+                    <RequestSummaryLine order="1" username="ThuyKhueChemist94" level="Giáo viên" gender="Nữ"></RequestSummaryLine>
+    
+                </div>
+            </div>
+
+
+            <div style={{ position: 'relative', marginTop: "2%", marginBottom: "0px", bottom: "0", width: '100%' }}>
                 <Footer />
             </div>
         </div>
 
 
+    );
+}
+
+function RequestSummaryLine(props) {
+    const { order, username, level, gender } = props;
+
+    return (
+        <div className="flex-request-line">
+            <div className="request-no-735">{order}</div>
+            <div className="request-username-735">{username}</div>
+            <div className="request-level-735">{level}</div>
+            <div className="request-gender-735">{gender}</div>
+            <div className="request-accept-735">
+            <button className="button-request-accept-735" type="submit" >
+                    <div className="request-button-735">
+                        Chấp nhận
+                    </div>
+                </button>
+            </div>
+            <div className="request-deny-735">
+            <button className="button-request-deny-735" type="submit" >
+                    <div className="request-button-735">
+                        Từ chối
+                    </div>
+                </button>
+            </div>
+        </div>
     );
 }
 
