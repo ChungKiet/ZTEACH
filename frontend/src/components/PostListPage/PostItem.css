@@ -28,6 +28,8 @@
 }
 
 .username-post-item40 {
+    padding-left: 5px;
+    padding-top: 5px;
     text-align: left;
     vertical-align:middle;
     font-size:xx-large;
@@ -36,6 +38,7 @@
 
 .title-post-item40 {
     padding-left: 20px;
+    padding-top: 5px;
     width: 600px;
     height: 60px;
     border-radius: 10px;
@@ -60,8 +63,10 @@
 
 .grid-2x3-subitem40 {
     display: grid;
-    grid-template-columns: 33% 33% 34%;
+    grid-template-columns: 33% 33% 33%;
     grid-template-rows: 70% 50%;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 
