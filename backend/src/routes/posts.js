@@ -12,15 +12,6 @@ route.put('/edit', postsController.edit_post);
 // http://localhost:8000/posts/delete
 route.delete('/delete', postsController.delete_post);
 
-// http://localhost:8000/posts/connect?_method=PUT
-route.put('/connect', postsController.post_new_connect);
-
-// http://localhost:8000/posts/connect?_method=DELEYE
-route.delete('/connect', postsController.post_delete_connect);
-
-// http://localhost:8000/posts/search?<fieds>=<values>
-route.get('/search', postsController.search);
-
 // http://localhost:8000/posts
 route.post('/user-post', postsController.user_post);
 

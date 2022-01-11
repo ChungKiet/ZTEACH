@@ -2,8 +2,7 @@ const home = require('./home');
 const posts = require('./posts');
 const users = require('./users');
 const tutors = require('./tutors');
-const connects = require('./connect')
-const images = require('./images')
+const connects = require('./connects')
 
 function route(app) {
 

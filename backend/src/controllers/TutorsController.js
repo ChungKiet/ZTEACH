@@ -13,7 +13,6 @@ class TutorsController {
             .limit(size)
             .skip(size * (page - 1));
 
-
         const now = new Date();
         if (query.younger) {
             const bd = new Date(now.getFullYear() - Number(query.younger), 1, 1);
@@ -47,9 +46,9 @@ class TutorsController {
 
     // [PUT] /tutors/register
     async register(req, res, next) {
-        const { id, major, literacy, fee, subjects, classes } = req.body;
+        const { username, major, literacy, fee, subjects, classes } = req.body;
         try {
-            await Tutor.updateOne({ _id: id, user_type: "student" }, {
+            await Tutor.updateOne({ username: username, user_type: "student" }, {
                 user_type: "tutor",
                 gender_secure: "Công khai", birthday_secure: "Công khai",
                 major, literacy, fee, subjects, classes, rate: 5
@@ -69,8 +68,8 @@ class TutorsController {
     // [POST] /tutors/profile
     async profile(req, res, next) {
         try {
-            const id = req.body.id;
-            const tutor = await Tutor.findOne({ _id: id, user_type: "tutor" });
+            const username = req.body.username;
+            const tutor = await Tutor.findOne({ username: username, user_type: "tutor" });
             res.json(tutor);
         }
         catch (err) {
@@ -83,6 +82,7 @@ class TutorsController {
         }
     }
 
+    // [PUT] /tutors/edit
     async edit_profile(req, res, next) {
         const { id, name, gender, email, email_secure, birthday,
             address, address_secure, contact, contact_secure,
@@ -105,7 +105,7 @@ class TutorsController {
         }
     }
 
-    // [DELETE] /users/delete
+    // [DELETE] /tutors/delete
     async delete_tutor(req, res, next) {
         const id = req.body.id;
         try {
@@ -122,6 +122,39 @@ class TutorsController {
         }
     }
 
+    // [PUT] /tutors/add-certificate
+    async add_certificate(req, res, next) {
+        const { username, image } = req.body;
+        try {
+            await Tutor.updateOne({ username }, { $push: { certificate: image } });
+            res.json({ "message": "Add certificate successfully." });
+        }
+        catch (err) {
+            res.status(500).send({
+                "error": {
+                    "code": 500,
+                    "message": "Add certificate failed."
+                }
+            });
+        }
+    }
+
+    // [PUT] /tutors/remove-certificate
+    async remove_certificate(req, res, next) {
+        const { username, image } = req.body;
+        try {
+            await Tutor.updateOne({ username }, { $pull: { certificate: image } });
+            res.json({ "message": "Remove certificate successfully." });
+        }
+        catch (err) {
+            res.status(500).send({
+                "error": {
+                    "code": 500,
+                    "message": "Add certificate failed."
+                }
+            });
+        }
+    }
 }
 
 module.exports = new TutorsController;

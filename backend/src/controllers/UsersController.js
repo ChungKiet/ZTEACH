@@ -14,18 +14,17 @@ class UsersController {
         const userExists = await User.findOne({ username });
         if (userExists) {
             res.send({
-                "msg": 3
+                "msg": 3, 'user': null
                 // "error": { "code": 409, "message": "Username already exists" }
             });
-            return;
         }
         try {
-            await User.create({ name, gender, birthday, email, username, password });
-            res.send({ "msg": 1 });
+            const user = await User.create({ name, gender, birthday, email, username, password });
+            res.send({ "msg": 1, 'user': user });
         }
         catch (err) {
             res.status(401).send({
-                "msg": 0
+                "msg": 0, 'user': null
                 // "error": { "code": 401, "message": "Registration failed." }
             });
         }
@@ -34,24 +33,24 @@ class UsersController {
     // [POST] /users/login
     async login(req, res, next) {
         const { username, password } = req.body;
-        const user = await User.findOne({ username }, { password: -1 });
+        const user = await User.findOne({ username });
         if (!user) {
             res.send({
-                "isLogin": 2,
-                "user": null
+                "isLogin": 2, "user": null
                 // "error": { "code": 404, "message": "Usernam not found" }
             });
         }
         else if (user.password === password) {
+            // const { name, gender, gender_secure, email, email_secure,
+            //      birthday, birthday_secure, address, address_secure,
+            //      contact,contact_secure, introduce, createdAt } = user;
             res.send({
-                "isLogin": 1,
-                "user": user
+                "isLogin": 1, "user": user
             });
         }
         else {
             res.send({
-                "isLogin": 3,
-                "user": null
+                "isLogin": 3, "user": null
                 // "error": { "code": 401, "message": "Wrong password" }
             });
         }
@@ -59,8 +58,11 @@ class UsersController {
 
     // [POST] /users/profile
     async user_profile(req, res, next) {
-        const id = req.body.id;
-        const user = await User.findOne({ _id: id, user_type: "student" });
+        const username = req.body.username;
+        const user = await User.findOne({
+            username: username,
+            user_type: "student"
+        }, '-classes -subjects -certificate');
         if (user) {
             res.json(user);
         }
@@ -76,11 +78,11 @@ class UsersController {
 
     // [PUT] /users/edit
     async edit_profile(req, res, next) {
-        const { id, name, gender, gender_secure, email, email_secure,
+        const { username, name, gender, gender_secure, email, email_secure,
             birthday, birthday_secure, address, address_secure,
             contact, contact_secure, introduce } = req.body;
         try {
-            await User.updateOne({ _id: id, user_type: "student" }, {
+            await User.updateOne({ username: username, user_type: "student" }, {
                 name, gender, gender_secure, email, email_secure,
                 birthday, birthday_secure, address, address_secure,
                 contact, contact_secure, introduce
@@ -116,9 +118,46 @@ class UsersController {
 
     // [POST] /users/short-prof
     async short_prof(req, res, next) {
-        const id = req.body.id;
-        const user = await User.findById({ _id: id }, '_id username name');
-        req.json(user);
+        const username = req.body.username;
+        const user = await User.findOne({ username }, 'username name');
+        res.json(user);
+    }
+
+    // [PUT] /users/edit-image
+    async edit_image(req, res, next) {
+        const { username, image } = req.body;
+        try {
+            await User.updateOne({ username }, { image });
+            res.json({ "message": "Update success." });
+        }
+        catch (err) {
+            res.status(500).send({
+                "error": {
+                    "code": 500,
+                    "message": "Image update failed."
+                }
+            });
+        }
+    }
+
+    // [PUT] /users/delete-image
+    async delete_image(req, res, next) {
+        const username = req.body.username;
+        try {
+            await User.updateOne({ username },
+                {
+                    image: 'https://firebasestorage.googleapis.com/v0/b/zteach-images.appspot.com/o/images%2Fprofile.png?alt=media&token=34e94b8d-cda6-4df8-8f4b-88a022d3b3fe'
+                });
+            res.json({ "message": "Delete success." });
+        }
+        catch (err) {
+            res.status(500).send({
+                "error": {
+                    "code": 500,
+                    "message": "Image delete failed."
+                }
+            });
+        }
     }
 }
 

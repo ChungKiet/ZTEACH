@@ -29,9 +29,10 @@ class PostsController {
         res.json(posts);
     }
 
-    user_post(req, res, next) {
+    // [POST] /posts/user-post
+    async user_post(req, res, next) {
         const user = req.body.user;
-        const posts = Post.find({ user }, 'title createdAt');
+        const posts = await Post.find({ user }, 'title createdAt');
         res.json(posts);
     }
 
@@ -58,73 +59,11 @@ class PostsController {
         }
     }
 
-    // [PUT] /posts/connect
-    async post_new_connect(req, res, next) {
-        const { tutor, post } = req.body;
-        const new_connect = { tutor: tutor, timec: Date.now() };
-        try {
-            const connected = await Post.findOne({ _id: post, "connect.tutor": tutor }, { "connect.tutor": 1 });
-            if (connected) {
-                res.status(409).send({
-                    "error": {
-                        "code": 409,
-                        "message": "Post connection requested."
-                    }
-                });
-                return;
-            }
-            await Post.updateOne(
-                { _id: post },
-                { $inc: { connect_count: 1 }, $push: { connect: new_connect } }
-            );
-            res.status(200).redirect('http://localhost:8000/posts/' + post);
-        }
-        catch (err) {
-            res.status(500).send({
-                "error": {
-                    "code": 500,
-                    "message": "Post connection failed."
-                }
-            });
-        }
-    }
-
-    // [DELETE] /posts/connect
-    async post_delete_connect(req, res, next) {
-        const { tutor, post } = req.body;
-        try {
-            // const post = await Post.findOne({ _id: post, "connect.tutor": tutor });
-            // console.log(post);
-            // if (!post) {
-            //     res.status(409).send({
-            //         "error": {
-            //             "code": 409,
-            //             "message": "Post connection not required."
-            //         }
-            //     });
-            //     return;
-            // }
-            await Post.updateOne(
-                { _id: post },
-                { $inc: { connect_count: -1 }, $pull: { connect: { tutor } } }
-            );
-            res.status(200).redirect('http://localhost:8000/posts/' + post);
-        }
-        catch (err) {
-            res.status(500).send({
-                "error": {
-                    "code": 500,
-                    "message": "Post delete connection failed."
-                }
-            });
-        }
-
-    }
-
-    // [Get] /posts/<post_id>
+    // [GET] /posts/<post-id>
     async post_detail(req, res, next) {
         try {
-            const post = await Post.findById(req.params.id);
+            const _id = req.params.id;
+            const post = await Post.findById({ _id });
             res.json(post);
         }
         catch (err) {

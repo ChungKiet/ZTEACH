@@ -2,13 +2,13 @@ const mongoose = require('mongoose');
 
 const Connect = mongoose.Schema({
     user: {
-        type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User'
+        type: String, required: true
     },
     tutor: {
-        type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User'
+        type: String, required: true
     },
     post: {
-        type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Post', default: 'null'
+        type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Post', default: null
     },
     accept: {
         type: Boolean, require: true, default: false
