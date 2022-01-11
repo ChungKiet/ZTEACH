@@ -20,56 +20,62 @@ import axios from "axios";
 
 
 function Post() {
+    const URL = window.location.pathname;
+    const tmp = URL.split('/');
+    const id = tmp[tmp.length - 1];
     const [values, setValues] = useState({
         subject: "Hóa học",
         grade: "Lớp 8",
-        place: "Quận 5",
-        daysperweek: "3",
-        duration: "2h",
-        start_date: "01-01-2021",
+        study_form: "Quận 5",
+        lessons: "3",
+        time: "2h",
+        start: "01-01-2021",
         title: "Default title",
-        detail: "Cần tìm gia sư dạy giỏi môn hóa, lương cao",
-        tutor_level: "Sinh viên",
-        tutor_gender: "Nữ",
-        salary: "300000",
-        connected: "2",
+        information: "Cần tìm gia sư dạy giỏi môn hóa, lương cao",
+        literacy: "Sinh viên",
+        gender: "Nữ",
+        fee: "300000",
+        request: "2",
+        user: "123234345123",
 
-        username: "admind",
         own_username: "admin",
         own_user_id: "u1709",
         is_connected: "0",
         is_requested: "0"
     });
+    console.log('http://localhost:8000/posts/' + id);
 
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await axios('http://localhost:8000/post');
+            const result = await axios('http://localhost:8000/posts/' + id);
             const dt = result.data;
             setValues({
                 title: dt.title,
-                detail: dt.detail,
+                information: dt.information,
                 subject: dt.subject,
                 grade: dt.grade,
-                place: dt.place,
-                start_date: dt.start_date,
-                tutor_level: dt.tutor_level,
-                tutor_gender: dt.tutor_gender,
-                salary: dt.salary,
-                connected: dt.connected,
-                daysperweek: dt.daysperweek,
-                duration: dt.duration,
+                study_form: dt.study_form,
+                start: dt.start,
+                literacy: dt.literacy,
+                gender: dt.gender,
+                fee: dt.fee,
+                request: dt.request,
+                lessons: dt.lessons,
+                time: dt.time,
+                user: dt.user,
 
-                own_username: dt.own_username,
-                own_user_id: dt.own_user_id,
-                is_connected: dt.is_connected,
-                is_requested: dt.is_requested
-
+                //own_username: dt.own_username,
+                //own_user_id: dt.own_user_id,
+                is_connected: "0",
+                is_requested: "0"
             });
         };
         fetchData();
+        
 
     }, []);
+    console.log(values);
 
     const handleChange = e => {
         const { name, value } = e.target;
@@ -79,10 +85,8 @@ function Post() {
         });
     };
 
-    function RenderButton(props) {
-        const is_connected = props.is_connected;
-        const is_requested = props.is_requested;
-        if (is_connected === "1")
+    function RenderButton() {
+        if (values.is_connected === "1")
             return (
                 <button className="button-connected">
                     <div className="button-connect-text">
@@ -90,7 +94,7 @@ function Post() {
                     </div>
                 </button>
             )
-        else if (is_requested === "0") {
+        else if (values.is_requested === "0") {
             return (
                 <button className="button-connect">
                     <div className="button-connect-text">
@@ -134,11 +138,11 @@ function Post() {
                             <img className="user-img-head" src={img_tutor} />
                         </div>
                         <div className="text-username">
-                            <a href={`http://localhost:3000/user?id=${values.own_user_id}`} style={{ 'text-decoration': 'none' }}>{values.own_username}</a>
+                            <a href={`http://localhost:3000/users/${values.user}`} style={{ 'text-decoration': 'none' }}>{values.user}</a>
                         </div>
                     </div>
                 </div>
-                <RenderButton is_connected={values.is_connected} is_requested={values.is_requested} />
+                <RenderButton/>
             </div>
 
 
@@ -192,7 +196,7 @@ function Post() {
                         </div>
                         <div className="placeholder-text-1">
                             <div className="select-occupation-1">
-                                {values.place}
+                                {values.study_form}
                             </div>
                         </div>
                     </div>
@@ -209,7 +213,7 @@ function Post() {
                         </div>
                         <div className="placeholder-text-1">
                             <div className="select-occupation-1">
-                                {values.start_date}
+                                {values.start.split('T')[0]}
                             </div>
                         </div>
                     </div>
@@ -229,7 +233,7 @@ function Post() {
                         </div>
                         <div className="placeholder-text-1">
                             <div className="select-occupation-1">
-                                {values.tutor_level}
+                                {values.literacy}
                             </div>
                         </div>
                     </div>
@@ -246,7 +250,7 @@ function Post() {
                         </div>
                         <div className="placeholder-text-1">
                             <div className="select-occupation-1">
-                                {values.tutor_gender}
+                                {values.gender}
                             </div>
                         </div>
                     </div>
@@ -263,7 +267,7 @@ function Post() {
                         </div>
                         <div className="placeholder-text-1">
                             <div className="select-occupation-1">
-                                {values.salary}đ/buổi
+                                {values.fee}đ/buổi
                             </div>
                         </div>
                     </div>
@@ -280,7 +284,7 @@ function Post() {
                         </div>
                         <div className="placeholder-text-1">
                             <div className="select-occupation-1">
-                                {values.connected} yêu cầu
+                                {values.request} yêu cầu
                             </div>
                         </div>
                     </div>
@@ -292,7 +296,7 @@ function Post() {
                     Thời lượng học:
                 </div>
                 <div className="duration">
-                    {values.daysperweek} buổi/tuần x {values.duration}/buổi
+                    {values.lessons} buổi/tuần x {values.time}/buổi
                 </div>
             </div>
 
@@ -301,7 +305,7 @@ function Post() {
 
             <div className="overlap-group-more-info">
                 <div className="box-outline-735"></div>
-                <div className="detail-script">{values.detail}</div>
+                <div className="detail-script">{values.information}</div>
             </div>
 
      
