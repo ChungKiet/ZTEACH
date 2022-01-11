@@ -4,12 +4,7 @@ Project of ZTeam - Đồ án Nhập môn Công nghệ phần mềm
 
 Thực hiện các lệnh cài đặt:
 
-- npm install --save express
-- npm install --save mongodb
-- npm install --save mongoose
-- npm install --save method-override
-- npm install --save-dev nodemon
-- npm install --save-dev ejs
+- Run npm install tại thư mục backend để cài đặt thư viện.
 
 Để run Server, thực hiện lệnh:
 
