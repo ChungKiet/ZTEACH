@@ -15,9 +15,8 @@ import img_tutor from '../images/postimg/tutor.png';
 
 import './Post.css';
 
-
 import axios from "axios";
-import { map } from "jquery";
+
 
 
 function Post() {
@@ -35,6 +34,7 @@ function Post() {
         salary: "300000",
         connected: "2",
 
+        username: "admind",
         own_username: "admin",
         own_user_id: "u1709",
         is_connected: "0",
@@ -304,7 +304,9 @@ function Post() {
                 <div className="detail-script">{values.detail}</div>
             </div>
 
+     
 
+        
             <div className="more-detail-label">Danh sách gia sư yêu cầu kết nối:</div>
 
             <div className="overlap-group-requests">
@@ -318,11 +320,12 @@ function Post() {
                 <div className="request-list-735">
                     <RequestSummaryLine order="1" username="ThuyKhueChemist94" level="Giáo viên" gender="Nữ"></RequestSummaryLine>
                     <RequestSummaryLine order="2" username="HoaiHuongPro" level="Sinh viên" gender="Nữ"></RequestSummaryLine>
-                    <RequestSummaryLine order="1" username="ThuyKhueChemist94" level="Giáo viên" gender="Nữ"></RequestSummaryLine>
-                    <RequestSummaryLine order="1" username="ThuyKhueChemist94" level="Giáo viên" gender="Nữ"></RequestSummaryLine>
-    
+                    <RequestSummaryLine order="3" username="TrucRapper" level="Giáo viên" gender="Nam"></RequestSummaryLine>
+                    <RequestSummaryLine order={1 + 3} username="AnhThanhNien" level="Giáo viên" gender="Nữ"></RequestSummaryLine>
+
                 </div>
             </div>
+            
 
 
             <div style={{ position: 'relative', marginTop: "2%", marginBottom: "0px", bottom: "0", width: '100%' }}>
@@ -334,24 +337,27 @@ function Post() {
     );
 }
 
+
 function RequestSummaryLine(props) {
     const { order, username, level, gender } = props;
 
     return (
         <div className="flex-request-line">
             <div className="request-no-735">{order}</div>
-            <div className="request-username-735">{username}</div>
+            <div className="request-username-735">
+                <a href={`http://localhost:3000/user?id=${username}`} style={{ 'text-decoration': 'none' }}>{username}</a>
+            </div>
             <div className="request-level-735">{level}</div>
             <div className="request-gender-735">{gender}</div>
             <div className="request-accept-735">
-            <button className="button-request-accept-735" type="submit" >
+                <button className="button-request-accept-735" type="submit" >
                     <div className="request-button-735">
                         Chấp nhận
                     </div>
                 </button>
             </div>
             <div className="request-deny-735">
-            <button className="button-request-deny-735" type="submit" >
+                <button className="button-request-deny-735" type="submit" >
                     <div className="request-button-735">
                         Từ chối
                     </div>

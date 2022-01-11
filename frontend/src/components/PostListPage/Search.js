@@ -68,7 +68,7 @@ function Search() {
                             className='search-choice-haft40'
                             values={optionSelect.daysperweek}
                             name="daysperweek"
-                            placeholder="Chọn số buổi/tuần"
+                            placeholder="Chọn số buổi"
                             onChange={handleChange}
                         />
                     </div>
@@ -79,7 +79,7 @@ function Search() {
                             className='search-choice-haft40'
                             values={optionSelect.duration}
                             name="duration"
-                            placeholder="Chọn thời gian mỗi buổi"
+                            placeholder="Chọn số giờ"
                             onChange={handleChange}
                         />
                     </div>
@@ -118,6 +118,7 @@ function Search() {
                             Hủy
                         </div>
                     </button>
+                    <div/>
                     <button className="button-occupation-ok40" type="submit" >
                         <div className="search-button">
                             Đăng
