@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom'
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 import 'bootstrap/dist/css/bootstrap.css';
+
 
 import img_connected from '../images/postimg/connected.png';
 import img_date from '../images/postimg/date.png';
@@ -85,8 +87,49 @@ function Post() {
         });
     };
 
-    function RenderButton() {
-        if (values.is_connected === "1")
+    function UserTag() {
+        const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
+        console.log("_id = ");
+        console.log(cookie._id);
+        const currentUserID = cookie._id;
+        if (currentUserID !== values.user)
+            return (
+                <div className="overlap-group-user">
+                    <div className="box-user-head"></div>
+                    <div className="flex-user">
+                        <div>
+                            <img className="user-img-head" src={img_tutor} />
+                        </div>
+                        <div className="text-username">
+                            <a href={`http://localhost:3000/users/${values.user}`} style={{ 'text-decoration': 'none' }}>{values.user}</a>
+                        </div>
+                    </div>
+                </div>
+            )
+        else
+            return (
+                <div className="overlap-group-user">
+                    <div className="box-user-own"></div>
+                    <div className="flex-user">
+                        <div className="text-username-own">Bạn là chủ bài đăng</div>
+                    </div>
+                </div>
+            );
+
+
+    }
+
+    function ButtonConnect() {
+        const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
+        console.log("_id = ");
+        console.log(cookie._id);
+        const currentUserID = cookie._id;
+        if (currentUserID === values.user) {
+            return (
+                <div />
+            )
+        }
+        else if (values.is_connected === "1")
             return (
                 <button className="button-connected">
                     <div className="button-connect-text">
@@ -114,7 +157,7 @@ function Post() {
         }
     }
 
-    function RenderRequestList() {
+    function RequestList() {
         const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
         console.log("_id = ");
         console.log(cookie._id);
@@ -122,29 +165,83 @@ function Post() {
         if (currentUserID === values.user)
             return (
                 <div>
-                <div className="more-detail-label">Danh sách gia sư yêu cầu kết nối:</div>
+                    <div className="more-detail-label">Danh sách gia sư yêu cầu kết nối:</div>
 
-            <div className="overlap-group-requests">
-                <div className="box-outline-735"></div>
-                <div className="flex-request-heads">
-                    <div className="request-no-735">STT</div>
-                    <div className="request-username-735">Tên tài khoản</div>
-                    <div className="request-level-735">Trình độ</div>
-                    <div className="request-gender-735">Giới tính</div>
+                    <div className="overlap-group-requests">
+                        <div className="box-outline-735"></div>
+                        <div className="flex-request-heads">
+                            <div className="request-no-735">STT</div>
+                            <div className="request-username-735">Tên tài khoản</div>
+                            <div className="request-level-735">Trình độ</div>
+                            <div className="request-gender-735">Giới tính</div>
+                        </div>
+                        <div className="request-list-735">
+                            <RequestSummaryLine order="1" username="ThuyKhueChemist94" level="Giáo viên" gender="Nữ"></RequestSummaryLine>
+                            <RequestSummaryLine order="2" username="HoaiHuongPro" level="Sinh viên" gender="Nữ"></RequestSummaryLine>
+                            <RequestSummaryLine order="3" username="TrucRapper" level="Giáo viên" gender="Nam"></RequestSummaryLine>
+                            <RequestSummaryLine order={1 + 3} username="AnhThanhNien" level="Giáo viên" gender="Nữ"></RequestSummaryLine>
+
+                        </div>
+                    </div>
+                </div>)
+        else {
+            return (<div />);
+        }
+    }
+
+    function EditAndRemove() {
+        const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
+        console.log("_id = ");
+        console.log(cookie._id);
+        const currentUserID = cookie._id;
+        if (currentUserID === values.user)
+            return (
+                <div className="edit-and-remove">
+                    <Link to='/posts/edit-post' state={{ values, id }} className="post-edit-remove-735">
+                        <div className="button-edit-735">
+                            Chỉnh sửa
+                        </div>
+                    </Link>
+
+                    <Link to={{ pathname: "/posts/new-post", state: values }} className="post-edit-remove-735">
+                        <div className="button-remove-735">
+                            Xóa
+                        </div>
+                    </Link>
+
                 </div>
-                <div className="request-list-735">
-                    <RequestSummaryLine order="1" username="ThuyKhueChemist94" level="Giáo viên" gender="Nữ"></RequestSummaryLine>
-                    <RequestSummaryLine order="2" username="HoaiHuongPro" level="Sinh viên" gender="Nữ"></RequestSummaryLine>
-                    <RequestSummaryLine order="3" username="TrucRapper" level="Giáo viên" gender="Nam"></RequestSummaryLine>
-                    <RequestSummaryLine order={1 + 3} username="AnhThanhNien" level="Giáo viên" gender="Nữ"></RequestSummaryLine>
+            );
+        else
+            return null;
+    }
 
+    function RequestSummaryLine(props) {
+        const { order, username, level, gender } = props;
+
+        return (
+            <div className="flex-request-line">
+                <div className="request-no-735">{order}</div>
+                <div className="request-username-735">
+                    <a href={`http://localhost:3000/user?id=${username}`} style={{ 'text-decoration': 'none' }}>{username}</a>
+                </div>
+                <div className="request-level-735">{level}</div>
+                <div className="request-gender-735">{gender}</div>
+                <div className="request-accept-735">
+                    <button className="button-request-accept-735" type="submit" >
+                        <div className="request-button-735">
+                            Chấp nhận
+                        </div>
+                    </button>
+                </div>
+                <div className="request-deny-735">
+                    <button className="button-request-deny-735" type="submit" >
+                        <div className="request-button-735">
+                            Từ chối
+                        </div>
+                    </button>
                 </div>
             </div>
-            </div>)
-        else{
-            return(<div/>);
-        }
-
+        );
     }
 
 
@@ -163,18 +260,8 @@ function Post() {
                         </div>
                     </div>
                 </div>
-                <div className="overlap-group-user">
-                    <div className="box-user-head"></div>
-                    <div className="flex-user">
-                        <div>
-                            <img className="user-img-head" src={img_tutor} />
-                        </div>
-                        <div className="text-username">
-                            <a href={`http://localhost:3000/users/${values.user}`} style={{ 'text-decoration': 'none' }}>{values.user}</a>
-                        </div>
-                    </div>
-                </div>
-                <RenderButton />
+                <UserTag />
+                <ButtonConnect />
             </div>
 
 
@@ -294,12 +381,12 @@ function Post() {
                     <div className="placeholder-text-container">
                         <div className="placeholder-text">
                             <div className="select-occupation">
-                                Học phí
+                                Học phí / tháng
                             </div>
                         </div>
                         <div className="placeholder-text-1">
                             <div className="select-occupation-1">
-                                {values.fee}đ/tháng
+                                {values.fee}đ
                             </div>
                         </div>
                     </div>
@@ -343,8 +430,8 @@ function Post() {
 
 
 
-            <RenderRequestList/>
-
+            <RequestList />
+            <EditAndRemove />
 
 
             <div style={{ position: 'relative', marginTop: "2%", marginBottom: "0px", bottom: "0", width: '100%' }}>
@@ -357,33 +444,6 @@ function Post() {
 }
 
 
-function RequestSummaryLine(props) {
-    const { order, username, level, gender } = props;
 
-    return (
-        <div className="flex-request-line">
-            <div className="request-no-735">{order}</div>
-            <div className="request-username-735">
-                <a href={`http://localhost:3000/user?id=${username}`} style={{ 'text-decoration': 'none' }}>{username}</a>
-            </div>
-            <div className="request-level-735">{level}</div>
-            <div className="request-gender-735">{gender}</div>
-            <div className="request-accept-735">
-                <button className="button-request-accept-735" type="submit" >
-                    <div className="request-button-735">
-                        Chấp nhận
-                    </div>
-                </button>
-            </div>
-            <div className="request-deny-735">
-                <button className="button-request-deny-735" type="submit" >
-                    <div className="request-button-735">
-                        Từ chối
-                    </div>
-                </button>
-            </div>
-        </div>
-    );
-}
 
 export default Post

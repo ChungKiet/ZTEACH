@@ -70,7 +70,7 @@ function NewPost() {
                     <Dropdown id="id-select-dpw"
                         className='text-occupation'
                         values={optionSelect.lesson}
-                        name="lesson"
+                        name="lessons"
                         placeholder="Chọn số buổi/tuần"
                         onChange={handleChange}
                     />

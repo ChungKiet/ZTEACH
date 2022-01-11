@@ -1,33 +1,48 @@
 import React, { Component, useState, findDOMNode } from "react";
+import { BrowserRouter as Router, Switch, useLocation} from "react-router-dom";
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 import 'bootstrap/dist/css/bootstrap.css';
 import './EditPost.css';
-import validateInfo from './validateInfo';
+import validate from './validateInfo';
 import useForm from './useForm'
-import Dropdown from '../Dropdown';
+import DropUpdate from '../DropUpdate';
+import GlobalVar from "../../GlobalVar";
 
+const optionSelect = GlobalVar.optionSelect;
 
-
-function EditPost() {
+function EditPost() {   
+    
+    const location = useLocation();
+    const v = location.state.values;
+    const id = {id :location.state.id};
+    const dt = {...v, ...id}
     const submitForm = () => {
         console.log("Submitted");
     }
-    const { handleChange, handleSubmit, values, errors } = useForm(
+    const { handleChange, handleSubmit, values,  errors } = useForm(
         submitForm,
-        validateInfo
+        validate,
+        dt
     );
-
-    const optionSelect = {
-        subject: ['Toán', 'Lý', 'Hóa', 'Sinh', 'Văn', 'Sử', 'Địa', 'Anh', 'KHTN', 'KHXH'],
-        grade: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-        place: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7', 'Q8', 'Q9', 'Q10', 'Q11', 'Q12', 'Bình Chánh', 'Bình Tân', 'Bình Thạnh', 'Cần Giờ', 'Củ Chi', 'Gò Vấp', 'Hóc Môn', 'Nhà Bè', 'Phú Nhuận', 'Tân Bình', 'Tân Phú', 'Thủ Đức', 'ONLINE'],
-        daysperweek: [1, 2, 3, 4, 5, 6, 7],
-        duration: ['1h', '1.5h', '2h', '2.5h', '3h', '3.5h', '4h'],
-        tutor_gender: ['Nam', 'Nữ', 'Khác'],
-        tutor_level: ['Sinh viên', 'Giáo viên']
-    }
-
+    
+    
+    //console.log("values = \n");
+    //console.log(values);
+    /*
+    values.id = id;
+    values.subject = v.subject;
+    values.grade = v.grade;
+    values.study_form = v.study_form;
+    values.lessons = v.lessons;
+    values.time = v.time;
+    values.start = v.start;
+    values.title = v.title;
+    values.information = v.information;
+    values.literacy = v.literacy;
+    values.gender = v.gender;
+    values.fee = v.fee;
+    */
     return (
 
         <form className="new-post-page" onSubmit={handleSubmit}>
@@ -35,7 +50,7 @@ function EditPost() {
 
 
             <div className="label-dangbaitimkiemgiasu">
-                <div>ĐĂNG BÀI TÌM GIA SƯ</div>
+                <div>CHỈNH SỬA BÀI ĐĂNG</div>
             </div>
 
             {/* Group 1 - Class */}
@@ -47,28 +62,31 @@ function EditPost() {
 
                 <div className="flex-row">
                     {/* Subject */}
-                    <Dropdown id="id-select-subject"
+                    <DropUpdate id="id-select-subject"
                         className='text-occupation'
                         values={optionSelect.subject}
+                        value={v.subject}
                         name="subject"
                         placeholder="Chọn môn học"
                         onChange={handleChange}
                     />
 
                     {/* Grade */}
-                    <Dropdown id="id-select-grade"
+                    <DropUpdate id="id-select-grade"
                         className='text-occupation'
                         values={optionSelect.grade}
+                        value={v.grade}
                         name="grade"
                         placeholder="Chọn lớp"
                         onChange={handleChange}
                     />
 
                     {/* Place */}
-                    <Dropdown id="id-select-place"
+                    <DropUpdate id="id-select-place"
                         className='text-occupation'
-                        values={optionSelect.place}
-                        name="place"
+                        values={optionSelect.study_form}
+                        value={v.study_form}
+                        name="study_form"
                         placeholder="Chọn nơi học"
                         onChange={handleChange}
                     />
@@ -76,20 +94,22 @@ function EditPost() {
                 <div className="flex-row">
                     {/* DaysPerWeek */}
 
-                    <Dropdown id="id-select-dpw"
+                    <DropUpdate id="id-select-dpw"
                         className='text-occupation'
-                        values={optionSelect.daysperweek}
-                        name="daysperweek"
+                        values={optionSelect.lesson}
+                        value={v.lessons}
+                        name="lessons"
                         placeholder="Chọn số buổi/tuần"
                         onChange={handleChange}
                     />
 
 
                     {/* Duration */}
-                    <Dropdown id="id-select-duration"
+                    <DropUpdate id="id-select-duration"
                         className='text-occupation'
-                        values={optionSelect.duration}
-                        name="duration"
+                        values={optionSelect.time}
+                        value={v.time}
+                        name="time"
                         placeholder="Chọn thời gian mỗi buổi"
                         onChange={handleChange}
                     />
@@ -99,21 +119,23 @@ function EditPost() {
                     {/* start_date */}
                     <input
                         id="duedate"
-                        type="text"
-                        onFocus={(e) => e.currentTarget.type = 'date'}
+                        type="date"
                         onChange={handleChange}
                         className="text-occupation"
-                        name="start_date"
+                        defaultValue={v.start}
+                        name="start"
                         placeholder="Thời gian bắt đầu dự kiến"
                     />
 
                 </div>
                 <div className="flex-row">
-                    {/* Title */}
+                    {/* Title
+                    must use defaultValue instead of value -> editable */}
                     <input
                         type='text'
                         className="class-title"
                         placeholder='Thêm tiêu đề...'
+                        defaultValue={v.title}
                         name="title"
                         onChange={handleChange}
                     >
@@ -125,7 +147,8 @@ function EditPost() {
                     <textarea
                         className="class-detail"
                         placeholder='Thêm thông tin chi tiết...'
-                        name="detail"
+                        defaultValue={v.information}
+                        name="information"
                         onChange={handleChange}
                         onKeyPress={(e) => { e.target.keyCode === 13 && e.preventDefault(); }}>
                     </textarea>
@@ -146,25 +169,25 @@ function EditPost() {
                 <div className="flex-row">
                     {/* tutor_level */}
                     
-                        <Dropdown id="id-select-level"
+                        <DropUpdate id="id-select-level"
                             className='text-occupation'
-                            values={optionSelect.tutor_level}
-                            name="tutor_level"
+                            values={optionSelect.literacy}
+                            value={v.literacy}
+                            name="literacy"
                             placeholder="Chọn trình độ gia sư"
                             onChange={handleChange}
                         />
                     
 
-                    {/* tutor_gender */}
-                    
-                        <Dropdown id="id-select-gender"
+                    {/* tutor_gender */}                    
+                        <DropUpdate id="id-select-gender"
                             className='text-occupation'
-                            values={optionSelect.tutor_gender}
-                            name="tutor_gender"
+                            values={optionSelect.gender}
+                            value={v.gender}
+                            name="gender"
                             placeholder="Chọn giới tính gia sư"
                             onChange={handleChange}
-                        />
-                    
+                        />                   
 
 
                     {/* salary */}
@@ -173,7 +196,8 @@ function EditPost() {
                         type='text'
                         className="text-occupation"
                         placeholder='Mức lương (/buổi)'
-                        name="salary"
+                        defaultValue={v.fee}
+                        name="fee"
                         onChange={handleChange}
                     >
                     </input>

@@ -10,7 +10,7 @@ const useForm = (callback, validate) => {
     subject: "",
     grade: "",
     study_form: "",
-    lesson: "",
+    lessons: "",
     time: "",
     start: "",
     title: "",

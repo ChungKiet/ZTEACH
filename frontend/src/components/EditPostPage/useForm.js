@@ -1,21 +1,12 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import GlobalVar from '../../GlobalVar';
+import { useNavigate } from 'react-router-dom';
 
-const useForm = (callback, validate) => {
-  const [values, setValues] = useState({
-    subject: "",
-    grade: "",
-    place: "",
-    daysperweek: "",
-    duration: "",
-    start_date: "",
-    title: "",
-    detail: "",
-    tutor_level: "",
-    tutor_gender: "",
-    salary: ""
-  });
+
+const useForm = (callback, validate, dt) => {
+  const navigate = useNavigate();
+
+  const [values, setValues] = useState(dt);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -28,51 +19,42 @@ const useForm = (callback, validate) => {
   };
 
   const handleSubmit = e => {
-    e.preventDefault();
-
-    setErrors(validate(values));
-    setIsSubmitting(true);
+    
+    //const tmp = JSON.parse(window.sessionStorage.getItem("user19120000"));
+    //console.log(tmp); // _id, password
+    //const user = {user : tmp._id};
+    //const data = {...user, ...values}; //concatenate
+    //console.log(data);
+    console.log("PUT data:\n");
     console.log(values);
+    e.preventDefault();
+    setErrors(validate(values));
+    setIsSubmitting(true);    
     if(true){
     //if (!errors.isError) {
-      axios.put("http://localhost:8000/edit-post", values).then(res => {
-        console.log(res)
-        const { isSucceeded } = res.data;
-        if (isSucceeded === true) {
-            alert("Thành công rồi nha!")
+      axios.put("http://localhost:8000/posts/edit", values).then(res => {
+        console.log(res.data)
+        const { message, uid } = res.data;
+        if (message === "Update Success") {
+            alert("Tạo bài đăng thành công!");
+            
+            navigate("/posts/" + values.id);
         }
         else{
-          alert("Thất bại!")
+          alert("Lỗi xảy ra khi cập nhật bài đăng!");
         }
     });
     }
   };
 
-  useEffect(() => {
-    const fetchData = async() => {
-        //const usertype = GlobalVar.user.user_type === "Học viên"? "user" : "tutor";
-        axios.post('http://localhost:8000/post', {id: '61d63bc74ed1d19b0d4a8db9'}).then(res => {//   https://localhost:8000/ + user_type + edit
-        const dt = res.data;
-        setValues({
-          subject: dt.subject,
-          grade: dt.grade,
-          place: dt.place,
-          daysperweek: dt.daysperweek,
-          duration: dt.duration,
-          start_date: dt.start_date,
-          title: dt.title,
-          detail: dt.detail,
-          tutor_level: dt.tutor_level,
-          tutor_gender: dt.tutor_gender,
-          salary: dt.fee,
-        });
-       })
-    };
-    fetchData();
-    if (Object.keys(errors).length === 0 && isSubmitting) {
-     callback();
-   }   
- }, [errors]);
+  useEffect(
+    () => {
+      if (Object.keys(errors).length === 0 && isSubmitting) {
+        callback();
+      }
+    },
+    [errors]
+  );
 
   return { handleChange, handleSubmit, values, errors };
 };
