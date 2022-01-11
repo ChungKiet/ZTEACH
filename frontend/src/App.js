@@ -16,6 +16,7 @@ import ImageUpload from './components/upload';
 // GlobalVar.isLogin = true;
 var a;
 function App() {
+  window.sessionStorage.setItem("isLogin", false);
   return (
     <Router>
       <div className="App">

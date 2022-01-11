@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 function Form() {
   const { register, handleSubmit, errors } = useForm();
   const navigate = useNavigate();
+  
   const onHandleSubmit = (data) => {
     axios.post("http://localhost:8000/users/login", data).then(res => {
       const { isLogin, user } = res.data;
@@ -15,6 +16,7 @@ function Form() {
         //GlobalVar.setUser(user);
         //setUser(user);
         window.sessionStorage.setItem("user19120000", JSON.stringify(user));
+        window.sessionStorage.setItem("isLogin", true);
         navigate('/');
       }
       else if (isLogin === 2) {

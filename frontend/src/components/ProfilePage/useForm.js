@@ -4,6 +4,7 @@ import GlobalVar from '../../GlobalVar';
 
 const useForm = (callback, validate) => {
   const [values, setValues] = useState({
+   id: "",
    username: "KietChung",
    intro: "No intro",
    name: "Kiệt Chung",
@@ -54,11 +55,14 @@ const useForm = (callback, validate) => {
   };
 
   useEffect(() => {
+  const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
+  console.log(user);
    const fetchData = async() => {
-       //const user_type = GlobalVar.user.user_type === "Học viên"? "users": "tutors";
-       axios.post('http://localhost:8000/users/profile', {id: '61d63bc74ed1d19b0d4a8db9'}).then(res => {//   https://localhost:8000/ + user_type + edit
+       //const user_type = GlobalVar.user.user_type === "Học viên"? "users": "tutors"; // '61d63bc74ed1d19b0d4a8db9'
+       axios.post('http://localhost:8000/users/profile', {id: user._id }).then(res => {//   https://localhost:8000/ + user_type + edit
     const dt = res.data;
     setValues({
+      id: dt._id,
       username: dt.username,
       intro: dt.introduce,
       name: dt.name,
@@ -85,7 +89,7 @@ const useForm = (callback, validate) => {
    
 }, []);
 
-  return { handleSubmit, values, errors };
+  return { handleSubmit ,  values, errors };
 };
 
 export default useForm;
