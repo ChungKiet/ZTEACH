@@ -14,6 +14,9 @@ class Profile extends React.Component {
     ClickListener(){
         this.setState({onClick: !this.state.onClick});
     }
+    LogoutListener(){
+        window.sessionStorage.removeItem("user19120000");
+    }
     render(){
     return (
           <div class="action">
@@ -25,7 +28,7 @@ class Profile extends React.Component {
                 <ul>
                     <Link to="/profile" className="link447"><li>Xem thông tin chi tiết</li></Link>
                     <li>Đổi mật khẩu</li>
-                    <Link to="/login" className="link447"><li>Đăng xuất</li></Link>
+                    <Link to="/login" className="link447" onClick={this.LogoutListener}><li>Đăng xuất</li></Link>
                 </ul>
             </div>)}
         </div>  

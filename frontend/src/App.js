@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, {useState} from 'react';
 import { BrowserRouter as Router, Switch, Route, Routes } from 'react-router-dom';
 import HomePage from './components/pages/HomePage';
 import LoginPage from './components/pages/LoginPage';
@@ -12,7 +12,6 @@ import TutorRegisterPage from './components/pages/TutorRegisterPage';
 import ProfilePage from './components/pages/ProfilePage';
 import PostListPage from './components/pages/PostListPage';
 import ImageUpload from './components/upload';
-import GlobalVar from './GlobalVar';
 
 // GlobalVar.isLogin = true;
 var a;
@@ -25,8 +24,8 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/edit-post" element={<EditPostPage />} />
-          <Route path="/new-post" element={<NewPostPage />} />
-          <Route path="/post" element={<PostPage />} />
+          <Route path="/posts/new-post" element={<NewPostPage />} />
+          <Route path="/posts/*" element={<PostPage />} />
           <Route path="/editprofile" element={<EditProfilePage />} />
           <Route path="/register-tutor" element={<TutorRegisterPage />} />
           <Route path="/profile" element={<ProfilePage />} />

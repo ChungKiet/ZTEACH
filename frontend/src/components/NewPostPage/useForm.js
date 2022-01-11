@@ -1,19 +1,23 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 const useForm = (callback, validate) => {
+  const navigate = useNavigate();
+
   const [values, setValues] = useState({
     subject: "",
     grade: "",
-    place: "",
-    daysperweek: "",
-    duration: "",
-    start_date: "",
+    study_form: "",
+    lesson: "",
+    time: "",
+    start: "",
     title: "",
-    detail: "",
-    tutor_level: "",
-    tutor_gender: "",
-    salary: ""
+    information: "",
+    literacy: "",
+    gender: "",
+    fee: ""
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,21 +31,28 @@ const useForm = (callback, validate) => {
   };
 
   const handleSubmit = e => {
-    e.preventDefault();
+    
+    const tmp = JSON.parse(window.sessionStorage.getItem("user19120000"));
+    console.log(tmp); // _id, password
 
+    const user = {user : tmp._id};
+    const data = {...user, ...values}; //concatenate
+
+
+    e.preventDefault();
     setErrors(validate(values));
-    setIsSubmitting(true);
-    console.log(values);
+    setIsSubmitting(true);    
     if(true){
     //if (!errors.isError) {
-      axios.post("http://localhost:8000/new-post", values).then(res => {
-        console.log(res)
-        const { isSucceeded } = res.data;
-        if (isSucceeded === true) {
-            alert("Thành công rồi nha!")
+      axios.post("http://localhost:8000/posts/new-post", data).then(res => {
+        console.log(res.data)
+        const { message, id } = res.data;
+        if (message === "Success") {
+            alert("Tạo bài đăng thành công!");
+            navigate("/posts/" + id);
         }
         else{
-          alert("Thất bại!")
+          alert("Lỗi khi tạo bài đăng!");
         }
     });
     }

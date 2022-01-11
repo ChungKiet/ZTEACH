@@ -4,14 +4,15 @@ import { Link } from 'react-router-dom';
 import './Navbar.css';
 import logo from './images/logo.png';
 import Profile from './Profile';
-import GlobalVar from '../GlobalVar';
+
 function Navbar() {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
-
+  //const {user, setUser} = useContext(UserContext);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
-
+  const tmp = window.sessionStorage.getItem("user19120000");
+  const user = JSON.parse(tmp); 
   const showButton = () => {
     if (window.innerWidth <= 960) {
       setButton(false);
@@ -37,7 +38,7 @@ function Navbar() {
           <div className='menu-icon' onClick={handleClick}>
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
           </div>
-          {!GlobalVar.isLogin && (<ul className={click ? 'nav-menu active' : 'nav-menu'}>
+          {(user === null) && (<ul className={click ? 'nav-menu active' : 'nav-menu'}>
             <li className='nav-item'>
               <Link
                 to='/login'
@@ -48,8 +49,8 @@ function Navbar() {
               </Link>
             </li>
           </ul>)}
-          {!GlobalVar.isLogin && button && <Link to="/signup"><Button buttonStyle='btn--outline1'>ĐĂNG KÝ</Button></Link>}
-          {GlobalVar.isLogin && <Profile/>}
+          {(user === null) && button && <Link to="/signup"><Button buttonStyle='btn--outline1'>ĐĂNG KÝ</Button></Link>}
+          {(user !== null) && <Profile/>}
         </div>
       </nav>
     </>
