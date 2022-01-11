@@ -7,7 +7,7 @@ function HomePage() {
   return (
     <>
       <Navbar/>
-      <Search/>
+      <Posts/>
     </>
   );
 }

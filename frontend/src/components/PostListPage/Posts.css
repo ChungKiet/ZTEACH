@@ -4,3 +4,9 @@
     grid-template-rows: 300px 300px 300px 300px 300px 300px 300px 300px 300px 300px;
     align-items: center;
 }
+
+.posts-grid-main-layout40 {
+    position: static;
+    display: grid;
+    grid-template-columns: 25% 75%;
+}
