@@ -38,11 +38,11 @@
 .search-input-full {
     display: block;
     padding-left: 10px;
-    outline: none;
+    /*outline: none;*/
+    border: none;
     border-radius: 2px;
     height: 40px;
     width: 300px;
-    border: none;
 }
 .search-input-full::placeholder {
     color: #595959;
@@ -52,19 +52,21 @@
 .search-choice-haft40 {
     width: 145px;
     height: 40px;
-    /*border: normal;
-    border-radius: 10px;*/
+    /*outline: none;*/
+    border: normal;
+    border-radius: 2px;
     text-align: center;
-    box-shadow: 1px 1px 1px 1px #9E9E9E;
+    border: none;
 }
 
 .search-choice-full40 {
     width: 300px;
     height: 40px;
-    /*border: normal;
-    border-radius: 10px;*/
+    /*outline: none;*/
+    border: normal;
+    border-radius: 2px;
     text-align: center;
-    box-shadow: 1px 1px 1px 1px #9E9E9E;
+    border: none;
 }
 
 .search-button {

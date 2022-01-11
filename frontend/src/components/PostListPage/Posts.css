@@ -1,7 +1,7 @@
 .posts-grid-layout40 {
     display: grid;
-    grid-template-columns: 1000px;
-    grid-template-rows: 300px 300px 300px 300px 300px 300px 300px 300px 300px 300px;
+    grid-template-columns:100%;
+    grid-template-rows: min-content min-content min-content min-content min-content min-content min-content min-content min-content min-content;
     align-items: center;
 }
 

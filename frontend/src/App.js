@@ -16,6 +16,7 @@ import ImageUpload from './components/upload';
 // GlobalVar.isLogin = true;
 var a;
 function App() {
+  window.sessionStorage.setItem("isLogin", false);
   return (
     <Router>
       <div className="App">
@@ -24,8 +25,8 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/edit-post" element={<EditPostPage />} />
-          <Route path="/new-post" element={<NewPostPage />} />
-          <Route path="/post" element={<PostPage />} />
+          <Route path="/posts/new-post" element={<NewPostPage />} />
+          <Route path="/posts/*" element={<PostPage />} />
           <Route path="/editprofile" element={<EditProfilePage />} />
           <Route path="/register-tutor" element={<TutorRegisterPage />} />
           <Route path="/profile" element={<ProfilePage />} />

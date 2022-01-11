@@ -6,8 +6,9 @@ import './NewPost.css';
 import validate from './validateInfo';
 import useForm from './useForm'
 import Dropdown from '../Dropdown';
+import GlobalVar from "../../GlobalVar";
 
-
+const optionSelect = GlobalVar.optionSelect;
 
 function NewPost() {
     const submitForm = () => {
@@ -17,16 +18,6 @@ function NewPost() {
         submitForm,
         validate
     );
-
-    const optionSelect = {
-        subject: ['Toán', 'Lý', 'Hóa', 'Sinh', 'Văn', 'Sử', 'Địa', 'Anh', 'KHTN', 'KHXH'],
-        grade: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-        place: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7', 'Q8', 'Q9', 'Q10', 'Q11', 'Q12', 'Bình Chánh', 'Bình Tân', 'Bình Thạnh', 'Cần Giờ', 'Củ Chi', 'Gò Vấp', 'Hóc Môn', 'Nhà Bè', 'Phú Nhuận', 'Tân Bình', 'Tân Phú', 'Thủ Đức', 'ONLINE'],
-        daysperweek: [1, 2, 3, 4, 5, 6, 7],
-        duration: ['1h', '1.5h', '2h', '2.5h', '3h', '3.5h', '4h'],
-        tutor_gender: ['Nam', 'Nữ', 'Khác'],
-        tutor_level: ['Sinh viên', 'Giáo viên']
-    }
 
     return (
 
@@ -67,8 +58,8 @@ function NewPost() {
                     {/* Place */}
                     <Dropdown id="id-select-place"
                         className='text-occupation'
-                        values={optionSelect.place}
-                        name="place"
+                        values={optionSelect.study_form}
+                        name="study_form"
                         placeholder="Chọn nơi học"
                         onChange={handleChange}
                     />
@@ -78,8 +69,8 @@ function NewPost() {
 
                     <Dropdown id="id-select-dpw"
                         className='text-occupation'
-                        values={optionSelect.daysperweek}
-                        name="daysperweek"
+                        values={optionSelect.lesson}
+                        name="lesson"
                         placeholder="Chọn số buổi/tuần"
                         onChange={handleChange}
                     />
@@ -88,8 +79,8 @@ function NewPost() {
                     {/* Duration */}
                     <Dropdown id="id-select-duration"
                         className='text-occupation'
-                        values={optionSelect.duration}
-                        name="duration"
+                        values={optionSelect.time}
+                        name="time"
                         placeholder="Chọn thời gian mỗi buổi"
                         onChange={handleChange}
                     />
@@ -103,7 +94,7 @@ function NewPost() {
                         onFocus={(e) => e.currentTarget.type = 'date'}
                         onChange={handleChange}
                         className="text-occupation"
-                        name="start_date"
+                        name="start"
                         placeholder="Thời gian bắt đầu dự kiến"
                     />
 
@@ -125,7 +116,7 @@ function NewPost() {
                     <textarea
                         className="class-detail"
                         placeholder='Thêm thông tin chi tiết...'
-                        name="detail"
+                        name="information"
                         onChange={handleChange}
                         onKeyPress={(e) => { e.target.keyCode === 13 && e.preventDefault(); }}>
                     </textarea>
@@ -148,23 +139,21 @@ function NewPost() {
                     
                         <Dropdown id="id-select-level"
                             className='text-occupation'
-                            values={optionSelect.tutor_level}
-                            name="tutor_level"
+                            values={optionSelect.literacy}
+                            name="literacy"
                             placeholder="Chọn trình độ gia sư"
                             onChange={handleChange}
                         />
                     
 
-                    {/* tutor_gender */}
-                    
+                    {/* tutor_gender */}                    
                         <Dropdown id="id-select-gender"
                             className='text-occupation'
-                            values={optionSelect.tutor_gender}
-                            name="tutor_gender"
+                            values={optionSelect.gender}
+                            name="gender"
                             placeholder="Chọn giới tính gia sư"
                             onChange={handleChange}
-                        />
-                    
+                        />                   
 
 
                     {/* salary */}
@@ -173,7 +162,7 @@ function NewPost() {
                         type='text'
                         className="text-occupation"
                         placeholder='Mức lương (/buổi)'
-                        name="salary"
+                        name="fee"
                         onChange={handleChange}
                     >
                     </input>

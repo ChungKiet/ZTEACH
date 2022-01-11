@@ -14,6 +14,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import React from "react";
 import validateInfo from './validateInfo';
 import useForm from './useForm';
+import { useNavigate } from 'react-router-dom';
 
 
 import FileBase64 from 'react-file-base64';
@@ -21,6 +22,7 @@ import FileBase64 from 'react-file-base64';
 var ReactDOM = require('react-dom');
 
 function Profile(){
+  const navigate = useNavigate();
   const submitForm = () => {
     console.log("Submitted");
   }
@@ -65,8 +67,8 @@ function Profile(){
           <div className='user_type'>
             {values.user_type}
           </div>
-          <button className='btn-edit'>
-            Chỉnh sửa trang cá nhân
+          <button className='btn_edit'>
+            <a href='/editprofile' > Chỉnh sửa trang cá nhân </a>
           </button>
         </div>
     

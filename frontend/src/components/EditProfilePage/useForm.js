@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const useForm = (callback, validate) => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
+   id: "",
    username: "KietChung",
    intro: "No intro",
    name: "Kiệt Chung",
@@ -70,18 +71,18 @@ const useForm = (callback, validate) => {
     //console.log(values);
     console.log(errors.isError);
     console.log(values);
-    alert("I'm here");
     if (!errors.isError) {
       //const usertype = GlobalVar.user.user_type === "Học viên"? "user" : "tutor";
-        axios.put('http://localhost:8000/users/edit', values).then(res => { // 'http://localhost:8000/' + usertype + '/edit', values
+        const user_type = values.user_type === "student"? "users":"tutors";
+        axios.put('http://localhost:8000/'+ user_type + '/edit', values).then(res => { // 'http://localhost:8000/' + usertype + '/edit', values
         const msg = res.data;
-        alert("I'm here");
         if (!msg.error) {
           GlobalVar.setUser(
             values
           );
           navigate('/profile');
           alert("Cập nhật thành công!");
+          //window.sessionStorage.setItem('user19120000', values);
         }
         else{
           alert("Cập nhật thất bại!");
@@ -92,11 +93,15 @@ const useForm = (callback, validate) => {
   };
 
   useEffect(() => {
+   const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
+   const user_type = user.user_type === "student"? "users": "tutors";
+   console.log(user);
    const fetchData = async() => {
        //const usertype = GlobalVar.user.user_type === "Học viên"? "user" : "tutor";
-       axios.post('http://localhost:8000/users/profile', {id: '61d63bc74ed1d19b0d4a8db9'}).then(res => {//   https://localhost:8000/ + user_type + edit
+       axios.post('http://localhost:8000/'+ "users" +'/profile', {id: user._id}).then(res => {//   https://localhost:8000/ + user_type + edit
        const dt = res.data;
        setValues({
+         id: dt._id,
          username: dt.username,
          intro: dt.introduce,
          name: dt.name,
