@@ -72,7 +72,7 @@ function Post() {
             });
         };
         fetchData();
-        
+
 
     }, []);
     console.log(values);
@@ -112,6 +112,38 @@ function Post() {
                 </button>
             );
         }
+    }
+
+    function RenderRequestList() {
+        const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
+        console.log("_id = ");
+        console.log(cookie._id);
+        const currentUserID = cookie._id;
+        if (currentUserID === values.user)
+            return (
+                <div>
+                <div className="more-detail-label">Danh sách gia sư yêu cầu kết nối:</div>
+
+            <div className="overlap-group-requests">
+                <div className="box-outline-735"></div>
+                <div className="flex-request-heads">
+                    <div className="request-no-735">STT</div>
+                    <div className="request-username-735">Tên tài khoản</div>
+                    <div className="request-level-735">Trình độ</div>
+                    <div className="request-gender-735">Giới tính</div>
+                </div>
+                <div className="request-list-735">
+                    <RequestSummaryLine order="1" username="ThuyKhueChemist94" level="Giáo viên" gender="Nữ"></RequestSummaryLine>
+                    <RequestSummaryLine order="2" username="HoaiHuongPro" level="Sinh viên" gender="Nữ"></RequestSummaryLine>
+                    <RequestSummaryLine order="3" username="TrucRapper" level="Giáo viên" gender="Nam"></RequestSummaryLine>
+                    <RequestSummaryLine order={1 + 3} username="AnhThanhNien" level="Giáo viên" gender="Nữ"></RequestSummaryLine>
+
+                </div>
+            </div>
+            </div>)
+        else{
+            return(<div/>);
+        }
 
     }
 
@@ -142,7 +174,7 @@ function Post() {
                         </div>
                     </div>
                 </div>
-                <RenderButton/>
+                <RenderButton />
             </div>
 
 
@@ -267,7 +299,7 @@ function Post() {
                         </div>
                         <div className="placeholder-text-1">
                             <div className="select-occupation-1">
-                                {values.fee}đ/buổi
+                                {values.fee}đ/tháng
                             </div>
                         </div>
                     </div>
@@ -308,28 +340,11 @@ function Post() {
                 <div className="detail-script">{values.information}</div>
             </div>
 
-     
 
-        
-            <div className="more-detail-label">Danh sách gia sư yêu cầu kết nối:</div>
 
-            <div className="overlap-group-requests">
-                <div className="box-outline-735"></div>
-                <div className="flex-request-heads">
-                    <div className="request-no-735">STT</div>
-                    <div className="request-username-735">Tên tài khoản</div>
-                    <div className="request-level-735">Trình độ</div>
-                    <div className="request-gender-735">Giới tính</div>
-                </div>
-                <div className="request-list-735">
-                    <RequestSummaryLine order="1" username="ThuyKhueChemist94" level="Giáo viên" gender="Nữ"></RequestSummaryLine>
-                    <RequestSummaryLine order="2" username="HoaiHuongPro" level="Sinh viên" gender="Nữ"></RequestSummaryLine>
-                    <RequestSummaryLine order="3" username="TrucRapper" level="Giáo viên" gender="Nam"></RequestSummaryLine>
-                    <RequestSummaryLine order={1 + 3} username="AnhThanhNien" level="Giáo viên" gender="Nữ"></RequestSummaryLine>
 
-                </div>
-            </div>
-            
+            <RenderRequestList/>
+
 
 
             <div style={{ position: 'relative', marginTop: "2%", marginBottom: "0px", bottom: "0", width: '100%' }}>
