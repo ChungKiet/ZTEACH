@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import GlobalVar from '../../GlobalVar';
 const useForm = (callback, validate) => {
   //Date birth = new Date(2000, 1, 1);
   const navigate = useNavigate();
@@ -37,8 +36,9 @@ const useForm = (callback, validate) => {
       axios.post("http://localhost:8000/users/register", values).then(res=>{
       const {msg} = res.data;
       if(msg === 1){
-        GlobalVar.changeLogin();
-        GlobalVar.setUser(values);
+         window.sessionStorage.setItem("user19120000", JSON.stringify(values));
+        //GlobalVar.changeLogin();
+        //GlobalVar.setUser(values);
         navigate('/editprofile');
       }
       else if(msg === 2){

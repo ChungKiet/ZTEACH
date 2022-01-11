@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, {useState} from 'react';
 import { BrowserRouter as Router, Switch, Route, Routes } from 'react-router-dom';
 import HomePage from './components/pages/HomePage';
 import LoginPage from './components/pages/LoginPage';
@@ -11,7 +11,6 @@ import TutorRegisterPage from './components/pages/TutorRegisterPage';
 import ProfilePage from './components/pages/ProfilePage';
 import PostListPage from './components/pages/PostListPage';
 import ImageUpload from './components/upload';
-import GlobalVar from './GlobalVar';
 
 // GlobalVar.isLogin = true;
 var a;
