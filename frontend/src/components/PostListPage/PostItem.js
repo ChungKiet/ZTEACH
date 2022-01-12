@@ -10,8 +10,6 @@ import img_place from '../images/postimg/place.png';
 import img_subject from '../images/postimg/subject.png';
 import img_avata_user from '../images/profile.png';
 
-import './PostItem.css';
-
 import axios from "axios";
 
 
@@ -54,14 +52,6 @@ function PostItem(params) {
         fetchData();
 
     }, []);
-
-    const handleChange = e => {
-        const { name, value } = e.target;
-        setValues({
-            ...values,
-            [name]: value
-        });
-    };
 
 
 

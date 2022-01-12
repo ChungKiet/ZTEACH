@@ -1,17 +1,23 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const useForm = (callback, validate) => {
+  const query = window.location.search;
+  console.log('http://localhost:8000/posts' + query);
+  
+  const navigate = useNavigate();
   const [values, setValues] = useState({
+    page: "1",
     title: "",
     subject: "",
     grade: "",
-    place: "",
-    daysperweek: "",
-    duration: "",
-    tutor_level: "",
-    tutor_gender: "",
-    fee: ""
+    study_form: "",
+    lesson: "",
+    time: "",
+    fee: "",
+    literacy: "",
+    gender: ""
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -30,29 +36,23 @@ const useForm = (callback, validate) => {
     setErrors(validate(values));
     setIsSubmitting(true);
     console.log(values);
-    if(true){
-    //if (!errors.isError) {
-      axios.post("http://localhost:8000/posts", values).then(res => {
-        console.log(res)
-        const { isSucceeded } = res.data;
-        if (isSucceeded === true) {
-            alert("Thành công rồi nha!")
-        }
-        else{
-          alert("Thất bại!")
-        }
-    });
-    }
+
+    navigate('/post');
   };
 
-  useEffect(
-    () => {
-      if (Object.keys(errors).length === 0 && isSubmitting) {
-        callback();
-      }
-    },
-    [errors]
-  );
+  useEffect(() => {
+        const fetchData = async () => {
+            
+
+
+
+            const result = await axios('http://localhost:8000/posts' + query);
+            const data = result.data;
+            console.log(data)
+            //
+        };
+        fetchData();
+    }, []);
 
   return { handleChange, handleSubmit, values, errors };
 };
