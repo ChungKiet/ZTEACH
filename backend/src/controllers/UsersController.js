@@ -82,18 +82,23 @@ class UsersController {
             birthday, birthday_secure, address, address_secure,
             contact, contact_secure, introduce } = req.body;
         try {
-            await User.updateOne({ username: username, user_type: "student" }, {
+            const user = await User.updateOne({ username: username, user_type: "student" }, {
                 name, gender, gender_secure, email, email_secure,
                 birthday, birthday_secure, address, address_secure,
                 contact, contact_secure, introduce
             });
-            res.json({ "message": "Profile update Success" });
+            if (user.modifiedCount === 1) {
+                res.json({ "message": "Profile update Success" });
+            }
+            else {
+                res.json({ "message": "Profile update Failed" });
+            }
         }
         catch (err) {
             res.status(500).send({
                 "error": {
                     "code": 500,
-                    "message": "Profile update failed."
+                    "message": "Server inernal error. Profile update failed."
                 }
             });
         }
@@ -119,7 +124,7 @@ class UsersController {
     // [POST] /users/short-prof
     async short_prof(req, res, next) {
         const username = req.body.username;
-        const user = await User.findOne({ username }, 'username name');
+        const user = await User.findOne({ username }, 'image username name');
         res.json(user);
     }
 

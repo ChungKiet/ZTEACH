@@ -31,19 +31,19 @@ class PostsController {
 
     // [POST] /posts/user-post
     async user_post(req, res, next) {
-        const user = req.body.user;
-        const posts = await Post.find({ user }, 'title createdAt');
+        const username = req.body.username;
+        const posts = await Post.find({ username }, 'title createdAt');
         res.json(posts);
     }
 
     // [POST] /posts/new-post
     async new_post(req, res, next) {
-        const { user, title, information, subject, grade, fee,
+        const { username, title, information, subject, grade, fee,
             study_form, gender, literacy, lessons, time, start } = req.body;
 
         try {
             const post = await Post.create({
-                user, title, information, subject, grade, fee,
+                username, title, information, subject, grade, fee,
                 study_form, gender, literacy, lessons, time, start
             });
 
@@ -119,17 +119,22 @@ class PostsController {
             study_form, gender, literacy, lessons, time, start } = req.body;
 
         try {
-            await Post.updateOne({ _id: id }, {
+            const post = await Post.updateOne({ _id: id }, {
                 title, information, subject, grade, fee,
                 study_form, gender, literacy, lessons, time, start
             });
-            res.json({ "message": "Update Success", "id": id });
+            if (post.modifiedCount === 1) {
+                res.json({ "message": "Update Success", "id": id });
+            }
+            else {
+                req.json({ "message": "Update Failed", "id": null });
+            }
         }
         catch (err) {
             res.status(500).send({
                 "error": {
                     "code": 500,
-                    "message": "Post update failed."
+                    "message": "Server internal error. Post update failed."
                 }
             });
         }

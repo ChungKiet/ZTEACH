@@ -88,18 +88,23 @@ class TutorsController {
             address, address_secure, contact, contact_secure,
             introduce, major, literacy, fee, subjects, classes } = req.body;
         try {
-            await Tutor.updateOne({ _id: id, user_type: "tutor" }, {
+            const tutor = await Tutor.updateOne({ _id: id, user_type: "tutor" }, {
                 name, gender, email, email_secure, birthday,
                 address, address_secure, contact, contact_secure,
                 introduce, major, literacy, fee, subjects, classes
             });
-            res.json({ "message": "Tutor's profile update Success" });
+            if (tutor.modifiedCount === 1) {
+                res.json({ "message": "Tutor's profile update Success" });
+            }
+            else {
+                res.json({ "message": "Tutor's profile update Failed" });
+            }
         }
         catch (err) {
             res.status(500).send({
                 "error": {
                     "code": 500,
-                    "message": "Profile update failed."
+                    "message": "Server internal error. Profile update failed."
                 }
             });
         }
