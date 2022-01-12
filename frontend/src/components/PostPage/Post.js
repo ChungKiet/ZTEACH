@@ -38,46 +38,63 @@ function Post() {
         gender: "Nữ",
         fee: "300000",
         request: "2",
-        user: "123234345123",
-
-        own_username: "admin",
-        own_user_id: "u1709",
+        username: "__default__",
         is_connected: "0",
-        is_requested: "0"
+        is_requested: "0",
+        avatar_link: ""
     });
-    console.log('http://localhost:8000/posts/' + id);
 
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await axios('http://localhost:8000/posts/' + id);
+            await axios('http://localhost:8000/posts/' + id).then(
+                res => {
+                    axios.post('http://localhost:8000/users/profile', { username: res.data.username }).then(
+                        res2 => {
+                            const dt = res.data;
+                            const dt2 = res2.data;
+                            setValues({
+                                title: dt.title,
+                                information: dt.information,
+                                subject: dt.subject,
+                                grade: dt.grade,
+                                study_form: dt.study_form,
+                                start: dt.start,
+                                literacy: dt.literacy,
+                                gender: dt.gender,
+                                fee: dt.fee,
+                                request: dt.request,
+                                lessons: dt.lessons,
+                                time: dt.time,
+                                username: dt.username,
+                                is_connected: "0",
+                                is_requested: "0",
+                                avatar_link: dt2.image_prof
+                            });
+
+
+                        }
+                    )
+                }
+
+            )
+
+        }
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        const fetchData2 = async () => {
+            const result = await axios.post('http://localhost:8000/users/profile', { username: values.username });
+            console.log(result);
             const dt = result.data;
             setValues({
-                title: dt.title,
-                information: dt.information,
-                subject: dt.subject,
-                grade: dt.grade,
-                study_form: dt.study_form,
-                start: dt.start,
-                literacy: dt.literacy,
-                gender: dt.gender,
-                fee: dt.fee,
-                request: dt.request,
-                lessons: dt.lessons,
-                time: dt.time,
-                user: dt.user,
-
-                //own_username: dt.own_username,
-                //own_user_id: dt.own_user_id,
-                is_connected: "0",
-                is_requested: "0"
+                avatar_link: dt.image_prof
             });
         };
-        fetchData();
-
-
+        fetchData2();
     }, []);
-    console.log(values);
+
 
     const handleChange = e => {
         const { name, value } = e.target;
@@ -89,19 +106,17 @@ function Post() {
 
     function UserTag() {
         const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
-        console.log("_id = ");
-        console.log(cookie._id);
-        const currentUserID = cookie._id;
-        if (currentUserID !== values.user)
+        const currentUser = cookie.username;
+        if (currentUser !== values.username)
             return (
                 <div className="overlap-group-user">
                     <div className="box-user-head"></div>
                     <div className="flex-user">
                         <div>
-                            <img className="user-img-head" src={img_tutor} />
+                            <img className="user-img-head" src={values.avatar_link} alt={values.username} />
                         </div>
                         <div className="text-username">
-                            <a href={`http://localhost:3000/users/${values.user}`} style={{ 'text-decoration': 'none' }}>{values.user}</a>
+                            <a href={`http://localhost:3000/users/${values.username}`} style={{ 'textDecoration': 'none' }}>{values.username}</a>
                         </div>
                     </div>
                 </div>
@@ -121,10 +136,8 @@ function Post() {
 
     function ButtonConnect() {
         const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
-        console.log("_id = ");
-        console.log(cookie._id);
-        const currentUserID = cookie._id;
-        if (currentUserID === values.user) {
+        const currentUser = cookie.username;
+        if (currentUser === values.username) {
             return (
                 <div />
             )
@@ -159,10 +172,8 @@ function Post() {
 
     function RequestList() {
         const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
-        console.log("_id = ");
-        console.log(cookie._id);
-        const currentUserID = cookie._id;
-        if (currentUserID === values.user)
+        const currentUser = cookie.username;
+        if (currentUser === values.username)
             return (
                 <div>
                     <div className="more-detail-label">Danh sách gia sư yêu cầu kết nối:</div>
@@ -191,10 +202,8 @@ function Post() {
 
     function EditAndRemove() {
         const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
-        console.log("_id = ");
-        console.log(cookie._id);
-        const currentUserID = cookie._id;
-        if (currentUserID === values.user)
+        const currentUser = cookie.username;
+        if (currentUser === values.username)
             return (
                 <div className="edit-and-remove">
                     <Link to='/posts/edit-post' state={{ values, id }} className="post-edit-remove-735">
@@ -250,6 +259,7 @@ function Post() {
     return (
         <div className="Post">
             <Navbar />
+            {console.log("after all:"), console.log(values)}
 
             <div className="frame-general">
                 <div className="title-container-head">
@@ -434,7 +444,7 @@ function Post() {
             <EditAndRemove />
 
 
-            <div style={{ position: 'relative', marginTop: "2%", marginBottom: "0px", bottom: "0", width: '100%' }}>
+            <div style={{ position: 'relative', marginTop: "1%", marginBottom: "0px", bottom: "0", width: '100%' }}>
                 <Footer />
             </div>
         </div>

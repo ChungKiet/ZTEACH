@@ -36,7 +36,7 @@ const useForm = (callback, validate, dt) => {
         console.log(res.data)
         const { message, uid } = res.data;
         if (message === "Update Success") {
-            alert("Tạo bài đăng thành công!");
+            alert("Cập nhật thành công!");
             
             navigate("/posts/" + values.id);
         }
