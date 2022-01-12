@@ -14,45 +14,10 @@ import axios from "axios";
 
 
 function PostItem(params) {
-    const [values, setValues] = useState({
-        title: "Default title",
-        subject: "Hóa học",
-        grade: "Lớp 8",
-        place: "Quận 5",
-        tutor_level: "Sinh viên",
-        tutor_gender: "Nữ",
-        salary: "300000",
+    
 
-        username: "username",
-        own_username: "username",
-        own_user_id: "tm1606",
-        is_connected: "0",
-        is_requested: "0"
-    });
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const result = await axios('http://localhost:8000/posts');
-            const dt = result.data;
-            setValues({
-                title: dt.title,
-                subject: dt.subject,
-                grade: dt.grade,
-                place: dt.place,
-                tutor_level: dt.tutor_level,
-                tutor_gender: dt.tutor_gender,
-                salary: dt.salary,
-
-                own_username: dt.own_username,
-                own_user_id: dt.own_user_id,
-                is_connected: dt.is_connected,
-                is_requested: dt.is_requested
-            });
-        };
-        fetchData();
-
-    }, []);
-
+    const values = params.params;
+    console.log(values);
 
 
     return (
@@ -86,7 +51,7 @@ function PostItem(params) {
                                 Môn học
                             </div>
                         </div>
-                        <div className="placeholder-text-1">
+                        <div className="placeholder-text-40">
                             <div className="select-occupation-1">
                                 {values.subject}
                             </div>
@@ -103,7 +68,7 @@ function PostItem(params) {
                                 Khối lớp
                             </div>
                         </div>
-                        <div className="placeholder-text-1">
+                        <div className="placeholder-text-40">
                             <div className="select-occupation-1">
                                 {values.grade}
                             </div>
@@ -120,9 +85,9 @@ function PostItem(params) {
                                 Địa điểm học
                             </div>
                         </div>
-                        <div className="placeholder-text-1">
+                        <div className="placeholder-text-40">
                             <div className="select-occupation-1">
-                                {values.place}
+                                {values.study_form}
                             </div>
                         </div>
                     </div>
@@ -137,9 +102,9 @@ function PostItem(params) {
                                 Trình độ gia sư
                             </div>
                         </div>
-                        <div className="placeholder-text-1">
+                        <div className="placeholder-text-40">
                             <div className="select-occupation-1">
-                                {values.tutor_level}
+                                {values.literacy}
                             </div>
                         </div>
                     </div>
@@ -154,9 +119,9 @@ function PostItem(params) {
                                 Giới tính
                             </div>
                         </div>
-                        <div className="placeholder-text-1">
+                        <div className="placeholder-text-40">
                             <div className="select-occupation-1">
-                                {values.tutor_gender}
+                                {values.gender}
                             </div>
                         </div>
                     </div>
@@ -171,9 +136,9 @@ function PostItem(params) {
                                 Học phí (VNĐ/buổi)
                             </div>
                         </div>
-                        <div className="placeholder-text-1">
+                        <div className="placeholder-text-40">
                             <div className="select-occupation-1">
-                                {values.salary}
+                                {values.fee}
                             </div>
                         </div>
                     </div>

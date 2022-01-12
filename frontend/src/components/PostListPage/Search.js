@@ -1,20 +1,15 @@
 import React from 'react'
 import './Search.css';
 import Dropdown from '../Dropdown';
-import useForm from './useForm'
-import validate from './validateInfo';
 import GlobalVar from '../../GlobalVar';
 
-const optionSelect = GlobalVar.optionSelect;
 
-function Search() {
-    const submitForm = () => {
-        console.log("Submitted");
-    }
-    const { handleChange, handleSubmit, values, errors } = useForm(
-        submitForm,
-        validate
-    );
+
+function Search(params) {
+    const optionSelect = GlobalVar.optionSelect;
+
+
+    const {handleChange, handleSubmit, values, errors} = params.params;
 
     return (
         <form className="search-frame40" onSubmit={handleSubmit}>
