@@ -8,7 +8,7 @@ class PostsController {
         const page = Number(req.query.page) || 1;
 
         const query = req.query;
-        const find = Post.find({}, 'user title subject grade \
+        const find = Post.find({}, 'image username title subject grade \
                                 study_form literacy gender fee')
             .limit(size)
             .skip(size * (page - 1));

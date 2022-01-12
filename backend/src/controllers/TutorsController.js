@@ -8,8 +8,8 @@ class TutorsController {
         const page = Number(req.query.page) || 1;
 
         const query = req.query;
-        const find = Tutor.find({ user_type: "tutor" }, 'username name birthday \
-                            introduce literacy gender subjects classes fee rate')
+        const find = Tutor.find({ user_type: "tutor" }, 'image username name birthday \
+                                introduce literacy gender subjects classes fee rate')
             .limit(size)
             .skip(size * (page - 1));
 
