@@ -4,14 +4,13 @@ class PostsController {
 
     // [Get] /posts 
     async index(req, res, next) {
-        const size = 5;
         const page = Number(req.query.page) || 1;
+        const from = (page - 1) * 10;
+        const to = page * 10;
 
         const query = req.query;
         const find = Post.find({}, 'image username title subject grade \
-                                study_form literacy gender fee')
-            .limit(size)
-            .skip(size * (page - 1));
+                                study_form literacy gender fee');
 
         if (query.fee) {
             find.find({ fee: { $gte: query.fee } });
@@ -26,7 +25,7 @@ class PostsController {
             }, {}));
 
         const posts = await find.exec();
-        res.json(posts);
+        res.json({ 'number': posts.length, 'posts': posts.slice(from, to) });
     }
 
     // [POST] /posts/user-post
@@ -38,22 +37,25 @@ class PostsController {
 
     // [POST] /posts/new-post
     async new_post(req, res, next) {
-        const { username, title, information, subject, grade, fee,
+        const { image, username, title, information, subject, grade, fee,
             study_form, gender, literacy, lessons, time, start } = req.body;
-
         try {
             const post = await Post.create({
-                username, title, information, subject, grade, fee,
+                image, username, title, information, subject, grade, fee,
                 study_form, gender, literacy, lessons, time, start
             });
-
-            res.json({ "message": "Success", "id": post._id });
+            if (post) {
+                res.json({ "message": "Create post Success", "id": post._id });
+            }
+            else {
+                res.json({ "message": "Create post Failed", "id": null });
+            }
         }
         catch (err) {
             res.status(500).send({
                 "error": {
                     "code": 500,
-                    "message": "Post creation failed."
+                    "message": "Server internal error. Create post Failed."
                 }
             });
         }
@@ -82,8 +84,8 @@ class PostsController {
         const page = Number(req.query.page) || 1;
 
         const query = req.query;
-        const find = Post.find({}, 'user title subject grade \
-                                study_form literacy gender fee')
+        const find = Post.find({}, 'image username title subject \
+                                grade study_form literacy gender fee')
             .limit(size)
             .skip(size * (page - 1));
 
@@ -145,13 +147,13 @@ class PostsController {
         const id = req.body.id;
         try {
             await Post.deleteOne({ _id: id });
-            res.json({ "message": "Delete post successfully." })
+            res.json({ "message": "Delete post Success." })
         }
         catch (err) {
             res.status(500).send({
                 "error": {
                     "code": 500,
-                    "message": "Delete post failed."
+                    "message": "Server internal error. Delete post Failed."
                 }
             });
         }
