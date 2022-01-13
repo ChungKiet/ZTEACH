@@ -204,10 +204,11 @@ const useForm = (callback, validate) => {
     const username = tmp[tmp.length - 1];
     const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
     
-    const fetchData = async() => {   
-      axios.post('http://localhost:8000/connects/get-tutor-connect', {username: username }).then(res => {//   https://localhost:8000/ + user_type + edit
+    const fetchData = async() => {  
+      axios.post('http://localhost:8000/connects/get-tutor-connect', {tutor: username }).then(res => {//   https://localhost:8000/ + user_type + edit
       const data = res.data;
-      alert("Oke vo dc");
+      alert("Oke vo dc"); 
+      console.log("Oke nghe!");
       for (let i = 0; i < data.length; i++){
         data[i]["order"] = i + 1;
       }

@@ -29,7 +29,7 @@ function Profile(){
   }
 
   const isLogin = window.sessionStorage.getItem("isLogin");
-  const { handleSubmit, listPost, values, errors } = useForm(
+  const { handleSubmit, listPost, listRequest, values, errors } = useForm(
       submitForm,
       validateInfo
   );
@@ -202,7 +202,6 @@ function Profile(){
               Hình ảnh các văn bằng
             </strong>
             </div>
-            <div>{values.files + "Có update"}</div>
           </div>
           <div className='row'>
             <div className='tutor-cert-img'>
@@ -211,9 +210,16 @@ function Profile(){
             </strong>
             </div>
             <div>{listPost}</div>
-            <div>{values.files + "Có update"}</div>
           </div>
-         
+          <div className='row'>
+            <div className='tutor-cert-img'>
+            <strong>
+              Danh sách các bài đã đăng
+            </strong>
+            </div>
+            <div>{listRequest}</div>
+          </div>
+         {/* //listRequest */}
         </div>
         {/* <div> oke</div> */}
         
