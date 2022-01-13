@@ -15,7 +15,8 @@ import React from "react";
 import validateInfo from './validateInfo';
 import useForm from './useForm';
 import { useNavigate } from 'react-router-dom';
-
+import { useEffect } from 'react';
+import axios from 'axios';
 
 import FileBase64 from 'react-file-base64';
 
@@ -28,10 +29,75 @@ function Profile(){
   }
 
   const isLogin = window.sessionStorage.getItem("isLogin");
-  const { handleSubmit, values, errors } = useForm(
+  const { handleSubmit, listPost, values, errors } = useForm(
       submitForm,
       validateInfo
   );
+  
+  // Create A Map For List Post
+  
+
+  // Create Adapter
+  // Add ID
+
+  function UserPost(props) {
+    const {order, id, title, dayPost} = props;
+    //const { order, username, level, gender } = props;
+
+    return (
+        <div className="flex-request-line">
+            <div className="request-no-553">{order}</div>
+            <div className="request-username-553">
+                <a href={`http://localhost:3000/${id}`} style={{ 'text-decoration': 'none' }}>{title}</a>
+            </div>
+            <div className="request-level-553">{dayPost}</div>
+            {/* <div className="request-gender-553">{gender}</div> */}
+            <div className="request-accept-553">
+                <button className="button-request-accept-553" type="submit" >
+                    <div className="request-button-553">
+                        Chỉnh sửa
+                    </div>
+                </button>
+            </div>
+            <div className="request-deny-553">
+                <button className="button-request-deny-553" type="submit" >
+                    <div className="request-button-553">
+                        Xóa
+                    </div>
+                </button>
+            </div>
+        </div>
+    );
+  }
+
+  function RequestSummaryLine(props) {
+    const { order, username, level, gender } = props;
+
+    return (
+        <div className="flex-request-line">
+            <div className="request-no-553">{order}</div>
+            <div className="request-username-553">
+                <a href={`http://localhost:3000/user?id=${username}`} style={{ 'text-decoration': 'none' }}>{username}</a>
+            </div>
+            <div className="request-level-553">{level}</div>
+            <div className="request-gender-553">{gender}</div>
+            <div className="request-accept-735">
+                <button className="button-request-accept-735" type="submit" >
+                    <div className="request-button-735">
+                        Chấp nhận
+                    </div>
+                </button>
+            </div>
+            <div className="request-deny-735">
+                <button className="button-request-deny-735" type="submit" >
+                    <div className="request-button-735">
+                        Từ chối
+                    </div>
+                </button>
+            </div>
+        </div>
+    );
+  }
 
   const getFiles = (filePost) => {
     this.setState({ files: filePost })
@@ -138,7 +204,19 @@ function Profile(){
             </div>
             <div>{values.files + "Có update"}</div>
           </div>
+          <div className='row'>
+            <div className='tutor-cert-img'>
+            <strong>
+              Danh sách các bài đã đăng
+            </strong>
+            </div>
+            <div>{listPost}</div>
+            <div>{values.files + "Có update"}</div>
+          </div>
+         
         </div>
+        {/* <div> oke</div> */}
+        
         <div>
           <Footer/>
         </div>

@@ -28,7 +28,12 @@ const useForm = (callback, validate) => {
    contact: "No Contact",
    contact_secure: "Công khai",
  });
-  const [errors, setErrors] = useState({});
+
+  // set listRequest after render
+  // return VALUES for PROFILE
+  // IF xóa tính sau
+  // 
+  const [errors, setErrors] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = e => {
@@ -81,21 +86,195 @@ const useForm = (callback, validate) => {
       // if ()
       // 
       const isLogin = window.sessionStorage.getItem("isLogin");
-      if (isLogin){
+      const user = JSON.parse(window.sessionStorage.getItem("isLogin"));
+      const isYourSelf = user.username === get_username;
+      // Xet login
+      if (isLogin && !isYourSelf){
         // Neu da dang nhap
         // Neu set rieng thu thi set = "Da bi an"
         if (get_gender_secure==="Riêng tư"){
           get_gender = "Đã bị ẩn";
         }  
         if (get_birth_day_secure==="Riêng tư"){
-          get_birth_day = "Đã bị ẩn"
+          get_birth_day = "Đã bị ẩn";
         }
-        //if ()
+        if (get_address_secure==="Riêng tư"){
+          get_address = "Đã bị ẩn";
+        }
+        if (get_email_secure==="Riêng tư"){
+          get_email = "Đã bị ẩn";
+        }
+        if (get_contact_secure==="Riêng tư"){
+          get_contact = "Đã bị ẩn";
+        }
       }
       else{
-
+        // Neu chua login thì ko hien thi neu o che do "Bao mat"
+        if (get_gender_secure==="Bảo mật"){
+          get_gender = "Đã bị ẩn";
+        }  
+        if (get_birth_day_secure==="Bảo mật"){
+          get_birth_day = "Đã bị ẩn";
+        }
+        if (get_address_secure==="Bảo mật"){
+          get_address = "Đã bị ẩn";
+        }
+        if (get_email_secure==="Bảo mật"){
+          get_email = "Đã bị ẩn";
+        }
+        if (get_contact_secure==="Bảo mật"){
+          get_contact = "Đã bị ẩn";
+        }        
       }
+      // Xet da ket noi
+
+      // Lay danh sach cac user da ket noi theo http:// something at backend
+      // for in list --> connected?
+      // if is connected --> can voting
+      // FILE PROFILE also check if is account holder
+      // It will hide or appear btn for edit + btn "Chinh sua trang ca nhan" + All info
   }
+
+  
+  function UserPost(props) {
+    const {order, id, title, dayPost} = props;
+    //const { order, username, level, gender } = props;
+
+    return (
+        <div className="flex-request-line">
+            <div className="request-no-553">{order}</div>
+            <div className="request-username-553">
+                <a href={'http://localhost:3000/posts/' + id} style={{ 'text-decoration': 'none' }}>{title}</a>
+            </div>
+            <div className="request-level-553">{dayPost}</div>
+            {/* <div className="request-gender-553">{gender}</div> */}
+            <div className="request-accept-553">
+                <button className="button-request-accept-553" type="submit" >
+                    <div className="request-button-553">
+                        <a href={'http://localhost:3000/posts/' + id}>Chỉnh sửa</a>
+                    </div>
+                </button>
+            </div>
+            <div className="request-deny-553">
+                <button className="button-request-deny-553" type="submit" >
+                    <div className="request-button-553">
+                        Xóa
+                    </div>
+                </button>
+            </div>
+        </div>
+    );
+  }
+
+  function RequestConnect(props) {
+    const {order, id, username, dayRequest} = props;
+    //const { order, username, level, gender } = props;
+
+    return (
+        <div className="flex-request-line">
+            <div className="request-no-553">{order}</div>
+            <div className="request-username-553">
+                <a href={'http://localhost:3000/posts/' + id} style={{ 'text-decoration': 'none' }}>{username}</a>
+            </div>
+            <div className="request-level-553">{dayRequest}</div>
+            {/* <div className="request-gender-553">{gender}</div> */}
+            <div className="request-accept-553">
+                <button className="button-request-accept-553" type="submit" >
+                    <div className="request-button-553">
+                        Chấp nhận
+                    </div>
+                </button>
+            </div>
+            <div className="request-deny-553">
+                <button className="button-request-deny-553" type="submit" >
+                    <div className="request-button-553">
+                        Từ chối
+                    </div>
+                </button>
+            </div>
+        </div>
+    );
+  }
+  //http://localhost:8000/connects/get-tutor-connect
+  
+  const [listRequest, setRequest] = useState([]);
+  useEffect(() =>{
+    const URL = window.location.pathname;
+    const tmp = URL.split('/');
+    const username = tmp[tmp.length - 1];
+    const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
+    
+    const fetchData = async() => {   
+      axios.post('http://localhost:8000/connects/get-tutor-connect', {username: username }).then(res => {//   https://localhost:8000/ + user_type + edit
+      const data = res.data;
+      alert("Oke vo dc");
+      for (let i = 0; i < data.length; i++){
+        data[i]["order"] = i + 1;
+      }
+      setRequest(data.map(v => (
+        <RequestConnect id={v._id} username={v.username} dayRequest={v.dayRequest} order={v.order}></RequestConnect>
+      )));
+      console.log("Im here");
+      //console.log(listPost);
+     })
+     // Cho chỉnh sửa hay ko là việc của UI
+     //
+     }
+     fetchData();
+  }, [])
+
+
+
+  const [listPost, setPostList] = useState([]);
+  useEffect(() =>{
+    // Get user post
+    //http://localhost:8000/posts
+    const URL = window.location.pathname;
+    const tmp = URL.split('/');
+    const username = tmp[tmp.length - 1];
+    const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
+    
+    const fetchData = async() => {   
+      axios.post('http://localhost:8000/posts/user-post', {username: username }).then(res => {//   https://localhost:8000/ + user_type + edit
+      const data = res.data;
+      for (let i = 0; i < data.length; i++){
+        data[i]["order"] = i + 1;
+      }
+      setPostList(data.map(v => (
+        <UserPost id={v._id} title={v.title} dayPost={v.createdAt} order={v.order}></UserPost>
+      )));
+      console.log("Im here");
+      //console.log(listPost);
+     })
+     // Cho chỉnh sửa hay ko là việc của UI
+     //
+     }
+     fetchData();
+  }, [])
+
+  useEffect(() =>{
+    // Get user post
+    //http://localhost:8000/posts
+    const URL = window.location.pathname;
+    const tmp = URL.split('/');
+    const username = tmp[tmp.length - 1];
+    const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
+    
+     const fetchData = async() => {   
+      axios.post('http://localhost:8000/posts/user-post', {username: username }).then(res => {//   https://localhost:8000/ + user_type + edit
+      const data = res.data;
+      console.log("I'm here bro");
+      //console.log(data);
+      for (let i = 0; i < data.length;i++){
+        data[i]["order"] = i + 1;
+      }
+      console.log(data);
+     })
+     // Cho chỉnh sửa hay ko là việc của UI
+     //
+     }
+     fetchData();
+  }, [])
 
   useEffect(() => {
   const URL = window.location.pathname;
@@ -162,7 +341,7 @@ const useForm = (callback, validate) => {
    
 }, []);
 
-  return { handleSubmit ,  values, errors };
+  return { handleSubmit , listPost,  values, errors };
 };
 
 export default useForm;
