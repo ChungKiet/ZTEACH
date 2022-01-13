@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const useForm = (callback, validate) => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
+    image:"",
    id: "",
    username: "KietChung",
    intro: "No intro",
@@ -103,6 +104,7 @@ const useForm = (callback, validate) => {
        const dt = res.data;
        setValues({
          id: dt._id,
+         image: dt.image,
          username: dt.username,
          intro: dt.introduce,
          name: dt.name,

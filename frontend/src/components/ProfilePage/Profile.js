@@ -17,6 +17,7 @@ import useForm from './useForm';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
+import ImageUpload from '../upload';
 
 import FileBase64 from 'react-file-base64';
 
@@ -29,7 +30,7 @@ function Profile(){
   }
 
   const isLogin = window.sessionStorage.getItem("isLogin");
-  const { handleSubmit, listPost, listRequest, values, errors } = useForm(
+  const { handleSubmit, handleChangeImage, listPost, listRequest, values, errors } = useForm(
       submitForm,
       validateInfo
   );
@@ -110,7 +111,7 @@ function Profile(){
     );
   }
   console.log(values);
-
+  
   const getFiles = (filePost) => {
     this.setState({ files: filePost })
     // this.setState({intro: filePost[0]["file"]})
@@ -127,9 +128,9 @@ function Profile(){
         <div className="row">
             <div class="image-upload" className='Avatar'>
               <label for="file-input">
-                  <img src={logo} className='Avatar_label'/>
+                  <img src={values.image} className='Avatar_label'/>
               </label>
-              <input id="file-input" type="file" className='Avatar-input'/>
+              <input id="file-input" onChange={handleChangeImage} type="file" className='Avatar-input'/>
             </div>
           <div className='user_name'>
                        {values.username}
