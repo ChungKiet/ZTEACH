@@ -86,8 +86,9 @@ class ConnectsController {
     // [POST] /get-post-connect  --> Danh sách yêu cầu của bài đăng
     async get_post_connect(req, res, next) {
         const post = req.body.post;
-        const connects = Connect.find({ post }, 'tutor');
-        const tutors = Tutor.find({ _id: { $in: connects } }, 'username name gender literacy timer');
+        // const connects = ;
+        const connects = (await Connect.find({ post: post }, 'tutor')).map(({ tutor }) => tutor);
+        const tutors = await Tutor.find({ username: { $in: connects } }, 'username name gender literacy timer');
         res.json(tutors);
     }
 
