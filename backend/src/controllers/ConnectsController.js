@@ -107,25 +107,25 @@ class ConnectsController {
         }
     }
 
-    // [POST] /get-user-request
-    async get_user_request(req, res, next) {
+    // [POST] /get-tutor-connect  --> danh sách gia sư yêu cầu nhưng chưa kết nối
+    async get_tutor_connect(req, res, next) {
         const tutor = req.body.tutor;
-        const connects = Connect.find({ tutor, post: 'null' }, 'user timer');
+        const connects = Connect.find({ tutor, post: 'null', accept: false }, 'user timer');
         res.json(connects);
     }
 
-    // [POST] /get-tutor-state
+    // [POST] /get-tutor-state  --> trạng thái của gia sư với người xem profile của gia sư đó
     async get_tutor_state(req, res, next) {
         const { user, tutor } = req.body;
         const connect = await Connect.findOne({ user, tutor });
         if (!connect) {
-            res.json({ 'post': post, 'state': 0 });
+            res.json({ 'post': post, 'state': 0 }); // chưa kết nối
         }
         else if (connect.accept === false) {
-            res.json({ 'post': post, 'state': 1 });
+            res.json({ 'post': post, 'state': 1 }); // đã yêu cầu
         }
         else {
-            res.json({ 'post': post, 'state': 2 });
+            res.json({ 'post': post, 'state': 2 }); // đã kết nối
         }
     }
 }
