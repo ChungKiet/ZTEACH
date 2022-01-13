@@ -11,6 +11,7 @@ import EditProfilePage from './components/pages/EditProfilePage';
 import TutorRegisterPage from './components/pages/TutorRegisterPage';
 import ProfilePage from './components/pages/ProfilePage';
 import PostListPage from './components/pages/PostListPage';
+import TutorListPage from './components/pages/TutorListPage';
 import ImageUpload from './components/upload';
 
 // GlobalVar.isLogin = true;
@@ -32,6 +33,7 @@ function App() {
           <Route path="/register-tutor" element={<TutorRegisterPage />} />
           <Route path="/profile/*" element={<ProfilePage />} />
           <Route path="/post-list" element={<PostListPage />} />
+          <Route path="/tutor-list" element={<TutorListPage />} />
           <Route path="/upload" element={<ImageUpload />} />
         </Routes>
       </div>
