@@ -11,11 +11,11 @@ const useForm = (callback, validate) => {
    user_type: "Học viên",
    gender: "Nam",
    gender_secure: "Công khai",
-   birth_day: "2001-12-17",
+   birthday: "2001-12-17",
    voting: "4.5",
    evaluate: "10",
    dayreg: "2022-01-04",
-   birth_day_secure: "Công khai",
+   birthday_secure: "Công khai",
    subject: ["Toán, Lý"],
    classes: ["Lớp 1", "Lớp 2"],
    major: "CNTT",
@@ -53,7 +53,7 @@ const useForm = (callback, validate) => {
     }
   };
 
-  checkValue = (data) => {
+  const checkValue = (data) => {
       const get_id =data._id;
       const get_username =  data.username;
       const get_intro =  data.introduce;
@@ -115,8 +115,8 @@ const useForm = (callback, validate) => {
       user_type: dt.user_type,
       gender: dt.gender,
       gender_secure: dt.gender_secure,
-      birth_day: dt.birth_day,
-      birth_day_secure: dt.birth_day_secure,
+      birthday: dt.birth_day,
+      birthday_secure: dt.birth_day_secure,
       classes: dt.classes,
       major: dt.major,
       literacy: dt.literacy,
@@ -142,8 +142,8 @@ const useForm = (callback, validate) => {
      user_type: dt.user_type,
      gender: dt.gender,
      gender_secure: dt.gender_secure,
-     birth_day: dt.birth_day,
-     birth_day_secure: dt.birth_day_secure,
+     birthday: dt.birth_day,
+     birthday_secure: dt.birth_day_secure,
      classes: dt.classes,
      major: dt.major,
      literacy: dt.literacy,

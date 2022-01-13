@@ -82,7 +82,7 @@ function Profile(){
           </div>
           <div className='row'>
             <div className='birth-day'>
-              {"Ngày sinh: " + values.birth_day}
+              {"Ngày sinh: " + values.birthday}
             </div>
             <div className='col'>
             <div className='user-gender'>

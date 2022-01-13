@@ -24,7 +24,7 @@ class Profile extends React.Component {
                 <img src={profile}/>
             </div>
             {this.state.onClick && (<div class="menu447">
-                <h3>Lan Anh</h3>
+                <h3>{JSON.parse(window.sessionStorage.getItem("user19120000")).username}</h3>
                 <ul>
                     <Link to={"/profile/" + JSON.parse(window.sessionStorage.getItem("user19120000")).username} className="link447"><li>Xem thông tin chi tiết</li></Link>
                     <li>Đổi mật khẩu</li>
