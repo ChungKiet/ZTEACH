@@ -15,8 +15,8 @@ function HeroSection() {
     <div className='hero-container'>
       <img className='img-18' src={banner} width="1000px" height = "700px"/>
       <div className='row-div'>
-        <button className='button-18'>Danh sách bài đăng</button>
-        <button className='button-18'>Danh sách gia sư</button>
+        <Link to="/post-list" className="link446"><button className='button-18'>Danh sách bài đăng</button></Link>
+        <Link to="/tutor-list" className="link446"><button className='button-18'>Danh sách gia sư</button></Link>
         {(user !== null) && <Link to="/posts/new-post" className="link446"><button className='button-17'>Đăng bài tìm gia sư</button></Link>}
       </div>
     </div>
