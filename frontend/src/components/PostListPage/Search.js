@@ -111,7 +111,7 @@ function Search(params) {
                 </div>
                 <div className='search-sub-grid-layout40'>
                     <button className="button-occupation-cancel40">
-                        <div className="search-button">
+                        <div className="search-button" to='/post-list?subject=Toán'>
                             Xoá
                         </div>
                     </button>
