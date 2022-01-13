@@ -17,7 +17,7 @@ function HeroSection() {
       <div className='row-div'>
         <Link to="/post-list" className="link446"><button className='button-18'>Danh sách bài đăng</button></Link>
         <Link to="/tutor-list" className="link446"><button className='button-18'>Danh sách gia sư</button></Link>
-        {(user !== null) && <Link to="/posts/new-post" className="link446"><button className='button-17'>Đăng bài tìm gia sư</button></Link>}
+        {(user !== null) && <Link to="/new-post" className="link446"><button className='button-17'>Đăng bài tìm gia sư</button></Link>}
       </div>
     </div>
     <img src={aboutus} width="1920px"/>

@@ -59,10 +59,11 @@ function Post() {
                     axios.post("http://localhost:8000/connects/get-post-state", { post: id, tutor: currentUser }).then(
                         res2 => {
                             const dt2 = res2.data;
-                            //axios.post("http://localhost:8000/connects/get-post-connect", { post: id}).then(
-                            //res3 => {
-                            //const dt3 = res3.data;
-                            //console.log(dt3);
+                            axios.post("http://localhost:8000/connects/get-post-connect", { post: id}).then(
+                            res3 => {
+                            const dt3 = res3.data;
+                            console.log("dt3 = ");
+                            console.log(dt3);
                             setValues({
                                 username: dt.username,
                                 image: dt.image,
@@ -79,11 +80,11 @@ function Post() {
                                 lessons: dt.lessons,
                                 time: dt.time,
                                 connect_state: dt2.state,
-                                //request_list: dt3.tutors
+                                request_list: dt3
                             });
 
-                            //}
-                            //)
+                            }
+                            )
 
                         }
                     )
@@ -246,13 +247,13 @@ function Post() {
         if (currentUser === values.username)
             return (
                 <div className="edit-and-remove">
-                    <Link to='/posts/edit-post' state={{ values, id }} className="post-edit-remove-735">
+                    <Link to='/edit-post' state={{ values, id }} className="post-edit-remove-735">
                         <div className="button-edit-735">
                             Chỉnh sửa
                         </div>
                     </Link>
 
-                    <Link to={{ pathname: "/posts/new-post", state: values }} className="post-edit-remove-735">
+                    <Link to='/edit-post' state={{ values, id }} className="post-edit-remove-735">
                         <div className="button-remove-735">
                             Xóa
                         </div>
@@ -299,7 +300,7 @@ function Post() {
     return (
         <div className="Post">
             <Navbar />
-            {console.log("currentUser:"), console.log(currentUser), console.log("after all:"), console.log(values), console.log(values.connect_state)}
+            {console.log("currentUser:"), console.log(currentUser), console.log("after all:"), console.log(values), console.log(values.connect_state), console.log(values.request_list)}
 
             <div className="frame-general">
                 <div className="title-container-head">
