@@ -32,16 +32,12 @@ const useForm = (callback, validate) => {
 
   const handleSubmit = e => {
     
-    const tmp = JSON.parse(window.sessionStorage.getItem("user19120000"));
-    console.log(tmp); // _id, password
-
-    const username = {username : tmp.username};
-    console.log("username = ");
-    console.log(username);
-    const data = {...username, ...values}; //concatenate
+    const user = (JSON.parse(window.sessionStorage.getItem("user19120000")));
+    const addInfo = {username : user.username, image : user.image};
+    console.log(addInfo);
+    const data = {...addInfo, ...values}; //concatenate
     console.log("send data = ");
     console.log(data);
-
 
     e.preventDefault();
     setErrors(validate(values));
@@ -50,8 +46,8 @@ const useForm = (callback, validate) => {
     //if (!errors.isError) {
       axios.post("http://localhost:8000/posts/new-post", data).then(res => {
         console.log(res.data)
-        const { message, id } = res.data;
-        if (message === "Success") {
+        const {result, message, id } = res.data;
+        if (message === "Create post Success" || result === "1") {
             alert("Tạo bài đăng thành công!");
             navigate("/posts/" + id);
             console.log("newpost-id = ");
