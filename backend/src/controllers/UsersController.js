@@ -88,15 +88,16 @@ class UsersController {
                 contact, contact_secure, introduce
             });
             if (user.modifiedCount === 1) {
-                res.json({ "message": "Profile update Success" });
+                res.json({ "result": 1, "message": "Profile update Success" });
             }
             else {
-                res.json({ "message": "Profile update Failed" });
+                res.json({ "result": 0, "message": "Profile update Failed" });
             }
         }
         catch (err) {
             res.status(500).send({
                 "error": {
+                    "result": 0,
                     "code": 500,
                     "message": "Server inernal error. Profile update failed."
                 }
@@ -109,11 +110,12 @@ class UsersController {
         const id = req.body.id;
         try {
             await User.deleteOne({ _id: id });
-            res.json({ "message": "Delete user successfully." })
+            res.json({ "result": 1, "message": "Delete user successfully." })
         }
         catch (err) {
             res.status(500).send({
                 "error": {
+                    "result": 0,
                     "code": 500,
                     "message": "Delete user failed."
                 }
@@ -133,11 +135,12 @@ class UsersController {
         const { username, image } = req.body;
         try {
             await User.updateOne({ username }, { image });
-            res.json({ "message": "Update success." });
+            res.json({ "result": 1, "message": "Update success." });
         }
         catch (err) {
             res.status(500).send({
                 "error": {
+                    "result": 0,
                     "code": 500,
                     "message": "Image update failed."
                 }
@@ -153,11 +156,12 @@ class UsersController {
                 {
                     image: 'https://firebasestorage.googleapis.com/v0/b/zteach-images.appspot.com/o/images%2Fprofile.png?alt=media&token=34e94b8d-cda6-4df8-8f4b-88a022d3b3fe'
                 });
-            res.json({ "message": "Delete success." });
+            res.json({ "result": 1, "message": "Delete success." });
         }
         catch (err) {
             res.status(500).send({
                 "error": {
+                    "result": 0,
                     "code": 500,
                     "message": "Image delete failed."
                 }

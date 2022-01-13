@@ -11,16 +11,17 @@ class ConnectsController {
             const connect = await Connect.create({ user, tutor, post });
             if (connect) {
                 await Post.updateOne({ _id: post }, { $inc: { request: 1 } });
-                res.json({ "result": 1 })
+                res.json({ "result": 1, "message": "Request post success." })
             }
             else {
-                res.json({ "result": 0 })
+                res.json({ "result": 0, "message": "Request post failed." })
             }
         }
         catch (err) {
             res.status(500).send({
-                "message": "Server internal error. Create connect failed."
-                // "error": { "code": 500, "message": "Create connect failed." }
+                "result": 0,
+                "message": "Server internal error. Request post failed."
+                // "error": { "code": 500, "message": "Request post failed." }
             });
         }
     }
@@ -31,13 +32,13 @@ class ConnectsController {
         try {
             await Connect.deleteOne({ user, tutor, post });
             await Post.updateOne({ _id: post }, { $inc: { request: -1 } });
-            res.json({ "result": 1 })
+            res.json({ "result": 1, "message": "Delete request post success." })
         }
         catch (err) {
-            res.status(401).send({
+            res.status(500).send({
                 "result": 1,
-                "message": "Delete connect failed."
-                // "error": { "code": 401, "message": "Delete connect failed." }
+                "message": "Delete request post failed."
+                // "error": { "code": 500, "message": "Delete request post failed." }
             });
         }
     }
@@ -48,16 +49,17 @@ class ConnectsController {
         try {
             const connect = await Connect.create({ user, tutor });
             if (connect) {
-                res.json({ "result": 1 })
+                res.json({ "result": 1, "message": "Request tutor success." })
             }
             else {
-                res.json({ "result": 0 })
+                res.json({ "result": 0, "message": "Request tutor failed." })
             }
         }
         catch (err) {
-            res.status(401).send({
-                "message": "Create connect failed."
-                // "error": { "code": 401, "message": "Create connect failed." }
+            res.status(500).send({
+                "result": 0,
+                "message": "Request tutor failed."
+                // "error": { "code": 500, "message": "Server internal error.Create connect failed." }
             });
         }
     }
@@ -67,13 +69,16 @@ class ConnectsController {
         const { user, tutor } = req.body;
         try {
             await Connect.deleteOne({ user, tutor, post: null });
-            res.json({ "result": 1 })
+            res.json({
+                "result": 1,
+                "message": "Delete request tutor success."
+            })
         }
         catch (err) {
-            res.status(401).send({
+            res.status(500).send({
                 "result": 0,
-                "message": "Delete connect failed."
-                // "error": { "code": 401, "message": "Delete connect failed." }
+                "message": "Server internal error. Delete connect failed."
+                // "error": { "code": 500, "message": "Delete connect failed." }
             });
         }
     }

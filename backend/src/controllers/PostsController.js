@@ -45,10 +45,18 @@ class PostsController {
                 study_form, gender, literacy, lessons, time, start
             });
             if (post) {
-                res.json({ "message": "Create post Success", "id": post._id });
+                res.json({
+                    "id": post._id,
+                    "result": 1,
+                    "message": "Create post Success"
+                });
             }
             else {
-                res.json({ "message": "Create post Failed", "id": null });
+                res.json({
+                    "id": null,
+                    "result": 0,
+                    "message": "Create post Failed"
+                });
             }
         }
         catch (err) {
@@ -63,19 +71,19 @@ class PostsController {
 
     // [GET] /posts/<post-id>
     async post_detail(req, res, next) {
-        try {
-            const _id = req.params.id;
-            const post = await Post.findById({ _id });
-            res.json(post);
-        }
-        catch (err) {
-            res.status(404).send({
-                "error": {
-                    "code": 404,
-                    "message": "Not Found"
-                }
-            });
-        }
+        const _id = req.params.id;
+        const post = await Post.findById({ _id });
+        res.json(post);
+        // try {
+        // }
+        // catch (err) {
+        //     res.status(500).send({
+        //         "error": {
+        //             "code": 500,
+        //             "message": "Server internal error."
+        //         }
+        //     });
+        // }
     }
 
     // [Get] /posts/search?<field>=<value>
@@ -106,10 +114,10 @@ class PostsController {
             res.json(posts);
         }
         catch (err) {
-            res.status(404).send({
+            res.status(500).send({
                 "error": {
-                    "code": 404,
-                    "message": "Not Found"
+                    "code": 500,
+                    "message": "Server internal error."
                 }
             });
         }
@@ -119,17 +127,24 @@ class PostsController {
     async edit_post(req, res, next) {
         const { id, title, information, subject, grade, fee,
             study_form, gender, literacy, lessons, time, start } = req.body;
-
         try {
             const post = await Post.updateOne({ _id: id }, {
                 title, information, subject, grade, fee,
                 study_form, gender, literacy, lessons, time, start
             });
             if (post.modifiedCount === 1) {
-                res.json({ "message": "Update Success", "id": id });
+                res.json({
+                    "id": id,
+                    "result": 1,
+                    "message": "Post update Success."
+                });
             }
             else {
-                req.json({ "message": "Update Failed", "id": null });
+                req.json({
+                    "id": null,
+                    "result": 0,
+                    "message": "Post update Failed."
+                });
             }
         }
         catch (err) {
@@ -147,7 +162,7 @@ class PostsController {
         const id = req.body.id;
         try {
             await Post.deleteOne({ _id: id });
-            res.json({ "message": "Delete post Success." })
+            res.json({ "result": 1, "message": "Delete post Success." })
         }
         catch (err) {
             res.status(500).send({

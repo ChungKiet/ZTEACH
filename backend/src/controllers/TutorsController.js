@@ -52,13 +52,14 @@ class TutorsController {
                 gender_secure: "Công khai", birthday_secure: "Công khai",
                 major, literacy, fee, subjects, classes, rate: 5
             });
-            res.status(200).json({ "message": "Register Success." })
+            res.status(200).json({ "result": 1, "message": "Register Success." })
         }
         catch (err) {
             res.status(500).send({
                 "error": {
+                    "result": 0,
                     "code": 500,
-                    "message": "Register tutor failed."
+                    "message": "Server internal error. Register tutor failed."
                 }
             });
         }
@@ -93,15 +94,16 @@ class TutorsController {
                 introduce, major, literacy, fee, subjects, classes
             });
             if (tutor.modifiedCount === 1) {
-                res.json({ "message": "Tutor's profile update Success" });
+                res.json({ "result": 1, "message": "Tutor's profile update Success" });
             }
             else {
-                res.json({ "message": "Tutor's profile update Failed" });
+                res.json({ "result": 0, "message": "Tutor's profile update Failed" });
             }
         }
         catch (err) {
             res.status(500).send({
                 "error": {
+                    "result": 0,
                     "code": 500,
                     "message": "Server internal error. Profile update failed."
                 }
@@ -114,13 +116,14 @@ class TutorsController {
         const id = req.body.id;
         try {
             await Tutor.deleteOne({ _id: id });
-            res.json({ "message": "Delete user successfully." })
+            res.json({ "result": 1, "message": "Delete user successfully." })
         }
         catch (err) {
             res.status(500).send({
                 "error": {
+                    "result": 0,
                     "code": 500,
-                    "message": "Delete user failed."
+                    "message": "Server internal error. Delete user failed."
                 }
             });
         }
@@ -131,13 +134,14 @@ class TutorsController {
         const { username, image } = req.body;
         try {
             await Tutor.updateOne({ username }, { $push: { certificate: image } });
-            res.json({ "message": "Add certificate successfully." });
+            res.json({ "result": 1, "message": "Add certificate successfully." });
         }
         catch (err) {
             res.status(500).send({
                 "error": {
+                    "result": 0,
                     "code": 500,
-                    "message": "Add certificate failed."
+                    "message": "Server internal error. Add certificate failed."
                 }
             });
         }
@@ -148,13 +152,14 @@ class TutorsController {
         const { username, image } = req.body;
         try {
             await Tutor.updateOne({ username }, { $pull: { certificate: image } });
-            res.json({ "message": "Remove certificate successfully." });
+            res.json({ "result": 1, "message": "Remove certificate successfully." });
         }
         catch (err) {
             res.status(500).send({
                 "error": {
+                    "result": 0,
                     "code": 500,
-                    "message": "Add certificate failed."
+                    "message": "Server internal error. Add certificate failed."
                 }
             });
         }

@@ -26,6 +26,8 @@ function Post() {
     const tmp = URL.split('/');
     const id = tmp[tmp.length - 1];
     const [values, setValues] = useState({
+        username: "",
+        image: "",
         subject: "Hóa học",
         grade: "Lớp 8",
         study_form: "Quận 5",
@@ -38,10 +40,8 @@ function Post() {
         gender: "Nữ",
         fee: "300000",
         request: "2",
-        username: "__default__",
         is_connected: "0",
-        is_requested: "0",
-        avatar_link: ""
+        is_requested: "0"
     });
 
 
@@ -49,37 +49,30 @@ function Post() {
         const fetchData = async () => {
             await axios('http://localhost:8000/posts/' + id).then(
                 res => {
-                    axios.post('http://localhost:8000/users/profile', { username: res.data.username }).then(
-                        res2 => {
-                            const dt = res.data;
-                            const dt2 = res2.data;
-                            setValues({
-                                title: dt.title,
-                                information: dt.information,
-                                subject: dt.subject,
-                                grade: dt.grade,
-                                study_form: dt.study_form,
-                                start: dt.start,
-                                literacy: dt.literacy,
-                                gender: dt.gender,
-                                fee: dt.fee,
-                                request: dt.request,
-                                lessons: dt.lessons,
-                                time: dt.time,
-                                username: dt.username,
-                                is_connected: "0",
-                                is_requested: "0",
-                                avatar_link: dt2.image_prof
-                            });
-
-
-                        }
-                    )
+                    const dt = res.data;
+                    setValues({
+                        username: dt.username,
+                        image: dt.image,
+                        title: dt.title,
+                        information: dt.information,
+                        subject: dt.subject,
+                        grade: dt.grade,
+                        study_form: dt.study_form,
+                        start: dt.start,
+                        literacy: dt.literacy,
+                        gender: dt.gender,
+                        fee: dt.fee,
+                        request: dt.request,
+                        lessons: dt.lessons,
+                        time: dt.time,                        
+                        is_connected: "0",
+                        is_requested: "0"                       
+                    });
                 }
-
             )
-
         }
+
+
         fetchData();
     }, []);
 
@@ -89,7 +82,7 @@ function Post() {
             console.log(result);
             const dt = result.data;
             setValues({
-                avatar_link: dt.image_prof
+                image: dt.image_prof
             });
         };
         fetchData2();
@@ -113,7 +106,7 @@ function Post() {
                     <div className="box-user-head"></div>
                     <div className="flex-user">
                         <div>
-                            <img className="user-img-head" src={values.avatar_link} alt={values.username} />
+                            <img className="user-img-head" src={values.image} alt={values.username} />
                         </div>
                         <div className="text-username">
                             <a href={`http://localhost:3000/users/${values.username}`} style={{ 'textDecoration': 'none' }}>{values.username}</a>
