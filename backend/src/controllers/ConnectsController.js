@@ -4,19 +4,23 @@ const Post = require('../models/posts');
 
 class ConnectsController {
 
-    // [POST] /new-post-connect
+    // [POST] /new-post-connect --> tạo 1 yêu cầu trong bài đăng
     async new_post_connect(req, res, next) {
         const { user, tutor, post } = req.body;
         try {
             const connect = await Connect.create({ user, tutor, post });
             if (connect) {
                 await Post.updateOne({ _id: post }, { $inc: { request: 1 } });
+                res.json({ "result": 1 })
+            }
+            else {
+                res.json({ "result": 0 })
             }
         }
         catch (err) {
-            res.status(401).send({
-                "message": "Create connect failed."
-                // "error": { "code": 401, "message": "Create connect failed." }
+            res.status(500).send({
+                "message": "Server internal error. Create connect failed."
+                // "error": { "code": 500, "message": "Create connect failed." }
             });
         }
     }
@@ -27,9 +31,11 @@ class ConnectsController {
         try {
             await Connect.deleteOne({ user, tutor, post });
             await Post.updateOne({ _id: post }, { $inc: { request: -1 } });
+            res.json({ "result": 1 })
         }
         catch (err) {
             res.status(401).send({
+                "result": 1,
                 "message": "Delete connect failed."
                 // "error": { "code": 401, "message": "Delete connect failed." }
             });
@@ -41,6 +47,12 @@ class ConnectsController {
         const { user, tutor } = req.body;
         try {
             const connect = await Connect.create({ user, tutor });
+            if (connect) {
+                res.json({ "result": 1 })
+            }
+            else {
+                res.json({ "result": 0 })
+            }
         }
         catch (err) {
             res.status(401).send({
@@ -55,16 +67,18 @@ class ConnectsController {
         const { user, tutor } = req.body;
         try {
             await Connect.deleteOne({ user, tutor, post: null });
+            res.json({ "result": 1 })
         }
         catch (err) {
             res.status(401).send({
+                "result": 0,
                 "message": "Delete connect failed."
                 // "error": { "code": 401, "message": "Delete connect failed." }
             });
         }
     }
 
-    // [POST] /get-post-connect
+    // [POST] /get-post-connect  --> Danh sách yêu cầu của bài đăng
     async get_post_connect(req, res, next) {
         const post = req.body.post;
         const connects = Connect.find({ post }, 'tutor');
@@ -72,18 +86,24 @@ class ConnectsController {
         res.json(tutors);
     }
 
-    // [POST] /get-post-state
+    // [POST] /get-post-state  --> trạng thái của bài đăng với 1 gia sư
     async get_post_state(req, res, next) {
         const { post, tutor } = req.body;
+        const connected = await Connect.findOne({ post, accept: true });
+        if (connected) {
+            if (connected.tutor === tutor) {
+                res.json({ 'post': post, 'state': 2 }); // Đã kết nỗi với gia sư hiện tại
+            }
+            else {
+                res.json({ 'post': post, 'state': 3 }); // Đã kết nỗi với gia sư khác
+            }
+        }
         const connect = await Connect.findOne({ post, tutor });
         if (!connect) {
-            res.json({ 'post': post, 'state': 0 });
-        }
-        else if (connect.accept === false) {
-            res.json({ 'post': post, 'state': 1 });
+            res.json({ 'post': post, 'state': 0 }); // Chưa yêu cầu
         }
         else {
-            res.json({ 'post': post, 'state': 2 });
+            res.json({ 'post': post, 'state': 1 }); // Đã yêu cầu và chưa được chấp nhận
         }
     }
 

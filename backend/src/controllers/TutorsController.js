@@ -4,14 +4,13 @@ class TutorsController {
 
     // [Get] /tutors
     async index(req, res, next) {
-        const size = 5;
         const page = Number(req.query.page) || 1;
+        const from = (page - 1) * 10;
+        const to = page * 10;
 
         const query = req.query;
-        const find = Tutor.find({ user_type: "tutor" }, 'username name birthday \
-                            introduce literacy gender subjects classes fee rate')
-            .limit(size)
-            .skip(size * (page - 1));
+        const find = Tutor.find({ user_type: "tutor" }, 'image username name birthday \
+                                introduce literacy gender subjects classes fee rate');
 
         const now = new Date();
         if (query.younger) {
@@ -41,7 +40,7 @@ class TutorsController {
             }, {}));
 
         const tutors = await find.exec();
-        res.json(tutors);
+        res.json({ 'number': tutors.length, 'posts': tutors.slice(from, to) });
     }
 
     // [PUT] /tutors/register
@@ -84,22 +83,27 @@ class TutorsController {
 
     // [PUT] /tutors/edit
     async edit_profile(req, res, next) {
-        const { id, name, gender, email, email_secure, birthday,
+        const { username, name, gender, email, email_secure, birthday,
             address, address_secure, contact, contact_secure,
             introduce, major, literacy, fee, subjects, classes } = req.body;
         try {
-            await Tutor.updateOne({ _id: id, user_type: "tutor" }, {
+            const tutor = await Tutor.updateOne({ username: username, user_type: "tutor" }, {
                 name, gender, email, email_secure, birthday,
                 address, address_secure, contact, contact_secure,
                 introduce, major, literacy, fee, subjects, classes
             });
-            res.json({ "message": "Tutor's profile update Success" });
+            if (tutor.modifiedCount === 1) {
+                res.json({ "message": "Tutor's profile update Success" });
+            }
+            else {
+                res.json({ "message": "Tutor's profile update Failed" });
+            }
         }
         catch (err) {
             res.status(500).send({
                 "error": {
                     "code": 500,
-                    "message": "Profile update failed."
+                    "message": "Server internal error. Profile update failed."
                 }
             });
         }

@@ -1,23 +1,47 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import './Posts.css';
 import Search from './Search';
 import PostItem from './PostItem';
+import useForm from './useForm'
+import validate from './validateInfo';
+import axios from 'axios';
 
-function Posts(params) {
+
+function Posts() {
+    const submitForm = () => {
+        console.log("Submitted");
+    }
+    const { handleChange, handleSubmit, values, errors } = useForm(
+        submitForm,
+        validate
+    );
+
+    const query = window.location.search;
+    console.log('http://localhost:8000/posts' + query);
+
+    const [Data, setDatas] = useState({
+        number: 0,
+        posts: []
+    });
+    
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await axios.get('http://localhost:8000/posts' + query)
+            console.log(result.data);
+            setDatas(result.data);
+        };
+        fetchData();
+    }, []);
+
+    console.log(Data);
+    
     return (
         <div className='posts-grid-main-layout40'>
-            <Search/>
-            <div className='posts-grid-layout40'>
-                <PostItem/>
-                <PostItem/>
-                <PostItem/>
-                <PostItem/>
-                <PostItem/>
-                <PostItem/>
-                <PostItem/>
-                <PostItem/>
-                <PostItem/>
-                <PostItem/>
+            <Search params={{handleChange, handleSubmit, values, errors}}/>
+            <div className='post-items-list-layout40'>
+                {Data.posts.map(item => (
+                    <PostItem params={item}/>
+                ))}
             </div>
         </div>
     )

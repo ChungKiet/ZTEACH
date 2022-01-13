@@ -1,33 +1,27 @@
 import React from 'react'
 import './Search.css';
 import Dropdown from '../Dropdown';
-import useForm from './useForm'
-import validate from './validateInfo';
+import GlobalVar from '../../GlobalVar';
 
-function Search() {
-    const submitForm = () => {
-        console.log("Submitted");
-    }
-    const { handleChange, handleSubmit, values, errors } = useForm(
-        submitForm,
-        validate
-    );
 
-    const optionSelect = {
-        subject: ['Toán', 'Lý', 'Hóa', 'Sinh', 'Văn', 'Sử', 'Địa', 'Anh', 'KHTN', 'KHXH'],
-        grade: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-        place: ['ONLINE', 'Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7', 'Q8', 'Q9', 'Q10', 'Q11', 'Q12', 'Bình Chánh', 'Bình Tân', 'Bình Thạnh', 'Cần Giờ', 'Củ Chi', 'Gò Vấp', 'Hóc Môn', 'Nhà Bè', 'Phú Nhuận', 'Tân Bình', 'Tân Phú', 'Thủ Đức'],
-        daysperweek: [1, 2, 3, 4, 5, 6, 7],
-        duration: ['1h', '1.5h', '2h', '2.5h', '3h', '3.5h', '4h'],
-        tutor_gender: ['Nam', 'Nữ', 'Khác'],
-        tutor_level: ['Sinh viên', 'Giáo viên']
-    }
+
+function Search(params) {
+    const optionSelect = GlobalVar.optionSelect;
+
+
+    const {handleChange, handleSubmit, values, errors} = params.params;
 
     return (
-        <div className="search-frame40">
+        <form className="search-frame40" onSubmit={handleSubmit}>
             <div className='search-grid-layout40'>
                 <div className='text-search-frame40'> Tìm kiếm lớp học </div>
-                <input className='search-input-full' type='text' placeholder='VD: Luyện thi đại học'/>
+                <input
+                        type="text"
+                        className="search-input-full"
+                        placeholder='VD: Luyện thi đại học'
+                        name="title"
+                        onChange={handleChange}
+                    />
                 <div className='search-sub-grid-layout40'>
                     <div>
                         <div className='text-item-search-frame40'> Môn học </div>
@@ -39,7 +33,6 @@ function Search() {
                             onChange={handleChange}
                         />
                     </div>
-                    <div/>
                     <div>
                         <div className='text-item-search-frame40'> Lớp </div>
                         <Dropdown id="id-select-grade"
@@ -53,10 +46,10 @@ function Search() {
                 </div>
                 <div>
                     <div className='text-item-search-frame40'> Địa điểm </div>
-                    <Dropdown id="id-select-place"
+                    <Dropdown id="id-select-study-form"
                         className='search-choice-full40'
-                        values={optionSelect.place}
-                        name="place"
+                        values={optionSelect.study_form}
+                        name="study_form"
                         placeholder="Chọn nơi học"
                         onChange={handleChange}
                     />
@@ -64,29 +57,34 @@ function Search() {
                 <div className='search-sub-grid-layout40'>
                     <div>
                         <div className='text-item-search-frame40'> Số buổi/tuần </div>
-                        <Dropdown id="id-select-dpw"
+                        <Dropdown id="id-select-lesson"
                             className='search-choice-haft40'
-                            values={optionSelect.daysperweek}
-                            name="daysperweek"
+                            values={optionSelect.lesson}
+                            name="lesson"
                             placeholder="Chọn số buổi"
                             onChange={handleChange}
                         />
                     </div>
-                    <div/>
                     <div>
                         <div className='text-item-search-frame40'> Thời lượng/buổi </div>
-                        <Dropdown id="id-select-duration"
+                        <Dropdown id="id-select-time"
                             className='search-choice-haft40'
-                            values={optionSelect.duration}
-                            name="duration"
+                            values={optionSelect.time}
+                            name="time"
                             placeholder="Chọn số giờ"
                             onChange={handleChange}
                         />
                     </div>
                 </div>
                 <div>
-                    <div className='text-item-search-frame40'> Học phí tối thiểu (VND/buổi) </div>
-                    <input className='search-input-full' type='text' placeholder='0'/>
+                    <div className='text-item-search-frame40'> Học phí tối thiểu (VND/tháng) </div>
+                    <input
+                        type="text"
+                        className="search-input-full"
+                        placeholder='VNĐ'
+                        name="fee"
+                        onChange={handleChange}
+                    />
                 </div>
                 <div className='text-search-frame40'> Yêu cầu đối với gia sư </div>
                 <div className='search-sub-grid-layout40'>
@@ -94,19 +92,18 @@ function Search() {
                         <div className='text-item-search-frame40'> Giới tính </div>
                         <Dropdown id="id-select-gender"
                             className='search-choice-haft40'
-                            values={optionSelect.tutor_gender}
-                            name="tutor_gender"
+                            values={optionSelect.gender}
+                            name="gender"
                             placeholder="Chọn giới tính"
                             onChange={handleChange}
                         />
                     </div>
-                    <div/>
                     <div>
                         <div className='text-item-search-frame40'> Trình độ </div>
-                        <Dropdown id="id-select-level"
+                        <Dropdown id="id-select-literacy"
                             className='search-choice-haft40'
-                            values={optionSelect.tutor_level}
-                            name="tutor_level"
+                            values={optionSelect.literacy}
+                            name="literacy"
                             placeholder="Chọn trình độ"
                             onChange={handleChange}
                         />
@@ -115,18 +112,17 @@ function Search() {
                 <div className='search-sub-grid-layout40'>
                     <button className="button-occupation-cancel40">
                         <div className="search-button">
-                            Hủy
+                            Xoá
                         </div>
                     </button>
-                    <div/>
                     <button className="button-occupation-ok40" type="submit" >
                         <div className="search-button">
-                            Đăng
+                            Tìm
                         </div>
                     </button>
                 </div>
             </div>
-        </div>
+        </form>
     )
 }
 

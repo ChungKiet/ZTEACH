@@ -1,20 +1,25 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const useForm = (callback, validate) => {
+  
+  const navigate = useNavigate();
   const [values, setValues] = useState({
+    page: "1",
     title: "",
     subject: "",
     grade: "",
-    place: "",
-    daysperweek: "",
-    duration: "",
-    tutor_level: "",
-    tutor_gender: "",
-    fee: ""
+    study_form: "",
+    lesson: "",
+    time: "",
+    fee: "",
+    literacy: "",
+    gender: ""
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -30,29 +35,11 @@ const useForm = (callback, validate) => {
     setErrors(validate(values));
     setIsSubmitting(true);
     console.log(values);
-    if(true){
-    //if (!errors.isError) {
-      axios.post("http://localhost:8000/posts", values).then(res => {
-        console.log(res)
-        const { isSucceeded } = res.data;
-        if (isSucceeded === true) {
-            alert("Thành công rồi nha!")
-        }
-        else{
-          alert("Thất bại!")
-        }
-    });
-    }
-  };
 
-  useEffect(
-    () => {
-      if (Object.keys(errors).length === 0 && isSubmitting) {
-        callback();
-      }
-    },
-    [errors]
-  );
+
+
+    navigate('/post');
+  };
 
   return { handleChange, handleSubmit, values, errors };
 };

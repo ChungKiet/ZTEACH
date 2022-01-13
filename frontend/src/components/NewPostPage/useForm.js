@@ -35,8 +35,12 @@ const useForm = (callback, validate) => {
     const tmp = JSON.parse(window.sessionStorage.getItem("user19120000"));
     console.log(tmp); // _id, password
 
-    const user = {user : tmp._id};
-    const data = {...user, ...values}; //concatenate
+    const username = {username : tmp.username};
+    console.log("username = ");
+    console.log(username);
+    const data = {...username, ...values}; //concatenate
+    console.log("send data = ");
+    console.log(data);
 
 
     e.preventDefault();
@@ -50,6 +54,8 @@ const useForm = (callback, validate) => {
         if (message === "Success") {
             alert("Tạo bài đăng thành công!");
             navigate("/posts/" + id);
+            console.log("newpost-id = ");
+            console.log(id);
         }
         else{
           alert("Lỗi khi tạo bài đăng!");
