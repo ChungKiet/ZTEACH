@@ -1,9 +1,9 @@
 import React from 'react';
 import '../../App.css';
 import Navbar from '../Navbar';
-import Search from '../PostListPage/Search';
 import Posts from '../PostListPage/Posts';
-function HomePage() {
+
+function PostListPage() {
   return (
     <>
       <Navbar/>
@@ -12,4 +12,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default PostListPage;
