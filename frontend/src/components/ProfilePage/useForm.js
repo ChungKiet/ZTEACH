@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import GlobalVar from '../../GlobalVar';
 import { data } from 'jquery';
+import { storage } from '../../firebase';
 
 const useForm = (callback, validate) => {
   const [values, setValues] = useState({
    id: "",
+   image: "",
    username: "KietChung",
    intro: "No intro",
    name: "Kiệt Chung",
@@ -92,6 +94,7 @@ const useForm = (callback, validate) => {
       var get_contact = data.contact;
       var get_contact_secure = data.contact_secure;
       var get_voting = data.voting;
+      var get_image = data.image;
       // Toàn bộ check trong hàm này
       // Tùy vào người dùng sẽ được thiết lập khác nhau
       // Khi sang trang edit profile thì phải load lần nữa chính nó
@@ -151,6 +154,7 @@ const useForm = (callback, validate) => {
 
       setValues({
         id: get_id,
+        image: get_image,
         username: get_username,
         intro: get_intro,
         name: get_name,
@@ -336,57 +340,12 @@ const useForm = (callback, validate) => {
     const data = res.data;
     if (!data)
       return;
-    // setValues({
-    //   id: dt._id,
-    //   username: dt.username,
-    //   intro: dt.introduce,
-    //   name: dt.name,
-    //   user_type: dt.user_type,
-    //   gender: dt.gender,
-    //   gender_secure: dt.gender_secure,
-    //   birthday: dt.birth_day,
-    //   birthday_secure: dt.birth_day_secure,
-    //   classes: dt.classes,
-    //   major: dt.major,
-    //   literacy: dt.literacy,
-    //   salary: dt.fee,
-    //   address: dt.address,
-    //   address_secure: dt.address_secure,
-    //   subjects: dt.subjects,
-    //   email: dt.email,
-    //   email_secure: dt.email_secure,
-    //   contact: dt.contact,
-    //   contact_secure: dt.contact_secure,
-    // });
    checkValue(data);
   })
    axios.post('http://localhost:8000/tutors/profile', {username: username }).then(res => {//   https://localhost:8000/ + user_type + edit
    const data = res.data;
    if (!data)
      return;
-  //  setValues({
-  //    id: dt._id,
-  //    username: dt.username,
-  //    intro: dt.introduce,
-  //    name: dt.name,
-  //    user_type: dt.user_type,
-  //    gender: dt.gender,
-  //    gender_secure: dt.gender_secure,
-  //    birthday: dt.birth_day,
-  //    birthday_secure: dt.birth_day_secure,
-  //    classes: dt.classes,
-  //    major: dt.major,
-  //    literacy: dt.literacy,
-  //    salary: dt.fee,
-  //    address: dt.address,
-  //    address_secure: dt.address_secure,
-  //    subjects: dt.subjects,
-  //    email: dt.email,
-  //    email_secure: dt.email_secure,
-  //    contact: dt.contact,
-  //    contact_secure: dt.contact_secure,
-  //    voting:dt.voting,
-  //  });
   checkValue(data);
 })
    };
@@ -394,7 +353,52 @@ const useForm = (callback, validate) => {
    
 }, []);
 
-  return { handleSubmit , listPost, listRequest, values, errors };
+  const [UserImage, setUserImage] = useState({
+      image: null,
+      url: 'https://firebasestorage.googleapis.com/v0/b/zteach-images.appspot.com/o/images%2Fprofile.png?alt=media&token=34e94b8d-cda6-4df8-8f4b-88a022d3b3fe',
+      progress: 0
+    })
+
+  const handleChangeImage = e => {
+    if (e.target.files[0]) {
+        const image = e.target.files[0];
+        setUserImage({
+          ...UserImage,
+          ["image"]:image
+        })
+        const name = image.name + '-' + Date.now();
+        const uploadTask = storage.ref(`images/${name}`).put(image);
+        uploadTask.on('state_changed',
+        (snapshot) => {
+            // progrss function ....
+            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+            setUserImage({
+              ...UserImage,
+              ["progress"]:progress
+            })
+            console.log("sdfsdfsfdsf")
+        },
+        (error) => {
+            // error function ....
+            console.log(error);
+            console.log("Here");
+        },
+        () => {
+            // complete function ....
+            storage.ref('images').child(name).getDownloadURL().then(url => {
+                console.log(url);
+                setValues({
+                  ...values,
+                  ["image"]: url
+                })
+            })
+        });
+        // Post then change 2 link
+    }
+}
+
+
+  return { handleSubmit , handleChangeImage, listPost, listRequest, values, errors };
 };
 
 export default useForm;

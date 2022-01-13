@@ -75,7 +75,7 @@ function EditProfile(){
           <Form.Group controlId="formFile">
             <div class="image-upload" className='Avatar'>
               <label for="file-input">
-                  <img src={logo} className='Avatar-student'/>
+                  <img src={values.image} className='Avatar-student'/>
               </label>
               <input id="file-input" type="file" className='Avatar-input'/>
             </div>

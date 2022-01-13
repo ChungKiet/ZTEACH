@@ -86,7 +86,7 @@ function EditProfileTutor(){
           <Form.Group controlId="formFile" className="mb-3" >
             <div className='Avatar-tutor'>
               <label for="file-input">
-                  <img src={logo} className='Avatar_label'/>
+                  <img src={values.image} className='Avatar_label'/>
               </label>
               <input id="file-input" type="file" className='Avatar-input'/>
             </div>
