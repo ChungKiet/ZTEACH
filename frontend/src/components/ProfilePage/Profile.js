@@ -29,7 +29,7 @@ function Profile(){
   }
 
   const isLogin = window.sessionStorage.getItem("isLogin");
-  const { handleSubmit, listPost, values, errors } = useForm(
+  const { handleSubmit, listPost, listRequest, values, errors } = useForm(
       submitForm,
       validateInfo
   );
@@ -69,6 +69,17 @@ function Profile(){
         </div>
     );
   }
+  const URL = window.location.pathname;
+  const tmp = URL.split('/');
+  const username = tmp[tmp.length - 1];
+  const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
+  var isHolderAccount = false;
+  if (!user){
+    isHolderAccount = false;
+  }
+  else if (user.username === username){
+    isHolderAccount = true;
+  }
 
   function RequestSummaryLine(props) {
     const { order, username, level, gender } = props;
@@ -98,6 +109,7 @@ function Profile(){
         </div>
     );
   }
+  console.log(values);
 
   const getFiles = (filePost) => {
     this.setState({ files: filePost })
@@ -122,7 +134,7 @@ function Profile(){
           <div className='user_name'>
                        {values.username}
           </div>
-          {values.user_type === "Gia sư" &&
+          {values.user_type === "tutor" &&
           <div className='col'>
             <div className='tutor-literacy'>{"Trình độ: " + values.literacy + " " + values.major}</div>
             <div className='tutor-voting'>{"Đánh giá: " + values.voting + " * " +  "(" + values.evaluate+ " bài đánh giá)"}</div>
@@ -135,11 +147,13 @@ function Profile(){
         </div>
         <div className='row'>
           <div className='user_type'>
-            {values.user_type}
+            {values.user_type==="student"?"Học viên": "Gia sư"}
           </div>
+          { isHolderAccount &&
           <button className='btn_edit'>
             <a href='/editprofile' > Chỉnh sửa trang cá nhân </a>
           </button>
+          }
         </div>
     
         <div className='column-info'>
@@ -202,7 +216,6 @@ function Profile(){
               Hình ảnh các văn bằng
             </strong>
             </div>
-            <div>{values.files + "Có update"}</div>
           </div>
           <div className='row'>
             <div className='tutor-cert-img'>
@@ -211,9 +224,16 @@ function Profile(){
             </strong>
             </div>
             <div>{listPost}</div>
-            <div>{values.files + "Có update"}</div>
           </div>
-         
+          <div className='row'>
+            <div className='tutor-cert-img'>
+            <strong>
+              Danh sách các yêu cầu kết nối
+            </strong>
+            </div>
+            <div>{listRequest}</div>
+          </div>
+         {/* //listRequest */}
         </div>
         {/* <div> oke</div> */}
         

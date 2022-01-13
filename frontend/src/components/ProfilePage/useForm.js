@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import GlobalVar from '../../GlobalVar';
+import { data } from 'jquery';
 
 const useForm = (callback, validate) => {
   const [values, setValues] = useState({
@@ -29,6 +30,17 @@ const useForm = (callback, validate) => {
    contact_secure: "Công khai",
  });
 
+    const URL = window.location.pathname;
+    const tmp = URL.split('/');
+    const username = tmp[tmp.length - 1];
+    const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
+    var isHolderAccount = false;
+    if (!user){
+      isHolderAccount = false;
+    }
+    else if (user.username === username){
+      isHolderAccount = true;
+    }
   // set listRequest after render
   // return VALUES for PROFILE
   // IF xóa tính sau
@@ -59,27 +71,27 @@ const useForm = (callback, validate) => {
   };
 
   const checkValue = (data) => {
-      const get_id =data._id;
-      const get_username =  data.username;
-      const get_intro =  data.introduce;
-      const get_name =  data.name;
-      const get_user_type =  data.user_type;
-      const get_gender = data.gender;
-      const get_gender_secure = data.gender_secure;
-      const get_birth_day = data.birth_day;
-      const get_birth_day_secure = data.birth_day_secure;
-      const get_classes = data.classes;
-      const get_major = data.major;
-      const get_literacy = data.literacy;
-      const get_salary = data.fee;
-      const get_address = data.address;
-      const get_address_secure = data.address_secure;
-      const get_subjects =  data.subjects;
-      const get_email = data.email;
-      const get_email_secure = data.email_secure;
-      const get_contact = data.contact;
-      const get_contact_secure = data.contact_secure;
-      const get_voting = data.voting;
+      var get_id =data._id;
+      var get_username =  data.username;
+      var get_intro =  data.introduce;
+      var get_name =  data.name;
+      var get_user_type =  data.user_type;
+      var get_gender = data.gender;
+      var get_gender_secure = data.gender_secure;
+      var get_birth_day = data.birth_day;
+      var get_birth_day_secure = data.birth_day_secure;
+      var get_classes = data.classes;
+      var get_major = data.major;
+      var get_literacy = data.literacy;
+      var get_salary = data.fee;
+      var get_address = data.address;
+      var get_address_secure = data.address_secure;
+      var get_subjects =  data.subjects;
+      var get_email = data.email;
+      var get_email_secure = data.email_secure;
+      var get_contact = data.contact;
+      var get_contact_secure = data.contact_secure;
+      var get_voting = data.voting;
       // Toàn bộ check trong hàm này
       // Tùy vào người dùng sẽ được thiết lập khác nhau
       // Khi sang trang edit profile thì phải load lần nữa chính nó
@@ -108,7 +120,7 @@ const useForm = (callback, validate) => {
           get_contact = "Đã bị ẩn";
         }
       }
-      else{
+      else if (!isLogin){
         // Neu chua login thì ko hien thi neu o che do "Bao mat"
         if (get_gender_secure==="Bảo mật"){
           get_gender = "Đã bị ẩn";
@@ -127,12 +139,39 @@ const useForm = (callback, validate) => {
         }        
       }
       // Xet da ket noi
-
+      // Neu da tung ket noi thi thay them btn danh gia
+      // Neu k phai chu tai khoan
+        // Neu chua ket noi --> ket noi or huy
+        // Neu da tung ket noi --> hien cai danh gia tung danh gia la bnhiu (DEFAULT: 4)
       // Lay danh sach cac user da ket noi theo http:// something at backend
       // for in list --> connected?
       // if is connected --> can voting
       // FILE PROFILE also check if is account holder
       // It will hide or appear btn for edit + btn "Chinh sua trang ca nhan" + All info
+
+      setValues({
+        id: get_id,
+        username: get_username,
+        intro: get_intro,
+        name: get_name,
+        user_type: get_user_type,
+        gender: get_gender,
+        gender_secure: get_gender_secure,
+        birthday: get_birth_day,
+        birthday_secure: get_birth_day_secure,
+        classes: get_classes,
+        major: get_major,
+        literacy: get_literacy,
+        salary: get_salary,
+        address: get_address,
+        address_secure: get_address_secure,
+        subjects: get_subjects,
+        email: get_email,
+        email_secure: get_email_secure,
+        contact: get_contact,
+        contact_secure: get_contact_secure,
+        voting: get_voting,
+      });
   }
 
   
@@ -148,6 +187,7 @@ const useForm = (callback, validate) => {
             </div>
             <div className="request-level-553">{dayPost}</div>
             {/* <div className="request-gender-553">{gender}</div> */}
+            { isHolderAccount &&
             <div className="request-accept-553">
                 <button className="button-request-accept-553" type="submit" >
                     <div className="request-button-553">
@@ -155,6 +195,8 @@ const useForm = (callback, validate) => {
                     </div>
                 </button>
             </div>
+            }
+            { isHolderAccount && 
             <div className="request-deny-553">
                 <button className="button-request-deny-553" type="submit" >
                     <div className="request-button-553">
@@ -162,6 +204,7 @@ const useForm = (callback, validate) => {
                     </div>
                 </button>
             </div>
+            }
         </div>
     );
   }
@@ -203,17 +246,24 @@ const useForm = (callback, validate) => {
     const tmp = URL.split('/');
     const username = tmp[tmp.length - 1];
     const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
+    var isHolderAccount = false;
+    if (!user){
+      isHolderAccount = false;
+    }
+    else if (user.username === username){
+      isHolderAccount = true;
+    }
     
-    const fetchData = async() => {   
-      axios.post('http://localhost:8000/connects/get-tutor-connect', {username: username }).then(res => {//   https://localhost:8000/ + user_type + edit
+    const fetchData = async() => {  
+      axios.post('http://localhost:8000/connects/get-tutor-connect', {tutor: username }).then(res => {//   https://localhost:8000/ + user_type + edit
       const data = res.data;
-      alert("Oke vo dc");
       for (let i = 0; i < data.length; i++){
         data[i]["order"] = i + 1;
       }
       setRequest(data.map(v => (
         <RequestConnect id={v._id} username={v.username} dayRequest={v.dayRequest} order={v.order}></RequestConnect>
       )));
+      console.log(listRequest);
       console.log("Im here");
       //console.log(listPost);
      })
@@ -283,65 +333,68 @@ const useForm = (callback, validate) => {
   const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
    const fetchData = async() => {    
     axios.post('http://localhost:8000/users/profile', {username: username }).then(res => {//   https://localhost:8000/ + user_type + edit
-    const dt = res.data;
-    if (!dt)
+    const data = res.data;
+    if (!data)
       return;
-    setValues({
-      id: dt._id,
-      username: dt.username,
-      intro: dt.introduce,
-      name: dt.name,
-      user_type: dt.user_type,
-      gender: dt.gender,
-      gender_secure: dt.gender_secure,
-      birthday: dt.birth_day,
-      birthday_secure: dt.birth_day_secure,
-      classes: dt.classes,
-      major: dt.major,
-      literacy: dt.literacy,
-      salary: dt.fee,
-      address: dt.address,
-      address_secure: dt.address_secure,
-      subjects: dt.subjects,
-      email: dt.email,
-      email_secure: dt.email_secure,
-      contact: dt.contact,
-      contact_secure: dt.contact_secure,
-    });
-   })
-   axios.post('http://localhost:8000/tutors/profile', {username: username }).then(res => {//   https://localhost:8000/ + user_type + edit
-   const dt = res.data;
-   if (!dt)
-     return;
-   setValues({
-     id: dt._id,
-     username: dt.username,
-     intro: dt.introduce,
-     name: dt.name,
-     user_type: dt.user_type,
-     gender: dt.gender,
-     gender_secure: dt.gender_secure,
-     birthday: dt.birth_day,
-     birthday_secure: dt.birth_day_secure,
-     classes: dt.classes,
-     major: dt.major,
-     literacy: dt.literacy,
-     salary: dt.fee,
-     address: dt.address,
-     address_secure: dt.address_secure,
-     subjects: dt.subjects,
-     email: dt.email,
-     email_secure: dt.email_secure,
-     contact: dt.contact,
-     contact_secure: dt.contact_secure,
-   });
+    // setValues({
+    //   id: dt._id,
+    //   username: dt.username,
+    //   intro: dt.introduce,
+    //   name: dt.name,
+    //   user_type: dt.user_type,
+    //   gender: dt.gender,
+    //   gender_secure: dt.gender_secure,
+    //   birthday: dt.birth_day,
+    //   birthday_secure: dt.birth_day_secure,
+    //   classes: dt.classes,
+    //   major: dt.major,
+    //   literacy: dt.literacy,
+    //   salary: dt.fee,
+    //   address: dt.address,
+    //   address_secure: dt.address_secure,
+    //   subjects: dt.subjects,
+    //   email: dt.email,
+    //   email_secure: dt.email_secure,
+    //   contact: dt.contact,
+    //   contact_secure: dt.contact_secure,
+    // });
+   checkValue(data);
   })
+   axios.post('http://localhost:8000/tutors/profile', {username: username }).then(res => {//   https://localhost:8000/ + user_type + edit
+   const data = res.data;
+   if (!data)
+     return;
+  //  setValues({
+  //    id: dt._id,
+  //    username: dt.username,
+  //    intro: dt.introduce,
+  //    name: dt.name,
+  //    user_type: dt.user_type,
+  //    gender: dt.gender,
+  //    gender_secure: dt.gender_secure,
+  //    birthday: dt.birth_day,
+  //    birthday_secure: dt.birth_day_secure,
+  //    classes: dt.classes,
+  //    major: dt.major,
+  //    literacy: dt.literacy,
+  //    salary: dt.fee,
+  //    address: dt.address,
+  //    address_secure: dt.address_secure,
+  //    subjects: dt.subjects,
+  //    email: dt.email,
+  //    email_secure: dt.email_secure,
+  //    contact: dt.contact,
+  //    contact_secure: dt.contact_secure,
+  //    voting:dt.voting,
+  //  });
+  checkValue(data);
+})
    };
    fetchData();
    
 }, []);
 
-  return { handleSubmit , listPost,  values, errors };
+  return { handleSubmit , listPost, listRequest, values, errors };
 };
 
 export default useForm;

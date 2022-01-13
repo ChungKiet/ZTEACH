@@ -80,7 +80,7 @@ const useForm = (callback, validate) => {
           GlobalVar.setUser(
             values
           );
-          navigate('/profile' + values.username);
+          navigate('/profile/' + values.username);
           alert("Cập nhật thành công!");
           //window.sessionStorage.setItem('user19120000', values);
         }

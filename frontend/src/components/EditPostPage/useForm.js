@@ -34,8 +34,8 @@ const useForm = (callback, validate, dt) => {
     //if (!errors.isError) {
       axios.put("http://localhost:8000/posts/edit", values).then(res => {
         console.log(res.data)
-        const { message, uid } = res.data;
-        if (message === "Update Success") {
+        const { id, result, message } = res.data;
+        if (result === 1 || result === "1") {
             alert("Cập nhật thành công!");
             
             navigate("/posts/" + values.id);

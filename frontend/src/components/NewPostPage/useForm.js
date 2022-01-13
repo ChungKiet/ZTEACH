@@ -46,8 +46,8 @@ const useForm = (callback, validate) => {
     //if (!errors.isError) {
       axios.post("http://localhost:8000/posts/new-post", data).then(res => {
         console.log(res.data)
-        const {result, message, id } = res.data;
-        if (message === "Create post Success" || result === "1") {
+        const {id, result, message} = res.data;
+        if (result === 1 || result === "1") {
             alert("Tạo bài đăng thành công!");
             navigate("/posts/" + id);
             console.log("newpost-id = ");
