@@ -26,6 +26,8 @@ function Profile(){
   const submitForm = () => {
     console.log("Submitted");
   }
+
+  const isLogin = window.sessionStorage.getItem("isLogin");
   const { handleSubmit, values, errors } = useForm(
       submitForm,
       validateInfo
@@ -54,11 +56,13 @@ function Profile(){
           <div className='user_name'>
                        {values.username}
           </div>
+          {values.user_type === "Gia sư" &&
           <div className='col'>
             <div className='tutor-literacy'>{"Trình độ: " + values.literacy + " " + values.major}</div>
             <div className='tutor-voting'>{"Đánh giá: " + values.voting + " * " +  "(" + values.evaluate+ " bài đánh giá)"}</div>
             <div className='tutor-dayreg'>{"Ngày tham gia: " + values.dayreg}</div>
           </div>
+          }
           <div className='col'>
             <img src={toprightimage} className='top-right-img'/>
           </div>

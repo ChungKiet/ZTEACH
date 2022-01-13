@@ -15,22 +15,21 @@ const useForm = (callback, validate) => {
    voting: "4.5",
    evaluate: "10",
    dayreg: "2022-01-04",
-   birth_day_secure: "Riêng tư",
+   birth_day_secure: "Công khai",
    subject: ["Toán, Lý"],
    classes: ["Lớp 1", "Lớp 2"],
    major: "CNTT",
    literacy: "Sinh viên",
    salary: "",
    address: "No address",
-   address_secure: "Riêng tư",
+   address_secure: "Công khai",
    email: "No email",
-   email_secure: "Riêng tư",
+   email_secure: "Công khai",
    contact: "No Contact",
-   contact_secure: "Riêng tư",
+   contact_secure: "Công khai",
  });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -54,13 +53,60 @@ const useForm = (callback, validate) => {
     }
   };
 
+  checkValue = (data) => {
+      const get_id =data._id;
+      const get_username =  data.username;
+      const get_intro =  data.introduce;
+      const get_name =  data.name;
+      const get_user_type =  data.user_type;
+      const get_gender = data.gender;
+      const get_gender_secure = data.gender_secure;
+      const get_birth_day = data.birth_day;
+      const get_birth_day_secure = data.birth_day_secure;
+      const get_classes = data.classes;
+      const get_major = data.major;
+      const get_literacy = data.literacy;
+      const get_salary = data.fee;
+      const get_address = data.address;
+      const get_address_secure = data.address_secure;
+      const get_subjects =  data.subjects;
+      const get_email = data.email;
+      const get_email_secure = data.email_secure;
+      const get_contact = data.contact;
+      const get_contact_secure = data.contact_secure;
+      const get_voting = data.voting;
+      // Toàn bộ check trong hàm này
+      // Tùy vào người dùng sẽ được thiết lập khác nhau
+      // Khi sang trang edit profile thì phải load lần nữa chính nó
+      // if ()
+      // 
+      const isLogin = window.sessionStorage.getItem("isLogin");
+      if (isLogin){
+        // Neu da dang nhap
+        // Neu set rieng thu thi set = "Da bi an"
+        if (get_gender_secure==="Riêng tư"){
+          get_gender = "Đã bị ẩn";
+        }  
+        if (get_birth_day_secure==="Riêng tư"){
+          get_birth_day = "Đã bị ẩn"
+        }
+        //if ()
+      }
+      else{
+
+      }
+  }
+
   useEffect(() => {
+  const URL = window.location.pathname;
+  const tmp = URL.split('/');
+  const username = tmp[tmp.length - 1];
   const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
-  console.log(user);
-   const fetchData = async() => {
-       //const user_type = GlobalVar.user.user_type === "Học viên"? "users": "tutors"; // '61d63bc74ed1d19b0d4a8db9'
-       axios.post('http://localhost:8000/users/profile', {id: user._id }).then(res => {//   https://localhost:8000/ + user_type + edit
+   const fetchData = async() => {    
+    axios.post('http://localhost:8000/users/profile', {username: username }).then(res => {//   https://localhost:8000/ + user_type + edit
     const dt = res.data;
+    if (!dt)
+      return;
     setValues({
       id: dt._id,
       username: dt.username,
@@ -84,6 +130,33 @@ const useForm = (callback, validate) => {
       contact_secure: dt.contact_secure,
     });
    })
+   axios.post('http://localhost:8000/tutors/profile', {username: username }).then(res => {//   https://localhost:8000/ + user_type + edit
+   const dt = res.data;
+   if (!dt)
+     return;
+   setValues({
+     id: dt._id,
+     username: dt.username,
+     intro: dt.introduce,
+     name: dt.name,
+     user_type: dt.user_type,
+     gender: dt.gender,
+     gender_secure: dt.gender_secure,
+     birth_day: dt.birth_day,
+     birth_day_secure: dt.birth_day_secure,
+     classes: dt.classes,
+     major: dt.major,
+     literacy: dt.literacy,
+     salary: dt.fee,
+     address: dt.address,
+     address_secure: dt.address_secure,
+     subjects: dt.subjects,
+     email: dt.email,
+     email_secure: dt.email_secure,
+     contact: dt.contact,
+     contact_secure: dt.contact_secure,
+   });
+  })
    };
    fetchData();
    
