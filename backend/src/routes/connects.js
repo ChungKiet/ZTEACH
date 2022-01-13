@@ -27,4 +27,7 @@ route.post('/get-tutor-connect', connectsController.get_tutor_connect);
 // http://localhost:8000/connects/get-tutor-state
 route.post('/get-tutor-state', connectsController.get_tutor_state);
 
+// http://localhost:8000/connects
+// route.get('/', connectsController.get_all_connect);
+
 module.exports = route;

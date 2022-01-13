@@ -115,7 +115,7 @@ class ConnectsController {
     // [POST] /get-tutor-connect  --> danh sách gia sư yêu cầu nhưng chưa kết nối
     async get_tutor_connect(req, res, next) {
         const tutor = req.body.tutor;
-        const connects = Connect.find({ tutor, post: 'null', accept: false }, 'user timer');
+        const connects = await Connect.find({ tutor: tutor, post: 'null', accept: false }, 'user timer');
         res.json(connects);
     }
 
@@ -133,6 +133,7 @@ class ConnectsController {
             res.json({ 'post': post, 'state': 2 }); // đã kết nối
         }
     }
+
 }
 
 module.exports = new ConnectsController;

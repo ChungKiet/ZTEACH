@@ -12,7 +12,7 @@ route.put('/edit', postsController.edit_post);
 // http://localhost:8000/posts/delete
 route.delete('/delete', postsController.delete_post);
 
-// http://localhost:8000/posts
+// http://localhost:8000/posts/user-post
 route.post('/user-post', postsController.user_post);
 
 // http://localhost:8000/posts/<post.id>
