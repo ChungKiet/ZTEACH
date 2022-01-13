@@ -278,7 +278,6 @@ const useForm = (callback, validate) => {
   }, [])
 
 
-
   const [listPost, setPostList] = useState([]);
   useEffect(() =>{
     // Get user post
@@ -376,7 +375,6 @@ const useForm = (callback, validate) => {
               ...UserImage,
               ["progress"]:progress
             })
-            console.log("sdfsdfsfdsf")
         },
         (error) => {
             // error function ....
@@ -391,6 +389,17 @@ const useForm = (callback, validate) => {
                   ...values,
                   ["image"]: url
                 })
+                //http://localhost:8000/users/edit-image
+                axios.put('http://localhost:8000/users/edit-image', {username: values.username, image: url}).then(res=>{
+                  const message = res.data;
+                  if (!message.error){
+                  const user = JSON.parse(window.sessionStorage.getItem("user19120000"));
+                  window.sessionStorage.setItem("user19120000", user);
+                  console.log(user);
+                  alert("Oke bro");
+                  }
+                }
+                )
             })
         });
         // Post then change 2 link

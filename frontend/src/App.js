@@ -16,6 +16,7 @@ import ImageUpload from './components/upload';
 // GlobalVar.isLogin = true;
 var a;
 function App() {
+  <script crossorigin src="..."></script>
   window.sessionStorage.setItem("isLogin", false);
   return (
     <Router>
