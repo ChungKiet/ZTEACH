@@ -8,7 +8,7 @@ const Connect = mongoose.Schema({
         type: String, required: true
     },
     post: {
-        type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Post', default: null
+        type: String, required: true, default: 'null'
     },
     accept: {
         type: Boolean, require: true, default: false
