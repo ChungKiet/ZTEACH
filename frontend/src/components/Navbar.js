@@ -38,7 +38,7 @@ function Navbar() {
           <div className='menu-icon' onClick={handleClick}>
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
           </div>
-          {(user === null) && (<ul className={click ? 'nav-menu active' : 'nav-menu'}>
+          {(user === null) && (<div className={click ? 'nav-menu active' : 'nav-menu'}>
             <li className='nav-item'>
               <Link
                 to='/login'
@@ -48,7 +48,7 @@ function Navbar() {
                 ĐĂNG NHẬP
               </Link>
             </li>
-          </ul>)}
+          </div>)}
           {(user === null) && button && <Link to="/signup"><Button buttonStyle='btn--outline1'>ĐĂNG KÝ</Button></Link>}
           {(user !== null) && <Profile/>}
         </div>

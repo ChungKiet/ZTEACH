@@ -14,60 +14,80 @@ import img_level from '../images/postimg/level.png';
 import img_place from '../images/postimg/place.png';
 import img_subject from '../images/postimg/subject.png';
 import img_tutor from '../images/postimg/tutor.png';
+import GlobalVar from "../../GlobalVar";
 
 import './Post.css';
 
 import axios from "axios";
 
-
+const user = GlobalVar.user;
+const optionSelect = GlobalVar.optionSelect;
 
 function Post() {
+    const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
+    var currentUser = null;
+    if (cookie !== null)
+        currentUser = cookie.username;
     const URL = window.location.pathname;
     const tmp = URL.split('/');
     const id = tmp[tmp.length - 1];
     const [values, setValues] = useState({
         username: "",
         image: "",
-        subject: "Hóa học",
-        grade: "Lớp 8",
-        study_form: "Quận 5",
-        lessons: "3",
-        time: "2h",
-        start: "01-01-2021",
-        title: "Default title",
-        information: "Cần tìm gia sư dạy giỏi môn hóa, lương cao",
-        literacy: "Sinh viên",
-        gender: "Nữ",
-        fee: "300000",
-        request: "2",
-        is_connected: "0",
-        is_requested: "0"
+        subject: "",
+        grade: "",
+        study_form: "",
+        lessons: "",
+        time: "",
+        start: "",
+        title: "",
+        information: "",
+        literacy: "",
+        gender: "",
+        fee: "",
+        request: "",
+        connect_state: "",
+        request_list: ""
     });
 
 
     useEffect(() => {
-        const fetchData = async () => {
-            await axios('http://localhost:8000/posts/' + id).then(
+        const fetchData =  () => {
+             axios('http://localhost:8000/posts/' + id).then(
                 res => {
                     const dt = res.data;
-                    setValues({
-                        username: dt.username,
-                        image: dt.image,
-                        title: dt.title,
-                        information: dt.information,
-                        subject: dt.subject,
-                        grade: dt.grade,
-                        study_form: dt.study_form,
-                        start: dt.start,
-                        literacy: dt.literacy,
-                        gender: dt.gender,
-                        fee: dt.fee,
-                        request: dt.request,
-                        lessons: dt.lessons,
-                        time: dt.time,                        
-                        is_connected: "0",
-                        is_requested: "0"                       
-                    });
+                    axios.post("http://localhost:8000/connects/get-post-state", { post: id, tutor: currentUser }).then(
+                        res2 => {
+                            const dt2 = res2.data;
+                            //axios.post("http://localhost:8000/connects/get-post-connect", { post: id}).then(
+                            //res3 => {
+                            //const dt3 = res3.data;
+                            //console.log(dt3);
+                            setValues({
+                                username: dt.username,
+                                image: dt.image,
+                                title: dt.title,
+                                information: dt.information,
+                                subject: dt.subject,
+                                grade: dt.grade,
+                                study_form: dt.study_form,
+                                start: dt.start,
+                                literacy: dt.literacy,
+                                gender: dt.gender,
+                                fee: dt.fee,
+                                request: dt.request,
+                                lessons: dt.lessons,
+                                time: dt.time,
+                                connect_state: dt2.state,
+                                //request_list: dt3.tutors
+                            });
+
+                            //}
+                            //)
+
+                        }
+                    )
+
                 }
             )
         }
@@ -76,7 +96,7 @@ function Post() {
         fetchData();
     }, []);
 
-   
+
 
     const handleChange = e => {
         const { name, value } = e.target;
@@ -85,6 +105,34 @@ function Post() {
             [name]: value
         });
     };
+
+    function connectToPost() {
+        console.log("clicked connect!");
+        axios.post("http://localhost:8000/connects/new-post-connect", { user : values.username, tutor: currentUser, post: id }).then(
+            res => {
+                if (res.data.result === 1) {
+                    alert('Tạo kết nối thành công');
+                    window.location.reload(`/posts/${id}`);
+                } else {
+                    alert('Đã xảy ra lỗi khi gửi yêu cầu. Thử lại sau.');
+                }
+            }
+        );
+    }
+
+    function cancelConnectToPost() {
+        console.log("clicked disconnect!");
+        axios.delete("http://localhost:8000/connects/delete-post-connect", {data :{ user : values.username, tutor: currentUser, post: id }}).then(
+            res => {
+                if (res.data.result === 1) {     
+                    alert('Đã hủy yêu cầu');
+                    window.location.reload(`/posts/${id}`);
+                } else {
+                    alert('Đã xảy ra lỗi khi hủy yêu cầu. Thử lại sau.');
+                }
+            }
+        );
+    }
 
     function UserTag() {
         const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
@@ -128,7 +176,7 @@ function Post() {
                 <div />
             )
         }
-        else if (values.is_connected === "1")
+        else if (values.connect_state === 2 || values.connect_state === "2")
             return (
                 <button className="button-connected">
                     <div className="button-connect-text">
@@ -136,25 +184,27 @@ function Post() {
                     </div>
                 </button>
             )
-        else if (values.is_requested === "0") {
+        else if (values.connect_state === 1 || values.connect_state === "1")
             return (
-                <button className="button-connect">
+                <button className="button-requested" onClick={cancelConnectToPost}>
+                    <div className="button-connect-text">
+                        Đã yêu cầu
+                    </div>
+                </button>
+            );
+        else if (values.connect_state === 0 || values.connect_state === "0") {
+            return (
+                <button className="button-connect" onClick={connectToPost}>
                     <div className="button-connect-text">
                         Kết nối
                     </div>
                 </button>
             );
         }
-        else {
-            return (
-                <button className="button-requested">
-                    <div className="button-connect-text">
-                        Đã yêu cầu
-                    </div>
-                </button>
-            );
-        }
+        else return null;
+
     }
+
 
     function RequestList() {
         const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
@@ -249,7 +299,7 @@ function Post() {
     return (
         <div className="Post">
             <Navbar />
-            {console.log("after all:"), console.log(values)}
+            {console.log("currentUser:"), console.log(currentUser), console.log("after all:"), console.log(values), console.log(values.connect_state)}
 
             <div className="frame-general">
                 <div className="title-container-head">

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const useForm = (callback, validate) => {
   
@@ -34,11 +35,21 @@ const useForm = (callback, validate) => {
 
     setErrors(validate(values));
     setIsSubmitting(true);
-    console.log(values);
+
+    var url = '/post-list?';
+    if (values.title !== "") url = url + "title=" + values.title + "&";
+    if (values.subject !== "") url = url + "subject=" + values.subject + "&";
+    if (values.grade !== "") url = url + "grade=" + values.grade + "&";
+    if (values.study_form !== "") url = url + "study_form=" + values.study_form + "&";
+    if (values.lesson !== "") url = url + "lesson=" + values.lesson + "&";
+    if (values.time !== "") url = url + "time=" + values.time + "&";
+    if (values.fee !== "") url = url + "fee=" + values.fee + "&";
+    if (values.literacy !== "") url = url + "literacy=" + values.literacy + "&";
+    if (values.gender !== "") url = url + "gender=" + values.gender + "&";
+    if (values.page !== "") url = url + "page=" + values.page;
 
 
-
-    navigate('/post');
+    window.location.replace(url);
   };
 
   return { handleChange, handleSubmit, values, errors };

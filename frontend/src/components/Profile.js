@@ -18,18 +18,20 @@ class Profile extends React.Component {
         window.sessionStorage.removeItem("user19120000");
     }
     render(){
+    const tmp = window.sessionStorage.getItem("user19120000");
+    const user = JSON.parse(tmp); 
     return (
           <div class="action">
             <div class="profile447" onClick={this.ClickListener}>
-                <img src={profile}/>
+                <img src={user.image}/>
             </div>
             {this.state.onClick && (<div class="menu447">
                 <h3>{JSON.parse(window.sessionStorage.getItem("user19120000")).username}</h3>
-                <ul>
-                    <Link to={"/profile/" + JSON.parse(window.sessionStorage.getItem("user19120000")).username} className="link447"><li>Xem thông tin chi tiết</li></Link>
-                    <li>Đổi mật khẩu</li>
-                    <Link to="/login" className="link447" onClick={this.LogoutListener}><li>Đăng xuất</li></Link>
-                </ul>
+                <div className="fix446">
+                    <Link to={"/profile/" + JSON.parse(window.sessionStorage.getItem("user19120000")).username} className="link447"><div className="fix447">Xem thông tin chi tiết</div></Link>
+                    <div className="fix447">Đổi mật khẩu</div>
+                    <Link to="/login" className="link447" onClick={this.LogoutListener}><div className="fix447">Đăng xuất</div></Link>
+                </div>
             </div>)}
         </div>  
     );
