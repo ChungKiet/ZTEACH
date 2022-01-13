@@ -80,7 +80,7 @@ const useForm = (callback, validate) => {
           GlobalVar.setUser(
             values
           );
-          navigate('/profile');
+          navigate('/profile' + values.username);
           alert("Cập nhật thành công!");
           //window.sessionStorage.setItem('user19120000', values);
         }
@@ -95,10 +95,11 @@ const useForm = (callback, validate) => {
   useEffect(() => {
    const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
    const user_type = user.user_type === "student"? "users": "tutors";
+   console.log("I'm here bro!");
    console.log(user);
    const fetchData = async() => {
        //const usertype = GlobalVar.user.user_type === "Học viên"? "user" : "tutor";
-       axios.post('http://localhost:8000/'+ "users" +'/profile', {id: user._id}).then(res => {//   https://localhost:8000/ + user_type + edit
+       axios.post('http://localhost:8000/'+ user_type +'/profile', {username: user.username}).then(res => {//   https://localhost:8000/ + user_type + edit
        const dt = res.data;
        setValues({
          id: dt._id,
@@ -108,8 +109,8 @@ const useForm = (callback, validate) => {
          user_type: dt.user_type,
          gender: dt.gender,
          gender_secure: dt.gender_secure,
-         birth_day: dt.birthday,
-         birth_day_secure: dt.birthday_secure,
+         birthday: dt.birthday,
+         birthday_secure: dt.birthday_secure,
          classes: dt.classes,
          major: dt.major,
          literacy: dt.literacy,

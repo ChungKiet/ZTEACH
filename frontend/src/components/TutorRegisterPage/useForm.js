@@ -75,7 +75,7 @@ const useForm = (callback, validate) => {
           GlobalVar.setUser(
             values
           );
-          navigate('/profile');
+          navigate('/profile/' + values.username);
         }
         else{
           alert("Cập nhật thành công!");

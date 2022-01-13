@@ -29,7 +29,7 @@ function App() {
           <Route path="/posts/*" element={<PostPage />} />
           <Route path="/editprofile" element={<EditProfilePage />} />
           <Route path="/register-tutor" element={<TutorRegisterPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile/*" element={<ProfilePage />} />
           <Route path="/post-list" element={<PostListPage />} />
           <Route path="/upload" element={<ImageUpload />} />
         </Routes>

@@ -38,7 +38,6 @@ const useForm = (callback, validate) => {
       if(msg === 1){
          window.sessionStorage.setItem("user19120000", JSON.stringify(values));
          const user = window.sessionStorage.getItem("user19120000");
-         
         //GlobalVar.changeLogin();
         //GlobalVar.setUser(values);
         navigate('/editprofile');
