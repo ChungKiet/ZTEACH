@@ -14,14 +14,20 @@ import img_level from '../images/postimg/level.png';
 import img_place from '../images/postimg/place.png';
 import img_subject from '../images/postimg/subject.png';
 import img_tutor from '../images/postimg/tutor.png';
+import GlobalVar from "../../GlobalVar";
 
 import './Post.css';
 
 import axios from "axios";
 
-
+const user = GlobalVar.user;
+const optionSelect = GlobalVar.optionSelect;
 
 function Post() {
+    const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
+    var currentUser = null;
+    if (cookie !== null)
+        currentUser = cookie.username;
     const URL = window.location.pathname;
     const tmp = URL.split('/');
     const id = tmp[tmp.length - 1];
@@ -40,8 +46,8 @@ function Post() {
         gender: "Nữ",
         fee: "300000",
         request: "2",
-        is_connected: "0",
-        is_requested: "0"
+        connect_state: "0",
+        request_list:""
     });
 
 
@@ -50,24 +56,38 @@ function Post() {
             await axios('http://localhost:8000/posts/' + id).then(
                 res => {
                     const dt = res.data;
-                    setValues({
-                        username: dt.username,
-                        image: dt.image,
-                        title: dt.title,
-                        information: dt.information,
-                        subject: dt.subject,
-                        grade: dt.grade,
-                        study_form: dt.study_form,
-                        start: dt.start,
-                        literacy: dt.literacy,
-                        gender: dt.gender,
-                        fee: dt.fee,
-                        request: dt.request,
-                        lessons: dt.lessons,
-                        time: dt.time,                        
-                        is_connected: "0",
-                        is_requested: "0"                       
-                    });
+                    axios.post("http://localhost:8000/connects/get-post-state", { post: id, tutor: currentUser }).then(
+                        res2 => {                            
+                            const dt2 = res2.data;
+                            //axios.post("http://localhost:8000/connects/get-post-connect", { post: id}).then(
+                                //res3 => {
+                                    //const dt3 = res3.data;
+                                    //console.log(dt3);
+                                    setValues({
+                                        username: dt.username,
+                                        image: dt.image,
+                                        title: dt.title,
+                                        information: dt.information,
+                                        subject: dt.subject,
+                                        grade: dt.grade,
+                                        study_form: dt.study_form,
+                                        start: dt.start,
+                                        literacy: dt.literacy,
+                                        gender: dt.gender,
+                                        fee: dt.fee,
+                                        request: dt.request,
+                                        lessons: dt.lessons,
+                                        time: dt.time,
+                                        connect_state: dt2.state,
+                                        //request_list: dt3.tutors
+                                    });
+        
+                                //}
+                            //)
+                            
+                        }
+                    )
+
                 }
             )
         }
@@ -76,7 +96,7 @@ function Post() {
         fetchData();
     }, []);
 
-   
+
 
     const handleChange = e => {
         const { name, value } = e.target;
@@ -128,7 +148,7 @@ function Post() {
                 <div />
             )
         }
-        else if (values.is_connected === "1")
+        else if (values.connect_state === 2 || values.connect_state === "2")
             return (
                 <button className="button-connected">
                     <div className="button-connect-text">
@@ -136,7 +156,15 @@ function Post() {
                     </div>
                 </button>
             )
-        else if (values.is_requested === "0") {
+        else if (values.connect_state === 1 || values.connect_state === "1")
+            return (
+                <button className="button-requested">
+                    <div className="button-connect-text">
+                        Đã yêu cầu
+                    </div>
+                </button>
+            );
+        else if (values.connect_state === 0 || values.connect_state === "0") {
             return (
                 <button className="button-connect">
                     <div className="button-connect-text">
@@ -145,302 +173,296 @@ function Post() {
                 </button>
             );
         }
-        else {
-            return (
-                <button className="button-requested">
-                    <div className="button-connect-text">
-                        Đã yêu cầu
-                    </div>
-                </button>
-            );
-        }
+        else return null;
+
     }
 
-    function RequestList() {
-        const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
-        if (cookie === null)
-            return null;
-        const currentUser = cookie.username;
-        if (currentUser === values.username)
-            return (
-                <div>
-                    <div className="more-detail-label">Danh sách gia sư yêu cầu kết nối:</div>
 
-                    <div className="overlap-group-requests">
-                        <div className="box-outline-735"></div>
-                        <div className="flex-request-heads">
-                            <div className="request-no-735">STT</div>
-                            <div className="request-username-735">Tên tài khoản</div>
-                            <div className="request-level-735">Trình độ</div>
-                            <div className="request-gender-735">Giới tính</div>
-                        </div>
-                        <div className="request-list-735">
-                            <RequestSummaryLine order="1" username="ThuyKhueChemist94" level="Giáo viên" gender="Nữ"></RequestSummaryLine>
-                            <RequestSummaryLine order="2" username="HoaiHuongPro" level="Sinh viên" gender="Nữ"></RequestSummaryLine>
-                            <RequestSummaryLine order="3" username="TrucRapper" level="Giáo viên" gender="Nam"></RequestSummaryLine>
-                            <RequestSummaryLine order={1 + 3} username="AnhThanhNien" level="Giáo viên" gender="Nữ"></RequestSummaryLine>
-
-                        </div>
-                    </div>
-                </div>)
-        else {
-            return (<div />);
-        }
-    }
-
-    function EditAndRemove() {
-        const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
-        if (cookie === null)
-            return null;
-        const currentUser = cookie.username;
-        if (currentUser === values.username)
-            return (
-                <div className="edit-and-remove">
-                    <Link to='/posts/edit-post' state={{ values, id }} className="post-edit-remove-735">
-                        <div className="button-edit-735">
-                            Chỉnh sửa
-                        </div>
-                    </Link>
-
-                    <Link to={{ pathname: "/posts/new-post", state: values }} className="post-edit-remove-735">
-                        <div className="button-remove-735">
-                            Xóa
-                        </div>
-                    </Link>
-
-                </div>
-            );
-        else
-            return null;
-    }
-
-    function RequestSummaryLine(props) {
-        const { order, username, level, gender } = props;
-
+function RequestList() {
+    const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
+    if (cookie === null)
+        return null;
+    const currentUser = cookie.username;
+    if (currentUser === values.username)
         return (
-            <div className="flex-request-line">
-                <div className="request-no-735">{order}</div>
-                <div className="request-username-735">
-                    <a href={`http://localhost:3000/user?id=${username}`} style={{ 'text-decoration': 'none' }}>{username}</a>
+            <div>
+                <div className="more-detail-label">Danh sách gia sư yêu cầu kết nối:</div>
+
+                <div className="overlap-group-requests">
+                    <div className="box-outline-735"></div>
+                    <div className="flex-request-heads">
+                        <div className="request-no-735">STT</div>
+                        <div className="request-username-735">Tên tài khoản</div>
+                        <div className="request-level-735">Trình độ</div>
+                        <div className="request-gender-735">Giới tính</div>
+                    </div>
+                    <div className="request-list-735">
+                        <RequestSummaryLine order="1" username="ThuyKhueChemist94" level="Giáo viên" gender="Nữ"></RequestSummaryLine>
+                        <RequestSummaryLine order="2" username="HoaiHuongPro" level="Sinh viên" gender="Nữ"></RequestSummaryLine>
+                        <RequestSummaryLine order="3" username="TrucRapper" level="Giáo viên" gender="Nam"></RequestSummaryLine>
+                        <RequestSummaryLine order={1 + 3} username="AnhThanhNien" level="Giáo viên" gender="Nữ"></RequestSummaryLine>
+
+                    </div>
                 </div>
-                <div className="request-level-735">{level}</div>
-                <div className="request-gender-735">{gender}</div>
-                <div className="request-accept-735">
-                    <button className="button-request-accept-735" type="submit" >
-                        <div className="request-button-735">
-                            Chấp nhận
-                        </div>
-                    </button>
-                </div>
-                <div className="request-deny-735">
-                    <button className="button-request-deny-735" type="submit" >
-                        <div className="request-button-735">
-                            Từ chối
-                        </div>
-                    </button>
-                </div>
+            </div>)
+    else {
+        return (<div />);
+    }
+}
+
+function EditAndRemove() {
+    const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
+    if (cookie === null)
+        return null;
+    const currentUser = cookie.username;
+    if (currentUser === values.username)
+        return (
+            <div className="edit-and-remove">
+                <Link to='/posts/edit-post' state={{ values, id }} className="post-edit-remove-735">
+                    <div className="button-edit-735">
+                        Chỉnh sửa
+                    </div>
+                </Link>
+
+                <Link to={{ pathname: "/posts/new-post", state: values }} className="post-edit-remove-735">
+                    <div className="button-remove-735">
+                        Xóa
+                    </div>
+                </Link>
+
             </div>
         );
-    }
+    else
+        return null;
+}
 
-
-
+function RequestSummaryLine(props) {
+    const { order, username, level, gender } = props;
 
     return (
-        <div className="Post">
-            <Navbar />
-            {console.log("after all:"), console.log(values)}
-
-            <div className="frame-general">
-                <div className="title-container-head">
-
-                    <div className="placeholder-title-head">
-                        <div className="text-title-head">
-                            {values.title}
-                        </div>
-                    </div>
-                </div>
-                <UserTag />
-                <ButtonConnect />
+        <div className="flex-request-line">
+            <div className="request-no-735">{order}</div>
+            <div className="request-username-735">
+                <a href={`http://localhost:3000/user?id=${username}`} style={{ 'text-decoration': 'none' }}>{username}</a>
             </div>
+            <div className="request-level-735">{level}</div>
+            <div className="request-gender-735">{gender}</div>
+            <div className="request-accept-735">
+                <button className="button-request-accept-735" type="submit" >
+                    <div className="request-button-735">
+                        Chấp nhận
+                    </div>
+                </button>
+            </div>
+            <div className="request-deny-735">
+                <button className="button-request-deny-735" type="submit" >
+                    <div className="request-button-735">
+                        Từ chối
+                    </div>
+                </button>
+            </div>
+        </div>
+    );
+}
 
 
 
 
-            {/* flex row */}
-            <div className="flex-row">
+return (
+    <div className="Post">
+        <Navbar />
+        {console.log("currentUser:"), console.log(currentUser), console.log("after all:"), console.log(values), console.log(values.connect_state)}
 
-                {/* Subject */}
-                <div className="img-label-detail">
-                    <img className="img-post" src={img_subject} />
-                    <div className="placeholder-text-container">
-                        <div className="placeholder-text">
-                            <div className="select-occupation">
-                                Môn học
-                            </div>
-                        </div>
-                        <div className="placeholder-text-1">
-                            <div className="select-occupation-1">
-                                {values.subject}
-                            </div>
-                        </div>
+        <div className="frame-general">
+            <div className="title-container-head">
+
+                <div className="placeholder-title-head">
+                    <div className="text-title-head">
+                        {values.title}
                     </div>
                 </div>
+            </div>
+            <UserTag />
+            <ButtonConnect />
+        </div>
 
-                {/* Grade */}
-                <div className="img-label-detail">
-                    <img className="img-post" src={img_grade} />
-                    <div className="placeholder-text-container">
-                        <div className="placeholder-text">
-                            <div className="select-occupation">
-                                Khối lớp
-                            </div>
-                        </div>
-                        <div className="placeholder-text-1">
-                            <div className="select-occupation-1">
-                                {values.grade}
-                            </div>
+
+
+
+        {/* flex row */}
+        <div className="flex-row">
+
+            {/* Subject */}
+            <div className="img-label-detail">
+                <img className="img-post" src={img_subject} />
+                <div className="placeholder-text-container">
+                    <div className="placeholder-text">
+                        <div className="select-occupation">
+                            Môn học
                         </div>
                     </div>
-                </div>
-
-                {/* Place */}
-                <div className="img-label-detail">
-                    <img className="img-post" src={img_place} />
-                    <div className="placeholder-text-container">
-                        <div className="placeholder-text">
-                            <div className="select-occupation">
-                                Địa điểm học
-                            </div>
-                        </div>
-                        <div className="placeholder-text-1">
-                            <div className="select-occupation-1">
-                                {values.study_form}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Place */}
-                <div className="img-label-detail">
-                    <img className="img-post" src={img_date} />
-                    <div className="placeholder-text-container">
-                        <div className="placeholder-text">
-                            <div className="select-occupation">
-                                Ngày học dự kiến
-                            </div>
-                        </div>
-                        <div className="placeholder-text-1">
-                            <div className="select-occupation-1">
-                                {values.start.split('T')[0]}
-                            </div>
+                    <div className="placeholder-text-1">
+                        <div className="select-occupation-1">
+                            {values.subject}
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* flex rows 2*/}
-            <div className="flex-row">
-                {/* Level */}
-                <div className="img-label-detail">
-                    <img className="img-post" src={img_level} />
-                    <div className="placeholder-text-container">
-                        <div className="placeholder-text">
-                            <div className="select-occupation">
-                                Trình độ gia sư
-                            </div>
-                        </div>
-                        <div className="placeholder-text-1">
-                            <div className="select-occupation-1">
-                                {values.literacy}
-                            </div>
+            {/* Grade */}
+            <div className="img-label-detail">
+                <img className="img-post" src={img_grade} />
+                <div className="placeholder-text-container">
+                    <div className="placeholder-text">
+                        <div className="select-occupation">
+                            Khối lớp
                         </div>
                     </div>
-                </div>
-
-                {/* Gender */}
-                <div className="img-label-detail">
-                    <img className="img-post" src={img_gender} />
-                    <div className="placeholder-text-container">
-                        <div className="placeholder-text">
-                            <div className="select-occupation">
-                                Giới tính
-                            </div>
-                        </div>
-                        <div className="placeholder-text-1">
-                            <div className="select-occupation-1">
-                                {values.gender}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Fee */}
-                <div className="img-label-detail">
-                    <img className="img-post" src={img_fee} />
-                    <div className="placeholder-text-container">
-                        <div className="placeholder-text">
-                            <div className="select-occupation">
-                                Học phí / tháng
-                            </div>
-                        </div>
-                        <div className="placeholder-text-1">
-                            <div className="select-occupation-1">
-                                {values.fee}đ
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Connected */}
-                <div className="img-label-detail">
-                    <img className="img-post" src={img_connected} />
-                    <div className="placeholder-text-container">
-                        <div className="placeholder-text">
-                            <div className="select-occupation">
-                                Kết nối
-                            </div>
-                        </div>
-                        <div className="placeholder-text-1">
-                            <div className="select-occupation-1">
-                                {values.request} yêu cầu
-                            </div>
+                    <div className="placeholder-text-1">
+                        <div className="select-occupation-1">
+                            {values.grade}
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div className="flex-row">
-                <div className="duration-label">
-                    Thời lượng học:
-                </div>
-                <div className="duration">
-                    {values.lessons} buổi/tuần x {values.time}/buổi
+            {/* Place */}
+            <div className="img-label-detail">
+                <img className="img-post" src={img_place} />
+                <div className="placeholder-text-container">
+                    <div className="placeholder-text">
+                        <div className="select-occupation">
+                            Địa điểm học
+                        </div>
+                    </div>
+                    <div className="placeholder-text-1">
+                        <div className="select-occupation-1">
+                            {values.study_form}
+                        </div>
+                    </div>
                 </div>
             </div>
 
+            {/* Place */}
+            <div className="img-label-detail">
+                <img className="img-post" src={img_date} />
+                <div className="placeholder-text-container">
+                    <div className="placeholder-text">
+                        <div className="select-occupation">
+                            Ngày học dự kiến
+                        </div>
+                    </div>
+                    <div className="placeholder-text-1">
+                        <div className="select-occupation-1">
+                            {values.start.split('T')[0]}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            <div className="more-detail-label">Thông tin thêm về lớp học:</div>
-
-            <div className="overlap-group-more-info">
-                <div className="box-outline-735"></div>
-                <div className="detail-script">{values.information}</div>
+        {/* flex rows 2*/}
+        <div className="flex-row">
+            {/* Level */}
+            <div className="img-label-detail">
+                <img className="img-post" src={img_level} />
+                <div className="placeholder-text-container">
+                    <div className="placeholder-text">
+                        <div className="select-occupation">
+                            Trình độ gia sư
+                        </div>
+                    </div>
+                    <div className="placeholder-text-1">
+                        <div className="select-occupation-1">
+                            {values.literacy}
+                        </div>
+                    </div>
+                </div>
             </div>
 
+            {/* Gender */}
+            <div className="img-label-detail">
+                <img className="img-post" src={img_gender} />
+                <div className="placeholder-text-container">
+                    <div className="placeholder-text">
+                        <div className="select-occupation">
+                            Giới tính
+                        </div>
+                    </div>
+                    <div className="placeholder-text-1">
+                        <div className="select-occupation-1">
+                            {values.gender}
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            {/* Fee */}
+            <div className="img-label-detail">
+                <img className="img-post" src={img_fee} />
+                <div className="placeholder-text-container">
+                    <div className="placeholder-text">
+                        <div className="select-occupation">
+                            Học phí / tháng
+                        </div>
+                    </div>
+                    <div className="placeholder-text-1">
+                        <div className="select-occupation-1">
+                            {values.fee}đ
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            {/* Connected */}
+            <div className="img-label-detail">
+                <img className="img-post" src={img_connected} />
+                <div className="placeholder-text-container">
+                    <div className="placeholder-text">
+                        <div className="select-occupation">
+                            Kết nối
+                        </div>
+                    </div>
+                    <div className="placeholder-text-1">
+                        <div className="select-occupation-1">
+                            {values.request} yêu cầu
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            <RequestList />
-            <EditAndRemove />
-
-
-            <div style={{ position: 'relative', marginTop: "1%", marginBottom: "0px", bottom: "0", width: '100%' }}>
-                <Footer />
+        <div className="flex-row">
+            <div className="duration-label">
+                Thời lượng học:
+            </div>
+            <div className="duration">
+                {values.lessons} buổi/tuần x {values.time}/buổi
             </div>
         </div>
 
 
-    );
+        <div className="more-detail-label">Thông tin thêm về lớp học:</div>
+
+        <div className="overlap-group-more-info">
+            <div className="box-outline-735"></div>
+            <div className="detail-script">{values.information}</div>
+        </div>
+
+
+
+
+        <RequestList />
+        <EditAndRemove />
+
+
+        <div style={{ position: 'relative', marginTop: "1%", marginBottom: "0px", bottom: "0", width: '100%' }}>
+            <Footer />
+        </div>
+    </div>
+
+
+);
 }
 
 
