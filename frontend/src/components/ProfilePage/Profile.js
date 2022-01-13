@@ -29,7 +29,8 @@ function Profile(){
     console.log("Submitted");
   }
 
-  const isLogin = window.sessionStorage.getItem("isLogin");
+  var isLogin = true;
+  
   const { handleSubmit, handleChangeImage, listPost, listRequest, values, errors } = useForm(
       submitForm,
       validateInfo
@@ -74,6 +75,7 @@ function Profile(){
   const tmp = URL.split('/');
   const username = tmp[tmp.length - 1];
   const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
+  if (!user) isLogin = false;
   var isHolderAccount = false;
   if (!user){
     isHolderAccount = false;
@@ -163,7 +165,7 @@ function Profile(){
           </div>
           <div className='row'>
             <div className='birth-day'>
-              {"Ngày sinh: " + values.birthday}
+              {"Ngày sinh: " + values.birthday.substring(0,10)}
             </div>
             <div className='col'>
             <div className='user-gender'>
@@ -192,13 +194,17 @@ function Profile(){
           <div className='row'>
             <div className='info-user'>
               <img src={subject} className='icon-img'/>
-              {"Môn học nhận dạy: " + values.subject}
+              {"Môn học nhận dạy: " + values.subjects.map(v=>(
+                v.name + ', '
+              ))}
             </div>
           </div>
           <div className='row'>
             <div className='info-user'>
               <img src={classImg} className='icon-img'/>
-              {"Lớp nhận dạy: " + values.classes}
+              {"Lớp nhận dạy: " + values.classes.map(v=>(
+                v.name + ', '
+              ))}
             </div>
           </div>
           <div className='row'>

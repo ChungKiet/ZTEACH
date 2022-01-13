@@ -13,12 +13,14 @@ import ProfilePage from './components/pages/ProfilePage';
 import PostListPage from './components/pages/PostListPage';
 import TutorListPage from './components/pages/TutorListPage';
 import ImageUpload from './components/upload';
+import { isLogin } from './GlobalVar';
 
 // GlobalVar.isLogin = true;
 var a;
 function App() {
   <script crossorigin src="..."></script>
-  window.sessionStorage.setItem("isLogin", false);
+  window.sessionStorage.setItem("isLogin", "false");
+
   return (
     <Router>
       <div className="App">

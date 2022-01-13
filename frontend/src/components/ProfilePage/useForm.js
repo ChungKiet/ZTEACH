@@ -19,11 +19,11 @@ const useForm = (callback, validate) => {
    evaluate: "10",
    dayreg: "2022-01-04",
    birthday_secure: "Công khai",
-   subject: ["Toán, Lý"],
+   subjects: ["Toán, Lý"],
    classes: ["Lớp 1", "Lớp 2"],
    major: "CNTT",
    literacy: "Sinh viên",
-   salary: "",
+   fee: "",
    address: "No address",
    address_secure: "Công khai",
    email: "No email",
@@ -80,12 +80,12 @@ const useForm = (callback, validate) => {
       var get_user_type =  data.user_type;
       var get_gender = data.gender;
       var get_gender_secure = data.gender_secure;
-      var get_birth_day = data.birth_day;
-      var get_birth_day_secure = data.birth_day_secure;
+      var get_birth_day = data.birthday;
+      var get_birth_day_secure = data.birthday_secure;
       var get_classes = data.classes;
       var get_major = data.major;
       var get_literacy = data.literacy;
-      var get_salary = data.fee;
+      var get_fee = data.fee;
       var get_address = data.address;
       var get_address_secure = data.address_secure;
       var get_subjects =  data.subjects;
@@ -100,11 +100,33 @@ const useForm = (callback, validate) => {
       // Khi sang trang edit profile thì phải load lần nữa chính nó
       // if ()
       // 
-      const isLogin = window.sessionStorage.getItem("isLogin");
-      const user = JSON.parse(window.sessionStorage.getItem("isLogin"));
-      const isYourSelf = user.username === get_username;
+      var isLogin = true;
+      const user = JSON.parse(window.sessionStorage.getItem("user19120000"));
+      var isYourSelf = false;
+      if (!user) isLogin = false;
+      else if (user.username === get_username) isYourSelf = true;
+      console.log("sdsfsdfsdsdf");
+      console.log(isYourSelf);
+      console.log(isLogin);
       // Xet login
-      if (isLogin && !isYourSelf){
+      if (!isLogin){
+        // Neu chua login thì ko hien thi neu o che do "Bao mat"
+        if (get_gender_secure==="Bảo mật"){
+          get_gender = "Đã bị ẩn";
+        }  
+        if (get_birth_day_secure==="Bảo mật"){
+          get_birth_day = "Đã bị ẩn";
+        }
+        if (get_address_secure==="Bảo mật"){
+          get_address = "Đã bị ẩn";
+        }
+        if (get_email_secure==="Bảo mật"){
+          get_email = "Đã bị ẩn";
+        }
+        if (get_contact_secure==="Bảo mật"){
+          get_contact = "Đã bị ẩn";
+        }   
+      else if (isLogin && !isYourSelf){
         // Neu da dang nhap
         // Neu set rieng thu thi set = "Da bi an"
         if (get_gender_secure==="Riêng tư"){
@@ -123,24 +145,7 @@ const useForm = (callback, validate) => {
           get_contact = "Đã bị ẩn";
         }
       }
-      else if (!isLogin){
-        // Neu chua login thì ko hien thi neu o che do "Bao mat"
-        if (get_gender_secure==="Bảo mật"){
-          get_gender = "Đã bị ẩn";
-        }  
-        if (get_birth_day_secure==="Bảo mật"){
-          get_birth_day = "Đã bị ẩn";
-        }
-        if (get_address_secure==="Bảo mật"){
-          get_address = "Đã bị ẩn";
-        }
-        if (get_email_secure==="Bảo mật"){
-          get_email = "Đã bị ẩn";
-        }
-        if (get_contact_secure==="Bảo mật"){
-          get_contact = "Đã bị ẩn";
-        }        
-      }
+    }
       // Xet da ket noi
       // Neu da tung ket noi thi thay them btn danh gia
       // Neu k phai chu tai khoan
@@ -166,7 +171,7 @@ const useForm = (callback, validate) => {
         classes: get_classes,
         major: get_major,
         literacy: get_literacy,
-        salary: get_salary,
+        fee: get_fee,
         address: get_address,
         address_secure: get_address_secure,
         subjects: get_subjects,

@@ -18,7 +18,7 @@ function Form() {
         //GlobalVar.setUser(user);
         //setUser(user);
         window.sessionStorage.setItem("user19120000", JSON.stringify(user));
-        window.sessionStorage.setItem("isLogin", true);
+        window.sessionStorage.setItem("isLogin", "true");
         navigate('/');
       }
       else if (isLogin === 2) {

@@ -4,7 +4,8 @@ import EditProfile from '../EditProfilePage/EditProfile';
 import GlobalVar from '../../GlobalVar';
 function EditProfilePage() {
     const user = JSON.parse(window.sessionStorage.getItem("user19120000"));
-    const isLogin = window.sessionStorage.getItem("isLogin");
+    var isLogin = true;
+    if (!user) isLogin = false;
     return (
         <div>
             {isLogin && user.user_type==="student" && <EditProfile/>} {/* Test conect backend*/}
