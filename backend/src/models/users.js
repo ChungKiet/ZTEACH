@@ -4,7 +4,7 @@ const User = mongoose.Schema({
     user_type: {
         type: String, required: true, default: 'student'
     },
-    image_prof: {
+    image: {
         type: String, require: true, default: 'https://firebasestorage.googleapis.com/v0/b/zteach-images.appspot.com/o/images%2Fprofile.png?alt=media&token=34e94b8d-cda6-4df8-8f4b-88a022d3b3fe'
     },
     username: {
