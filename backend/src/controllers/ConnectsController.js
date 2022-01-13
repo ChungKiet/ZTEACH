@@ -8,13 +8,18 @@ class ConnectsController {
     async new_post_connect(req, res, next) {
         const { user, tutor, post } = req.body;
         try {
+            const connected = await Connect.findOne({ user, tutor, post });
+            if (connected) {
+                res.json({ "result": 2, "message": "Already request to post." });
+                return;
+            }
             const connect = await Connect.create({ user, tutor, post });
             if (connect) {
                 await Post.updateOne({ _id: post }, { $inc: { request: 1 } });
-                res.json({ "result": 1, "message": "Request post success." })
+                res.json({ "result": 1, "message": "Request post success." });
             }
             else {
-                res.json({ "result": 0, "message": "Request post failed." })
+                res.json({ "result": 0, "message": "Request post failed." });
             }
         }
         catch (err) {
@@ -47,6 +52,11 @@ class ConnectsController {
     async new_tutor_connect(req, res, next) {
         const { user, tutor } = req.body;
         try {
+            const connected = await Connect.findOne({ user, tutor, post: 'null' });
+            if (connected && connected.accept === false) {
+                res.json({ "result": 2, "message": "Already request to tutor." })
+                return;
+            }
             const connect = await Connect.create({ user, tutor });
             if (connect) {
                 res.json({ "result": 1, "message": "Request tutor success." })
