@@ -11,7 +11,6 @@ import img_place from '../images/postimg/place.png';
 import img_subject from '../images/postimg/subject.png';
 import img_avata_user from '../images/profile.png';
 
-import axios from "axios";
 
 
 function PostItem(params) {
@@ -22,7 +21,7 @@ function PostItem(params) {
 
 
     return (
-        <Link to={'/posts/' + values._id} className="post-item-frame40">
+        <Link to={'/post/' + values._id} className="post-item-frame40">
             <div className="post-item-grid-title40">
                 <Link to={'/profile/' + values.username} className="group-user-grid40">
                     <div>

@@ -36,7 +36,7 @@ const useForm = (callback, validate) => {
     setErrors(validate(values));
     setIsSubmitting(true);
 
-    var url = '/post-list?';
+    var url = '/tutor-list?';
     if (values.name !== "") url = url + "name=" + values.name + "&";
     if (values.subject !== "") url = url + "subject=" + values.subject + "&";
     if (values.grade !== "") url = url + "grade=" + values.grade + "&";

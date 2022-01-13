@@ -1,8 +1,4 @@
-.post-item-frame40 {
-    padding-top: 30px;
-    padding-bottom: 30px;
-    padding-left: 30px;
-    padding-right: 30px;
+.tutor-item-frame40 {
     border-radius: 50px;
     margin-top: 30px;
     margin-left: 40px;
@@ -14,6 +10,15 @@
     background-color: #DDDDDD;
     
     position:static;
+    display: grid;
+    grid-template-columns: 20% 20% 60%;
+    align-items: center;
+}
+
+.flex-column-tutor-list40{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .post-item-grid-title40 {
@@ -53,21 +58,20 @@
 }
 
 
-.user-img-post-item40 {
+.user-img-tutor-item40 {
     display: inline-block;
     position: relative;
     object-fit: fill;
-    height: 60px; 
-    width: 60px;
+    height: 200px; 
+    width: 200px;
     border-radius: 30px;
 }
 
-.grid-2x3-subitem40 {
+.grid-3x2-subitem40 {
     display: grid;
-    grid-template-columns: 33% 33% 33%;
-    grid-template-rows: 70% 50%;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 33% 33% 33%;
     margin-left: 5%;
-    margin-right: 5%;
 }
 
 
