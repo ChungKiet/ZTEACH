@@ -226,10 +226,8 @@ function Post() {
                             <div className="request-gender-735">Giới tính</div>
                         </div>
                         <div className="request-list-735">
-                            <RequestSummaryLine order="1" username="ThuyKhueChemist94" level="Giáo viên" gender="Nữ"></RequestSummaryLine>
-                            <RequestSummaryLine order="2" username="HoaiHuongPro" level="Sinh viên" gender="Nữ"></RequestSummaryLine>
-                            <RequestSummaryLine order="3" username="TrucRapper" level="Giáo viên" gender="Nam"></RequestSummaryLine>
-                            <RequestSummaryLine order={1 + 3} username="AnhThanhNien" level="Giáo viên" gender="Nữ"></RequestSummaryLine>
+                            {values.request_list.map((v, index) => (
+                            <RequestSummaryLine order={index + 1} username={v.username} level={v.literacy} gender={v.gender}></RequestSummaryLine>))}
 
                         </div>
                     </div>
