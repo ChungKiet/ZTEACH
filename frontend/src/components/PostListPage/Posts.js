@@ -16,8 +16,6 @@ function Posts() {
         validate
     );
 
-    const query = window.location.search;
-    console.log('http://localhost:8000/posts' + query);
 
     const [Data, setDatas] = useState({
         number: 0,
@@ -26,14 +24,16 @@ function Posts() {
     
     useEffect(() => {
         const fetchData = async () => {
+            const query = window.location.search;
+
+            console.log('http://localhost:8000/posts' + query);
             const result = await axios.get('http://localhost:8000/posts' + query)
+
             console.log(result.data);
             setDatas(result.data);
         };
         fetchData();
     }, []);
-
-    console.log(Data);
     
     return (
         <div className='posts-grid-main-layout40'>

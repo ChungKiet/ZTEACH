@@ -12,6 +12,7 @@ class PostsController {
         const find = Post.find({}, 'image username title subject grade \
                                 study_form literacy gender fee');
 
+        find.find({ start: { $gte: Date.now() } });
         if (query.fee) {
             find.find({ fee: { $gte: query.fee } });
             delete query.fee;
