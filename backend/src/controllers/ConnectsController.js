@@ -97,18 +97,18 @@ class ConnectsController {
         const connected = await Connect.findOne({ post, accept: true });
         if (connected) {
             if (connected.tutor === tutor) {
-                res.json({ 'post': post, 'state': 2 }); // Đã kết nỗi với gia sư hiện tại
+                res.json({ 'state': 2, 'message': 'Is connected.' }); // Đã kết nỗi với gia sư hiện tại
             }
             else {
-                res.json({ 'post': post, 'state': 3 }); // Đã kết nỗi với gia sư khác
+                res.json({ 'state': 3, 'message': 'Is connected with another tutor.' }); // Đã kết nỗi với gia sư khác
             }
         }
         const connect = await Connect.findOne({ post, tutor });
         if (!connect) {
-            res.json({ 'post': post, 'state': 0 }); // Chưa yêu cầu
+            res.json({ 'state': 0, 'message': 'Is not request.' }); // Chưa yêu cầu
         }
         else {
-            res.json({ 'post': post, 'state': 1 }); // Đã yêu cầu và chưa được chấp nhận
+            res.json({ 'state': 1, 'message': 'Is requested.' }); // Đã yêu cầu và chưa được chấp nhận
         }
     }
 
@@ -124,13 +124,39 @@ class ConnectsController {
         const { user, tutor } = req.body;
         const connect = await Connect.findOne({ user, tutor });
         if (!connect) {
-            res.json({ 'post': post, 'state': 0 }); // chưa kết nối
+            res.json({ 'state': 0, 'message': 'Is not request.' }); // chưa kết nối
         }
         else if (connect.accept === false) {
-            res.json({ 'post': post, 'state': 1 }); // đã yêu cầu
+            res.json({ 'state': 1, 'message': 'Is requested.' }); // đã yêu cầu
         }
         else {
-            res.json({ 'post': post, 'state': 2 }); // đã kết nối
+            res.json({ 'state': 2, 'message': 'Is connected.' }); // đã kết nối
+        }
+    }
+
+    async accept_connect(req, res, next) {
+        const { user, tutor } = req.body;
+        try {
+            const connect = await Connect.updateOne({ user, tutor }, { accept: true });
+            if (connect.modifiedCount === 1) {
+                res.json({
+                    "result": 1,
+                    "message": "Accept request success."
+                });
+            }
+            else {
+                res.json({
+                    "result": 0,
+                    "message": "Accept request failed."
+                });
+            }
+        }
+        catch (err) {
+            res.status(500).send({
+                "result": 0,
+                "message": "Server internal error. Accept request failed."
+                // "error": { "code": 500, "message": "Server internal error.Create connect failed." }
+            });
         }
     }
 
