@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 import './PostItem.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -17,20 +18,20 @@ function PostItem(params) {
     
 
     const values = params.params;
-    console.log(values);
+    //console.log(values);
 
 
     return (
-        <div className="post-item-frame40">
+        <Link to={'/posts/' + values._id} className="post-item-frame40">
             <div className="post-item-grid-title40">
-                <div className="group-user-grid40">
+                <Link to={'/profile/' + values.username} className="group-user-grid40">
                     <div>
                         <img className="user-img-post-item40" src={img_avata_user} />
                     </div>
                     <div class="username-post-item40">
-                        {values.own_username}
+                        {values.username}
                     </div>
-                </div>
+                </Link>
                 <div class="title-post-item40">
                     {values.title}
                 </div>
@@ -144,7 +145,7 @@ function PostItem(params) {
                     </div>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 
 }
