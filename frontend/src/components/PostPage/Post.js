@@ -76,18 +76,7 @@ function Post() {
         fetchData();
     }, []);
 
-    useEffect(() => {
-        const fetchData2 = async () => {
-            const result = await axios.post('http://localhost:8000/users/profile', { username: values.username });
-            console.log(result);
-            const dt = result.data;
-            setValues({
-                image: dt.image_prof
-            });
-        };
-        fetchData2();
-    }, []);
-
+   
 
     const handleChange = e => {
         const { name, value } = e.target;
@@ -99,8 +88,10 @@ function Post() {
 
     function UserTag() {
         const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
-        const currentUser = cookie.username;
-        if (currentUser !== values.username)
+        var currentUser = null;
+        if (cookie !== null)
+            currentUser = cookie.username;
+        if (currentUser === null || currentUser !== values.username)
             return (
                 <div className="overlap-group-user">
                     <div className="box-user-head"></div>
@@ -129,6 +120,8 @@ function Post() {
 
     function ButtonConnect() {
         const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
+        if (cookie === null)
+            return null;
         const currentUser = cookie.username;
         if (currentUser === values.username) {
             return (
@@ -165,6 +158,8 @@ function Post() {
 
     function RequestList() {
         const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
+        if (cookie === null)
+            return null;
         const currentUser = cookie.username;
         if (currentUser === values.username)
             return (
@@ -195,6 +190,8 @@ function Post() {
 
     function EditAndRemove() {
         const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
+        if (cookie === null)
+            return null;
         const currentUser = cookie.username;
         if (currentUser === values.username)
             return (
