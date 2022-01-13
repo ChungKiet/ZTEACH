@@ -21,8 +21,8 @@ route.post('/get-post-connect', connectsController.get_post_connect);
 // http://localhost:8000/connects/get-post-state
 route.post('/get-post-state', connectsController.get_post_state);
 
-// http://localhost:8000/connects/get-tutor-state
-route.post('/get-tutor-state', connectsController.get_post_connect);
+// http://localhost:8000/connects/get-tutor-connect
+route.post('/get-tutor-connect', connectsController.get_tutor_connect);
 
 // http://localhost:8000/connects/get-tutor-state
 route.post('/get-tutor-state', connectsController.get_tutor_state);
