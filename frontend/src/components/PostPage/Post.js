@@ -88,7 +88,7 @@ function Post() {
 
     function UserTag() {
         const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
-        const currentUser = null;
+        var currentUser = null;
         if (cookie !== null)
             currentUser = cookie.username;
         if (currentUser === null || currentUser !== values.username)
