@@ -87,7 +87,7 @@ class ConnectsController {
     async get_post_connect(req, res, next) {
         const post = req.body.post;
         const connects = Connect.find({ post }, 'tutor');
-        const tutors = Tutor.find({ _id: { $in: connects } }, 'username name gender literacy timer');
+        const tutors = Tutor.find({ username: { $in: connects } }, 'username name gender literacy timer');
         res.json(tutors);
     }
 
