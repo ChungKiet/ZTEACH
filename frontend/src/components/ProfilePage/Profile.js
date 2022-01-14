@@ -191,22 +191,27 @@ function Profile(){
               {"SĐT liên hệ: " + values.contact}
             </div>
           </div>
+          { user.user_type==="tutor" && 
           <div className='row'>
             <div className='info-user'>
-              <img src={subject} className='icon-img'/>
-              {"Môn học nhận dạy: " + values.subjects.map(v=>(
+              <img src={subject} className='icon-img'/>{ user.user_type==="tutor" && 
+              "Môn học nhận dạy: " + values.subjects.map(v=>(
                 v.name + ', '
               ))}
             </div>
           </div>
+          }
+          { user.user_type==="tutor" && 
           <div className='row'>
             <div className='info-user'>
               <img src={classImg} className='icon-img'/>
-              {"Lớp nhận dạy: " + values.classes.map(v=>(
+              "Lớp nhận dạy: " + values.classes.map(v=>(
                 v.name + ', '
-              ))}
+              ))
+              
             </div>
           </div>
+          }
           <div className='row'>
             <div className='intro-label'>
             <strong>
