@@ -3,6 +3,7 @@ import axios from 'axios';
 import GlobalVar from '../../GlobalVar';
 import { data } from 'jquery';
 import { storage } from '../../firebase';
+import './Profile.css';
 
 const useForm = (callback, validate) => {
   const [values, setValues] = useState({
@@ -186,23 +187,29 @@ const useForm = (callback, validate) => {
     //const { order, username, level, gender } = props;
 
     return (
-        <div className="flex-request-line">
+        <div className="flex-request-line-553">
             <div className="request-no-553">{order}</div>
             <div className="request-username-553">
-                <a href={'http://localhost:3000/posts/' + id} style={{ 'text-decoration': 'none' }}>{title}</a>
+                <a href={'http://localhost:3000/post/' + id} 
+                style={{ 'text-decoration': 'none',
+                      overflow: 'hidden',
+                      maxWidth: "10px"
+                }}>
+                  {title}
+                </a>
             </div>
-            <div className="request-level-553">{dayPost}</div>
+            <div className="request-level-553">{dayPost.substring(0, 10)}</div>
             {/* <div className="request-gender-553">{gender}</div> */}
-            { isHolderAccount &&
+            {/* { isHolderAccount &&
             <div className="request-accept-553">
                 <button className="button-request-accept-553" type="submit" >
-                    <div className="request-button-553">
-                        <a href={'http://localhost:3000/posts/' + id}>Chỉnh sửa</a>
+                    <div className="request-button_553">
+                        <a href={'http://localhost:3000/post/' + id}> Xem chi tiết</a>
                     </div>
                 </button>
             </div>
-            }
-            { isHolderAccount && 
+            } */}
+            {/* { isHolderAccount && 
             <div className="request-deny-553">
                 <button className="button-request-deny-553" type="submit" >
                     <div className="request-button-553">
@@ -210,7 +217,7 @@ const useForm = (callback, validate) => {
                     </div>
                 </button>
             </div>
-            }
+            } */}
         </div>
     );
   }
@@ -223,7 +230,7 @@ const useForm = (callback, validate) => {
         <div className="flex-request-line">
             <div className="request-no-553">{order}</div>
             <div className="request-username-553">
-                <a href={'http://localhost:3000/posts/' + id} style={{ 'text-decoration': 'none' }}>{username}</a>
+                <a href={'http://localhost:3000/post/' + id} style={{ 'text-decoration': 'none' }}>{username}</a>
             </div>
             <div className="request-level-553">{dayRequest}</div>
             {/* <div className="request-gender-553">{gender}</div> */}
@@ -315,7 +322,6 @@ const useForm = (callback, validate) => {
       return;
    checkValue(data);
    console.log(res.data);
-   alert("here")
   })
    axios.post('http://localhost:8000/tutors/profile', {username: username }).then(res => {//   https://localhost:8000/ + user_type + edit
    const data = res.data;
@@ -323,7 +329,6 @@ const useForm = (callback, validate) => {
      return;
   checkValue(data);
   console.log(res.data);
-  alert("here")
 })
    };
    fetchData();
