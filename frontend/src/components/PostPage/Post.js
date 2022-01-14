@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 import 'bootstrap/dist/css/bootstrap.css';
-
-
 import img_connected from '../images/postimg/connected.png';
 import img_date from '../images/postimg/date.png';
 import img_fee from '../images/postimg/fee.png';
@@ -13,7 +11,6 @@ import img_grade from '../images/postimg/grade.png';
 import img_level from '../images/postimg/level.png';
 import img_place from '../images/postimg/place.png';
 import img_subject from '../images/postimg/subject.png';
-import img_tutor from '../images/postimg/tutor.png';
 import GlobalVar from "../../GlobalVar";
 
 import './Post.css';
@@ -105,7 +102,6 @@ function Post() {
     }, []);
 
 
-
     const handleChange = e => {
         const { name, value } = e.target;
         setValues({
@@ -113,32 +109,6 @@ function Post() {
             [name]: value
         });
     };
-
-    function connectToPost() {
-        axios.post("http://localhost:8000/connects/new-post-connect", { user: values.username, tutor: currentUser, post: id }).then(
-            res => {
-                if (res.data.result === 1) {
-                    alert('Đã yêu cầu kết nối để nhận lớp!');
-                    window.location.reload(`/post/${id}`);
-                } else {
-                    alert('Đã xảy ra lỗi khi gửi yêu cầu. Thử lại sau.');
-                }
-            }
-        );
-    }
-
-    function cancelConnectToPost() {
-        axios.delete("http://localhost:8000/connects/delete-post-connect", { data: { user: values.username, tutor: currentUser, post: id } }).then(
-            res => {
-                if (res.data.result === 1) {
-                    alert('Đã hủy yêu cầu');
-                    window.location.reload(`/post/${id}`);
-                } else {
-                    alert('Đã xảy ra lỗi khi hủy yêu cầu. Thử lại sau.');
-                }
-            }
-        );
-    }
 
     function UserTag() {
         if (currentUser === null || currentUser !== values.username)
@@ -164,187 +134,8 @@ function Post() {
                     </div>
                 </div>
             );
-
-
     }
-
-    function ButtonConnect() {
-        if (currentUser === null)
-            return null;
-        if (userType !== "tutor")
-            return null;
-        if (currentUser === values.username)
-            return null
-
-        else if (values.connect_state === 2 || values.connect_state === "2")
-            return (
-                <button className="button-connected">
-                    <div className="button-connect-text">
-                        Đã kết nối
-                    </div>
-                </button>
-            )
-        else if (values.connect_state === 1 || values.connect_state === "1")
-            return (
-                <button className="button-requested" onClick={cancelConnectToPost}>
-                    <div className="button-connect-text">
-                        Đã yêu cầu
-                    </div>
-                </button>
-            );
-        else if (values.connect_state === 0 || values.connect_state === "0") {
-            return (
-                <button className="button-connect" onClick={connectToPost}>
-                    <div className="button-connect-text">
-                        Kết nối
-                    </div>
-                </button>
-            );
-        }
-        else return null;
-
-    }
-
-
-    function RequestList() {
-        // Guest - restricted infomation
-        if (currentUser === null)
-            return null
-        if (currentUser === values.username && values.connect_state !== 3)
-            // OWN - Not have accepted connection with any tutor
-            return (
-                <div>
-                    <div className="more-detail-label">Danh sách gia sư yêu cầu kết nối:</div>
-
-                    <div className="overlap-group-requests">
-                        <div className="box-outline-735"></div>
-                        <div className="flex-request-heads">
-                            <div className="request-no-735">STT</div>
-                            <div className="request-username-735">Tên tài khoản</div>
-                            <div className="request-level-735">Trình độ</div>
-                            <div className="request-gender-735">Giới tính</div>
-                        </div>
-                        <div className="request-list-735">
-                            {values.request_list.map((v, index) => (
-                                <RequestSummaryLine order={index + 1} username={v.username} level={v.literacy} gender={v.gender}></RequestSummaryLine>))}
-
-                        </div>
-                    </div>
-                </div>)
-        else if (values.connect_state === 3)
-            // OWN - Accepted connection with a tutor
-            // Others tutor - cannot do anything more, just see the tutor information
-            return (
-                <div className="flex-row-tutor-accepted">
-                    <div className="accepted-label">Lớp đã được nhận dạy bởi: </div>
-                    <div className="overlap-group-user">
-                        <div className="box-user-head">
-                            <div className="flex-user">
-                                <div><img className="user-img-head" src={values.accepted_tutor.image} alt={values.username} /></div>
-                                <div className="text-username">
-                                    <a href={`http://localhost:3000/profile/${values.accepted_tutor.username}`}
-                                        style={{ 'textDecoration': 'none', 'fontSize': '30px', 'fontWeight': 'bold' }}>
-                                        {values.accepted_tutor.username}</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )
-        else
-            // The tutor that has been accepted
-            return null;
-
-    }
-
-    function EditAndRemove() {
-        if (currentUser === null)
-            return null;
-        if (currentUser === values.username)
-            return (
-                <div className="edit-and-remove">
-                    <Link to='/edit-post' state={{ values, id }} className="post-edit-remove-735">
-                        <div className="button-edit-735">
-                            Chỉnh sửa
-                        </div>
-                    </Link>
-
-                    <button className="post-edit-remove-735" onClick={() => {
-                        if (window.confirm('Bạn thực sự muốn xóa vĩnh viễn bài đăng này?'))
-                            axios.delete("http://localhost:8000/posts/delete", { data: { id: id } }).then(
-                                res => {
-                                    if (res.data.result === 1) {
-                                        alert('Đã bay màu T-T');
-                                        window.location.replace('/post-list');
-                                    } else {
-                                        alert('Đã xảy ra lỗi khi xóa bài. Thử lại sau :))');
-                                    }
-                                }
-                            );
-                    }}>
-                        <div className="button-remove-735">
-                            Xóa
-                        </div>
-                    </button>
-
-                </div>
-            );
-        else
-            return null;
-    }
-
-    function RequestSummaryLine(props) {
-        const { order, username, level, gender } = props;
-
-        return (
-            <div className="flex-request-line">
-                <div className="request-no-735">{order}</div>
-                <div className="request-username-735">
-                    <a href={`http://localhost:3000/profile/${username}`} style={{ 'textDecoration': 'none' }}>{username}</a>
-                </div>
-                <div className="request-level-735">{level}</div>
-                <div className="request-gender-735">{gender}</div>
-                <div className="request-accept-735">
-                    <button className="button-request-accept-735" onClick={() => {
-                        axios.put("http://localhost:8000/connects/accept-connect", { user: currentUser, tutor: username, post: id })
-                            .then(window.location.reload(`/post/${id}`)
-                            )
-                    }} >
-                        <div className="request-button-735">
-                            Chấp nhận
-                        </div>
-                    </button>
-                </div>
-                <div className="request-deny-735">
-                    <button className="button-request-deny-735" onClick={() => {
-                        axios.delete("http://localhost:8000/connects/delete-post-connect", { data: { user: currentUser, tutor: username, post: id } }).then(
-                            res => {
-                                if (res.data.result === 1) {
-                                    alert('Đã xóa yêu cầu');
-                                    window.location.reload(`/post/${id}`);
-                                } else {
-                                    alert('Đã xảy ra lỗi khi xóa yêu cầu. Thử lại sau.');
-                                }
-                            }
-                        );
-                    }} >
-                        <div className="request-button-735">
-                            Từ chối
-                        </div>
-                    </button>
-                </div>
-            </div>
-        );
-    }
-
-    function AcceptRequestButton(props) {
-        const { username } = props;
-
-    }
-
-
-
-
+   
     return (
         <div className="Post">
             <Navbar />
@@ -364,12 +155,8 @@ function Post() {
                 <ButtonConnect />
             </div>
 
-
-
-
             {/* flex row */}
             <div className="flex-row">
-
                 {/* Subject */}
                 <div className="img-label-detail">
                     <img className="img-post" src={img_subject} />
@@ -519,28 +306,228 @@ function Post() {
                 </div>
             </div>
 
-
             <div className="more-detail-label">Thông tin thêm về lớp học:</div>
-
             <div className="overlap-group-more-info">
                 <div className="box-outline-735"></div>
                 <div className="detail-script">{values.information}</div>
             </div>
 
-
-
-
             <RequestList />
             <EditAndRemove />
-
 
             <div style={{ position: 'relative', marginTop: "1%", marginBottom: "0px", bottom: "0", width: '100%' }}>
                 <Footer />
             </div>
         </div>
-
-
     );
+
+    function ButtonConnect() {
+        if (currentUser === null)
+            return null;
+        if (userType !== "tutor")
+            return null;
+        if (currentUser === values.username)
+            return null
+
+        else if (values.connect_state === 2 || values.connect_state === "2")
+            return (
+                <button className="button-connected">
+                    <div className="button-connect-text">
+                        Đã kết nối
+                    </div>
+                </button>
+            )
+        else if (values.connect_state === 1 || values.connect_state === "1")
+            return (
+                <button className="button-requested" onClick={() => {
+                    axios.delete("http://localhost:8000/connects/delete-post-connect", { data: { user: values.username, tutor: currentUser, post: id } }).then(
+                        res => {
+                            if (res.data.result === 1) {
+                                alert('Đã hủy yêu cầu');
+                                window.location.reload(`/post/${id}`);
+                            } else {
+                                alert('Đã xảy ra lỗi khi hủy yêu cầu. Thử lại sau.');
+                            }
+                        }
+                    );
+                }}>
+                    <div className="button-connect-text">
+                        Đã yêu cầu
+                    </div>
+                </button>
+            );
+        else if (values.connect_state === 0 || values.connect_state === "0") {
+            return (
+                <button className="button-connect" onClick={() => {
+                    axios.post("http://localhost:8000/connects/new-post-connect", { user: values.username, tutor: currentUser, post: id }).then(
+                        res => {
+                            if (res.data.result === 1) {
+                                alert('Đã yêu cầu kết nối để nhận lớp!');
+                                window.location.reload(`/post/${id}`);
+                            } else {
+                                alert('Đã xảy ra lỗi khi gửi yêu cầu. Thử lại sau.');
+                            }
+                        }
+                    );
+                }}>
+                    <div className="button-connect-text">
+                        Kết nối
+                    </div>
+                </button>
+            );
+        }
+        else return null;
+
+    }
+
+
+    function RequestList() {
+        // Guest - restricted infomation
+        if (currentUser === null)
+            return null
+        if (currentUser === values.username && values.connect_state !== 3)
+            // OWN - Not have accepted connection with any tutor
+            return (
+                <div>
+                    <div className="more-detail-label">Danh sách gia sư yêu cầu kết nối:</div>
+
+                    <div className="overlap-group-requests">
+                        <div className="box-outline-735"></div>
+                        <div className="flex-request-heads">
+                            <div className="request-no-735">STT</div>
+                            <div className="request-username-735">Tên tài khoản</div>
+                            <div className="request-level-735">Trình độ</div>
+                            <div className="request-gender-735">Giới tính</div>
+                        </div>
+                        <div className="request-list-735">
+                            {values.request_list.map((v, index) => (
+                                <RequestSummaryLine order={index + 1} username={v.username} level={v.literacy} gender={v.gender}></RequestSummaryLine>))}
+
+                        </div>
+                    </div>
+                </div>)
+        else if (values.connect_state === 3)
+            // OWN - Accepted connection with a tutor
+            // Others tutor - cannot do anything more, just see the tutor information
+            return (
+                <div className="flex-row-tutor-accepted">
+                    <div className="accepted-label">Lớp đã được nhận dạy bởi: </div>
+                    <div className="overlap-group-user">
+                        <div className="box-user-head">
+                            <div className="flex-user">
+                                <div><img className="user-img-head" src={values.accepted_tutor.image} alt={values.username} /></div>
+                                <div className="text-username">
+                                    <a href={`http://localhost:3000/profile/${values.accepted_tutor.username}`}
+                                        style={{ 'textDecoration': 'none', 'fontSize': '30px', 'fontWeight': 'bold' }}>
+                                        {values.accepted_tutor.username}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        else
+            // The tutor that has been accepted
+            return null;
+
+    }
+
+
+
+    function RequestSummaryLine(props) {
+        const { order, username, level, gender } = props;
+
+        return (
+            <div className="flex-request-line">
+                <div className="request-no-735">{order}</div>
+                <div className="request-username-735">
+                    <a href={`http://localhost:3000/profile/${username}`} style={{ 'textDecoration': 'none' }}>{username}</a>
+                </div>
+                <div className="request-level-735">{level}</div>
+                <div className="request-gender-735">{gender}</div>
+                <div className="request-accept-735">
+                    <button className="button-request-accept-735" onClick={() => {
+                        axios.put("http://localhost:8000/connects/accept-connect", { user: currentUser, tutor: username, post: id })
+                            .then(window.location.reload(`/post/${id}`)
+                            )
+                    }} >
+                        <div className="request-button-735">
+                            Chấp nhận
+                        </div>
+                    </button>
+                </div>
+                <div className="request-deny-735">
+                    <button className="button-request-deny-735" onClick={() => {
+                        axios.delete("http://localhost:8000/connects/delete-post-connect", { data: { user: currentUser, tutor: username, post: id } }).then(
+                            res => {
+                                if (res.data.result === 1) {
+                                    alert('Đã xóa yêu cầu');
+                                    window.location.reload(`/post/${id}`);
+                                } else {
+                                    alert('Đã xảy ra lỗi khi xóa yêu cầu. Thử lại sau.');
+                                }
+                            }
+                        );
+                    }} >
+                        <div className="request-button-735">
+                            Từ chối
+                        </div>
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
+
+    function EditPostButton() {
+        if (values.connect_state !== 3)
+            return (
+                <Link to='/edit-post' state={{ values, id }} className="post-edit-remove-735">
+                    <div className="button-edit-735">
+                        Chỉnh sửa
+                    </div>
+                </Link>
+            )
+        else
+            return null;
+    }
+
+    function DeletePostButton() {
+        return (
+            <button className="post-edit-remove-735" onClick={() => {
+                if (window.confirm('Bạn thực sự muốn xóa vĩnh viễn bài đăng này?'))
+                    axios.delete("http://localhost:8000/posts/delete", { data: { id: id } }).then(
+                        res => {
+                            if (res.data.result === 1) {
+                                alert('Đã bay màu T-T');
+                                window.location.replace('/post-list');
+                            } else {
+                                alert('Đã xảy ra lỗi khi xóa bài. Thử lại sau :))');
+                            }
+                        }
+                    );
+            }}>
+                <div className="button-remove-735">
+                    Xóa
+                </div>
+            </button>
+        )
+    }
+
+    function EditAndRemove() {
+        if (currentUser === null)
+            return null;
+        if (currentUser === values.username)
+            return (
+                <div className="edit-and-remove">
+                    <EditPostButton />
+                    <DeletePostButton />
+
+                </div>
+            );
+        else
+            return null;
+    }
 }
 
 
