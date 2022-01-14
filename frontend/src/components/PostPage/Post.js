@@ -28,11 +28,11 @@ function Post() {
     console.log(cookie);
     var currentUser = null;
     var userType = null;
-    if (cookie !== null){
+    if (cookie !== null) {
         currentUser = cookie.username;
         userType = cookie.user_type;
     }
-        
+
     const URL = window.location.pathname;
     const tmp = URL.split('/');
     const id = tmp[tmp.length - 1];
@@ -61,42 +61,36 @@ function Post() {
         const fetchData = () => {
             axios('http://localhost:8000/posts/' + id).then(
                 res => {
-                    console.log(res);
                     const dt = res.data;
-                    console.log("ok res");
-                    console.log(dt);
                     axios.post("http://localhost:8000/connects/get-post-state", { post: id, tutor: currentUser }).then(
                         res2 => {
                             const dt2 = res2.data;
-                            console.log("ok res2");
-                            console.log(dt2);
-                            axios.post("http://localhost:8000/connects/get-post-connect", { post: id}).then(
-                            res3 => {
-                            const dt3 = res3.data;
-                            console.log("ok res3");
-                            console.log("dt3 = ");
-                            console.log(dt3);
-                            setValues({
-                                username: dt.username,
-                                image: dt.image,
-                                title: dt.title,
-                                information: dt.information,
-                                subject: dt.subject,
-                                grade: dt.grade,
-                                study_form: dt.study_form,
-                                start: dt.start,
-                                literacy: dt.literacy,
-                                gender: dt.gender,
-                                fee: dt.fee,
-                                request: dt.request,
-                                lessons: dt.lessons,
-                                time: dt.time,
-                                connect_state: dt2.state
-                                //request_list: dt3.requested,
-                                //accepted_tutor: dt3.tutor
-                            });
+                            axios.post("http://localhost:8000/connects/get-post-connect", { post: id }).then(
+                                res3 => {
+                                    const dt3 = res3.data;
+                                    console.log("dt3 = ");
+                                    console.log(dt3);
+                                    setValues({
+                                        username: dt.username,
+                                        image: dt.image,
+                                        title: dt.title,
+                                        information: dt.information,
+                                        subject: dt.subject,
+                                        grade: dt.grade,
+                                        study_form: dt.study_form,
+                                        start: dt.start,
+                                        literacy: dt.literacy,
+                                        gender: dt.gender,
+                                        fee: dt.fee,
+                                        request: dt.request,
+                                        lessons: dt.lessons,
+                                        time: dt.time,
+                                        connect_state: dt2.state,
+                                        request_list: dt3.requested,
+                                        accepted_tutor: dt3.tutor
+                                    });
 
-                            }
+                                }
                             )
 
                         }
@@ -121,10 +115,10 @@ function Post() {
     };
 
     function connectToPost() {
-        axios.post("http://localhost:8000/connects/new-post-connect", { user : values.username, tutor: currentUser, post: id }).then(
+        axios.post("http://localhost:8000/connects/new-post-connect", { user: values.username, tutor: currentUser, post: id }).then(
             res => {
                 if (res.data.result === 1) {
-                    alert('Tạo kết nối thành công');
+                    alert('Đã yêu cầu kết nối để nhận lớp!');
                     window.location.reload(`/post/${id}`);
                 } else {
                     alert('Đã xảy ra lỗi khi gửi yêu cầu. Thử lại sau.');
@@ -134,9 +128,9 @@ function Post() {
     }
 
     function cancelConnectToPost() {
-        axios.delete("http://localhost:8000/connects/delete-post-connect", {data :{ user : values.username, tutor: currentUser, post: id }}).then(
+        axios.delete("http://localhost:8000/connects/delete-post-connect", { data: { user: values.username, tutor: currentUser, post: id } }).then(
             res => {
-                if (res.data.result === 1) {     
+                if (res.data.result === 1) {
                     alert('Đã hủy yêu cầu');
                     window.location.reload(`/post/${id}`);
                 } else {
@@ -156,7 +150,7 @@ function Post() {
                             <img className="user-img-head" src={values.image} alt={values.username} />
                         </div>
                         <div className="text-username">
-                            <a href={`http://localhost:3000/users/${values.username}`} style={{ 'textDecoration': 'none' }}>{values.username}</a>
+                            <a href={`http://localhost:3000/profile/${values.username}`} style={{ 'textDecoration': 'none' }}>{values.username}</a>
                         </div>
                     </div>
                 </div>
@@ -175,7 +169,9 @@ function Post() {
     }
 
     function ButtonConnect() {
-        if (currentUser === null || userType !== "tutor")
+        if (currentUser === null)
+            return null;
+        if (userType !== "tutor")
             return null;
         if (currentUser === values.username)
             return null
@@ -212,7 +208,7 @@ function Post() {
 
     function RequestList() {
         // Guest - restricted infomation
-        if (currentUser === null)         
+        if (currentUser === null)
             return null
         if (currentUser === values.username && values.connect_state !== 3)
             // OWN - Not have accepted connection with any tutor
@@ -230,24 +226,35 @@ function Post() {
                         </div>
                         <div className="request-list-735">
                             {values.request_list.map((v, index) => (
-                            <RequestSummaryLine order={index + 1} username={v.username} level={v.literacy} gender={v.gender}></RequestSummaryLine>))}
+                                <RequestSummaryLine order={index + 1} username={v.username} level={v.literacy} gender={v.gender}></RequestSummaryLine>))}
 
                         </div>
                     </div>
                 </div>)
-        else if(values.connect_state === 3)
+        else if (values.connect_state === 3)
             // OWN - Accepted connection with a tutor
             // Others tutor - cannot do anything more, just see the tutor information
-            return(
-                <div>
-                    <div className="more-detail-label">Lớp đã được nhận dạy bởi:</div>
-                    <div>{values.accepted_tutor.username}</div>
+            return (
+                <div className="flex-row-tutor-accepted">
+                    <div className="accepted-label">Lớp đã được nhận dạy bởi: </div>
+                    <div className="overlap-group-user">
+                        <div className="box-user-head">
+                            <div className="flex-user">
+                                <div><img className="user-img-head" src={values.accepted_tutor.image} alt={values.username} /></div>
+                                <div className="text-username">
+                                    <a href={`http://localhost:3000/profile/${values.accepted_tutor.username}`}
+                                        style={{ 'textDecoration': 'none', 'fontSize': '30px', 'fontWeight': 'bold' }}>
+                                        {values.accepted_tutor.username}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             )
-        else 
+        else
             // The tutor that has been accepted
             return null;
-        
+
     }
 
     function EditAndRemove() {
@@ -262,8 +269,18 @@ function Post() {
                         </div>
                     </Link>
 
-                    <button className="post-edit-remove-735" onClick={() =>{
-                        
+                    <button className="post-edit-remove-735" onClick={() => {
+                        if (window.confirm('Bạn thực sự muốn xóa vĩnh viễn bài đăng này?'))
+                            axios.delete("http://localhost:8000/posts/delete", { data: { id: id } }).then(
+                                res => {
+                                    if (res.data.result === 1) {
+                                        alert('Đã bay màu T-T');
+                                        window.location.replace('/post-list');
+                                    } else {
+                                        alert('Đã xảy ra lỗi khi xóa bài. Thử lại sau :))');
+                                    }
+                                }
+                            );
                     }}>
                         <div className="button-remove-735">
                             Xóa
@@ -283,15 +300,15 @@ function Post() {
             <div className="flex-request-line">
                 <div className="request-no-735">{order}</div>
                 <div className="request-username-735">
-                    <a href={`http://localhost:3000/user?id=${username}`} style={{ 'text-decoration': 'none' }}>{username}</a>
+                    <a href={`http://localhost:3000/user?id=${username}`} style={{ 'textDecoration': 'none' }}>{username}</a>
                 </div>
                 <div className="request-level-735">{level}</div>
                 <div className="request-gender-735">{gender}</div>
                 <div className="request-accept-735">
                     <button className="button-request-accept-735" onClick={() => {
-                        axios.put("http://localhost:8000/connects/accept-connect", {user : currentUser, tutor : username /*, post_id : id*/})
+                        axios.put("http://localhost:8000/connects/accept-connect", { user: currentUser, tutor: username, post: id })
                             .then(window.location.reload(`/post/${id}`)
-                        )
+                            )
                     }} >
                         <div className="request-button-735">
                             Chấp nhận
@@ -299,7 +316,18 @@ function Post() {
                     </button>
                 </div>
                 <div className="request-deny-735">
-                    <button className="button-request-deny-735" type="submit" >
+                    <button className="button-request-deny-735" onClick={() => {
+                        axios.delete("http://localhost:8000/connects/delete-post-connect", { data: { user: currentUser, tutor: username, post: id } }).then(
+                            res => {
+                                if (res.data.result === 1) {
+                                    alert('Đã xóa yêu cầu');
+                                    window.location.reload(`/post/${id}`);
+                                } else {
+                                    alert('Đã xảy ra lỗi khi xóa yêu cầu. Thử lại sau.');
+                                }
+                            }
+                        );
+                    }} >
                         <div className="request-button-735">
                             Từ chối
                         </div>
@@ -309,8 +337,8 @@ function Post() {
         );
     }
 
-    function AcceptRequestButton(props){
-        const {username} = props;
+    function AcceptRequestButton(props) {
+        const { username } = props;
 
     }
 
@@ -320,10 +348,8 @@ function Post() {
     return (
         <div className="Post">
             <Navbar />
-            {/*console.log("currentUser:"), console.log(currentUser), console.log(userType), 
-            console.log("after all:"), console.log(values), 
-            console.log("connect state: "),console.log(values.connect_state), 
-    console.log("request list: "),console.log(values.request_list)*/}
+            {console.log("currentUser:"), console.log(currentUser), console.log(userType),
+                console.log("after all:"), console.log(values)}
 
             <div className="frame-general">
                 <div className="title-container-head">

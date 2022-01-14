@@ -107,7 +107,8 @@ class ConnectsController {
             return;
         }
         const tutor = await Tutor.findOne({ username: accept.tutor },
-            'username name gender literacy ');
+            // Nghia, add image in response
+            'username image name gender literacy ');
 
         res.json({ requested, tutor });
     }

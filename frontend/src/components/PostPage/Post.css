@@ -52,6 +52,7 @@
   flex-wrap: wrap;
 }
 
+
 .box-user-head {
   background-color: var(--white);
   border-radius: 8px;
@@ -121,7 +122,7 @@
   font-size: 20px;
   font-weight: 600;
   font-style: normal;
-  color: #30be05;
+  color: #34a313;
   position: relative;
   margin-right: 3%;
   overflow: hidden;
@@ -195,6 +196,14 @@
   margin-top: 20px;
   margin-left: 20%;
   margin-right: auto;
+}
+
+.flex-row-tutor-accepted {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  justify-content: center;
 }
 
 
@@ -320,6 +329,16 @@
   font-family: montserrat;
   font-size: 30px;
   font-weight: 500;
+  font-style: normal;
+}
+
+.accepted-label {
+  height: 70px;
+  text-align: left;
+  color: rgb(52, 163, 19);
+  font-family: montserrat;
+  font-size: 30px;
+  font-weight: 700;
   font-style: normal;
 }
 
