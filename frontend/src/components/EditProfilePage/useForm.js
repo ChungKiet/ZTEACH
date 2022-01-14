@@ -158,6 +158,7 @@ const handleChangeImage = e => {
        //const usertype = GlobalVar.user.user_type === "Học viên"? "user" : "tutor";
        axios.post('http://localhost:8000/'+ user_type +'/profile', {username: user.username}).then(res => {//   https://localhost:8000/ + user_type + edit
        const dt = res.data;
+       console.log(dt);
        setValues({
          id: dt._id,
          image: dt.image,
@@ -180,6 +181,7 @@ const handleChangeImage = e => {
          email_secure: dt.email_secure,
          contact: dt.contact,
          contact_secure: dt.contact_secure,
+         voting: dt.voting
        });
       })
    };
