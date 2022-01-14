@@ -96,10 +96,25 @@ class ConnectsController {
     // [POST] /get-post-connect  --> Danh sách yêu cầu của bài đăng
     async get_post_connect(req, res, next) {
         const post = req.body.post;
-        const connects = (await Connect.find({ post: post }, 'tutor'))
+        const request = (await Connect.find({ post: post, accept: false }, 'tutor'))
             .map(({ tutor }) => tutor);
-        const tutors = await Tutor.find({ username: { $in: connects } },
-            'username name gender literacy timer accept');
+        const requested = await Tutor.find({ username: { $in: request } },
+            'username name gender literacy ');
+
+        const accept = await Connect.findOne({ post: post, accept: true }, 'tutor');
+        const tutor = await Tutor.findOne({ username: accept.tutor },
+            'username name gender literacy ');
+
+        res.json({ requested, tutor });
+    }
+
+    // [POST] /get-post-accept  --> Danh sách yêu cầu của bài đăng
+    async get_post_accept(req, res, next) {
+        const post = req.body.post;
+        const connects = (await Connect.findOne({ post: post, accept: true }, 'tutor'))
+            .map(({ tutor }) => tutor);
+        const tutors = await Tutor.findOne({ username: { $in: connects } },
+            'username name gender literacy');
         res.json(tutors);
     }
 
@@ -153,8 +168,9 @@ class ConnectsController {
     // [POST] /get-tutor-state  --> đồng ý yêu cầu kết nối (cho cả bài đăng và yêu cầu trực tiếp đên gia sư)
     async accept_connect(req, res, next) {
         const { user, tutor } = req.body;
+        const post = req.body.post || 'null';
         try {
-            const connect = await Connect.updateOne({ user, tutor }, { accept: true });
+            const connect = await Connect.updateOne({ user, tutor, post }, { accept: true });
             if (connect.modifiedCount === 1) {
                 res.json({ "result": 1, "message": "Accept request success." });
             }

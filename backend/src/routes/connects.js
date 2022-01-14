@@ -18,6 +18,9 @@ route.delete('/delete-tutor-connect', connectsController.delete_tutor_connect);
 // http://localhost:8000/connects/get-post-connect
 route.post('/get-post-connect', connectsController.get_post_connect);
 
+// http://localhost:8000/connects/get-post-accept
+route.post('/get-post-accept', connectsController.get_post_accept);
+
 // http://localhost:8000/connects/get-post-state
 route.post('/get-post-state', connectsController.get_post_state);
 
