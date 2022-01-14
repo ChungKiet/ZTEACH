@@ -25,6 +25,7 @@ const optionSelect = GlobalVar.optionSelect;
 
 function Post() {
     const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
+    console.log(cookie);
     var currentUser = null;
     var userType = null;
     if (cookie !== null){
@@ -51,21 +52,28 @@ function Post() {
         fee: "",
         request: "",
         connect_state: "",
-        request_list: ""
+        request_list: "",
+        accepted_tutor: ""
     });
 
 
     useEffect(() => {
-        const fetchData =  () => {
-             axios('http://localhost:8000/posts/' + id).then(
+        const fetchData = () => {
+            axios('http://localhost:8000/posts/' + id).then(
                 res => {
+                    console.log(res);
                     const dt = res.data;
+                    console.log("ok res");
+                    console.log(dt);
                     axios.post("http://localhost:8000/connects/get-post-state", { post: id, tutor: currentUser }).then(
                         res2 => {
                             const dt2 = res2.data;
+                            console.log("ok res2");
+                            console.log(dt2);
                             axios.post("http://localhost:8000/connects/get-post-connect", { post: id}).then(
                             res3 => {
                             const dt3 = res3.data;
+                            console.log("ok res3");
                             console.log("dt3 = ");
                             console.log(dt3);
                             setValues({
@@ -83,8 +91,9 @@ function Post() {
                                 request: dt.request,
                                 lessons: dt.lessons,
                                 time: dt.time,
-                                connect_state: dt2.state,
-                                request_list: dt3
+                                connect_state: dt2.state
+                                //request_list: dt3.requested,
+                                //accepted_tutor: dt3.tutor
                             });
 
                             }
@@ -232,6 +241,7 @@ function Post() {
             return(
                 <div>
                     <div className="more-detail-label">Lớp đã được nhận dạy bởi:</div>
+                    <div>{values.accepted_tutor.username}</div>
                 </div>
             )
         else 
@@ -252,11 +262,13 @@ function Post() {
                         </div>
                     </Link>
 
-                    <Link to='/edit-post' state={{ values, id }} className="post-edit-remove-735">
+                    <button className="post-edit-remove-735" onClick={() =>{
+                        
+                    }}>
                         <div className="button-remove-735">
                             Xóa
                         </div>
-                    </Link>
+                    </button>
 
                 </div>
             );
@@ -308,10 +320,10 @@ function Post() {
     return (
         <div className="Post">
             <Navbar />
-            {console.log("currentUser:"), console.log(currentUser), console.log(userType), 
+            {/*console.log("currentUser:"), console.log(currentUser), console.log(userType), 
             console.log("after all:"), console.log(values), 
             console.log("connect state: "),console.log(values.connect_state), 
-            console.log("request list: "),console.log(values.request_list)}
+    console.log("request list: "),console.log(values.request_list)*/}
 
             <div className="frame-general">
                 <div className="title-container-head">
