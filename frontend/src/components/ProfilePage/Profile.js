@@ -42,35 +42,7 @@ function Profile(){
   // Create Adapter
   // Add ID
 
-  function UserPost(props) {
-    const {order, id, title, dayPost} = props;
-    //const { order, username, level, gender } = props;
-
-    return (
-        <div className="flex-request-line">
-            <div className="request-no-553">{order}</div>
-            <div className="request-username-553">
-                <a href={`http://localhost:3000/${id}`} style={{ 'text-decoration': 'none' }}>{title}</a>
-            </div>
-            <div className="request-level-553">{dayPost}</div>
-            {/* <div className="request-gender-553">{gender}</div> */}
-            <div className="request-accept-553">
-                <button className="button-request-accept-553" type="submit" >
-                    <div className="request-button-553">
-                        Chỉnh sửa
-                    </div>
-                </button>
-            </div>
-            <div className="request-deny-553">
-                <button className="button-request-deny-553" type="submit" >
-                    <div className="request-button-553">
-                        Xóa
-                    </div>
-                </button>
-            </div>
-        </div>
-    );
-  }
+  
   const URL = window.location.pathname;
   const tmp = URL.split('/');
   const username = tmp[tmp.length - 1];
@@ -83,6 +55,32 @@ function Profile(){
   else if (user.username === username){
     isHolderAccount = true;
   }
+
+  function RequestList() {
+    const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
+    if (cookie === null)
+        return null;
+    const currentUser = cookie.username;
+    if (currentUser === values.username)
+        return (
+            <div>
+                <div className="overlap-group-requests-553">
+                    <div className="box-outline-553"></div>
+                    <div className="flex-request-heads-553">
+                        <div className="request-no-553">STT</div>
+                        <div className="request-username-553"> Bài đăng</div>
+                        <div className="request-level-553">Ngày đăng</div>
+                    </div>
+                    <div className="request-list-553">
+                        {listPost}
+                    </div>
+                </div>
+            </div>)
+    else {
+        return (<div />);
+    }
+}
+
 
   function RequestSummaryLine(props) {
     const { order, username, level, gender } = props;
@@ -235,7 +233,8 @@ function Profile(){
               Danh sách các bài đã đăng
             </strong>
             </div>
-            <div>{listPost}</div>
+            {/* <div>{listPost}</div> */}
+            <RequestList />
           </div>
           <div className='row'>
             <div className='tutor-cert-img'>
