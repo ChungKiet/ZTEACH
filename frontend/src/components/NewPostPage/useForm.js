@@ -49,7 +49,7 @@ const useForm = (callback, validate) => {
         const {id, result, message} = res.data;
         if (result === 1 || result === "1") {
             alert("Tạo bài đăng thành công!");
-            navigate("/posts/" + id);
+            navigate("/post/" + id);
             console.log("newpost-id = ");
             console.log(id);
         }

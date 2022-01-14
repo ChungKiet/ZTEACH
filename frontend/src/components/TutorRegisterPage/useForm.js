@@ -7,6 +7,7 @@ const useForm = (callback, validate) => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
    id: "",
+   image:"",
    username: "KietChung",
    intro: "No intro",
    name: "Kiệt Chung",
@@ -92,6 +93,7 @@ const useForm = (callback, validate) => {
     const dt = res.data;
     setValues({
       id: dt._id,
+      image: dt.image,
       username: dt.username,
       intro: dt.introduce,
       name: dt.name,

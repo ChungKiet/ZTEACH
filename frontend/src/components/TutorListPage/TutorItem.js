@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
-import './PostItem.css';
+import './TutorItem.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import img_fee from '../images/postimg/fee.png';
@@ -12,86 +12,46 @@ import img_subject from '../images/postimg/subject.png';
 import img_avata_user from '../images/profile.png';
 
 
-
-function PostItem(params) {
+function TutorItem(params) {
     
 
     const values = params.params;
-    //console.log(values);
+    console.log(values);
 
+    function handleString(params) {
+        var res = "";
+        for (var i = 0; i < params.length; i++){
+            if (i > 0) res = res + ", ";
+            res = res += params[i].value;
+        }
+        return res;
+    }
+
+    function handleAge(birthday) {
+        const day = birthday.split("T")[0];
+        const year = day.split("-")[0];
+        return 2021 - year;
+    }
 
     return (
-        <Link to={'/post/' + values._id} className="post-item-frame40">
-            <div className="post-item-grid-title40">
-                <Link to={'/profile/' + values.username} className="group-user-grid40">
-                    <div>
-                        <img className="user-img-post-item40" src={img_avata_user} />
-                    </div>
-                    <div class="username-post-item40">
-                        {values.username}
-                    </div>
-                </Link>
-                <div class="title-post-item40">
-                    {values.title}
+        <Link to={'/profile/' + values.username} className="tutor-item-frame40">
+
+            <div className="flex-column-tutor-list40">
+                <div>
+                    <img className="user-img-tutor-item40" src={img_avata_user} />
+                </div>
+            </div>
+            
+            <div className="flex-column-tutor-list40">
+                <div class="username-post-item40">
+                    {values.username}
                 </div>
             </div>
 
 
 
 
-            {/* flex row */}
-            <div className="grid-2x3-subitem40">
-
-                {/* Subject */}
-                <div className="img-label-detail40">
-                    <img className="img-post" src={img_subject} />
-                    <div className="placeholder-text-container">
-                        <div className="placeholder-text">
-                            <div className="select-occupation">
-                                Môn học
-                            </div>
-                        </div>
-                        <div className="placeholder-text-40">
-                            <div className="select-occupation-1">
-                                {values.subject}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Grade */}
-                <div className="img-label-detail40">
-                    <img className="img-post" src={img_grade} />
-                    <div className="placeholder-text-container">
-                        <div className="placeholder-text">
-                            <div className="select-occupation">
-                                Khối lớp
-                            </div>
-                        </div>
-                        <div className="placeholder-text-40">
-                            <div className="select-occupation-1">
-                                {values.grade}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Place */}
-                <div className="img-label-detail40">
-                    <img className="img-post" src={img_place} />
-                    <div className="placeholder-text-container">
-                        <div className="placeholder-text">
-                            <div className="select-occupation">
-                                Địa điểm học
-                            </div>
-                        </div>
-                        <div className="placeholder-text-40">
-                            <div className="select-occupation-1">
-                                {values.study_form}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div className="grid-3x2-subitem40">
 
                 {/* Level */}
                 <div className="img-label-detail40">
@@ -110,6 +70,23 @@ function PostItem(params) {
                     </div>
                 </div>
 
+                {/* Subject */}
+                <div className="img-label-detail40">
+                    <img className="img-post" src={img_subject} />
+                    <div className="placeholder-text-container">
+                        <div className="placeholder-text">
+                            <div className="select-occupation">
+                                Môn học
+                            </div>
+                        </div>
+                        <div className="placeholder-text-40">
+                            <div className="select-occupation-1">
+                                {handleString(values.subjects)}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 {/* Gender */}
                 <div className="img-label-detail40">
                     <img className="img-post" src={img_gender} />
@@ -122,6 +99,40 @@ function PostItem(params) {
                         <div className="placeholder-text-40">
                             <div className="select-occupation-1">
                                 {values.gender}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Grade */}
+                <div className="img-label-detail40">
+                    <img className="img-post" src={img_grade} />
+                    <div className="placeholder-text-container">
+                        <div className="placeholder-text">
+                            <div className="select-occupation">
+                                Khối lớp
+                            </div>
+                        </div>
+                        <div className="placeholder-text-40">
+                            <div className="select-occupation-1">
+                                {handleString(values.classes)}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Place */}
+                <div className="img-label-detail40">
+                    <img className="img-post" src={img_place} />
+                    <div className="placeholder-text-container">
+                        <div className="placeholder-text">
+                            <div className="select-occupation">
+                                Tuổi
+                            </div>
+                        </div>
+                        <div className="placeholder-text-40">
+                            <div className="select-occupation-1">
+                                {handleAge(values.birthday)}
                             </div>
                         </div>
                     </div>
@@ -149,4 +160,4 @@ function PostItem(params) {
 
 }
 
-export default PostItem;
+export default TutorItem;

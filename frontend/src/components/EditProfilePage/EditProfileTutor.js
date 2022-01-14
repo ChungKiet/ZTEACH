@@ -86,7 +86,7 @@ function EditProfileTutor(){
           <Form.Group controlId="formFile" className="mb-3" >
             <div className='Avatar-tutor'>
               <label for="file-input">
-                  <img src={logo} className='Avatar_label'/>
+                  <img src={values.image} className='Avatar_label'/>
               </label>
               <input id="file-input" type="file" className='Avatar-input'/>
             </div>
@@ -104,9 +104,9 @@ function EditProfileTutor(){
               Giới thiệu về bản thân bạn
             </div>
             <Form.Control type='text' 
-            value={values.intro}
+            value={values.introduce}
             onChange={handleChange}
-            name='intro'
+            name='introduce'
             placeholder='Giới thiệu ngắn gọn về bản thân bạn' 
             className='intro-control'>
             </Form.Control>
@@ -147,9 +147,9 @@ function EditProfileTutor(){
             </div>
             <Form.Control type='text'
               placeholder='Mức lương bạn mong muốn' 
-              name='salary'
+              name='fee'
               onChange={salaryChange}
-              value={values.salary}
+              value={values.fee}
               className='salary_control'>
             </Form.Control>
             <div className='input-label'>
@@ -215,7 +215,7 @@ function EditProfileTutor(){
               className='birth-day-select'
               onChange={handleChange}
               type="date"
-              name="birth_day"
+              name="birthday"
               value={values.birthday}
               placeholder="Due date"
             />
@@ -247,7 +247,7 @@ function EditProfileTutor(){
             </div>
             <MultiSelect
               options={optionSelect.subject}
-              value={values.classes}
+              value={values.subjects}
               name='classes'
               onChange={subjectChange}
               labelledBy="Lớp"

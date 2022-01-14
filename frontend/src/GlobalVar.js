@@ -14,7 +14,8 @@ var GlobalVar = module.exports = {
         lesson: [1, 2, 3, 4, 5, 6, 7],
         time: ['1h', '1.5h', '2h', '2.5h', '3h', '3.5h', '4h'],
         gender: ['Nam', 'Nữ', 'Khác'],
-        literacy: ['Sinh viên', 'Giáo viên']
+        literacy: ['Sinh viên', 'Giáo viên'],
+        rate: ['0 sao', '1 sao', '2 sao', '3 sao', '4 sao', '5 sao']
     }
 
 }

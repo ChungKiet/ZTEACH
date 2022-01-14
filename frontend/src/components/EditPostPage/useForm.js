@@ -36,9 +36,8 @@ const useForm = (callback, validate, dt) => {
         console.log(res.data)
         const { id, result, message } = res.data;
         if (result === 1 || result === "1") {
-            alert("Cập nhật thành công!");
-            
-            navigate("/posts/" + values.id);
+            alert("Cập nhật thành công!");            
+            navigate("/post/" + values.id);
         }
         else{
           alert("Lỗi xảy ra khi cập nhật bài đăng!");

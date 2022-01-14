@@ -6,9 +6,10 @@ import { useNavigate } from 'react-router-dom';
 const useForm = (callback, validate) => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
+    image:"",
    id: "",
    username: "KietChung",
-   intro: "No intro",
+   introduce: "No intro",
    name: "Kiệt Chung",
    user_type: "Học viên",
    gender: "Nam",
@@ -19,7 +20,7 @@ const useForm = (callback, validate) => {
    subjects: [],
    major: "",
    literacy: "",
-   salary: "",
+   fee: "",
    address: "No address",
    address_secure: "Riêng tư",
    email: "No email",
@@ -58,7 +59,7 @@ const useForm = (callback, validate) => {
   if (e.target.value === '' || re.test(e.target.value)) {
     setValues({
       ...values,
-      ["salary"]: value
+      ["fee"]: value
     });
   }
 };
@@ -103,8 +104,9 @@ const useForm = (callback, validate) => {
        const dt = res.data;
        setValues({
          id: dt._id,
+         image: dt.image,
          username: dt.username,
-         intro: dt.introduce,
+         introduce: dt.introduce,
          name: dt.name,
          user_type: dt.user_type,
          gender: dt.gender,
@@ -114,7 +116,7 @@ const useForm = (callback, validate) => {
          classes: dt.classes,
          major: dt.major,
          literacy: dt.literacy,
-         salary: dt.fee,
+         fee: dt.fee,
          address: dt.address,
          address_secure: dt.address_secure,
          subjects: dt.subjects,

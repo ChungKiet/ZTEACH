@@ -17,6 +17,7 @@ import useForm from './useForm';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
+import ImageUpload from '../upload';
 
 import FileBase64 from 'react-file-base64';
 
@@ -28,8 +29,9 @@ function Profile(){
     console.log("Submitted");
   }
 
-  const isLogin = window.sessionStorage.getItem("isLogin");
-  const { handleSubmit, listPost, listRequest, values, errors } = useForm(
+  var isLogin = true;
+  
+  const { handleSubmit, handleChangeImage, listPost, listRequest, values, errors } = useForm(
       submitForm,
       validateInfo
   );
@@ -73,6 +75,7 @@ function Profile(){
   const tmp = URL.split('/');
   const username = tmp[tmp.length - 1];
   const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
+  if (!user) isLogin = false;
   var isHolderAccount = false;
   if (!user){
     isHolderAccount = false;
@@ -110,7 +113,7 @@ function Profile(){
     );
   }
   console.log(values);
-
+  
   const getFiles = (filePost) => {
     this.setState({ files: filePost })
     // this.setState({intro: filePost[0]["file"]})
@@ -127,9 +130,9 @@ function Profile(){
         <div className="row">
             <div class="image-upload" className='Avatar'>
               <label for="file-input">
-                  <img src={logo} className='Avatar_label'/>
+                  <img src={values.image} className='Avatar_label'/>
               </label>
-              <input id="file-input" type="file" className='Avatar-input'/>
+              <input id="file-input" onChange={handleChangeImage} type="file" className='Avatar-input'/>
             </div>
           <div className='user_name'>
                        {values.username}
@@ -162,7 +165,7 @@ function Profile(){
           </div>
           <div className='row'>
             <div className='birth-day'>
-              {"Ngày sinh: " + values.birthday}
+              {"Ngày sinh: " + values.birthday.substring(0,10)}
             </div>
             <div className='col'>
             <div className='user-gender'>
@@ -191,13 +194,17 @@ function Profile(){
           <div className='row'>
             <div className='info-user'>
               <img src={subject} className='icon-img'/>
-              {"Môn học nhận dạy: " + values.subject}
+              {"Môn học nhận dạy: " + values.subjects.map(v=>(
+                v.name + ', '
+              ))}
             </div>
           </div>
           <div className='row'>
             <div className='info-user'>
               <img src={classImg} className='icon-img'/>
-              {"Lớp nhận dạy: " + values.classes}
+              {"Lớp nhận dạy: " + values.classes.map(v=>(
+                v.name + ', '
+              ))}
             </div>
           </div>
           <div className='row'>

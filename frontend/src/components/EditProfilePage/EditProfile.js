@@ -75,7 +75,7 @@ function EditProfile(){
           <Form.Group controlId="formFile">
             <div class="image-upload" className='Avatar'>
               <label for="file-input">
-                  <img src={logo} className='Avatar-student'/>
+                  <img src={values.image} className='Avatar-student'/>
               </label>
               <input id="file-input" type="file" className='Avatar-input'/>
             </div>
@@ -91,9 +91,9 @@ function EditProfile(){
               Giới thiệu về bản thân bạn
             </div>
             <Form.Control type='text' 
-            value={values.intro}
+            value={values.introduce}
             onChange={handleChange}
-            name='intro'
+            name='introduce'
             placeholder='Giới thiệu ngắn gọn về bản thân bạn' 
             className='intro-student-control'>
             </Form.Control>
@@ -126,7 +126,7 @@ function EditProfile(){
               className='birth-day-student-select'
               onChange={handleChange}
               type="date"
-              name="birth_day"
+              name="birthday"
               value={values.birthday}
               placeholder="Due date"
             />
@@ -190,8 +190,8 @@ function EditProfile(){
             <div>
             <select id="gender" 
               className='option_secure_student_select'
-              name='birth_day_secure'
-              value={values.birth_day_secure}
+              name='birthday_secure'
+              value={values.birthday_secure}
               onChange={handleChange}>
               {optionSecure}
             </select>

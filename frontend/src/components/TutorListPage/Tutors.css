@@ -1,0 +1,15 @@
+.post-items-list-layout40 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.posts-grid-main-layout40 {
+    position: static;
+    display: grid;
+    grid-template-columns: 25% 75%;
+}
