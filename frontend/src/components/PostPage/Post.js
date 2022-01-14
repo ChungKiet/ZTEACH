@@ -26,8 +26,12 @@ const optionSelect = GlobalVar.optionSelect;
 function Post() {
     const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
     var currentUser = null;
-    if (cookie !== null)
+    var userType = null;
+    if (cookie !== null){
         currentUser = cookie.username;
+        userType = cookie.user_type;
+    }
+        
     const URL = window.location.pathname;
     const tmp = URL.split('/');
     const id = tmp[tmp.length - 1];
@@ -108,12 +112,11 @@ function Post() {
     };
 
     function connectToPost() {
-        console.log("clicked connect!");
         axios.post("http://localhost:8000/connects/new-post-connect", { user : values.username, tutor: currentUser, post: id }).then(
             res => {
                 if (res.data.result === 1) {
                     alert('Tạo kết nối thành công');
-                    window.location.reload(`/posts/${id}`);
+                    window.location.reload(`/post/${id}`);
                 } else {
                     alert('Đã xảy ra lỗi khi gửi yêu cầu. Thử lại sau.');
                 }
@@ -122,12 +125,11 @@ function Post() {
     }
 
     function cancelConnectToPost() {
-        console.log("clicked disconnect!");
         axios.delete("http://localhost:8000/connects/delete-post-connect", {data :{ user : values.username, tutor: currentUser, post: id }}).then(
             res => {
                 if (res.data.result === 1) {     
                     alert('Đã hủy yêu cầu');
-                    window.location.reload(`/posts/${id}`);
+                    window.location.reload(`/post/${id}`);
                 } else {
                     alert('Đã xảy ra lỗi khi hủy yêu cầu. Thử lại sau.');
                 }
@@ -136,10 +138,6 @@ function Post() {
     }
 
     function UserTag() {
-        const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
-        var currentUser = null;
-        if (cookie !== null)
-            currentUser = cookie.username;
         if (currentUser === null || currentUser !== values.username)
             return (
                 <div className="overlap-group-user">
@@ -168,10 +166,8 @@ function Post() {
     }
 
     function ButtonConnect() {
-        const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
-        if (cookie === null)
+        if (currentUser === null || userType !== "tutor")
             return null;
-        const currentUser = cookie.username;
         if (currentUser === values.username) {
             return (
                 <div />
@@ -208,11 +204,11 @@ function Post() {
 
 
     function RequestList() {
-        const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
-        if (cookie === null)
-            return null;
-        const currentUser = cookie.username;
-        if (currentUser === values.username)
+        // Guest - restricted infomation
+        if (currentUser === null)         
+            return null
+        if (currentUser === values.username && values.connect_state !== 3)
+            // OWN - Not have accepted connection with any tutor
             return (
                 <div>
                     <div className="more-detail-label">Danh sách gia sư yêu cầu kết nối:</div>
@@ -232,16 +228,23 @@ function Post() {
                         </div>
                     </div>
                 </div>)
-        else {
-            return (<div />);
-        }
+        else if(values.connect_state === 3)
+            // OWN - Accepted connection with a tutor
+            // Others tutor - cannot do anything more, just see the tutor information
+            return(
+                <div>
+                    <div className="more-detail-label">Lớp đã được nhận dạy bởi:</div>
+                </div>
+            )
+        else 
+            // The tutor that has been accepted
+            return null;
+        
     }
 
     function EditAndRemove() {
-        const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
-        if (cookie === null)
+        if (currentUser === null)
             return null;
-        const currentUser = cookie.username;
         if (currentUser === values.username)
             return (
                 <div className="edit-and-remove">
@@ -275,7 +278,11 @@ function Post() {
                 <div className="request-level-735">{level}</div>
                 <div className="request-gender-735">{gender}</div>
                 <div className="request-accept-735">
-                    <button className="button-request-accept-735" type="submit" >
+                    <button className="button-request-accept-735" onClick={() => {
+                        axios.put("http://localhost:8000/connects/accept-connect", {user : currentUser, tutor : username /*, post_id : id*/})
+                            .then(window.location.reload(`/post/${id}`)
+                        )
+                    }} >
                         <div className="request-button-735">
                             Chấp nhận
                         </div>
@@ -292,13 +299,21 @@ function Post() {
         );
     }
 
+    function AcceptRequestButton(props){
+        const {username} = props;
+
+    }
+
 
 
 
     return (
         <div className="Post">
             <Navbar />
-            {console.log("currentUser:"), console.log(currentUser), console.log("after all:"), console.log(values), console.log(values.connect_state), console.log(values.request_list)}
+            {console.log("currentUser:"), console.log(currentUser), console.log(userType), 
+            console.log("after all:"), console.log(values), 
+            console.log(values.connect_state), 
+            console.log(values.request_list)}
 
             <div className="frame-general">
                 <div className="title-container-head">

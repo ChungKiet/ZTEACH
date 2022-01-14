@@ -51,7 +51,7 @@
   height: 80px;
 }
 
-.nav-links {
+.nav-links447 {
   color: #fff;
   display: flex;
   align-items: center;
@@ -60,7 +60,7 @@
   height: 100%;
 }
 
-.nav-links:hover {
+.nav-links447:hover {
   border-bottom: 4px solid #fff;
   transition: all 0.2s ease-out;
 }

@@ -143,8 +143,8 @@ a:link {
 }
 
 .top-right-img {
-   margin-left: 8%;
-   margin-top: 15px;
+   position: absolute;
+   right: 0;
    width: 120px;
 }
 

@@ -3,8 +3,9 @@ import EditProfileTutor from '../EditProfilePage/EditProfileTutor';
 import EditProfile from '../EditProfilePage/EditProfile';
 import GlobalVar from '../../GlobalVar';
 function EditProfilePage() {
-    const user = JSON.parse(window.sessionStorage.getItem("user19120000"));
+    var user = JSON.parse(window.sessionStorage.getItem("user19120000"));
     var isLogin = true;
+    console.log(user);
     if (!user) isLogin = false;
     return (
         <div>

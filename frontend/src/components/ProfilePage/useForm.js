@@ -9,9 +9,9 @@ const useForm = (callback, validate) => {
    id: "",
    image: "",
    username: "KietChung",
-   intro: "No intro",
+   introduce: "No intro",
    name: "Kiệt Chung",
-   user_type: "Học viên",
+   user_type: "",
    gender: "Nam",
    gender_secure: "Công khai",
    birthday: "2001-12-17",
@@ -55,12 +55,10 @@ const useForm = (callback, validate) => {
 
     setErrors(validate(values));
     setIsSubmitting(true);
-    console.log(values);
     if(true){
     //if (!errors.isError) {
-      const user_type = GlobalVar.user.user_type === "Học viên"? "users": "tutors";
+      const user_type = GlobalVar.user.user_type === "student"? "users": "tutors";
       axios.post("http://localhost:8000/" + user_type + GlobalVar.user.username, values).then(res => {
-        console.log(res)
         const { isSucceeded } = res.data;
         if (isSucceeded === true) {
             alert("Thành công rồi nha!")
@@ -95,6 +93,7 @@ const useForm = (callback, validate) => {
       var get_contact_secure = data.contact_secure;
       var get_voting = data.voting;
       var get_image = data.image;
+      var get_dayReg = data.timestamps;
       // Toàn bộ check trong hàm này
       // Tùy vào người dùng sẽ được thiết lập khác nhau
       // Khi sang trang edit profile thì phải load lần nữa chính nó
@@ -105,9 +104,6 @@ const useForm = (callback, validate) => {
       var isYourSelf = false;
       if (!user) isLogin = false;
       else if (user.username === get_username) isYourSelf = true;
-      console.log("sdsfsdfsdsdf");
-      console.log(isYourSelf);
-      console.log(isLogin);
       // Xet login
       if (!isLogin){
         // Neu chua login thì ko hien thi neu o che do "Bao mat"
@@ -161,7 +157,7 @@ const useForm = (callback, validate) => {
         id: get_id,
         image: get_image,
         username: get_username,
-        intro: get_intro,
+        introduce: get_intro,
         name: get_name,
         user_type: get_user_type,
         gender: get_gender,
@@ -180,6 +176,7 @@ const useForm = (callback, validate) => {
         contact: get_contact,
         contact_secure: get_contact_secure,
         voting: get_voting,
+        dayreg: get_dayReg,
       });
   }
 
@@ -272,9 +269,6 @@ const useForm = (callback, validate) => {
       setRequest(data.map(v => (
         <RequestConnect id={v._id} username={v.username} dayRequest={v.dayRequest} order={v.order}></RequestConnect>
       )));
-      console.log(listRequest);
-      console.log("Im here");
-      //console.log(listPost);
      })
      // Cho chỉnh sửa hay ko là việc của UI
      //
@@ -301,32 +295,7 @@ const useForm = (callback, validate) => {
       setPostList(data.map(v => (
         <UserPost id={v._id} title={v.title} dayPost={v.createdAt} order={v.order}></UserPost>
       )));
-      console.log("Im here");
-      //console.log(listPost);
-     })
-     // Cho chỉnh sửa hay ko là việc của UI
-     //
-     }
-     fetchData();
-  }, [])
-
-  useEffect(() =>{
-    // Get user post
-    //http://localhost:8000/posts
-    const URL = window.location.pathname;
-    const tmp = URL.split('/');
-    const username = tmp[tmp.length - 1];
-    const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
-    
-     const fetchData = async() => {   
-      axios.post('http://localhost:8000/posts/user-post', {username: username }).then(res => {//   https://localhost:8000/ + user_type + edit
-      const data = res.data;
-      console.log("I'm here bro");
-      //console.log(data);
-      for (let i = 0; i < data.length;i++){
-        data[i]["order"] = i + 1;
-      }
-      console.log(data);
+     
      })
      // Cho chỉnh sửa hay ko là việc của UI
      //
@@ -345,12 +314,16 @@ const useForm = (callback, validate) => {
     if (!data)
       return;
    checkValue(data);
+   console.log(res.data);
+   alert("here")
   })
    axios.post('http://localhost:8000/tutors/profile', {username: username }).then(res => {//   https://localhost:8000/ + user_type + edit
    const data = res.data;
    if (!data)
      return;
   checkValue(data);
+  console.log(res.data);
+  alert("here")
 })
    };
    fetchData();
@@ -384,12 +357,10 @@ const useForm = (callback, validate) => {
         (error) => {
             // error function ....
             console.log(error);
-            console.log("Here");
         },
         () => {
             // complete function ....
             storage.ref('images').child(name).getDownloadURL().then(url => {
-                console.log(url);
                 setValues({
                   ...values,
                   ["image"]: url
@@ -399,9 +370,9 @@ const useForm = (callback, validate) => {
                   const message = res.data;
                   if (!message.error){
                   const user = JSON.parse(window.sessionStorage.getItem("user19120000"));
-                  window.sessionStorage.setItem("user19120000", user);
-                  console.log(user);
-                  alert("Oke bro");
+                  user.url = url;
+                  //window.sessionStorage.setItem("user19120000", values);
+                  alert("Cập nhật ảnh thành công!");
                   }
                 }
                 )

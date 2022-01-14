@@ -2,24 +2,25 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import GlobalVar from '../../GlobalVar';
 import { useNavigate } from 'react-router-dom';
+import { storage } from '../../firebase';
 
 const useForm = (callback, validate) => {
   const navigate = useNavigate();
   const [values, setValues] = useState({
    id: "",
    image:"",
-   username: "KietChung",
-   intro: "No intro",
+   username: "",
+   introduce: "No intro",
    name: "Kiệt Chung",
    user_type: "Học viên",
    gender: "Nam",
    gender_secure: "Công khai",
-   birth_day: "2001-12-17",
-   birth_day_secure: "Riêng tư",
+   birthday: "2001-12-17",
+   birthday_secure: "Công khai",
    classes: [],
    major: "",
    literacy: "",
-   salary: "",
+   fee: "",
    address: "No address",
    address_secure: "Riêng tư",
    email: "No email",
@@ -51,7 +52,7 @@ const useForm = (callback, validate) => {
   if (e.target.value === '' || re.test(e.target.value)) {
     setValues({
       ...values,
-      ["salary"]: value
+      ["fee"]: value
     });
   }
 };
@@ -73,46 +74,107 @@ const useForm = (callback, validate) => {
         const msg = res.data;
         if (!msg.error) {
           alert("Cập nhật thành công!");
-          GlobalVar.setUser(
-            values
-          );
+          window.sessionStorage.setItem("user19120000", values);
+          
           navigate('/profile/' + values.username);
         }
         else{
-          alert("Cập nhật thành công!");
+          alert("Cập nhật thất bại!");
         }
       })
     }
   };
 
+  const [UserImage, setUserImage] = useState({
+    image: null,
+    url: values.image,
+    progress: 0
+  })
+
+const handleChangeImage = e => {
+  if (e.target.files[0]) {
+      const image = e.target.files[0];
+      setUserImage({
+        ...UserImage,
+        ["image"]:image
+      })
+      const name = image.name + '-' + Date.now();
+      const uploadTask = storage.ref(`images/${name}`).put(image);
+      uploadTask.on('state_changed',
+      (snapshot) => {
+          // progrss function ....
+          const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          setUserImage({
+            ...UserImage,
+            ["progress"]:progress
+          })
+      },
+      (error) => {
+          // error function ....
+          console.log(error);
+          console.log("Here");
+      },
+      () => {
+          // complete function ....
+          storage.ref('images').child(name).getDownloadURL().then(url => {
+              console.log(url);
+              setValues({
+                ...values,
+                ["image"]: url
+              })
+              //http://localhost:8000/users/edit-image
+              axios.put('http://localhost:8000/users/edit-image', {username: values.username, image: url}).then(res=>{
+                const message = res.data;
+                if (!message.error){
+                  const user = JSON.parse(window.sessionStorage.getItem("user19120000"));
+                  user.url = url;
+                  //window.sessionStorage.setItem("user19120000", values);
+                  //console.log(user);
+                  alert("Cập nhật ảnh thành công!");
+                }
+              }
+              )
+          })
+      });
+      // Post then change 2 link
+  }
+}
+
   useEffect(() => {
-  const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
-  console.log("Test again!!");
-   const fetchData = async() => {
-    axios.post('http://localhost:8000/users/profile', {id: user._id}).then(res => {//   https://localhost:8000/ + user_type + edit
-    const dt = res.data;
-    setValues({
-      id: dt._id,
-      image: dt.image,
-      username: dt.username,
-      intro: dt.introduce,
-      name: dt.name,
-      user_type: dt.user_type,
-      gender: dt.gender,
-      gender_secure: dt.gender_secure,
-      birth_day: dt.birth_day,
-      birth_day_secure: dt.birth_day_secure,
-      classes: dt.classes,
-      major: dt.major,
-      literacy: dt.literacy,
-      salary: dt.fee,
-      address: dt.address,
-      address_secure: dt.address_secure,
-      subjects: dt.subjects,
-      email: dt.email,
-      email_secure: dt.email_secure,
-      contact: dt.contact,
-      contact_secure: dt.contact_secure,
+    const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
+    //console.log(user);
+     const fetchData = async() => {    
+      axios.post('http://localhost:8000/users/profile', {username: user.username }).then(res => {//   https://localhost:8000/ + user_type + edit
+      const data = res.data;
+      //alert("Im, here");
+      console.log(data);
+      //("Im, here");
+
+      //if (!data)
+        //return;
+      //console.log(data);
+      setValues({
+        id: user._id,
+        image: user.image,
+        username: user.username,
+        introduce: user.introduce,
+        name: user.name,
+        user_type: user.user_type,
+        gender: user.gender,
+        gender_secure: user.gender_secure,
+        birthday: user.birthday,
+        birthday_secure: user.birthday_secure,
+        classes: user.classes,
+        major: user.major,
+        literacy: user.literacy,
+        fee: user.fee,
+        address: user.address,
+        address_secure: user.address_secure,
+        subjects: user.subjects,
+        email: user.email,
+        email_secure: user.email_secure,
+        contact: user.contact,
+        contact_secure: user.contact_secure,
     });
    })
    };
@@ -120,7 +182,7 @@ const useForm = (callback, validate) => {
    
 }, []);
 
-  return { handleChange, handleSubmit, classesChange,salaryChange,  values, errors };
+  return { handleChange, handleSubmit, classesChange,salaryChange, handleChangeImage,  values, errors };
 };
 
 export default useForm;

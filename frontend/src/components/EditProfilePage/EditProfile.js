@@ -17,7 +17,7 @@ function EditProfile(){
     console.log("Submitted");
   }
 
-  const { handleChange, handleSubmit, classesChange, values, errors } = useForm(
+  const { handleChange, handleSubmit, classesChange, handleChangeImage, values, errors } = useForm(
       submitForm,
       validateInfo
   );
@@ -77,10 +77,10 @@ function EditProfile(){
               <label for="file-input">
                   <img src={values.image} className='Avatar-student'/>
               </label>
-              <input id="file-input" type="file" className='Avatar-input'/>
+              <input id="file-input" type="file" onChange={handleChangeImage} className='Avatar-input'/>
             </div>
             <div type='text' className="user_type_student" 
-            disabled>{values.user_type}
+            disabled>{values.user_type === "student"? "Học viên": "Gia sư"}
             </div>
           </Form.Group>
           <Form.Group>
