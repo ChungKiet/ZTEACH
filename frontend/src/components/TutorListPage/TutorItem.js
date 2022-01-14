@@ -7,16 +7,14 @@ import img_fee from '../images/postimg/fee.png';
 import img_gender from '../images/postimg/gender.png';
 import img_grade from '../images/postimg/grade.png';
 import img_level from '../images/postimg/level.png';
-import img_place from '../images/postimg/place.png';
+import img_age from '../images/postimg/age.png';
 import img_subject from '../images/postimg/subject.png';
-import img_avata_user from '../images/profile.png';
 
 
 function TutorItem(params) {
     
 
     const values = params.params;
-    console.log(values);
 
     function handleString(params) {
         var res = "";
@@ -30,22 +28,19 @@ function TutorItem(params) {
     function handleAge(birthday) {
         const day = birthday.split("T")[0];
         const year = day.split("-")[0];
-        return 2021 - year;
+        return 2022 - year;
     }
 
     return (
-        <Link to={'/profile/' + values.username} className="tutor-item-frame40">
+        <div className="tutor-item-frame40">
 
             <div className="flex-column-tutor-list40">
-                <div>
-                    <img className="user-img-tutor-item40" src={img_avata_user} />
-                </div>
-            </div>
-            
-            <div className="flex-column-tutor-list40">
-                <div class="username-post-item40">
+                <Link to={'/profile/' + values.username} >
+                    <img className="user-img-tutor-item40" src={values.image} />
+                </Link>
+                <Link to={'/profile/' + values.username}  class="username-tutor-item40">
                     {values.username}
-                </div>
+                </Link>
             </div>
 
 
@@ -123,7 +118,7 @@ function TutorItem(params) {
 
                 {/* Place */}
                 <div className="img-label-detail40">
-                    <img className="img-post" src={img_place} />
+                    <img className="img-post" src={img_age} />
                     <div className="placeholder-text-container">
                         <div className="placeholder-text">
                             <div className="select-occupation">
@@ -155,7 +150,7 @@ function TutorItem(params) {
                     </div>
                 </div>
             </div>
-        </Link>
+        </div>
     );
 
 }

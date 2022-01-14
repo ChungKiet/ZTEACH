@@ -12,7 +12,7 @@ import TutorRegisterPage from './components/pages/TutorRegisterPage';
 import ProfilePage from './components/pages/ProfilePage';
 import PostListPage from './components/pages/PostListPage';
 import TutorListPage from './components/pages/TutorListPage';
-import ErrorPage from './components/pages/ErrorPage';
+import NotFoundPage from './components/pages/NotFoundPage';
 import ImageUpload from './components/upload';
 import { isLogin } from './GlobalVar';
 
@@ -39,7 +39,7 @@ function App() {
           <Route path="/post-list" element={<PostListPage />} />
           <Route path="/tutor-list" element={<TutorListPage />} />
           <Route path="/upload" element={<ImageUpload />} />
-          <Route path="/error" element={<ErrorPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
     </Router>

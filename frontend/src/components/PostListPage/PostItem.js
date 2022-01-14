@@ -9,7 +9,6 @@ import img_grade from '../images/postimg/grade.png';
 import img_level from '../images/postimg/level.png';
 import img_place from '../images/postimg/place.png';
 import img_subject from '../images/postimg/subject.png';
-import img_avata_user from '../images/profile.png';
 
 
 
@@ -21,19 +20,19 @@ function PostItem(params) {
 
 
     return (
-        <Link to={'/post/' + values._id} className="post-item-frame40">
+        <div className="post-item-frame40">
             <div className="post-item-grid-title40">
                 <Link to={'/profile/' + values.username} className="group-user-grid40">
                     <div>
-                        <img className="user-img-post-item40" src={img_avata_user} />
+                        <img className="user-img-post-item40" src={values.image} />
                     </div>
                     <div class="username-post-item40">
                         {values.username}
                     </div>
                 </Link>
-                <div class="title-post-item40">
-                    {values.title}
-                </div>
+                <Link to={'/post/' + values._id}  class="title-post-item40">
+                    {values.title.length<=45 ? values.title : values.title.substring(0, 42) + "..."}
+                </Link>
             </div>
 
 
@@ -144,7 +143,7 @@ function PostItem(params) {
                     </div>
                 </div>
             </div>
-        </Link>
+        </div>
     );
 
 }

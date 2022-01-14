@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 import 'bootstrap/dist/css/bootstrap.css';
-
-
 import img_connected from '../images/postimg/connected.png';
 import img_date from '../images/postimg/date.png';
 import img_fee from '../images/postimg/fee.png';
@@ -13,7 +11,6 @@ import img_grade from '../images/postimg/grade.png';
 import img_level from '../images/postimg/level.png';
 import img_place from '../images/postimg/place.png';
 import img_subject from '../images/postimg/subject.png';
-import img_tutor from '../images/postimg/tutor.png';
 import GlobalVar from "../../GlobalVar";
 
 import './Post.css';
@@ -25,13 +22,14 @@ const optionSelect = GlobalVar.optionSelect;
 
 function Post() {
     const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
+    console.log(cookie);
     var currentUser = null;
     var userType = null;
-    if (cookie !== null){
+    if (cookie !== null) {
         currentUser = cookie.username;
         userType = cookie.user_type;
     }
-        
+
     const URL = window.location.pathname;
     const tmp = URL.split('/');
     const id = tmp[tmp.length - 1];
@@ -51,43 +49,45 @@ function Post() {
         fee: "",
         request: "",
         connect_state: "",
-        request_list: ""
+        request_list: "",
+        accepted_tutor: ""
     });
 
 
     useEffect(() => {
-        const fetchData =  () => {
-             axios('http://localhost:8000/posts/' + id).then(
+        const fetchData = () => {
+            axios('http://localhost:8000/posts/' + id).then(
                 res => {
                     const dt = res.data;
                     axios.post("http://localhost:8000/connects/get-post-state", { post: id, tutor: currentUser }).then(
                         res2 => {
                             const dt2 = res2.data;
-                            axios.post("http://localhost:8000/connects/get-post-connect", { post: id}).then(
-                            res3 => {
-                            const dt3 = res3.data;
-                            console.log("dt3 = ");
-                            console.log(dt3);
-                            setValues({
-                                username: dt.username,
-                                image: dt.image,
-                                title: dt.title,
-                                information: dt.information,
-                                subject: dt.subject,
-                                grade: dt.grade,
-                                study_form: dt.study_form,
-                                start: dt.start,
-                                literacy: dt.literacy,
-                                gender: dt.gender,
-                                fee: dt.fee,
-                                request: dt.request,
-                                lessons: dt.lessons,
-                                time: dt.time,
-                                connect_state: dt2.state,
-                                request_list: dt3
-                            });
+                            axios.post("http://localhost:8000/connects/get-post-connect", { post: id }).then(
+                                res3 => {
+                                    const dt3 = res3.data;
+                                    console.log("dt3 = ");
+                                    console.log(dt3);
+                                    setValues({
+                                        username: dt.username,
+                                        image: dt.image,
+                                        title: dt.title,
+                                        information: dt.information,
+                                        subject: dt.subject,
+                                        grade: dt.grade,
+                                        study_form: dt.study_form,
+                                        start: dt.start,
+                                        literacy: dt.literacy,
+                                        gender: dt.gender,
+                                        fee: dt.fee,
+                                        request: dt.request,
+                                        lessons: dt.lessons,
+                                        time: dt.time,
+                                        connect_state: dt2.state,
+                                        request_list: dt3.requested,
+                                        accepted_tutor: dt3.tutor
+                                    });
 
-                            }
+                                }
                             )
 
                         }
@@ -102,7 +102,6 @@ function Post() {
     }, []);
 
 
-
     const handleChange = e => {
         const { name, value } = e.target;
         setValues({
@@ -110,32 +109,6 @@ function Post() {
             [name]: value
         });
     };
-
-    function connectToPost() {
-        axios.post("http://localhost:8000/connects/new-post-connect", { user : values.username, tutor: currentUser, post: id }).then(
-            res => {
-                if (res.data.result === 1) {
-                    alert('Tạo kết nối thành công');
-                    window.location.reload(`/post/${id}`);
-                } else {
-                    alert('Đã xảy ra lỗi khi gửi yêu cầu. Thử lại sau.');
-                }
-            }
-        );
-    }
-
-    function cancelConnectToPost() {
-        axios.delete("http://localhost:8000/connects/delete-post-connect", {data :{ user : values.username, tutor: currentUser, post: id }}).then(
-            res => {
-                if (res.data.result === 1) {     
-                    alert('Đã hủy yêu cầu');
-                    window.location.reload(`/post/${id}`);
-                } else {
-                    alert('Đã xảy ra lỗi khi hủy yêu cầu. Thử lại sau.');
-                }
-            }
-        );
-    }
 
     function UserTag() {
         if (currentUser === null || currentUser !== values.username)
@@ -147,7 +120,7 @@ function Post() {
                             <img className="user-img-head" src={values.image} alt={values.username} />
                         </div>
                         <div className="text-username">
-                            <a href={`http://localhost:3000/users/${values.username}`} style={{ 'textDecoration': 'none' }}>{values.username}</a>
+                            <a href={`http://localhost:3000/profile/${values.username}`} style={{ 'textDecoration': 'none' }}>{values.username}</a>
                         </div>
                     </div>
                 </div>
@@ -161,159 +134,13 @@ function Post() {
                     </div>
                 </div>
             );
-
-
     }
-
-    function ButtonConnect() {
-        if (currentUser === null || userType !== "tutor")
-            return null;
-        if (currentUser === values.username) {
-            return (
-                <div />
-            )
-        }
-        else if (values.connect_state === 2 || values.connect_state === "2")
-            return (
-                <button className="button-connected">
-                    <div className="button-connect-text">
-                        Đã kết nối
-                    </div>
-                </button>
-            )
-        else if (values.connect_state === 1 || values.connect_state === "1")
-            return (
-                <button className="button-requested" onClick={cancelConnectToPost}>
-                    <div className="button-connect-text">
-                        Đã yêu cầu
-                    </div>
-                </button>
-            );
-        else if (values.connect_state === 0 || values.connect_state === "0") {
-            return (
-                <button className="button-connect" onClick={connectToPost}>
-                    <div className="button-connect-text">
-                        Kết nối
-                    </div>
-                </button>
-            );
-        }
-        else return null;
-
-    }
-
-
-    function RequestList() {
-        // Guest - restricted infomation
-        if (currentUser === null)         
-            return null
-        if (currentUser === values.username && values.connect_state !== 3)
-            // OWN - Not have accepted connection with any tutor
-            return (
-                <div>
-                    <div className="more-detail-label">Danh sách gia sư yêu cầu kết nối:</div>
-
-                    <div className="overlap-group-requests">
-                        <div className="box-outline-735"></div>
-                        <div className="flex-request-heads">
-                            <div className="request-no-735">STT</div>
-                            <div className="request-username-735">Tên tài khoản</div>
-                            <div className="request-level-735">Trình độ</div>
-                            <div className="request-gender-735">Giới tính</div>
-                        </div>
-                        <div className="request-list-735">
-                            {values.request_list.map((v, index) => (
-                            <RequestSummaryLine order={index + 1} username={v.username} level={v.literacy} gender={v.gender}></RequestSummaryLine>))}
-
-                        </div>
-                    </div>
-                </div>)
-        else if(values.connect_state === 3)
-            // OWN - Accepted connection with a tutor
-            // Others tutor - cannot do anything more, just see the tutor information
-            return(
-                <div>
-                    <div className="more-detail-label">Lớp đã được nhận dạy bởi:</div>
-                </div>
-            )
-        else 
-            // The tutor that has been accepted
-            return null;
-        
-    }
-
-    function EditAndRemove() {
-        if (currentUser === null)
-            return null;
-        if (currentUser === values.username)
-            return (
-                <div className="edit-and-remove">
-                    <Link to='/edit-post' state={{ values, id }} className="post-edit-remove-735">
-                        <div className="button-edit-735">
-                            Chỉnh sửa
-                        </div>
-                    </Link>
-
-                    <Link to='/edit-post' state={{ values, id }} className="post-edit-remove-735">
-                        <div className="button-remove-735">
-                            Xóa
-                        </div>
-                    </Link>
-
-                </div>
-            );
-        else
-            return null;
-    }
-
-    function RequestSummaryLine(props) {
-        const { order, username, level, gender } = props;
-
-        return (
-            <div className="flex-request-line">
-                <div className="request-no-735">{order}</div>
-                <div className="request-username-735">
-                    <a href={`http://localhost:3000/user?id=${username}`} style={{ 'text-decoration': 'none' }}>{username}</a>
-                </div>
-                <div className="request-level-735">{level}</div>
-                <div className="request-gender-735">{gender}</div>
-                <div className="request-accept-735">
-                    <button className="button-request-accept-735" onClick={() => {
-                        axios.put("http://localhost:8000/connects/accept-connect", {user : currentUser, tutor : username /*, post_id : id*/})
-                            .then(window.location.reload(`/post/${id}`)
-                        )
-                    }} >
-                        <div className="request-button-735">
-                            Chấp nhận
-                        </div>
-                    </button>
-                </div>
-                <div className="request-deny-735">
-                    <button className="button-request-deny-735" type="submit" >
-                        <div className="request-button-735">
-                            Từ chối
-                        </div>
-                    </button>
-                </div>
-            </div>
-        );
-    }
-
-    function AcceptRequestButton(props){
-        const {username} = props;
-
-    }
-
-
-
-
+   
     return (
         <div className="Post">
             <Navbar />
-            {console.log("currentUser:"), console.log(currentUser), console.log(userType), 
-            console.log("after all:"), console.log(values), 
-            console.log(values.connect_state), 
-            console.log(values.request_list)}
+            {console.log("currentUser:"), console.log(currentUser), console.log(userType),
+                console.log("after all:"), console.log(values)}
 
             <div className="frame-general">
                 <div className="title-container-head">
@@ -328,12 +155,8 @@ function Post() {
                 <ButtonConnect />
             </div>
 
-
-
-
             {/* flex row */}
             <div className="flex-row">
-
                 {/* Subject */}
                 <div className="img-label-detail">
                     <img className="img-post" src={img_subject} />
@@ -483,28 +306,228 @@ function Post() {
                 </div>
             </div>
 
-
             <div className="more-detail-label">Thông tin thêm về lớp học:</div>
-
             <div className="overlap-group-more-info">
                 <div className="box-outline-735"></div>
                 <div className="detail-script">{values.information}</div>
             </div>
 
-
-
-
             <RequestList />
             <EditAndRemove />
-
 
             <div style={{ position: 'relative', marginTop: "1%", marginBottom: "0px", bottom: "0", width: '100%' }}>
                 <Footer />
             </div>
         </div>
-
-
     );
+
+    function ButtonConnect() {
+        if (currentUser === null)
+            return null;
+        if (userType !== "tutor")
+            return null;
+        if (currentUser === values.username)
+            return null
+
+        else if (values.connect_state === 2 || values.connect_state === "2")
+            return (
+                <button className="button-connected">
+                    <div className="button-connect-text">
+                        Đã kết nối
+                    </div>
+                </button>
+            )
+        else if (values.connect_state === 1 || values.connect_state === "1")
+            return (
+                <button className="button-requested" onClick={() => {
+                    axios.delete("http://localhost:8000/connects/delete-post-connect", { data: { user: values.username, tutor: currentUser, post: id } }).then(
+                        res => {
+                            if (res.data.result === 1) {
+                                alert('Đã hủy yêu cầu');
+                                window.location.reload(`/post/${id}`);
+                            } else {
+                                alert('Đã xảy ra lỗi khi hủy yêu cầu. Thử lại sau.');
+                            }
+                        }
+                    );
+                }}>
+                    <div className="button-connect-text">
+                        Đã yêu cầu
+                    </div>
+                </button>
+            );
+        else if (values.connect_state === 0 || values.connect_state === "0") {
+            return (
+                <button className="button-connect" onClick={() => {
+                    axios.post("http://localhost:8000/connects/new-post-connect", { user: values.username, tutor: currentUser, post: id }).then(
+                        res => {
+                            if (res.data.result === 1) {
+                                alert('Đã yêu cầu kết nối để nhận lớp!');
+                                window.location.reload(`/post/${id}`);
+                            } else {
+                                alert('Đã xảy ra lỗi khi gửi yêu cầu. Thử lại sau.');
+                            }
+                        }
+                    );
+                }}>
+                    <div className="button-connect-text">
+                        Kết nối
+                    </div>
+                </button>
+            );
+        }
+        else return null;
+
+    }
+
+
+    function RequestList() {
+        // Guest - restricted infomation
+        if (currentUser === null)
+            return null
+        if (currentUser === values.username && values.connect_state !== 3)
+            // OWN - Not have accepted connection with any tutor
+            return (
+                <div>
+                    <div className="more-detail-label">Danh sách gia sư yêu cầu kết nối:</div>
+
+                    <div className="overlap-group-requests">
+                        <div className="box-outline-735"></div>
+                        <div className="flex-request-heads">
+                            <div className="request-no-735">STT</div>
+                            <div className="request-username-735">Tên tài khoản</div>
+                            <div className="request-level-735">Trình độ</div>
+                            <div className="request-gender-735">Giới tính</div>
+                        </div>
+                        <div className="request-list-735">
+                            {values.request_list.map((v, index) => (
+                                <RequestSummaryLine order={index + 1} username={v.username} level={v.literacy} gender={v.gender}></RequestSummaryLine>))}
+
+                        </div>
+                    </div>
+                </div>)
+        else if (values.connect_state === 3)
+            // OWN - Accepted connection with a tutor
+            // Others tutor - cannot do anything more, just see the tutor information
+            return (
+                <div className="flex-row-tutor-accepted">
+                    <div className="accepted-label">Lớp đã được nhận dạy bởi: </div>
+                    <div className="overlap-group-user">
+                        <div className="box-user-head">
+                            <div className="flex-user">
+                                <div><img className="user-img-head" src={values.accepted_tutor.image} alt={values.username} /></div>
+                                <div className="text-username">
+                                    <a href={`http://localhost:3000/profile/${values.accepted_tutor.username}`}
+                                        style={{ 'textDecoration': 'none', 'fontSize': '30px', 'fontWeight': 'bold' }}>
+                                        {values.accepted_tutor.username}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        else
+            // The tutor that has been accepted
+            return null;
+
+    }
+
+
+
+    function RequestSummaryLine(props) {
+        const { order, username, level, gender } = props;
+
+        return (
+            <div className="flex-request-line">
+                <div className="request-no-735">{order}</div>
+                <div className="request-username-735">
+                    <a href={`http://localhost:3000/profile/${username}`} style={{ 'textDecoration': 'none' }}>{username}</a>
+                </div>
+                <div className="request-level-735">{level}</div>
+                <div className="request-gender-735">{gender}</div>
+                <div className="request-accept-735">
+                    <button className="button-request-accept-735" onClick={() => {
+                        axios.put("http://localhost:8000/connects/accept-connect", { user: currentUser, tutor: username, post: id })
+                            .then(window.location.reload(`/post/${id}`)
+                            )
+                    }} >
+                        <div className="request-button-735">
+                            Chấp nhận
+                        </div>
+                    </button>
+                </div>
+                <div className="request-deny-735">
+                    <button className="button-request-deny-735" onClick={() => {
+                        axios.delete("http://localhost:8000/connects/delete-post-connect", { data: { user: currentUser, tutor: username, post: id } }).then(
+                            res => {
+                                if (res.data.result === 1) {
+                                    alert('Đã xóa yêu cầu');
+                                    window.location.reload(`/post/${id}`);
+                                } else {
+                                    alert('Đã xảy ra lỗi khi xóa yêu cầu. Thử lại sau.');
+                                }
+                            }
+                        );
+                    }} >
+                        <div className="request-button-735">
+                            Từ chối
+                        </div>
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
+
+    function EditPostButton() {
+        if (values.connect_state !== 3)
+            return (
+                <Link to='/edit-post' state={{ values, id }} className="post-edit-remove-735">
+                    <div className="button-edit-735">
+                        Chỉnh sửa
+                    </div>
+                </Link>
+            )
+        else
+            return null;
+    }
+
+    function DeletePostButton() {
+        return (
+            <button className="post-edit-remove-735" onClick={() => {
+                if (window.confirm('Bạn thực sự muốn xóa vĩnh viễn bài đăng này?'))
+                    axios.delete("http://localhost:8000/posts/delete", { data: { id: id } }).then(
+                        res => {
+                            if (res.data.result === 1) {
+                                alert('Đã bay màu T-T');
+                                window.location.replace('/post-list');
+                            } else {
+                                alert('Đã xảy ra lỗi khi xóa bài. Thử lại sau :))');
+                            }
+                        }
+                    );
+            }}>
+                <div className="button-remove-735">
+                    Xóa
+                </div>
+            </button>
+        )
+    }
+
+    function EditAndRemove() {
+        if (currentUser === null)
+            return null;
+        if (currentUser === values.username)
+            return (
+                <div className="edit-and-remove">
+                    <EditPostButton />
+                    <DeletePostButton />
+
+                </div>
+            );
+        else
+            return null;
+    }
 }
 
 

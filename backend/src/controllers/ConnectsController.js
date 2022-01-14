@@ -102,8 +102,13 @@ class ConnectsController {
             'username name gender literacy ');
 
         const accept = await Connect.findOne({ post: post, accept: true }, 'tutor');
+        if (!accept) {
+            res.json({ requested, tutor: null });
+            return;
+        }
         const tutor = await Tutor.findOne({ username: accept.tutor },
-            'username name gender literacy ');
+            // Nghia, add image in response
+            'username image name gender literacy ');
 
         res.json({ requested, tutor });
     }
@@ -111,11 +116,14 @@ class ConnectsController {
     // [POST] /get-post-accept  --> Danh sách yêu cầu của bài đăng
     async get_post_accept(req, res, next) {
         const post = req.body.post;
-        const connects = (await Connect.findOne({ post: post, accept: true }, 'tutor'))
-            .map(({ tutor }) => tutor);
-        const tutors = await Tutor.findOne({ username: { $in: connects } },
+        const connect = (await Connect.findOne({ post: post, accept: true }, 'tutor'));
+        if (!connect) {
+            res.json({ tutor: null });
+            return;
+        }
+        const tutor = await Tutor.findOne({ username: { $in: connect.map(({ tutor }) => tutor) } },
             'username name gender literacy');
-        res.json(tutors);
+        res.json(tutor);
     }
 
     // [POST] /get-post-state  --> trạng thái của bài đăng với 1 gia sư

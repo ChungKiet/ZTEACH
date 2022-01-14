@@ -11,7 +11,7 @@
     
     position:static;
     display: grid;
-    grid-template-columns: 20% 20% 60%;
+    grid-template-columns: 30% 70%;
     align-items: center;
 }
 
@@ -33,28 +33,14 @@
     grid-template-rows: 60px;
 }
 
-.username-post-item40 {
+.username-tutor-item40 {
     padding-left: 5px;
     padding-top: 5px;
     text-align: left;
     vertical-align:middle;
     font-size:xx-large;
     font: bold;
-}
-
-.title-post-item40 {
-    padding-left: 20px;
-    padding-top: 5px;
-    width: 600px;
-    height: 60px;
-    border-radius: 10px;
-
-    background-color: white;
-
-    text-align:left;
-    vertical-align:middle;
-    font-size:xx-large;
-    font: bold;
+    color: black;
 }
 
 
@@ -64,12 +50,12 @@
     object-fit: fill;
     height: 200px; 
     width: 200px;
-    border-radius: 30px;
+    border-radius: 100px;
 }
 
 .grid-3x2-subitem40 {
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 40% 60%;
     grid-template-rows: 33% 33% 33%;
     margin-left: 5%;
 }

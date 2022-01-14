@@ -30,25 +30,27 @@
 
 .username-post-item40 {
     padding-left: 5px;
-    padding-top: 5px;
+    padding-top: 10px;
     text-align: left;
     vertical-align:middle;
-    font-size:xx-large;
+    font-size:x-large;
     font: bold;
+    color: black;
 }
 
 .title-post-item40 {
     padding-left: 20px;
-    padding-top: 5px;
+    padding-top: 10px;
     width: 600px;
     height: 60px;
     border-radius: 10px;
 
     background-color: white;
+    color: black;
 
     text-align:left;
     vertical-align:middle;
-    font-size:xx-large;
+    font-size:x-large;
     font: bold;
 }
 
