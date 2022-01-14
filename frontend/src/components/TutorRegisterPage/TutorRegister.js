@@ -16,7 +16,7 @@ function TutorRegister(){
   const submitForm = () => {
     console.log("Submitted");
   }
-  const { handleChange, handleSubmit, classesChange, salaryChange, values, errors } = useForm(
+  const { handleChange, handleSubmit, classesChange, salaryChange, handleChangeImage, values, errors } = useForm(
       submitForm,
       validateInfo
   );
@@ -76,7 +76,7 @@ function TutorRegister(){
               <label for="file-input">
                   <img src={values.image} className='Avatar_label'/>
               </label>
-              <input id="file-input" type="file" className='Avatar-input'/>
+              <input id="file-input" type="file" onChange={handleChangeImage} className='Avatar-input'/>
             </div>
             <div type='text' 
               className="user_type_reg" 
@@ -92,7 +92,7 @@ function TutorRegister(){
               Giới thiệu về bản thân bạn
             </div>
             <Form.Control type='text' 
-            value={values.intro}
+            value={values.introduce}
             onChange={handleChange}
             name='intro'
             placeholder='Giới thiệu ngắn gọn về bản thân bạn' 
@@ -135,9 +135,9 @@ function TutorRegister(){
             </div>
             <Form.Control type='text' 
               placeholder='Mức lương bạn mong muốn' 
-              name='salary'
+              name='fee'
               onChange={salaryChange}
-              value={values.salary}
+              value={values.fee}
               className='salary_control'>
             </Form.Control>
             <div className='input-label'>
@@ -204,8 +204,8 @@ function TutorRegister(){
               className='birth-day-select'
               onChange={handleChange}
               type="date"
-              name="birth_day"
-              value={values.birth_day}
+              name="birthday"
+              value={values.birthday}
               placeholder="Due date"
             />
             <div className='option-secure-label'>

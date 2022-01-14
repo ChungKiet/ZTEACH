@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import GlobalVar from '../../GlobalVar';
 import { useNavigate } from 'react-router-dom';
+import { storage } from '../../firebase';
 
 const useForm = (callback, validate) => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ const useForm = (callback, validate) => {
    username: "KietChung",
    introduce: "No intro",
    name: "Kiệt Chung",
-   user_type: "Học viên",
+   user_type: "",
    gender: "Nam",
    gender_secure: "Công khai",
    birthday: "2001-12-17",
@@ -93,6 +94,61 @@ const useForm = (callback, validate) => {
     }
   };
 
+  const [UserImage, setUserImage] = useState({
+    image: null,
+    url: values.image,
+    progress: 0
+  })
+
+const handleChangeImage = e => {
+  if (e.target.files[0]) {
+      const image = e.target.files[0];
+      setUserImage({
+        ...UserImage,
+        ["image"]:image
+      })
+      const name = image.name + '-' + Date.now();
+      const uploadTask = storage.ref(`images/${name}`).put(image);
+      uploadTask.on('state_changed',
+      (snapshot) => {
+          // progrss function ....
+          const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          setUserImage({
+            ...UserImage,
+            ["progress"]:progress
+          })
+      },
+      (error) => {
+          // error function ....
+          console.log(error);
+          console.log("Here");
+      },
+      () => {
+          // complete function ....
+          storage.ref('images').child(name).getDownloadURL().then(url => {
+              console.log(url);
+              setValues({
+                ...values,
+                ["image"]: url
+              })
+              //http://localhost:8000/users/edit-image
+              axios.put('http://localhost:8000/users/edit-image', {username: values.username, image: url}).then(res=>{
+                const message = res.data;
+                if (!message.error){
+                  const user = JSON.parse(window.sessionStorage.getItem("user19120000"));
+                  user.url = url;
+                  //window.sessionStorage.setItem("user19120000", values);
+                  //console.log(user);
+                  alert("Cập nhật ảnh thành công!");
+                }
+              }
+              )
+          })
+      });
+      // Post then change 2 link
+  }
+}
+
   useEffect(() => {
    const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
    const user_type = user.user_type === "student"? "users": "tutors";
@@ -133,7 +189,7 @@ const useForm = (callback, validate) => {
   }   
 }, [errors]);
 
-  return { handleChange, handleSubmit, subjectChange, classesChange,salaryChange,  values, errors };
+  return { handleChange, handleSubmit, subjectChange, classesChange,salaryChange, handleChangeImage, values, errors };
 };
 
 export default useForm;

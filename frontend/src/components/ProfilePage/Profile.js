@@ -191,24 +191,24 @@ function Profile(){
               {"SĐT liên hệ: " + values.contact}
             </div>
           </div>
-          { user.user_type==="tutor" && 
+          { values.user_type==="tutor" && 
           <div className='row'>
             <div className='info-user'>
-              <img src={subject} className='icon-img'/>{ user.user_type==="tutor" && 
+              <img src={subject} className='icon-img'/>{
               "Môn học nhận dạy: " + values.subjects.map(v=>(
                 v.name + ', '
               ))}
             </div>
           </div>
           }
-          { user.user_type==="tutor" && 
+          { values.user_type==="tutor" && 
           <div className='row'>
             <div className='info-user'>
-              <img src={classImg} className='icon-img'/>
+              <img src={classImg} className='icon-img'/>{
               "Lớp nhận dạy: " + values.classes.map(v=>(
                 v.name + ', '
               ))
-              
+              }
             </div>
           </div>
           }
@@ -220,7 +220,7 @@ function Profile(){
             </div>
           </div>
           <div className='intro-user'>
-            {values.intro}
+            {values.introduce}
           </div>
           <div className='row'>
             <div className='tutor-cert-img'>

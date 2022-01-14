@@ -9,9 +9,9 @@ const useForm = (callback, validate) => {
    id: "",
    image: "",
    username: "KietChung",
-   intro: "No intro",
+   introduce: "No intro",
    name: "Kiệt Chung",
-   user_type: "Học viên",
+   user_type: "",
    gender: "Nam",
    gender_secure: "Công khai",
    birthday: "2001-12-17",
@@ -58,7 +58,7 @@ const useForm = (callback, validate) => {
     console.log(values);
     if(true){
     //if (!errors.isError) {
-      const user_type = GlobalVar.user.user_type === "Học viên"? "users": "tutors";
+      const user_type = GlobalVar.user.user_type === "student"? "users": "tutors";
       axios.post("http://localhost:8000/" + user_type + GlobalVar.user.username, values).then(res => {
         console.log(res)
         const { isSucceeded } = res.data;
@@ -161,7 +161,7 @@ const useForm = (callback, validate) => {
         id: get_id,
         image: get_image,
         username: get_username,
-        intro: get_intro,
+        introduce: get_intro,
         name: get_name,
         user_type: get_user_type,
         gender: get_gender,
@@ -399,9 +399,10 @@ const useForm = (callback, validate) => {
                   const message = res.data;
                   if (!message.error){
                   const user = JSON.parse(window.sessionStorage.getItem("user19120000"));
-                  window.sessionStorage.setItem("user19120000", user);
-                  console.log(user);
-                  alert("Oke bro");
+                  user.url = url;
+                  //window.sessionStorage.setItem("user19120000", values);
+                  //console.log(user);
+                  alert("Cập nhật ảnh thành công!");
                   }
                 }
                 )
