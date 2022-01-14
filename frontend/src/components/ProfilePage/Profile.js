@@ -194,7 +194,7 @@ function Profile(){
             <div className='info-user'>
               <img src={subject} className='icon-img'/>{
               "Môn học nhận dạy: " + values.subjects.map(v=>(
-                v.label + ', '
+                v.label + ' '
               ))}
             </div>
           </div>
@@ -204,7 +204,7 @@ function Profile(){
             <div className='info-user'>
               <img src={classImg} className='icon-img'/>{
               "Lớp nhận dạy: " + values.classes.map(v=>(
-                v.label + ', '
+                v.label + ' '
               ))
               }
             </div>
@@ -220,6 +220,7 @@ function Profile(){
           <div className='intro-user'>
             {values.introduce}
           </div>
+          { values.user_type==="tutor" &&
           <div className='row'>
             <div className='tutor-cert-img'>
             <strong>
@@ -227,8 +228,9 @@ function Profile(){
             </strong>
             </div>
           </div>
+          }
           <div className='row'>
-            <div className='tutor-cert-img'>
+            <div className='tutor-cert-img' style={{width:"400px"}}>
             <strong>
               Danh sách các bài đã đăng
             </strong>
@@ -236,8 +238,9 @@ function Profile(){
             {/* <div>{listPost}</div> */}
             <RequestList />
           </div>
+        
           <div className='row'>
-            <div className='tutor-cert-img'>
+            <div className='tutor-cert-img' style={{width: '400px'}}>
             <strong>
               Danh sách các yêu cầu kết nối
             </strong>

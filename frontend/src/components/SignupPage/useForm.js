@@ -36,7 +36,7 @@ const useForm = (callback, validate) => {
       axios.post("http://localhost:8000/users/register", values).then(res=>{
       const {msg} = res.data;
       if(msg === 1){
-         window.sessionStorage.setItem("user19120000", JSON.stringify(values));
+         window.sessionStorage.setItem("user19120000", JSON.parse(values));
          const user = window.sessionStorage.getItem("user19120000");
         //GlobalVar.changeLogin();
         //GlobalVar.setUser(values);

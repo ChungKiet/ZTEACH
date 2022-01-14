@@ -199,25 +199,6 @@ const useForm = (callback, validate) => {
                 </a>
             </div>
             <div className="request-level-553">{dayPost.substring(0, 10)}</div>
-            {/* <div className="request-gender-553">{gender}</div> */}
-            {/* { isHolderAccount &&
-            <div className="request-accept-553">
-                <button className="button-request-accept-553" type="submit" >
-                    <div className="request-button_553">
-                        <a href={'http://localhost:3000/post/' + id}> Xem chi tiết</a>
-                    </div>
-                </button>
-            </div>
-            } */}
-            {/* { isHolderAccount && 
-            <div className="request-deny-553">
-                <button className="button-request-deny-553" type="submit" >
-                    <div className="request-button-553">
-                        Xóa
-                    </div>
-                </button>
-            </div>
-            } */}
         </div>
     );
   }
@@ -251,8 +232,21 @@ const useForm = (callback, validate) => {
         </div>
     );
   }
+
+  const [connectState, setConnectState] = useState("Chưa kết nối");
   //http://localhost:8000/connects/get-tutor-connect
   
+  useEffect(()=>{
+    //http://localhost:8000/connects/get-tutor-state
+    const URL = window.location.pathname;
+    const tmp = URL.split('/');
+    const username = tmp[tmp.length - 1];
+    const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
+    var isLogin = true;
+    var isYourSelf = false;
+    if (!user) isLogin = false;
+    else if (user.username === username) isYourSelf = true;
+  })
   const [listRequest, setRequest] = useState([]);
   useEffect(() =>{
     const URL = window.location.pathname;
