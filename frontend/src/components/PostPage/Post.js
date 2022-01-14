@@ -168,11 +168,9 @@ function Post() {
     function ButtonConnect() {
         if (currentUser === null || userType !== "tutor")
             return null;
-        if (currentUser === values.username) {
-            return (
-                <div />
-            )
-        }
+        if (currentUser === values.username)
+            return null
+
         else if (values.connect_state === 2 || values.connect_state === "2")
             return (
                 <button className="button-connected">
@@ -312,8 +310,8 @@ function Post() {
             <Navbar />
             {console.log("currentUser:"), console.log(currentUser), console.log(userType), 
             console.log("after all:"), console.log(values), 
-            console.log(values.connect_state), 
-            console.log(values.request_list)}
+            console.log("connect state: "),console.log(values.connect_state), 
+            console.log("request list: "),console.log(values.request_list)}
 
             <div className="frame-general">
                 <div className="title-container-head">
