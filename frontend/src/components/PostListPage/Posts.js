@@ -1,20 +1,74 @@
 import React, {useState, useEffect} from 'react'
+import {Link} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './Posts.css';
 import Search from './Search';
 import PostItem from './PostItem';
-import useForm from './useForm'
 import validate from './validateInfo';
 import axios from 'axios';
 
 
 function Posts() {
+    const defaultValues = {
+        page: "1",
+        title: "",
+        subject: "",
+        grade: "",
+        study_form: "",
+        lesson: "",
+        time: "",
+        fee: "",
+        literacy: "",
+        gender: ""
+    };
     const submitForm = () => {
         console.log("Submitted");
     }
-    const { handleChange, handleSubmit, values, errors } = useForm(
-        submitForm,
-        validate
-    );
+    const navigate = useNavigate();
+    const [values, setValues] = useState(defaultValues);
+    const [errors, setErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  
+  
+    const handleChange = e => {
+      const { name, value } = e.target;
+      setValues({
+        ...values,
+        [name]: value
+      });
+    };
+
+    const handleDelete = e => {
+      setValues({...defaultValues, ["page"]: values.page});
+    };
+  
+    const handleSubmit = e => {
+      e.preventDefault();
+  
+      setErrors(validate(values));
+      setIsSubmitting(true);
+  
+      var url = '/post-list?';
+      if (values.title !== "") url = url + "title=" + values.title + "&";
+      if (values.subject !== "") url = url + "subject=" + values.subject + "&";
+      if (values.grade !== "") url = url + "grade=" + values.grade + "&";
+      if (values.study_form !== "") url = url + "study_form=" + values.study_form + "&";
+      if (values.lesson !== "") url = url + "lesson=" + values.lesson + "&";
+      if (values.time !== "") url = url + "time=" + values.time + "&";
+      if (values.fee !== "") url = url + "fee=" + values.fee + "&";
+      if (values.literacy !== "") url = url + "literacy=" + values.literacy + "&";
+      if (values.gender !== "") url = url + "gender=" + values.gender + "&";
+      if (values.page !== "") url = url + "page=" + values.page;
+  
+  
+      window.location.replace(url);
+    };
+
+
+
+
+
 
 
     const [Data, setDatas] = useState({
@@ -22,14 +76,30 @@ function Posts() {
         posts: []
     });
     
+    
+
+
     useEffect(() => {
         const fetchData = async () => {
-            const query = window.location.search;
+            const searchURL = 'http://localhost:8000/posts' + window.location.search;
 
-            console.log('http://localhost:8000/posts' + query);
-            const result = await axios.get('http://localhost:8000/posts' + query)
+            console.log(searchURL);
+            const result = await axios.get(searchURL);
 
-            console.log(result.data);
+            
+            var url = require('url');
+            var url_parts = url.parse(searchURL, true);
+            var query = url_parts.query;
+            var newValues = values;
+            var keys = Object.keys(query);
+            for (var i=0; i<keys.length; i++){
+                var key = keys[i];
+                var value = query[key];
+                newValues = {...newValues,[key]:value};
+            }
+            setValues(newValues);
+
+
             setDatas(result.data);
         };
         fetchData();
@@ -37,8 +107,14 @@ function Posts() {
     
     return (
         <div className='posts-grid-main-layout40'>
-            <Search params={{handleChange, handleSubmit, values, errors}}/>
+            <Search params={{handleChange, handleSubmit, handleDelete, values, errors}}/>
             <div className='post-items-list-layout40'>
+                <div className='header-frame40'>
+                    <div>
+                        <div className='title1-40'>Tìm thấy {Data.number} bài đăng</div>
+                    </div>
+                    <Link to="/tutor-list" className="link446"><button className='button-18'>Danh sách gia sư</button></Link>
+                </div>                
                 {Data.posts.map(item => (
                     <PostItem params={item}/>
                 ))}

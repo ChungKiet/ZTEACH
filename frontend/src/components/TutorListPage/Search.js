@@ -9,7 +9,21 @@ function Search(params) {
     const optionSelect = GlobalVar.optionSelect;
 
 
-    const {handleChange, handleSubmit, values, errors} = params.params;
+    const {handleChange, handleSubmit, handleDelete, values, errors} = params.params;
+    console.log(values);
+
+    function mySelect(name, placeholder, className) {
+        return (
+            <select id={"id-select-" + name}
+                className={className}
+                name={name}
+                value={values[name]}
+                onChange={handleChange}>
+                {!optionSelect[name].includes(values[name]) ? <option value="" disabled selected>{placeholder}</option>:<></>}
+                {optionSelect[name].map(item => (<option value={item}>{item}</option>))}
+            </select>
+        )
+    }
 
     return (
         <form className="search-frame40" onSubmit={handleSubmit}>
@@ -20,50 +34,27 @@ function Search(params) {
                         className="search-input-full"
                         placeholder='Tên gia sư'
                         name="name"
+                        value={values.name}
                         onChange={handleChange}
                     />
                 <div className='search-sub-grid-layout40'>
                     <div>
                         <div className='text-item-search-frame40'> Môn học </div>
-                        <Dropdown id="id-select-subject"
-                            className='search-choice-haft40'
-                            values={optionSelect.subject}
-                            name="subject"
-                            placeholder="Chọn môn học"
-                            onChange={handleChange}
-                        />
+                        {mySelect("subject", "Chọn môn", 'search-choice-haft40')}
                     </div>
                     <div>
                         <div className='text-item-search-frame40'> Lớp </div>
-                        <Dropdown id="id-select-grade"
-                            className='search-choice-haft40'
-                            values={optionSelect.grade}
-                            placeholder="Chọn lớp"
-                            name="grade"
-                            onChange={handleChange}
-                        />
+                        {mySelect("grade", "Chọn lớp", 'search-choice-haft40')}
                     </div>
                 </div>
                 <div className='search-sub-grid-layout40'>
                     <div>
                         <div className='text-item-search-frame40'> Giới tính </div>
-                        <Dropdown id="id-select-gender"
-                            className='search-choice-haft40'
-                            values={optionSelect.gender}
-                            placeholder="Chọn giới tính"
-                            name="gender"
-                            onChange={handleChange}
-                        />
+                        {mySelect("gender", "Chọn giới tính", 'search-choice-haft40')}
                     </div>
                     <div>
                         <div className='text-item-search-frame40'> Trình độ </div>
-                        <Dropdown id="id-select-literacy"
-                            className='search-choice-haft40'
-                            values={optionSelect.literacy}
-                            placeholder="Chọn trình độ"
-                            name="literacy"
-                            onChange={handleChange}
-                        />
+                        {mySelect("literacy", "Chọn trình độ", 'search-choice-haft40')}
                     </div>
                 </div>
                 <div className='search-sub-grid-layout40'>
@@ -74,6 +65,7 @@ function Search(params) {
                             className="search-input-haft"
                             placeholder='0'
                             name="older"
+                            value={values.older}
                             onChange={handleChange}
                         />
                     </div>
@@ -84,6 +76,7 @@ function Search(params) {
                             className="search-input-haft"
                             placeholder='99'
                             name="younger"
+                            value={values.younger}
                             onChange={handleChange}
                         />
                     </div>
@@ -95,6 +88,7 @@ function Search(params) {
                         className="search-input-full"
                         placeholder='VNĐ'
                         name="fee"
+                        value={values.fee}
                         onChange={handleChange}
                     />
                 </div>
@@ -107,22 +101,17 @@ function Search(params) {
                             className="search-input-haft"
                             placeholder='Số học viên'
                             name="exp"
+                            value={values.exp}
                             onChange={handleChange}
                         />
                     </div>
                     <div>
                         <div className='text-item-search-frame40'> Xếp hạng </div>
-                        <Dropdown id="id-select-literacy"
-                            className='search-choice-haft40'
-                            values={optionSelect.rate}
-                            placeholder="Chọn số sao"
-                            name="rate"
-                            onChange={handleChange}
-                        />
+                        {mySelect("rate", "Chọn số sao", 'search-choice-haft40')}
                     </div>
                 </div>
                 <div className='search-sub-grid-layout40'>
-                    <button className="button-occupation-cancel40">
+                    <button className="button-occupation-cancel40" onClick={handleDelete}>
                         <div className="search-button" to='/post-list?subject=Toán'>
                             Xoá
                         </div>
