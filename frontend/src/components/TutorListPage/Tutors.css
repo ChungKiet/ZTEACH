@@ -21,6 +21,13 @@
     grid-template-columns: 60% 40%;
 }
 
+.footer-frame40 {
+    height: 120px;
+    width: 950px;
+    display: grid;
+    grid-template-columns: 70% 30%;
+}
+
 .title1-40 {
     padding-left: 50px;
     padding-top: 30px;
@@ -31,6 +38,30 @@
 }
 
 .title2-40 {
-    font-size: 1.2rem;
+    padding-left: 50px;
+    padding-top: 30px;
+    text-align: left;
+    vertical-align: text-bottom;
+    font-size: 1.5rem;
     color: #654321;
+}
+
+
+.footer-flex-row40 {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+
+.page-number40 {
+    display: block;
+    padding-left: 10px;
+    border:black;
+    border-radius: 2px;
+    font-size: 1.5rem;
+    color: #654321;
+    height: 40px;
+    width: 60px;
+    margin-left: 5px;
+    margin-top: 30px;
 }
