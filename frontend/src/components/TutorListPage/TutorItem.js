@@ -34,18 +34,15 @@ function TutorItem(params) {
     }
 
     return (
-        <Link to={'/profile/' + values.username} className="tutor-item-frame40">
+        <div className="tutor-item-frame40">
 
             <div className="flex-column-tutor-list40">
-                <div>
+                <Link to={'/profile/' + values.username} >
                     <img className="user-img-tutor-item40" src={img_avata_user} />
-                </div>
-            </div>
-            
-            <div className="flex-column-tutor-list40">
-                <div class="username-post-item40">
+                </Link>
+                <Link to={'/profile/' + values.username}  class="username-tutor-item40">
                     {values.username}
-                </div>
+                </Link>
             </div>
 
 
@@ -155,7 +152,7 @@ function TutorItem(params) {
                     </div>
                 </div>
             </div>
-        </Link>
+        </div>
     );
 
 }

@@ -13,3 +13,24 @@
     display: grid;
     grid-template-columns: 25% 75%;
 }
+
+.header-frame40 {
+    height: 120px;
+    width: 950px;
+    display: grid;
+    grid-template-columns: 60% 40%;
+}
+
+.title1-40 {
+    padding-left: 50px;
+    padding-top: 30px;
+    text-align: left;
+    vertical-align: text-bottom;
+    font-size: 2rem;
+    color: #123456;
+}
+
+.title2-40 {
+    font-size: 1.2rem;
+    color: #654321;
+}

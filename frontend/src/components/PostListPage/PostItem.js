@@ -21,7 +21,7 @@ function PostItem(params) {
 
 
     return (
-        <Link to={'/post/' + values._id} className="post-item-frame40">
+        <div className="post-item-frame40">
             <div className="post-item-grid-title40">
                 <Link to={'/profile/' + values.username} className="group-user-grid40">
                     <div>
@@ -31,9 +31,9 @@ function PostItem(params) {
                         {values.username}
                     </div>
                 </Link>
-                <div class="title-post-item40">
-                    {values.title}
-                </div>
+                <Link to={'/post/' + values._id}  class="title-post-item40">
+                    {values.title.length<=45 ? values.title : values.title.substring(0, 42) + "..."}
+                </Link>
             </div>
 
 
@@ -144,7 +144,7 @@ function PostItem(params) {
                     </div>
                 </div>
             </div>
-        </Link>
+        </div>
     );
 
 }
