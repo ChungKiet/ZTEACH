@@ -300,7 +300,7 @@ function Post() {
             <div className="flex-request-line">
                 <div className="request-no-735">{order}</div>
                 <div className="request-username-735">
-                    <a href={`http://localhost:3000/user?id=${username}`} style={{ 'textDecoration': 'none' }}>{username}</a>
+                    <a href={`http://localhost:3000/profile/${username}`} style={{ 'textDecoration': 'none' }}>{username}</a>
                 </div>
                 <div className="request-level-735">{level}</div>
                 <div className="request-gender-735">{gender}</div>
