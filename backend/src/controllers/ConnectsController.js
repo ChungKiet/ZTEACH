@@ -31,11 +31,11 @@ class ConnectsController {
         }
     }
 
-    // [DELETE] /delete-post-connect
+    // [DELETE] /delete-post-connect --> xóa 1 yêu cầu (chỉ xóa khi yêu cầu chưa được cấp nhận)
     async delete_post_connect(req, res, next) {
         const { user, tutor, post } = req.body;
         try {
-            await Connect.deleteOne({ user, tutor, post });
+            await Connect.deleteOne({ user, tutor, post, accept: false });
             await Post.updateOne({ _id: post }, { $inc: { request: -1 } });
             res.json({ "result": 1, "message": "Delete request post success." })
         }
@@ -48,12 +48,12 @@ class ConnectsController {
         }
     }
 
-    // [POST] /new-tutor-connect
+    // [POST] /new-tutor-connect --> tạo một yêu cầu trực tiếp đến một gia sư
     async new_tutor_connect(req, res, next) {
         const { user, tutor } = req.body;
         try {
-            const connected = await Connect.findOne({ user, tutor, post: 'null' });
-            if (connected && connected.accept === false) {
+            const connected = await Connect.findOne({ user, tutor, post: 'null', accept: false });
+            if (connected) {
                 res.json({ "result": 2, "message": "Already request to tutor." })
                 return;
             }
@@ -74,11 +74,11 @@ class ConnectsController {
         }
     }
 
-    // [DELETE] /delete-tutor-connect
+    // [DELETE] /delete-tutor-connect --> Xóa 1 yêu cầu của học (chỉ xóa khi yêu cầu chưa được chấp nhận)
     async delete_tutor_connect(req, res, next) {
         const { user, tutor } = req.body;
         try {
-            await Connect.deleteOne({ user, tutor, post: null });
+            await Connect.deleteOne({ user, tutor, post: 'null', accept: false });
             res.json({
                 "result": 1,
                 "message": "Delete request tutor success."
@@ -96,9 +96,10 @@ class ConnectsController {
     // [POST] /get-post-connect  --> Danh sách yêu cầu của bài đăng
     async get_post_connect(req, res, next) {
         const post = req.body.post;
-        // const connects = ;
-        const connects = (await Connect.find({ post: post }, 'tutor')).map(({ tutor }) => tutor);
-        const tutors = await Tutor.find({ username: { $in: connects } }, 'username name gender literacy timer');
+        const connects = (await Connect.find({ post: post }, 'tutor'))
+            .map(({ tutor }) => tutor);
+        const tutors = await Tutor.find({ username: { $in: connects } },
+            'username name gender literacy timer accept');
         res.json(tutors);
     }
 
@@ -113,6 +114,7 @@ class ConnectsController {
             else {
                 res.json({ 'state': 3, 'message': 'Is connected with another tutor.' }); // Đã kết nỗi với gia sư khác
             }
+            return;
         }
         const connect = await Connect.findOne({ post, tutor });
         if (!connect) {
@@ -126,7 +128,10 @@ class ConnectsController {
     // [POST] /get-tutor-connect  --> danh sách gia sư yêu cầu nhưng chưa kết nối
     async get_tutor_connect(req, res, next) {
         const tutor = req.body.tutor;
-        const connects = await Connect.find({ tutor: tutor, post: 'null', accept: false }, 'user timer');
+        const connects = await Connect.find(
+            { tutor: tutor, post: 'null', accept: false },
+            'user timer accept'
+        );
         res.json(connects);
     }
 
@@ -145,21 +150,16 @@ class ConnectsController {
         }
     }
 
+    // [POST] /get-tutor-state  --> đồng ý yêu cầu kết nối (cho cả bài đăng và yêu cầu trực tiếp đên gia sư)
     async accept_connect(req, res, next) {
         const { user, tutor } = req.body;
         try {
             const connect = await Connect.updateOne({ user, tutor }, { accept: true });
             if (connect.modifiedCount === 1) {
-                res.json({
-                    "result": 1,
-                    "message": "Accept request success."
-                });
+                res.json({ "result": 1, "message": "Accept request success." });
             }
             else {
-                res.json({
-                    "result": 0,
-                    "message": "Accept request failed."
-                });
+                res.json({ "result": 0, "message": "Accept request failed." });
             }
         }
         catch (err) {
