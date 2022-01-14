@@ -74,13 +74,12 @@ const useForm = (callback, validate) => {
         const msg = res.data;
         if (!msg.error) {
           alert("Cập nhật thành công!");
-          GlobalVar.setUser(
-            values
-          );
+          window.sessionStorage.setItem("user19120000", values);
+          
           navigate('/profile/' + values.username);
         }
         else{
-          alert("Cập nhật thành công!");
+          alert("Cập nhật thất bại!");
         }
       })
     }

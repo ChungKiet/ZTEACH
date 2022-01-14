@@ -81,7 +81,7 @@ function TutorRegister(){
             <div type='text' 
               className="user_type_reg" 
               disabled>
-                {values.user_type}
+                {values.user_type==="student"?"Học viên": "Gia sư"}
             </div>
           </Form.Group>
           <Form.Group>

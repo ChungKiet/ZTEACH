@@ -140,7 +140,7 @@ function Profile(){
           {values.user_type === "tutor" &&
           <div className='col'>
             <div className='tutor-literacy'>{"Trình độ: " + values.literacy + " " + values.major}</div>
-            <div className='tutor-voting'>{"Đánh giá: " + values.voting + " * " +  "(" + values.evaluate+ " bài đánh giá)"}</div>
+            <div className='tutor-voting'>{"Đánh giá: " + (!values.voting?"5":values.voting) + " * " +  "(" + (!values.evaluate?"0":values.evaluate) + " bài đánh giá)"}</div>
             <div className='tutor-dayreg'>{"Ngày tham gia: " + values.dayreg}</div>
           </div>
           }
@@ -196,7 +196,7 @@ function Profile(){
             <div className='info-user'>
               <img src={subject} className='icon-img'/>{
               "Môn học nhận dạy: " + values.subjects.map(v=>(
-                v.name + ', '
+                v.label + ', '
               ))}
             </div>
           </div>
@@ -206,7 +206,7 @@ function Profile(){
             <div className='info-user'>
               <img src={classImg} className='icon-img'/>{
               "Lớp nhận dạy: " + values.classes.map(v=>(
-                v.name + ', '
+                v.label + ', '
               ))
               }
             </div>

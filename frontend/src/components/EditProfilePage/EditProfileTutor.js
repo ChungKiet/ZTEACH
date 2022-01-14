@@ -227,7 +227,7 @@ function EditProfileTutor(){
                 className='level_select'
                 name='literacy'
                 value={values.literacy}
-                onChange={classesChange}>
+                onChange={handleChange}>
                 {optionLevel}
               </select>
             </div>
