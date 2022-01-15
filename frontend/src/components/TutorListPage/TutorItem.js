@@ -35,7 +35,7 @@ function TutorItem(params) {
         <div className="tutor-item-frame40">
 
             <div className="flex-column-tutor-list40">
-                <Link to={'/profile/' + values.username} >
+                <Link to={'/profile/' + values.username} className="bounder-user-img-tutor-item40">
                     <img className="user-img-tutor-item40" src={values.image} />
                 </Link>
                 <Link to={'/profile/' + values.username}  class="username-tutor-item40">

@@ -22,14 +22,14 @@ function PostItem(params) {
     return (
         <div className="post-item-frame40">
             <div className="post-item-grid-title40">
-                <Link to={'/profile/' + values.username} className="group-user-grid40">
-                    <div>
+                <div className="group-user-grid40">
+                    <Link to={'/profile/' + values.username}  className="bounder-user-img-post-item40">
                         <img className="user-img-post-item40" src={values.image} />
-                    </div>
-                    <div class="username-post-item40">
+                    </Link>
+                    <Link to={'/profile/' + values.username}  class="username-post-item40">
                         {values.username}
-                    </div>
-                </Link>
+                    </Link>
+                </div>
                 <Link to={'/post/' + values._id}  class="title-post-item40">
                     {values.title.length<=45 ? values.title : values.title.substring(0, 42) + "..."}
                 </Link>
