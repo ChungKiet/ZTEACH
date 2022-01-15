@@ -12,7 +12,8 @@ const useForm = (callback, validate) => {
     email: '',
     password: '',
     password2: '',
-    user_type: 'student'
+    user_type: 'student',
+    image: 'https://firebasestorage.googleapis.com/v0/b/zteach-images.appspot.com/o/images%2Fprofile.png?alt=media&token=34e94b8d-cda6-4df8-8f4b-88a022d3b3fe'
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -36,7 +37,7 @@ const useForm = (callback, validate) => {
       axios.post("http://localhost:8000/users/register", values).then(res=>{
       const {msg} = res.data;
       if(msg === 1){
-         window.sessionStorage.setItem("user19120000", JSON.parse(values));
+         window.sessionStorage.setItem("user19120000", JSON.stringify(values));
          const user = window.sessionStorage.getItem("user19120000");
         //GlobalVar.changeLogin();
         //GlobalVar.setUser(values);

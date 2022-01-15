@@ -152,7 +152,6 @@ const handleChangeImage = e => {
   useEffect(() => {
    const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
    const user_type = user.user_type === "student"? "users": "tutors";
-   console.log("I'm here bro!");
    console.log(user);
    const fetchData = async() => {
        //const usertype = GlobalVar.user.user_type === "Học viên"? "user" : "tutor";
@@ -183,6 +182,7 @@ const handleChangeImage = e => {
          contact_secure: dt.contact_secure,
          voting: dt.voting
        });
+      //  window.sessionStorage.setItem("user19120000", JSON.stringify(values));
       })
    };
    fetchData();
