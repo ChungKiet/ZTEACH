@@ -12,7 +12,8 @@ const useForm = (callback, validate) => {
     email: '',
     password: '',
     password2: '',
-    user_type: 'student'
+    user_type: 'student',
+    image: 'https://firebasestorage.googleapis.com/v0/b/zteach-images.appspot.com/o/images%2Fprofile.png?alt=media&token=34e94b8d-cda6-4df8-8f4b-88a022d3b3fe'
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);

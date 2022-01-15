@@ -11,7 +11,7 @@ const useForm = (callback, validate) => {
    image:"",
    username: "",
    introduce: "No intro",
-   name: "Kiệt Chung",
+   name: "",
    user_type: "Học viên",
    gender: "Nam",
    gender_secure: "Công khai",
@@ -59,7 +59,24 @@ const useForm = (callback, validate) => {
 
   // function add image : (only 1 image)
 
-
+  const updateData = (data) => {
+    const user = JSON.parse(window.sessionStorage.getItem("user19120000"));
+    user.introduce = data.introduce;
+    user.name=data.name;
+    user.gender = data.gender;
+    user.classes = data.classes;
+    user.birthday = data.birthday;
+    user.major = data.major;
+    user.literacy = data.literacy;
+    user.address = data.address;
+    user.address_secure = data.address_secure;
+    user.email = data.email;
+    user.email_secure = data.email_secure;
+    user.contact = data.contact;
+    user.contact_secure = data.contact_secure;
+    user.gender_secure = data.gender_secure;
+    user.birthday_secure = data.birthday_secure;
+  }
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -74,7 +91,8 @@ const useForm = (callback, validate) => {
         const msg = res.data;
         if (!msg.error) {
           alert("Cập nhật thành công!");
-          window.sessionStorage.setItem("user19120000", values);
+          window.sessionStorage.setItem("user19120000", JSON.stringify(values));
+          //updateData(values);
           
           navigate('/profile/' + values.username);
         }
@@ -139,42 +157,46 @@ const handleChangeImage = e => {
       // Post then change 2 link
   }
 }
-
+  
+  //console.log(user);
   useEffect(() => {
-    const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
     //console.log(user);
      const fetchData = async() => {    
+      const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
+      console.log(user);
       axios.post('http://localhost:8000/users/profile', {username: user.username }).then(res => {//   https://localhost:8000/ + user_type + edit
       const data = res.data;
-      //alert("Im, here");
-      console.log(data);
+      // window.sessionStorage.setItem("user19120000", JSON.stringify(data));
+      alert("Im, here");
+      
       //("Im, here");
 
-      //if (!data)
-        //return;
-      //console.log(data);
+      // if (!data)
+      //   return;
+      console.log(data);
+      user.image = data.image;
       setValues({
-        id: user._id,
-        image: user.image,
-        username: user.username,
-        introduce: user.introduce,
-        name: user.name,
-        user_type: user.user_type,
-        gender: user.gender,
-        gender_secure: user.gender_secure,
-        birthday: user.birthday,
-        birthday_secure: user.birthday_secure,
-        classes: user.classes,
-        major: user.major,
-        literacy: user.literacy,
-        fee: user.fee,
-        address: user.address,
-        address_secure: user.address_secure,
-        subjects: user.subjects,
-        email: user.email,
-        email_secure: user.email_secure,
-        contact: user.contact,
-        contact_secure: user.contact_secure,
+        id: data._id,
+        image: data.image,
+        username: data.username,
+        introduce: data.introduce,
+        name: data.name,
+        user_type: data.user_type,
+        gender: data.gender,
+        gender_secure: data.gender_secure,
+        birthday: data.birthday,
+        birthday_secure: data.birthday_secure,
+        classes: [],
+        major: data.major,
+        literacy: data.literacy,
+        fee: data.fee,
+        address:data.address,
+        address_secure: data.address_secure,
+        subjects:data.subjects,
+        email: data.email,
+        email_secure: data.email_secure,
+        contact: data.contact,
+        contact_secure: data.contact_secure,
     });
    })
    };
