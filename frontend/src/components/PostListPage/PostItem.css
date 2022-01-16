@@ -1,25 +1,21 @@
 .post-item-frame40 {
-    padding-top: 30px;
-    padding-bottom: 30px;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding: 30px;
     border-radius: 50px;
     margin-top: 30px;
-    margin-left: 40px;
-    margin-right: 40px;
     height: 350px;
-    width:950px;
+    width:95%;
 
 
-    background-color: #DDDDDD;
+    background-color: rgba(180, 180, 180, 0.5);
     
     position:static;
 }
 
 .post-item-grid-title40 {
     display: grid;
-    grid-template-columns: min-content max-content;
+    grid-template-columns: 260px 1fr;
     grid-template-rows: 60px;
+    align-items: center;
 }
 
 .group-user-grid40 {
@@ -29,19 +25,23 @@
 }
 
 .username-post-item40 {
-    padding-left: 5px;
     padding-top: 10px;
+    padding-left: 10px;
     text-align: left;
     vertical-align:middle;
     font-size:x-large;
     font: bold;
     color: black;
 }
+.username-post-item40:hover{
+    color: #ED8201;
+}
 
 .title-post-item40 {
     padding-left: 20px;
+    padding-right: 20px;
     padding-top: 10px;
-    width: 600px;
+    width:100%;
     height: 60px;
     border-radius: 10px;
 
@@ -53,15 +53,30 @@
     font-size:x-large;
     font: bold;
 }
+.title-post-item40:hover{
+    color: #ED8201;
+}
 
 
 .user-img-post-item40 {
     display: inline-block;
     position: relative;
     object-fit: fill;
+    height: 100%; 
+    width: 100%;
+    border-radius: 30px;
+}
+
+
+.bounder-user-img-post-item40 {
+    display: inline-block;
+    position: relative;
+    object-fit: fill;
+    padding: 2px;
     height: 60px; 
     width: 60px;
     border-radius: 30px;
+    background-color: orange;
 }
 
 .grid-2x3-subitem40 {

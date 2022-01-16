@@ -1,32 +1,7 @@
-.search-frame40 {
-    position: sticky;
-    top: 70px;
-    display: flex;
-    height: 575px;
-    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.2);
-    padding-top: 20px;
-    padding-left: 20px;
-    background-color: #FFDD88;
-}
-
 .text-search-frame40 {
     display: inline-block;
     font-size: 1rem;
     color: #012345;
-}
-
-.search-grid-layout40 {
-    display: grid;
-    grid-template-columns: 300px;
-    grid-template-rows: 20px 50px 70px 70px 70px 80px 20px 90px 60px;
-    align-items: center;
-}
-
-.search-sub-grid-layout40 {
-    display: grid;
-    grid-template-columns: 150px 150px;
-    grid-template-rows: 60px;
-    align-items: center;
 }
 
 .text-item-search-frame40 {
@@ -35,21 +10,6 @@
     color: #654321;
 }
 
-.search-input-full {
-    display: block;
-    padding-left: 10px;
-    /*outline: none;*/
-    border: none;
-    border-radius: 2px;
-    height: 40px;
-    width: 290px;
-    margin-left: 5px;
-    margin-right: 5px;
-}
-.search-input-full::placeholder {
-    color: #595959;
-    font-size: 1rem;
-}
 
 .search-input-haft {
     display: block;
@@ -58,71 +18,11 @@
     border: none;
     border-radius: 2px;
     height: 40px;
-    width: 140px;
-    margin-left: 5px;
-    margin-right: 5px;
+    width: 96%;
+    margin-left: 2%;
+    margin-right: 2%;
 }
 .search-input-haft::placeholder {
     color: #595959;
     font-size: 1rem;
-}
-
-.search-choice-haft40 {
-    width: 140px;
-    height: 40px;
-    margin-left: 5px;
-    margin-right: 5px;
-    /*outline: none;*/
-    border: normal;
-    border-radius: 2px;
-    text-align: center;
-    border: none;
-}
-
-.search-choice-full40 {
-    width: 290px;
-    height: 40px;
-    margin-left: 5px;
-    margin-right: 5px;
-    /*outline: none;*/
-    border: normal;
-    border-radius: 2px;
-    text-align: center;
-    border: none;
-}
-
-.search-button {
-    letter-spacing: 0;
-    height: 100%;
-    width: 100%;
-    margin-top: auto;
-    margin-bottom: auto;
-    text-align: center;
-    white-space: nowrap;
-
-    font-family:    Montserrat, sans-serif;
-    font-size:      1.8rem;
-    font-weight:    bold;
-}
-
-.button-occupation-ok40 {
-    background-color: #FE9312;
-    width: 140px;
-    height: 50px;
-    margin-left: 5px;
-    margin-right: 5px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 1px 3px 3px 1px #9E9E9E;
-}
-
-.button-occupation-cancel40 {
-    background-color: gray;
-    width: 140px;
-    height: 50px;
-    margin-left: 5px;
-    margin-right: 5px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 1px 3px 3px 1px #9E9E9E;
 }

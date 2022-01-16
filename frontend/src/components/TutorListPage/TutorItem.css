@@ -1,17 +1,16 @@
 .tutor-item-frame40 {
+    padding: 30px;
     border-radius: 50px;
     margin-top: 30px;
-    margin-left: 40px;
-    margin-right: 40px;
     height: 350px;
-    width:950px;
+    width:95%;
 
 
-    background-color: #DDDDDD;
+    background-color: rgba(180, 180, 180, 0.5);
     
     position:static;
     display: grid;
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 25% 75%;
     align-items: center;
 }
 
@@ -21,17 +20,6 @@
     align-items: center;
 }
 
-.post-item-grid-title40 {
-    display: grid;
-    grid-template-columns: min-content max-content;
-    grid-template-rows: 60px;
-}
-
-.group-user-grid40 {
-    display: grid;
-    grid-template-columns: 60px 200px;
-    grid-template-rows: 60px;
-}
 
 .username-tutor-item40 {
     padding-left: 5px;
@@ -42,15 +30,32 @@
     font: bold;
     color: black;
 }
+.username-tutor-item40:hover{
+    color: #ED8201;
+}
 
 
 .user-img-tutor-item40 {
     display: inline-block;
     position: relative;
     object-fit: fill;
-    height: 200px; 
+    height: 100%;
+    width: 100%;
+    border-radius: 100px;
+}
+
+.bounder-user-img-tutor-item40 {
+    display: inline-block;
+    position: relative;
+    object-fit: fill;
+    padding: 5px;
+    height: 200px;
     width: 200px;
     border-radius: 100px;
+    background-color: orange;
+}
+.bounder-user-img-tutor-item40:hover{
+    background-color: #ED8201;
 }
 
 .grid-3x2-subitem40 {
