@@ -167,7 +167,6 @@ const handleChangeImage = e => {
       axios.post('http://localhost:8000/users/profile', {username: user.username }).then(res => {//   https://localhost:8000/ + user_type + edit
       const data = res.data;
       // window.sessionStorage.setItem("user19120000", JSON.stringify(data));
-      alert("Im, here");
       
       //("Im, here");
 

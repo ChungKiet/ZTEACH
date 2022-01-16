@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import GlobalVar from '../../GlobalVar';
 import { data } from 'jquery';
@@ -9,7 +9,7 @@ const useForm = (callback, validate) => {
   const [values, setValues] = useState({
    id: "",
    image: "",
-   username: "KietChung",
+   username: "",
    introduce: "No intro",
    name: "Kiệt Chung",
    user_type: "",
@@ -33,10 +33,12 @@ const useForm = (callback, validate) => {
    contact_secure: "Công khai",
  });
 
-    const URL = window.location.pathname;
-    const tmp = URL.split('/');
-    const username = tmp[tmp.length - 1];
-    const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
+    // useEffect(()=>{
+      const URL = window.location.pathname;
+      const tmp = URL.split('/');
+      const username = tmp[tmp.length - 1];
+      const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
+    // })
     var isHolderAccount = false;
     if (!user){
       isHolderAccount = false;
@@ -180,7 +182,7 @@ const useForm = (callback, validate) => {
         dayreg: get_dayReg,
       });
   }
-
+  const [connectState, setConnectState] = useState(-1)
   
   function UserPost(props) {
     const {order, id, title, dayPost} = props;
@@ -203,28 +205,71 @@ const useForm = (callback, validate) => {
     );
   }
 
-  function RequestConnect(props) {
-    const {order, id, username, dayRequest} = props;
-    //const { order, username, level, gender } = props;
+  // function RequestConnect(props) {
+  //   const {order, id, username, dayRequest} = props;
+  //   //const { order, username, level, gender } = props;
 
+  //   return (
+  //       <div className="flex-request-line-553">
+  //           <div className="request-no-553">{order}</div>
+  //           <div className="request-username-553">
+  //               <a href={'http://localhost:3000/post/' + id} style={{ 'text-decoration': 'none' }}>{username}</a>
+  //           </div>
+  //           <div className="request-level-553">{dayRequest}</div>
+  //           {/* <div className="request-gender-553">{gender}</div> */}
+  //           <div className="request-accept-553">
+  //               <button className="button-request-accept-553" type="submit" >
+  //                   <div className="request-button-553">
+  //                       Chấp nhận
+  //                   </div>
+  //               </button>
+  //           </div>
+  //           <div className="request-deny-553">
+  //               <button className="button-request-deny-553" type="submit" >
+  //                   <div className="request-button-553">
+  //                       Từ chối
+  //                   </div>
+  //               </button>
+  //           </div>
+  //       </div>
+  //   );
+  // }
+
+  function RequestSummaryLine(props) {
+    const { order, username, dayRequest } = props;
+    const user = window.sessionStorage.getItem("user19120000");
     return (
-        <div className="flex-request-line">
+        <div className="flex-request-line-553">
             <div className="request-no-553">{order}</div>
             <div className="request-username-553">
-                <a href={'http://localhost:3000/post/' + id} style={{ 'text-decoration': 'none' }}>{username}</a>
+                <a href={`http://localhost:3000/profile/${username}`} style={{ 'textDecoration': 'none' }}>{username}</a>
             </div>
             <div className="request-level-553">{dayRequest}</div>
-            {/* <div className="request-gender-553">{gender}</div> */}
             <div className="request-accept-553">
-                <button className="button-request-accept-553" type="submit" >
-                    <div className="request-button-553">
+                <button className="button-request-accept-553" onClick={() => {
+                    axios.put("http://localhost:8000/connects/accept-connect", { user: user.username, tutor: username })
+                        .then(window.location.reload(`/users/${username}`)
+                        )
+                }} >
+                    <div className="request-button_553">
                         Chấp nhận
                     </div>
                 </button>
             </div>
             <div className="request-deny-553">
-                <button className="button-request-deny-553" type="submit" >
-                    <div className="request-button-553">
+                <button className="button-request-deny-553" onClick={() => {
+                    axios.delete("http://localhost:8000/connects/delete-tutor-connect", { user: user.username, tutor: username}).then(
+                        res => {
+                            if (res.data.result === 1) {
+                                alert('Đã xóa yêu cầu');
+                                window.location.reload(`/users/${username}`);
+                            } else {
+                                alert('Đã xảy ra lỗi khi xóa yêu cầu. Thử lại sau.');
+                            }
+                        }
+                    );
+                }} >
+                    <div className="request-button_553">
                         Từ chối
                     </div>
                 </button>
@@ -233,9 +278,117 @@ const useForm = (callback, validate) => {
     );
   }
 
-  const [connectState, setConnectState] = useState("Chưa kết nối");
-  //http://localhost:8000/connects/get-tutor-connect
   
+function ButtonConnect() {
+  if (user===null)
+      return null;
+  if (user.username === null)
+      return null;
+  if (user.user_type !== "tutor")
+      return null;
+  if (user.username === values.username)
+      return null
+
+  else if (connectState === 2 || connectState === "2")
+      return (
+          <button className="button-connected">
+              <div className="button-connect-text">
+                  Đã kết nối
+              </div>
+          </button>
+      )
+  else if (connectState === 1 || connectState === "1")
+      return (
+          <button className="button-requested" onClick={() => {
+              axios.delete("http://localhost:8000/connects/delete-tutor-connect", { user: user.username, tutor: values.username}).then(
+                  res => {
+                      if (res.data.result === 1) {
+                          alert('Đã hủy yêu cầu');
+                          window.location.reload(`/users/${username}`);
+                      } else {
+                          alert('Đã xảy ra lỗi khi hủy yêu cầu. Thử lại sau.');
+                      }
+                  }
+              );
+          }}>
+              <div className="button-connect-text">
+                  Đã yêu cầu
+              </div>
+          </button>
+      );
+  else if (connectState === 0 || connectState === "0") {
+      return (
+          <button className="button-connect" onClick={() => {
+              axios.post("http://localhost:8000/connects/new-tutor-connect", { user: user.username, tutor: values.username}).then(
+                  res => {
+                      if (res.data.result === 1) {
+                          alert('Đã yêu cầu kết nối để nhận lớp!');
+                          window.location.reload(`/users/${username}`);
+                      } else {
+                          alert('Đã xảy ra lỗi khi gửi yêu cầu. Thử lại sau.');
+                      }
+                  }
+              );
+          }}>
+              <div className="button-connect-text">
+                  Kết nối
+              </div>
+          </button>
+      );
+  }
+  else return null;
+
+  }
+
+  function RequestListConnect() {
+    // Guest - restricted infomation
+    if (user === null)
+        return null
+    if (user.username === values.username)
+        // OWN - Not have accepted connection with any tutor
+        return (
+            <div>
+                <div className="overlap-group-requests-553">
+                    <div className="box-outline-553"></div>
+                    <div className="flex-request-heads-553">
+                        <div className="request-no-553">STT</div>
+                        <div className="request-username-553">Tài khoản</div>
+                        <div className="request-level-553">Ngày yêu cầu</div>
+                    </div>
+                    <div className="request-list-553">
+                        {listRequest.map((v, index) => (
+                            <RequestSummaryLine order={index + 1} username={v.username} dayRequest={v.dayRequest}></RequestSummaryLine>))}
+
+                    </div>
+                </div>
+            </div>)
+    // else if (values.connect_state === 3)
+    //     // OWN - Accepted connection with a tutor
+    //     // Others tutor - cannot do anything more, just see the tutor information
+    //     return (
+    //         <div className="flex-row-tutor-accepted-553">
+    //             <div className="accepted-label-553">Lớp đã được nhận dạy bởi: </div>
+    //             <div className="overlap-group-user-553">
+    //                 <div className="box-user-head-553">
+    //                     <div className="flex-user-553">
+    //                         <div><img className="user-img-head-553" src={values.accepted_tutor.image} alt={values.username} /></div>
+    //                         <div className="text-username-553">
+    //                             <a href={`http://localhost:3000/profile/${values.accepted_tutor.username}`}
+    //                                 style={{ 'textDecoration': 'none', 'fontSize': '30px', 'fontWeight': 'bold' }}>
+    //                                 {values.accepted_tutor.username}</a>
+    //                         </div>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     )
+    else
+        // The tutor that has been accepted
+        return null;
+  }
+
+  //http://localhost:8000/connects/get-tutor-connect
+  const [listRequest, setRequest] = useState([]);
   useEffect(()=>{
     //http://localhost:8000/connects/get-tutor-state
     const URL = window.location.pathname;
@@ -246,14 +399,22 @@ const useForm = (callback, validate) => {
     var isYourSelf = false;
     if (!user) isLogin = false;
     else if (user.username === username) isYourSelf = true;
+    if (!isLogin) return;
+    if (isYourSelf) return;
+    const fetchData = async() => {  
+      axios.post('http://localhost:8000/connects/get-tutor-state', {tutor: username, user: user.username }).then(res => {//   https://localhost:8000/ + user_type + edit
+      const data = res.data;
+      setConnectState(data.state);
+    })
+  }
+  fetchData();
   })
-  const [listRequest, setRequest] = useState([]);
+  
   useEffect(() =>{
     const URL = window.location.pathname;
     const tmp = URL.split('/');
     const username = tmp[tmp.length - 1];
     const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
-    var isHolderAccount = false;
     if (!user){
       isHolderAccount = false;
     }
@@ -267,9 +428,10 @@ const useForm = (callback, validate) => {
       for (let i = 0; i < data.length; i++){
         data[i]["order"] = i + 1;
       }
-      setRequest(data.map(v => (
-        <RequestConnect id={v._id} username={v.username} dayRequest={v.dayRequest} order={v.order}></RequestConnect>
-      )));
+      setRequest(data);
+      // setRequest(data.map(v => (
+      //   <RequestSummaryLine id={v._id} username={v.username} dayRequest={v.dayRequest} order={v.order}></RequestSummaryLine>
+      // )));
      })
      // Cho chỉnh sửa hay ko là việc của UI
      //
@@ -382,7 +544,7 @@ const useForm = (callback, validate) => {
 }
 
 
-  return { handleSubmit , handleChangeImage, listPost, listRequest, values, errors };
+  return { handleSubmit , handleChangeImage, ButtonConnect, RequestListConnect, listPost, listRequest, values, errors };
 };
 
 export default useForm;

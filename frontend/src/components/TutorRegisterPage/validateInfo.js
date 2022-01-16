@@ -1,8 +1,5 @@
 export default function validateInfo(values) {
   let errors = {isError: false};
-
-  if (values.user_type==="student") {
-    // Name
     if (!values.name.trim()){
       errors.name = 'Hãy nhập tên của bạn';
       alert("Hãy nhập tên của bạn");
@@ -20,7 +17,6 @@ export default function validateInfo(values) {
       alert("Hãy nhập Tên đăng nhập");
       errors.isError = true;
     }
-  }  
   
   return errors;
 }

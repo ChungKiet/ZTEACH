@@ -286,11 +286,11 @@ a:link {
  }
 
  .request-level-553{
-   width: 15%;
+   width: 20%;
    color: rgb(102, 102, 102);
    font-family: montserrat;
    font-size: 17px;
-   margin-left: 100px;
+   margin-left: 20px;
    font-weight: 400;
    font-style: normal;
  
@@ -317,7 +317,7 @@ a:link {
  }
  
  .request-deny-553{
-   width: 12%;
+   width: 15%;
    color: rgb(102, 102, 102);
    font-family: montserrat;
    font-size: 20px;
@@ -358,6 +358,42 @@ a:link {
    font-weight:    bold;
  }
  
+ .rate {
+   float: left;
+   height: 46px;
+   padding: 0 10px;
+}
+.rate:not(:checked) > input {
+   position:absolute;
+   top:-9999px;
+}
+.rate:not(:checked) > label {
+   float:right;
+   width:1em;
+   overflow:hidden;
+   white-space:nowrap;
+   cursor:pointer;
+   font-size:30px;
+   color:#ccc;
+}
+.rate:not(:checked) > label:before {
+   content: '★ ';
+}
+.rate > input:checked ~ label {
+   color: #ffc700;    
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+   color: #deb217;  
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+   color: #c59b08;
+}
+
  .request-list-553{
    position: relative;
    width: 100%;

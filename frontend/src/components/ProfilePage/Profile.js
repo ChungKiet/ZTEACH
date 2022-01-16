@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
 import ImageUpload from '../upload';
+import { useState } from 'react';
 
 import FileBase64 from 'react-file-base64';
 
@@ -31,7 +32,7 @@ function Profile(){
 
   var isLogin = true;
   
-  const { handleSubmit, handleChangeImage, listPost, listRequest, values, errors } = useForm(
+  const { handleSubmit, handleChangeImage, ButtonConnect, RequestListConnect, listPost, listRequest, values, errors } = useForm(
       submitForm,
       validateInfo
   );
@@ -42,7 +43,33 @@ function Profile(){
   // Create Adapter
   // Add ID
 
-  
+  // const allImages = [
+  //   {
+  //     id: 1,
+  //     imgUrl: "https://via.placeholder.com/100"
+  //   },
+  //   {
+  //     id: 2,
+  //     imgUrl: "https://via.placeholder.com/100"
+  //   },
+  //   {
+  //     id: 3,
+  //     imgUrl: "https://via.placeholder.com/100"
+  //   }
+  // ];
+
+  // const [pics, setPics] = useState([]);
+
+  // const removeImage = (id) => {
+  //   // this is the line that you are looking for
+  //   setPics((oldState) => oldState.filter((item) => item.id !== id));
+  // };
+
+  // useEffect(() => {
+  //   //fake fetch data
+  //   setPics(allImages);
+  // }, []);
+
   const URL = window.location.pathname;
   const tmp = URL.split('/');
   const username = tmp[tmp.length - 1];
@@ -56,7 +83,7 @@ function Profile(){
     isHolderAccount = true;
   }
 
-  function RequestList() {
+  function PostList() {
     const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
     if (cookie === null)
         return null;
@@ -79,44 +106,24 @@ function Profile(){
     else {
         return (<div />);
     }
-}
-
-
-  function RequestSummaryLine(props) {
-    const { order, username, level, gender } = props;
-
-    return (
-        <div className="flex-request-line">
-            <div className="request-no-553">{order}</div>
-            <div className="request-username-553">
-                <a href={`http://localhost:3000/user?id=${username}`} style={{ 'text-decoration': 'none' }}>{username}</a>
-            </div>
-            <div className="request-level-553">{level}</div>
-            <div className="request-gender-553">{gender}</div>
-            <div className="request-accept-735">
-                <button className="button-request-accept-735" type="submit" >
-                    <div className="request-button-735">
-                        Chấp nhận
-                    </div>
-                </button>
-            </div>
-            <div className="request-deny-735">
-                <button className="button-request-deny-735" type="submit" >
-                    <div className="request-button-735">
-                        Từ chối
-                    </div>
-                </button>
-            </div>
+  } 
+    function Evaluate(){
+      return (
+        <div class="rate">
+          <input type="radio" id="star5" name="rate" value="5" />
+          <label for="star5" title="text">5 stars</label>
+          <input type="radio" id="star4" name="rate" value="4" />
+          <label for="star4" title="text">4 stars</label>
+          <input type="radio" id="star3" name="rate" value="3" />
+          <label for="star3" title="text">3 stars</label>
+          <input type="radio" id="star2" name="rate" value="2" />
+          <label for="star2" title="text">2 stars</label>
+          <input type="radio" id="star1" name="rate" value="1" />
+          <label for="star1" title="text">1 star</label>
         </div>
-    );
-  }
-  console.log(values);
-  
-  const getFiles = (filePost) => {
-    this.setState({ files: filePost })
-    // this.setState({intro: filePost[0]["file"]})
-    console.log(filePost[0]["file"])
-  }
+      )
+    }
+
     return (
       <div className="Profile" style={{
         backgroundImage: `url(${background})` ,
@@ -139,7 +146,7 @@ function Profile(){
           <div className='col'>
             <div className='tutor-literacy'>{"Trình độ: " + values.literacy + " " + values.major}</div>
             <div className='tutor-voting'>{"Đánh giá: " + (!values.voting?"5":values.voting) + " * " +  "(" + (!values.evaluate?"0":values.evaluate) + " bài đánh giá)"}</div>
-            <div className='tutor-dayreg'>{"Ngày tham gia: " + values.dayreg}</div>
+            <div className='tutor-dayreg'>{"Ngày tham gia: " + "15/01/2022"}</div>
           </div>
           }
           <div className='col'>
@@ -155,8 +162,23 @@ function Profile(){
             <a href='/editprofile' > Chỉnh sửa trang cá nhân </a>
           </button>
           }
+          {<Evaluate/>}
+          {<ButtonConnect/>}
         </div>
-    
+        {/* {pics.map((pic) => {
+        return (
+          <div style={{ marginBottom: "100px" }}>
+            {pic.id}
+            <img
+              src={pic.imgUrl}
+              width="100px"
+              height="100px"
+              alt="placeholder grey 100px"
+            />
+            <button onClick={() => removeImage(pic.id)}>X</button>
+          </div>
+        );
+      })} */}
         <div className='column-info'>
           <div className='name'>
             <strong>{values.name}</strong>
@@ -236,7 +258,7 @@ function Profile(){
             </strong>
             </div>
             {/* <div>{listPost}</div> */}
-            <RequestList />
+            <PostList />
           </div>
         
           <div className='row'>
@@ -245,7 +267,7 @@ function Profile(){
               Danh sách các yêu cầu kết nối
             </strong>
             </div>
-            <div>{listRequest}</div>
+            <RequestListConnect/>
           </div>
          {/* //listRequest */}
         </div>
