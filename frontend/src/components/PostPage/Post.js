@@ -65,7 +65,7 @@ function Post() {
                             axios.post("http://localhost:8000/connects/get-post-connect", { post: id }).then(
                                 res3 => {
                                     const dt3 = res3.data;
-                                    console.log("dt3 = ");
+                                    console.log("post connect = ");
                                     console.log(dt3);
                                     setValues({
                                         username: dt.username,
@@ -135,16 +135,14 @@ function Post() {
                 </div>
             );
     }
-   
+
     return (
         <div className="Post">
             <Navbar />
-            {console.log("currentUser:"), console.log(currentUser), console.log(userType),
-                console.log("after all:"), console.log(values)}
+            {console.log("after all:"), console.log(values)}
 
             <div className="frame-general">
                 <div className="title-container-head">
-
                     <div className="placeholder-title-head">
                         <div className="text-title-head">
                             {values.title}
@@ -377,9 +375,7 @@ function Post() {
             );
         }
         else return null;
-
     }
-
 
     function RequestList() {
         // Guest - restricted infomation
@@ -387,25 +383,27 @@ function Post() {
             return null
         if (currentUser === values.username && values.connect_state !== 3)
             // OWN - Not have accepted connection with any tutor
-            return (
-                <div>
-                    <div className="more-detail-label">Danh sách gia sư yêu cầu kết nối:</div>
+            if (values.request_list.length < 1)
+                return null;
+            else
+                return (
+                    <div>
+                        <div className="more-detail-label">Danh sách gia sư yêu cầu kết nối:</div>
+                        <div className="overlap-group-requests">
+                            <div className="box-outline-735"></div>
+                            <div className="flex-request-heads">
+                                <div className="request-no-735">STT</div>
+                                <div className="request-username-735">Tên tài khoản</div>
+                                <div className="request-level-735">Trình độ</div>
+                                <div className="request-gender-735">Giới tính</div>
+                            </div>
+                            <div className="request-list-735">
+                                {values.request_list.map((v, index) => (
+                                    <RequestSummaryLine order={index + 1} username={v.username} level={v.literacy} gender={v.gender}></RequestSummaryLine>))}
 
-                    <div className="overlap-group-requests">
-                        <div className="box-outline-735"></div>
-                        <div className="flex-request-heads">
-                            <div className="request-no-735">STT</div>
-                            <div className="request-username-735">Tên tài khoản</div>
-                            <div className="request-level-735">Trình độ</div>
-                            <div className="request-gender-735">Giới tính</div>
+                            </div>
                         </div>
-                        <div className="request-list-735">
-                            {values.request_list.map((v, index) => (
-                                <RequestSummaryLine order={index + 1} username={v.username} level={v.literacy} gender={v.gender}></RequestSummaryLine>))}
-
-                        </div>
-                    </div>
-                </div>)
+                    </div>)
         else if (values.connect_state === 3)
             // OWN - Accepted connection with a tutor
             // Others tutor - cannot do anything more, just see the tutor information
@@ -431,8 +429,6 @@ function Post() {
             return null;
 
     }
-
-
 
     function RequestSummaryLine(props) {
         const { order, username, level, gender } = props;
@@ -477,7 +473,6 @@ function Post() {
             </div>
         );
     }
-
 
     function EditPostButton() {
         if (values.connect_state !== 3)
@@ -529,8 +524,5 @@ function Post() {
             return null;
     }
 }
-
-
-
 
 export default Post
