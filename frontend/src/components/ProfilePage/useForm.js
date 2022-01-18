@@ -310,12 +310,12 @@ function ButtonConnect() {
   else if (connectState === 2 || connectState === "2")
       return (
         <div>
-          <button className="button-connected-553">
+           <Evaluate/>
+          <div className="button-connected-553">
               <div className="button-connect-text-553">
                 Đã kết nối
               </div>
-          </button>
-          <Evaluate/>
+          </div>
           </div>
       )
   else if (connectState === 1 || connectState === "1")
@@ -426,6 +426,7 @@ function ButtonConnect() {
     const fetchData = async() => {  
       axios.post('http://localhost:8000/connects/get-tutor-state', {tutor: username, user: user.username }).then(res => {//   https://localhost:8000/ + user_type + edit
       const data = res.data;
+
       setConnectState(data.state);
     })
   }
