@@ -31,6 +31,7 @@ const useForm = (callback, validate) => {
    email_secure: "Công khai",
    contact: "No Contact",
    contact_secure: "Công khai",
+   certificate: [],
  });
 
     // useEffect(()=>{
@@ -114,6 +115,7 @@ const useForm = (callback, validate) => {
       var get_voting = data.voting;
       var get_image = data.image;
       var get_dayReg = data.timestamps;
+      var get_cert = data.certificate;
       // Toàn bộ check trong hàm này
       // Tùy vào người dùng sẽ được thiết lập khác nhau
       // Khi sang trang edit profile thì phải load lần nữa chính nó
@@ -197,6 +199,7 @@ const useForm = (callback, validate) => {
         contact_secure: get_contact_secure,
         voting: get_voting,
         dayreg: get_dayReg,
+        certificate: get_cert,
       });
   }
   const [connectState, setConnectState] = useState(-1)

@@ -85,7 +85,7 @@
 .grid-2x3-subitem40 {
     display: grid;
     grid-template-columns: 33% 33% 33%;
-    grid-template-rows: 70% 50%;
+    grid-template-rows: 50% 50%;
     margin-left: 5%;
     margin-right: 5%;
 }

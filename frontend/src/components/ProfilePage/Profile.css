@@ -308,6 +308,25 @@ a:link {
    margin-left: 1%;
  }
 
+ .scroll-container {
+   width: 350px;
+   height: 200px;
+   overflow-x: scroll;
+   scroll-behavior: smooth;
+   display: flex;
+ }
+
+ .scroll-container .scroll-page{
+    flex: 1 0;
+ }
+ .scroll-page {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   height: 100%;
+   font-size: 5em;
+ }
+
 
  .request-time-553{
    width: 20%;

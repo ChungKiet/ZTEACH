@@ -150,16 +150,18 @@ function Tutors() {
                     <TutorItem params={item}/>
                 ))}
                 <div className='footer-frame40'>
-                    <div className="footer-flex-row40">
-                        <div className='title2-40'>Trang </div>
-                        <input
-                            type="number"
-                            className="page-number40"
-                            name="page"
-                            value={values.page}
-                            onChange={handleChangePage}
-                        />
-                    </div>
+                    {Data.number > 1 ?
+                        <div className="footer-flex-row40">
+                            <div className='title2-40'>Trang </div>
+                            <input
+                                type="number"
+                                className="page-number40"
+                                name="page"
+                                value={values.page}
+                                onChange={handleChangePage}
+                            />
+                        </div>
+                    :<div/>}
                     <img className="user-img-tutor-item40" src={footer_image} />
                 </div>
             </div>
