@@ -22,6 +22,7 @@ const optionSelect = GlobalVar.optionSelect;
 
 function Post() {
     const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
+    console.log("cookie = ");
     console.log(cookie);
     var currentUser = null;
     var userType = null;
@@ -88,7 +89,7 @@ function Post() {
                                         // con
                                         request_list: dt3.requested,
                                         accepted_tutor: dt3.tutor,
-                                        rate: dt3.rate
+                                        rate: dt3.accept.rate
                                     });
 
                                 }
@@ -444,19 +445,21 @@ function Post() {
                     </div>
                 </div>
 
-                <RatedStar/>
+                <RatedStar />
             </div>
         )
     }
 
-    function RatedStar(){
-        //if(values.rate > 0)
-            return(
-                <div>Đánh giá của bạn: {values.rate}
-                    <span style={{'marginLeft': '10px', 'fontSize':'40px'}}>&#11088;</span>
+    function RatedStar() {
+        if (values.rate > 0)
+            return (
+                <div style={{'textAlign' : 'center'}}>
+                <div style={{ 'marginLeft': '5px', 'fontSize': '20px' }}>Đánh giá từ người học:
+                    <span style={{ 'marginLeft': '15px', 'fontSize': '40px' }}>{values.rate}&#11088;</span>
+                </div>
                 </div>
             )
-       // else return null;
+        else return null;
     }
 
     function RequestSummaryLine(props) {
@@ -580,10 +583,10 @@ function Post() {
 
             <label className="label-radiobtn">
                 <input id={"rate" + star} value={star} name="radiobtn_rate" type="radio" onChange={() => {
-                    alert('huhu' + star);
-                    axios.put('localhost:8000', {user: currentUser, tutor : values.tutor, post : id, rate : star}).then(res => {
-                        alert('updated');
-                    })
+                    axios.put('http://localhost:8000/connects/new-tutor-rate',
+                        { user: currentUser, tutor: values.accepted_tutor.username, post: id, rate: star }).then(res => {
+                            window.location.reload('/post/' + id)
+                        })
                 }} />
                 {star}
             </label>

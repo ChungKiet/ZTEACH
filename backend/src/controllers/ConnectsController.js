@@ -202,6 +202,7 @@ class ConnectsController {
     // [PUT] /new-tutor-rate
     async new_tutor_rate(req, res, next) {
         const { user, tutor, post, rate } = req.body;
+        console.log(req.body);
         try {
             const connect = await Connect.updateOne({ user, tutor, post, accept: true }, { rate: rate });
             if (connect.modifiedCount === 1) {
