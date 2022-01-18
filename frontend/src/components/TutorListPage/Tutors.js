@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import './Tutors.css';
+import Navbar from '../Navbar';
 import Search from './Search';
 import TutorItem from './TutorItem';
 import validate from './validateInfo';
@@ -16,8 +17,8 @@ import footer_image5 from '../images/searchimg/img5.png';
 
 
 function Tutors() {
-    var footer_images = [footer_image1, footer_image2, footer_image3, footer_image4, footer_image5];
-    var num_footer_image = 5;
+    const footer_images = [footer_image1, footer_image2, footer_image3, footer_image4, footer_image5];
+    const num_footer_image = 5;
     const [footer_image, set_footer_image] = useState(null);
 
     const PPP = 10;     //num of posts per page
@@ -137,6 +138,10 @@ function Tutors() {
     }, []);
     
     return (
+        <div>
+        <div style={{height: '10%', width: '100%', position: 'absolute'}}>
+            <Navbar/>
+        </div>
         <div className='posts-grid-main-layout40'>
             <Search params={{handleChange, handleSubmit, handleDelete, values, errors}}/>
             <div className='post-items-list-layout40'>
@@ -165,6 +170,7 @@ function Tutors() {
                     <img className="user-img-tutor-item40" src={footer_image} />
                 </div>
             </div>
+        </div>
         </div>
     )
 }
