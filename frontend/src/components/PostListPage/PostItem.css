@@ -64,7 +64,7 @@
     object-fit: fill;
     height: 100%; 
     width: 100%;
-    border-radius: 30px;
+    border-radius: 50%;
 }
 
 
@@ -75,8 +75,11 @@
     padding: 2px;
     height: 60px; 
     width: 60px;
-    border-radius: 30px;
+    border-radius: 50%;
     background-color: orange;
+}
+.bounder-user-img-post-item40:hover{
+    background-color: #ED8201;
 }
 
 .grid-2x3-subitem40 {

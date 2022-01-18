@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
 import './TutorItem.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -35,12 +34,12 @@ function TutorItem(params) {
         <div className="tutor-item-frame40">
 
             <div className="flex-column-tutor-list40">
-                <Link to={'/profile/' + values.username} className="bounder-user-img-tutor-item40">
+                <a href={'/profile/' + values.username} className="bounder-user-img-tutor-item40">
                     <img className="user-img-tutor-item40" src={values.image} />
-                </Link>
-                <Link to={'/profile/' + values.username}  class="username-tutor-item40">
+                </a>
+                <a href={'/profile/' + values.username}  class="username-tutor-item40">
                     {values.username}
-                </Link>
+                </a>
             </div>
 
 
@@ -139,7 +138,7 @@ function TutorItem(params) {
                     <div className="placeholder-text-container">
                         <div className="placeholder-text">
                             <div className="select-occupation">
-                                Học phí (VNĐ/buổi)
+                                Học phí (VNĐ/tháng)
                             </div>
                         </div>
                         <div className="placeholder-text-40">

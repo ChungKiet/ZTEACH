@@ -78,17 +78,17 @@
     border: none;
 }
 
-.search-button {
+.search-button40 {
     letter-spacing: 0;
     height: 100%;
     width: 100%;
-    margin-top: auto;
-    margin-bottom: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
     text-align: center;
     white-space: nowrap;
 
     font-family:    Montserrat, sans-serif;
-    font-size:      1.8rem;
+    font-size:      1.5rem;
     font-weight:    bold;
 }
 
@@ -100,16 +100,22 @@
     margin-right: 5%;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 1px 3px 3px 1px #9E9E9E;
+    outline: none;
+    align-items:center;
+}
+.button-occupation-ok40:hover {
+    background-color: #FFBE36;
 }
 
 .button-occupation-cancel40 {
-    background-color: gray;
+    background-color: rgb(226, 226, 226);
     height: 50px;
     width: 90%;
     margin-left: 5%;
     margin-right: 5%;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 1px 3px 3px 1px #9E9E9E;
+}
+.button-occupation-cancel40:hover {
+    background-color: rgb(184, 183, 183);
 }
