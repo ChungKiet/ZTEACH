@@ -21,7 +21,7 @@ function TutorItem(params) {
         var res = "";
         for (var i = 0; i < params.length; i++){
             if (i > 0) res = res + ", ";
-            res = res += params[i].value;
+            res = res += params[i];
         }
         return res;
     }
