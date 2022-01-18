@@ -100,6 +100,56 @@ const useForm = (callback, validate) => {
     progress: 0
   })
 
+  //handleUploadTutorImage
+  const handleUploadTutorImage = e => {
+    if (e.target.files[0]) {
+        const image = e.target.files[0];
+        setUserImage({
+          ...UserImage,
+          ["image"]:image
+        })
+        const name = image.name + '-' + Date.now();
+        const uploadTask = storage.ref(`images/${name}`).put(image);
+        uploadTask.on('state_changed',
+        (snapshot) => {
+            // progrss function ....
+            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+            setUserImage({
+              ...UserImage,
+              ["progress"]:progress
+            })
+        },
+        (error) => {
+            // error function ....
+            console.log(error);
+            console.log("Here");
+        },
+        () => {
+            // complete function ....
+            storage.ref('images').child(name).getDownloadURL().then(url => {
+                console.log(url);
+                setValues({
+                  ...values,
+                  ["image"]: url
+                })
+                //http://localhost:8000/users/edit-image
+                axios.put('http://localhost:8000/users/edit-image', {username: values.username, image: url}).then(res=>{
+                  const message = res.data;
+                  if (!message.error){
+                    const user = JSON.parse(window.sessionStorage.getItem("user19120000"));
+                    user.url = url;
+                    //window.sessionStorage.setItem("user19120000", values);
+                    //console.log(user);
+                    alert("Cập nhật ảnh thành công!");
+                  }
+                }
+                )
+            })
+        });
+        // Post then change 2 link
+    }
+  }
+
 const handleChangeImage = e => {
   if (e.target.files[0]) {
       const image = e.target.files[0];
@@ -166,20 +216,20 @@ const handleChangeImage = e => {
          name: dt.name,
          user_type: dt.user_type,
          gender: dt.gender,
-         gender_secure: dt.gender_secure,
+         gender_secure: dt.gender_secure || 'Công khai',
          birthday: dt.birthday,
-         birthday_secure: dt.birthday_secure,
-         classes: dt.classes,
-         major: dt.major,
-         literacy: dt.literacy,
-         fee: dt.fee,
-         address: dt.address,
-         address_secure: dt.address_secure,
+         birthday_secure: dt.birthday_secure || 'Công khai',
+         classes: dt.classes || [],
+         major: dt.major || '',
+         literacy: dt.literacy || 'Sinh viên',
+         fee: dt.fee || '',
+         address: dt.address || '',
+         address_secure: dt.address_secure || 'Công khai',
          subjects: dt.subjects,
          email: dt.email,
-         email_secure: dt.email_secure,
+         email_secure: dt.email_secure || 'Công khai',
          contact: dt.contact,
-         contact_secure: dt.contact_secure,
+         contact_secure: dt.contact_secure || 'Công khai',
          voting: dt.voting
        });
       //  window.sessionStorage.setItem("user19120000", JSON.stringify(values));
@@ -191,7 +241,7 @@ const handleChangeImage = e => {
   }   
 }, [errors]);
 
-  return { handleChange, handleSubmit, subjectChange, classesChange,salaryChange, handleChangeImage, values, errors };
+  return { handleChange, handleSubmit, subjectChange, classesChange,salaryChange, handleChangeImage, handleUploadTutorImage, values, errors };
 };
 
 export default useForm;

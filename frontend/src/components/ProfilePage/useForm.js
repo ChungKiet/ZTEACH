@@ -72,6 +72,22 @@ const useForm = (callback, validate) => {
     });
     }
   };
+  function Evaluate(){
+    return (
+      <div class="rate">
+        <input type="radio" id="star5" name="rate" value="5" />
+        <label for="star5" title="text">5 stars</label>
+        <input type="radio" id="star4" name="rate" value="4" />
+        <label for="star4" title="text">4 stars</label>
+        <input type="radio" id="star3" name="rate" value="3" />
+        <label for="star3" title="text">3 stars</label>
+        <input type="radio" id="star2" name="rate" value="2" />
+        <label for="star2" title="text">2 stars</label>
+        <input type="radio" id="star1" name="rate" value="1" />
+        <label for="star1" title="text">1 star</label>
+      </div>
+    )
+  }
 
   const checkValue = (data) => {
       var get_id =data._id;
@@ -293,13 +309,16 @@ function ButtonConnect() {
       return (
           <button className="button-connected">
               <div className="button-connect-text">
-                  Đã kết nối
+                Đã kết nối
+              </div>
+              <div>
+                Đánh giá của bạn: <Evaluate/>
               </div>
           </button>
       )
   else if (connectState === 1 || connectState === "1")
       return (
-          <button className="button-requested" onClick={() => {
+          <button className="button-requested-553" onClick={() => {
               axios.delete("http://localhost:8000/connects/delete-tutor-connect", { user: user.username, tutor: values.username}).then(
                   res => {
                       if (res.data.result === 1) {
@@ -311,14 +330,15 @@ function ButtonConnect() {
                   }
               );
           }}>
-              <div className="button-connect-text">
-                  Đã yêu cầu
+              <div className="button-connect-text-553">
+                  Đang yêu cầu kết nối
               </div>
           </button>
+          
       );
   else if (connectState === 0 || connectState === "0") {
       return (
-          <button className="button-connect" onClick={() => {
+          <button className="button-connect-553" onClick={() => {
               axios.post("http://localhost:8000/connects/new-tutor-connect", { user: user.username, tutor: values.username}).then(
                   res => {
                       if (res.data.result === 1) {
@@ -330,7 +350,7 @@ function ButtonConnect() {
                   }
               );
           }}>
-              <div className="button-connect-text">
+              <div className="button-connect-text-553">
                   Kết nối
               </div>
           </button>
@@ -358,7 +378,6 @@ function ButtonConnect() {
                     <div className="request-list-553">
                         {listRequest.map((v, index) => (
                             <RequestSummaryLine order={index + 1} username={v.username} dayRequest={v.dayRequest}></RequestSummaryLine>))}
-
                     </div>
                 </div>
             </div>)

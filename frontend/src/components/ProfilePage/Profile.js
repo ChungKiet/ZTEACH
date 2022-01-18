@@ -84,28 +84,20 @@ function Profile(){
   }
 
   function PostList() {
-    const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
-    if (cookie === null)
-        return null;
-    const currentUser = cookie.username;
-    if (currentUser === values.username)
-        return (
-            <div>
-                <div className="overlap-group-requests-553">
-                    <div className="box-outline-553"></div>
-                    <div className="flex-request-heads-553">
-                        <div className="request-no-553">STT</div>
-                        <div className="request-username-553"> Bài đăng</div>
-                        <div className="request-level-553">Ngày đăng</div>
-                    </div>
-                    <div className="request-list-553">
-                        {listPost}
-                    </div>
+    return (
+        <div>
+            <div className="overlap-group-requests-553">
+                <div className="box-outline-553"></div>
+                <div className="flex-request-heads-553">
+                    <div className="request-no-553">STT</div>
+                    <div className="request-username-553"> Bài đăng</div>
+                    <div className="request-level-553">Ngày đăng</div>
                 </div>
-            </div>)
-    else {
-        return (<div />);
-    }
+                <div className="request-list-553">
+                    {listPost}
+                </div>
+            </div>
+        </div>)
   } 
     function Evaluate(){
       return (
@@ -137,7 +129,7 @@ function Profile(){
               <label for="file-input">
                   <img src={values.image} className='Avatar_label'/>
               </label>
-              <input id="file-input" onChange={handleChangeImage} type="file" className='Avatar-input'/>
+              <input id="file-input" disabled={!isHolderAccount} onChange={handleChangeImage} type="file" className='Avatar-input'/>
             </div>
           <div className='user_name'>
                        {values.username}
@@ -145,7 +137,7 @@ function Profile(){
           {values.user_type === "tutor" &&
           <div className='col'>
             <div className='tutor-literacy'>{"Trình độ: " + values.literacy + " " + values.major}</div>
-            <div className='tutor-voting'>{"Đánh giá: " + (!values.voting?"5":values.voting) + " * " +  "(" + (!values.evaluate?"0":values.evaluate) + " bài đánh giá)"}</div>
+            <div className='tutor-voting'>{"Đánh giá: " + (!values.voting?"5":values.voting) + ' '} <div style={{color: '#ffc700', fontSize: '30px',marginTop: '-12px'}}> ★ </div> {  " (" + (!values.evaluate?"0":values.evaluate) + " bài đánh giá)"}</div>
             <div className='tutor-dayreg'>{"Ngày tham gia: " + "15/01/2022"}</div>
           </div>
           }
@@ -162,7 +154,6 @@ function Profile(){
             <a href='/editprofile' > Chỉnh sửa trang cá nhân </a>
           </button>
           }
-          {<Evaluate/>}
           {<ButtonConnect/>}
         </div>
         {/* {pics.map((pic) => {
@@ -260,7 +251,7 @@ function Profile(){
             {/* <div>{listPost}</div> */}
             <PostList />
           </div>
-        
+          { isHolderAccount &&
           <div className='row'>
             <div className='tutor-cert-img' style={{width: '400px'}}>
             <strong>
@@ -269,11 +260,12 @@ function Profile(){
             </div>
             <RequestListConnect/>
           </div>
+          }
          {/* //listRequest */}
         </div>
         {/* <div> oke</div> */}
         
-        <div>
+        <div style={{marginTop: '2%'}}>
           <Footer/>
         </div>
       </div>
