@@ -195,6 +195,42 @@ class ConnectsController {
         }
     }
 
+    // [POST] /get-tutor-rate
+    async new_tutor_rate(req, res, next) {
+        const { user, tutor, rate } = req.body;
+        try {
+            const connect = await Connect.updateOne({ user, tutor, accept: true, rate: -1.0 }, { rate: rate });
+            if (connect.modifiedCount === 1) {
+                const rates = (await Connect.find(
+                    { tutor: tutor, accept: true, rate: { $ne: -1.0 } },
+                    'rate')
+                ).map(({ rate }) => rate);
+
+                const avg = (rates.reduce((a, b) => a + b, 0) / rates.length) || 0.0;
+                await Tutor.updateOne({ tutor: tutor }, { rate: avg });
+
+                res.json({ "result": 1, "message": "Rate tutor success." });
+            }
+            else {
+                res.json({ "result": 0, "message": "Rate tutor failed." });
+            }
+        }
+        catch (err) {
+            res.status(500).send({
+                "result": 0,
+                "message": "Server internal error. Rate tutor failed."
+                // "error": { "code": 500, "message": "Server internal error.Rate tutor failed." }
+            });
+        }
+    }
+
+    // [POST] /get-tutor-rate
+    async get_tutor_rate(req, res, next) {
+        const username = req.body.username;
+        const rate = await Tutor.findOne({ username }, 'username rate');
+        res.json(rate);
+    }
+
 }
 
 module.exports = new ConnectsController;
