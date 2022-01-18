@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import './Tutors.css';
+import Navbar from '../Navbar';
 import Search from './Search';
 import TutorItem from './TutorItem';
 import validate from './validateInfo';
@@ -137,6 +138,10 @@ function Tutors() {
     }, []);
     
     return (
+        <div>
+        <div style={{height: '10%', width: '100%', position: 'absolute'}}>
+            <Navbar/>
+        </div>
         <div className='posts-grid-main-layout40'>
             <Search params={{handleChange, handleSubmit, handleDelete, values, errors}}/>
             <div className='post-items-list-layout40'>
@@ -165,6 +170,7 @@ function Tutors() {
                     <img className="user-img-tutor-item40" src={footer_image} />
                 </div>
             </div>
+        </div>
         </div>
     )
 }
