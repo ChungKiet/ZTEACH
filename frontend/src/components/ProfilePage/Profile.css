@@ -291,10 +291,33 @@ a:link {
    color: rgb(102, 102, 102);
    font-family: montserrat;
    font-size: 17px;
-   margin-left: 20px;
+   margin-left: 30px;
    font-weight: 400;
    font-style: normal;
- 
+ }
+
+
+ .button-connected-553 {
+   background-color: #2a7414;
+   border-radius: 100px;
+   box-shadow: 2px 7px 5px #00000040;
+   display: flex;
+   height: 40px;
+   width: fit-content;
+   margin-top: .6%;
+   margin-left: 1%;
+ }
+
+
+ .request-time-553{
+   width: 20%;
+   color: rgb(102, 102, 102);
+   font-family: montserrat;
+   font-size: 17px;
+   margin-left: 150px;
+
+   font-weight: 400;
+   font-style: normal;
  }
  .request-gender-553{
    width: 10%;
@@ -327,13 +350,14 @@ a:link {
    margin-left: auto;
    margin-right: auto;
    color: black;
+   text-align: center;
    font-family: montserrat;
-   font-size: 20px;
+   font-size: 19px;
    font-weight: 400;
    font-style: semi-bold;
  }
  .request-accept-553{
-   width: 12%;
+   width: fit-content;
    margin-left: 1%;
    color: rgb(102, 102, 102);
    font-family: montserrat;
@@ -375,25 +399,25 @@ a:link {
  
  .button-request-deny-553 {
    background-color: gray;
-   width: 70%;
+   width: fit-content;
    height: 80%;
    border-radius: 10px;
    text-align: center;
    box-shadow: 1px 3px 3px 1px #9E9E9E;
   }
  
-  .request-button_553 {
+  .request-button-553 {
    letter-spacing: 0;
    height: 100%;
-   width: 100px;
+   width: 130px;
    margin-top: auto;
    margin-bottom: auto;
-   text-align: center;
    white-space: nowrap;
- 
+   text-align: center;
    font-family:    Montserrat, sans-serif;
    font-size:      17px;
    font-weight:    bold;
+   margin-left: -10px;
  }
  
  .rate {
