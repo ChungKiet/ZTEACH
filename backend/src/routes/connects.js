@@ -37,7 +37,7 @@ route.put('/accept-connect', connectsController.accept_connect);
 route.put('/new-tutor-rate', connectsController.new_tutor_rate);
 
 // http://localhost:8000/connects/get-tutor-rate
-route.put('/get-tutor-rate', connectsController.get_tutor_rate);
+route.post('/get-tutor-rate', connectsController.get_tutor_rate);
 
 // http://localhost:8000/connects
 // route.get('/', connectsController.get_all_connect);
