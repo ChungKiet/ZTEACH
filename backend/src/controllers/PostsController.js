@@ -10,9 +10,9 @@ class PostsController {
 
         const query = req.query;
         const find = Post.find({}, 'image username title subject grade \
-                                study_form literacy gender fee');
+                                study_form literacy gender fee accept');
 
-        find.find({ start: { $gte: Date.now() } });
+        find.find({ start: { $gte: Date.now() }, accept: false });
         if (query.fee) {
             find.find({ fee: { $gte: query.fee } });
             delete query.fee;

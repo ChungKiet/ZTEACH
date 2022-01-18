@@ -178,8 +178,11 @@ class ConnectsController {
         const { user, tutor } = req.body;
         const post = req.body.post || 'null';
         try {
-            const connect = await Connect.updateOne({ user, tutor, post }, { accept: true });
+            const connect = await Connect.updateOne({ user, tutor, post }, { accept: true, timea: Date.now() });
             if (connect.modifiedCount === 1) {
+                if (post !== 'null') {
+                    await Post.updateOne({ _id: post }, { accept: true });
+                }
                 res.json({ "result": 1, "message": "Accept request success." });
             }
             else {
@@ -195,19 +198,19 @@ class ConnectsController {
         }
     }
 
-    // [POST] /get-tutor-rate
+    // [PUT] /new-tutor-rate
     async new_tutor_rate(req, res, next) {
-        const { user, tutor, rate } = req.body;
+        const { user, tutor, post, rate } = req.body;
         try {
-            const connect = await Connect.updateOne({ user, tutor, accept: true, rate: -1.0 }, { rate: rate });
+            const connect = await Connect.updateOne({ user, tutor, post, accept: true }, { rate: rate });
             if (connect.modifiedCount === 1) {
                 const rates = (await Connect.find(
-                    { tutor: tutor, accept: true, rate: { $ne: -1.0 } },
+                    { tutor: tutor, accept: true, rate: { $ne: -1 } },
                     'rate')
                 ).map(({ rate }) => rate);
 
                 const avg = (rates.reduce((a, b) => a + b, 0) / rates.length) || 0.0;
-                await Tutor.updateOne({ tutor: tutor }, { rate: avg });
+                await Tutor.updateOne({ username: tutor }, { rate: avg });
 
                 res.json({ "result": 1, "message": "Rate tutor success." });
             }
@@ -226,8 +229,8 @@ class ConnectsController {
 
     // [POST] /get-tutor-rate
     async get_tutor_rate(req, res, next) {
-        const username = req.body.username;
-        const rate = await Tutor.findOne({ username }, 'username rate');
+        const tutor = req.body.tutor;
+        const rate = await Tutor.findOne({ username: tutor }, 'username rate');
         res.json(rate);
     }
 

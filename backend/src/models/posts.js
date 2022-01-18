@@ -42,7 +42,10 @@ const Post = mongoose.Schema({
     }, // thời gian bắt đầu (dự kiến)
     request: {
         type: Number, required: true, default: 0
-    } // Số lượng yêu cầu kết nối
+    }, // Số lượng yêu cầu kết nối
+    accept: {
+        type: Boolean, require: true, default: false
+    }
 },
     {
         timestamps: true, // thời gian tạo và thời gian cập nhật
