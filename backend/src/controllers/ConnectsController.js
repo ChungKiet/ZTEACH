@@ -102,9 +102,10 @@ class ConnectsController {
             'username name gender literacy ');
 
         // Nghia, get tutor and rate
-        const accept = await Connect.findOne({ post: post, accept: true }, 'tutor rate');
+        // Modify return, always include accept -> avoid error
+        const accept = await Connect.findOne({ post: post, accept: true }, 'tutor rate user');
         if (!accept) {
-            res.json({ requested, tutor: null });
+            res.json({ requested, tutor: null, accept : {rate : -1} });
             return;
         }
         const tutor = await Tutor.findOne({ username: accept.tutor },
@@ -213,7 +214,6 @@ class ConnectsController {
     // [PUT] /new-tutor-rate
     async new_tutor_rate(req, res, next) {
         const { user, tutor, post, rate } = req.body;
-        console.log(req.body);
         try {
             const connect = await Connect.updateOne({ user, tutor, post, accept: true }, { rate: rate });
             if (connect.modifiedCount === 1) {

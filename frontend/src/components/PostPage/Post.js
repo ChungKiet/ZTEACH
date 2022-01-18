@@ -22,8 +22,6 @@ const optionSelect = GlobalVar.optionSelect;
 
 function Post() {
     const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
-    console.log("cookie = ");
-    console.log(cookie);
     var currentUser = null;
     var userType = null;
     if (cookie !== null) {
@@ -67,33 +65,40 @@ function Post() {
                             axios.post("http://localhost:8000/connects/get-post-connect", { post: id }).then(
                                 res3 => {
                                     const dt3 = res3.data;
-                                    console.log("post connect = ");
+                                    console.log('dt3');
                                     console.log(dt3);
-                                    setValues({
-                                        username: dt.username,
-                                        image: dt.image,
-                                        title: dt.title,
-                                        information: dt.information,
-                                        subject: dt.subject,
-                                        grade: dt.grade,
-                                        study_form: dt.study_form,
-                                        start: dt.start,
-                                        literacy: dt.literacy,
-                                        gender: dt.gender,
-                                        fee: dt.fee,
-                                        request: dt.request,
-                                        lessons: dt.lessons,
-                                        time: dt.time,
-                                        //state
-                                        connect_state: dt2.state,
-                                        // con
-                                        request_list: dt3.requested,
-                                        accepted_tutor: dt3.tutor,
-                                        rate: dt3.accept.rate
-                                    });
+                                    axios.post("http://localhost:8000/connects/get-post-rate", { post: id }).then(
+                                        res4 => {
+                                            setValues({
+                                                username: dt.username,
+                                                image: dt.image,
+                                                title: dt.title,
+                                                information: dt.information,
+                                                subject: dt.subject,
+                                                grade: dt.grade,
+                                                study_form: dt.study_form,
+                                                start: dt.start,
+                                                literacy: dt.literacy,
+                                                gender: dt.gender,
+                                                fee: dt.fee,
+                                                request: dt.request,
+                                                lessons: dt.lessons,
+                                                time: dt.time,
+                                                //state
+                                                connect_state: dt2.state,
+                                                // con
+                                                request_list: dt3.requested,
+                                                accepted_tutor: dt3.tutor,
+                                                //rate: res4.data.rate
+                                                rate: dt3.accept.rate
+                                            })
+                                        }
+                                    )
 
                                 }
                             )
+
+
 
                         }
                     )
@@ -453,10 +458,10 @@ function Post() {
     function RatedStar() {
         if (values.rate > 0)
             return (
-                <div style={{'textAlign' : 'center'}}>
-                <div style={{ 'marginLeft': '5px', 'fontSize': '20px' }}>Đánh giá từ người học:
-                    <span style={{ 'marginLeft': '15px', 'fontSize': '40px' }}>{values.rate}&#11088;</span>
-                </div>
+                <div style={{ 'textAlign': 'center' }}>
+                    <div style={{ 'marginLeft': '5px', 'fontSize': '20px' }}>Đánh giá từ người học:
+                        <span style={{ 'marginLeft': '15px', 'fontSize': '40px' }}>{values.rate}&#11088;</span>
+                    </div>
                 </div>
             )
         else return null;
