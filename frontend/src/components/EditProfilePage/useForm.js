@@ -28,6 +28,7 @@ const useForm = (callback, validate) => {
    email_secure: "Riêng tư",
    contact: "No Contact",
    contact_secure: "Riêng tư",
+   certificate: [],
  });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -100,55 +101,12 @@ const useForm = (callback, validate) => {
     progress: 0
   })
 
+  const [CertImage, setCertImage] = useState({
+    image: null,
+    url: values.image,
+    progress: 0
+  })
   //handleUploadTutorImage
-  const handleUploadTutorImage = e => {
-    if (e.target.files[0]) {
-        const image = e.target.files[0];
-        setUserImage({
-          ...UserImage,
-          ["image"]:image
-        })
-        const name = image.name + '-' + Date.now();
-        const uploadTask = storage.ref(`images/${name}`).put(image);
-        uploadTask.on('state_changed',
-        (snapshot) => {
-            // progrss function ....
-            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-            setUserImage({
-              ...UserImage,
-              ["progress"]:progress
-            })
-        },
-        (error) => {
-            // error function ....
-            console.log(error);
-            console.log("Here");
-        },
-        () => {
-            // complete function ....
-            storage.ref('images').child(name).getDownloadURL().then(url => {
-                console.log(url);
-                setValues({
-                  ...values,
-                  ["image"]: url
-                })
-                //http://localhost:8000/users/edit-image
-                axios.put('http://localhost:8000/users/edit-image', {username: values.username, image: url}).then(res=>{
-                  const message = res.data;
-                  if (!message.error){
-                    const user = JSON.parse(window.sessionStorage.getItem("user19120000"));
-                    user.url = url;
-                    //window.sessionStorage.setItem("user19120000", values);
-                    //console.log(user);
-                    alert("Cập nhật ảnh thành công!");
-                  }
-                }
-                )
-            })
-        });
-        // Post then change 2 link
-    }
-  }
 
 const handleChangeImage = e => {
   if (e.target.files[0]) {
@@ -189,7 +147,7 @@ const handleChangeImage = e => {
                   user.url = url;
                   //window.sessionStorage.setItem("user19120000", values);
                   //console.log(user);
-                  alert("Cập nhật ảnh thành công!");
+                  alert("Vô nhầm hàm!");
                 }
               }
               )
@@ -230,7 +188,8 @@ const handleChangeImage = e => {
          email_secure: dt.email_secure || 'Công khai',
          contact: dt.contact,
          contact_secure: dt.contact_secure || 'Công khai',
-         voting: dt.voting
+         voting: dt.voting,
+         certificate: dt.certificate || [],
        });
       //  window.sessionStorage.setItem("user19120000", JSON.stringify(values));
       })
@@ -241,7 +200,55 @@ const handleChangeImage = e => {
   }   
 }, [errors]);
 
-  return { handleChange, handleSubmit, subjectChange, classesChange,salaryChange, handleChangeImage, handleUploadTutorImage, values, errors };
+const handleChangeCert = e => {
+  alert('Cập nhật bằng cấp thành công')
+  if (e.target.files[0]) {
+      const image = e.target.files[0];
+      setCertImage({
+        ...CertImage,
+        ["image"]:image
+      })
+      const name = image.name + '-' + Date.now();
+      const uploadTask = storage.ref(`images/${name}`).put(image);
+      uploadTask.on('state_changed',
+      (snapshot) => {
+          // progrss function ....
+          const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          setCertImage({
+            ...CertImage,
+            ["progress"]:progress
+          })
+      },
+      (error) => {
+          // error function ....
+          console.log(error);
+      },
+      () => {
+          // complete function ....
+          storage.ref('images').child(name).getDownloadURL().then(url => {
+              setValues({
+                ...values,
+                ["certificate"]: values.certificate.push(url)
+              })
+              alert(values.certificate)
+              alert(values.username)
+              //http://localhost:8000/users/edit-image
+              axios.put('http://localhost:8000/tutors/add-certificate',{username: values.username, image: url}).then(res=>{
+                const message = res.data;
+                alert(message.error)
+                if (!message.error){
+                  alert('Cập nhật bằng cấp thành công')
+                //window.sessionStorage.setItem("user19120000", values);
+                }
+              }
+              )
+          })
+      });
+      // Post then change 2 link
+  }
+}
+
+  return { handleChange, handleSubmit, subjectChange, classesChange,salaryChange, handleChangeCert, handleChangeImage, values, errors };
 };
 
 export default useForm;

@@ -158,6 +158,54 @@ const handleChangeImage = e => {
   }
 }
   
+  const [CertImage, setCertImage] = useState([]);
+const handleChangeCert = e => {
+  alert('Cập nhật bằng cấp thành công')
+  if (e.target.files[0]) {
+      const image = e.target.files[0];
+      setCertImage({
+        ...CertImage,
+        ["image"]:image
+      })
+      const name = image.name + '-' + Date.now();
+      const uploadTask = storage.ref(`images/${name}`).put(image);
+      uploadTask.on('state_changed',
+      (snapshot) => {
+          // progrss function ....
+          const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          setCertImage({
+            ...CertImage,
+            ["progress"]:progress
+          })
+      },
+      (error) => {
+          // error function ....
+          console.log(error);
+      },
+      () => {
+          // complete function ....
+          storage.ref('images').child(name).getDownloadURL().then(url => {
+              setValues({
+                ...values,
+                ["certificate"]: values.certificate.push(url)
+              })
+              alert(values.certificate)
+              alert(values.username)
+              //http://localhost:8000/users/edit-image
+              axios.put('http://localhost:8000/tutors/add-certificate',{username: values.username, image: url}).then(res=>{
+                const message = res.data;
+                alert(message.error)
+                if (!message.error){
+                  alert('Cập nhật bằng cấp thành công')
+                //window.sessionStorage.setItem("user19120000", values);
+                }
+              }
+              )
+          })
+      });
+      // Post then change 2 link
+  }
+}
   //console.log(user);
   useEffect(() => {
     //console.log(user);
@@ -196,6 +244,7 @@ const handleChangeImage = e => {
         email_secure: data.email_secure,
         contact: data.contact,
         contact_secure: data.contact_secure,
+        certificate: [],
     });
    })
    };
