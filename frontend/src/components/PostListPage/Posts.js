@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import './Posts.css';
+import Navbar from '../Navbar';
 import Search from './Search';
 import PostItem from './PostItem';
 import validate from './validateInfo';
@@ -142,6 +143,10 @@ function Posts() {
     }, []);
     
     return (
+        <div>
+        <div style={{height: '10%', width: '100%', position: 'absolute'}}>
+            <Navbar/>
+        </div>
         <div className='posts-grid-main-layout40'>
             <Search params={{handleChange, handleSubmit, handleDelete, values, errors}}/>
             <div className='post-items-list-layout40'>
@@ -155,7 +160,7 @@ function Posts() {
                     <PostItem params={item}/>
                 ))}
                 <div className='footer-frame40'>
-                    {Data.number > 0 ? 
+                    {Data.number > 1 ?
                         <div className="footer-flex-row40">
                             <div className='title2-40'>Trang </div>
                             <input
@@ -166,10 +171,11 @@ function Posts() {
                                 onChange={handleChangePage}
                             />
                         </div>
-                    :<div/>}                    
+                    :<div/>}
                     <img className="user-img-tutor-item40" src={footer_image} />
                 </div>
             </div>
+        </div>
         </div>
     )
 }
