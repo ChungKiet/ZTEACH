@@ -101,7 +101,8 @@ class ConnectsController {
         const requested = await Tutor.find({ username: { $in: request } },
             'username name gender literacy ');
 
-        const accept = await Connect.findOne({ post: post, accept: true }, 'tutor');
+        // Nghia, get tutor and rate
+        const accept = await Connect.findOne({ post: post, accept: true }, 'tutor rate');
         if (!accept) {
             res.json({ requested, tutor: null });
             return;
@@ -110,7 +111,7 @@ class ConnectsController {
             // Nghia, add image in response
             'username image name gender literacy ');
 
-        res.json({ requested, tutor });
+        res.json({ requested, tutor, accept });
     }
 
     // [POST] /get-post-accept  --> Danh sách yêu cầu của bài đăng

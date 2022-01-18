@@ -50,7 +50,8 @@ function Post() {
         request: "",
         connect_state: "",
         request_list: "",
-        accepted_tutor: ""
+        accepted_tutor: "",
+        rate: "",
     });
 
 
@@ -82,9 +83,12 @@ function Post() {
                                         request: dt.request,
                                         lessons: dt.lessons,
                                         time: dt.time,
+                                        //state
                                         connect_state: dt2.state,
+                                        // con
                                         request_list: dt3.requested,
-                                        accepted_tutor: dt3.tutor
+                                        accepted_tutor: dt3.tutor,
+                                        rate: dt3.rate
                                     });
 
                                 }
@@ -311,6 +315,7 @@ function Post() {
             </div>
 
             <RequestList />
+
             <EditAndRemove />
 
             <div style={{ position: 'relative', marginTop: "1%", marginBottom: "0px", bottom: "0", width: '100%' }}>
@@ -318,6 +323,8 @@ function Post() {
             </div>
         </div>
     );
+
+
 
     function ButtonConnect() {
         if (currentUser === null)
@@ -408,26 +415,48 @@ function Post() {
             // OWN - Accepted connection with a tutor
             // Others tutor - cannot do anything more, just see the tutor information
             return (
-                <div className="flex-row-tutor-accepted">
-                    <div className="accepted-label">Lớp đã được nhận dạy bởi: </div>
-                    <div className="overlap-group-user">
-                        <div className="box-user-head">
-                            <div className="flex-user">
-                                <div><img className="user-img-head" src={values.accepted_tutor.image} alt={values.username} /></div>
-                                <div className="text-username">
-                                    <a href={`http://localhost:3000/profile/${values.accepted_tutor.username}`}
-                                        style={{ 'textDecoration': 'none', 'fontSize': '30px', 'fontWeight': 'bold' }}>
-                                        {values.accepted_tutor.username}</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div>
+                    <AcceptedTutor />
+                    <UpdateRate />
                 </div>
             )
         else
             // The tutor that has been accepted
             return null;
 
+    }
+
+    function AcceptedTutor() {
+        return (
+            <div className="flex-row-tutor-accepted">
+                <div className="accepted-label">Được nhận dạy bởi: </div>
+
+                <div className="overlap-group-user">
+                    <div className="box-user-head">
+                        <div className="flex-user">
+                            <div><img className="user-img-head" src={values.accepted_tutor.image} alt={values.username} /></div>
+                            <div className="text-username">
+                                <a href={`http://localhost:3000/profile/${values.accepted_tutor.username}`}
+                                    style={{ 'textDecoration': 'none', 'fontSize': '30px', 'fontWeight': 'bold' }}>
+                                    {values.accepted_tutor.username}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <RatedStar/>
+            </div>
+        )
+    }
+
+    function RatedStar(){
+        //if(values.rate > 0)
+            return(
+                <div>Đánh giá của bạn: {values.rate}
+                    <span style={{'marginLeft': '10px', 'fontSize':'40px'}}>&#11088;</span>
+                </div>
+            )
+       // else return null;
     }
 
     function RequestSummaryLine(props) {
@@ -522,6 +551,44 @@ function Post() {
             );
         else
             return null;
+    }
+
+    function UpdateRate() {
+        if (currentUser === values.username)
+            return (
+                <div className="flex-row-tutor-accepted">
+                    <div className="accepted-label">Cập nhật đánh giá: </div>
+                    <div className="overlap-group-rate">
+                        <div className="box-user-head"></div>
+                        <div className="flex-user">
+                            <RadioButtonRate star={1} />
+                            <RadioButtonRate star={2} />
+                            <RadioButtonRate star={3} />
+                            <RadioButtonRate star={4} />
+                            <RadioButtonRate star={5} />
+                        </div>
+                    </div>
+
+                </div>
+            )
+        else return null;
+    }
+
+    function RadioButtonRate(props) {
+        const star = props.star;
+        return (
+
+            <label className="label-radiobtn">
+                <input id={"rate" + star} value={star} name="radiobtn_rate" type="radio" onChange={() => {
+                    alert('huhu' + star);
+                    axios.put('localhost:8000', {user: currentUser, tutor : values.tutor, post : id, rate : star}).then(res => {
+                        alert('updated');
+                    })
+                }} />
+                {star}
+            </label>
+
+        )
     }
 }
 
