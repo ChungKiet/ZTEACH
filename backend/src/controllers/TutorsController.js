@@ -40,7 +40,7 @@ class TutorsController {
             }, {}));
 
         const tutors = await find.exec();
-        res.json({ 'number': tutors.length, 'posts': tutors.slice(from, to) });
+        res.json({ 'number': tutors.length, 'tutors': tutors.slice(from, to) });
     }
 
     // [PUT] /tutors/register
@@ -87,12 +87,14 @@ class TutorsController {
         const { username, name, gender, email, email_secure, birthday,
             address, address_secure, contact, contact_secure,
             introduce, major, literacy, fee, subjects, classes } = req.body;
+        // const { username, subjects, classes } = req.body;
         try {
             const tutor = await Tutor.updateOne({ username: username, user_type: "tutor" }, {
                 name, gender, email, email_secure, birthday,
                 address, address_secure, contact, contact_secure,
                 introduce, major, literacy, fee, subjects, classes
             });
+            // const tutor = await Tutor.updateOne({ username }, { subjects, classes });
             if (tutor.modifiedCount === 1) {
                 res.json({ "result": 1, "message": "Tutor's profile update Success" });
             }
@@ -132,9 +134,17 @@ class TutorsController {
     // [PUT] /tutors/add-certificate
     async add_certificate(req, res, next) {
         const { username, image } = req.body;
+        console.log(image);
         try {
-            await Tutor.updateOne({ username }, { $push: { certificate: image } });
-            res.json({ "result": 1, "message": "Add certificate successfully." });
+            const cer = await Tutor.updateOne({ username }, { $push: { certificate: image } });
+            const tutor = await Tutor.findOne({ username });
+            console.log(tutor);
+            if (cer.modifiedCount === 1) {
+                res.json({ "result": 1, "message": "Add certificate successfully." });
+            }
+            else {
+                res.json({ "result": 0, "message": "Add certificate failed." });
+            }
         }
         catch (err) {
             res.status(500).send({

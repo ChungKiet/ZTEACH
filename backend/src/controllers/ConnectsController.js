@@ -173,6 +173,17 @@ class ConnectsController {
         }
     }
 
+    async get_post_rate(req, res, next) {
+        const post = req.body.post;
+        const rate = await Connect.findOne({ post, accept: true }, 'rate');
+        if (rate) {
+            res.json({ rate: rate.rate });
+        }
+        else {
+            res.json({ rate: 0 });
+        }
+    }
+
     // [POST] /get-tutor-state  --> đồng ý yêu cầu kết nối (cho cả bài đăng và yêu cầu trực tiếp đên gia sư)
     async accept_connect(req, res, next) {
         const { user, tutor } = req.body;
