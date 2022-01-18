@@ -101,7 +101,7 @@ function Posts() {
 
 
 
-    const [Data, setDatas] = useState({
+    const [Data, setData] = useState({
         number: 0,
         posts: []
     });
@@ -135,7 +135,7 @@ function Posts() {
             }
             setValues(newValues);
 
-            setDatas(result.data);
+            setData(result.data);
 
             set_footer_image(footer_images[Math.floor(Math.random() * num_footer_image)]);
         };

@@ -99,9 +99,9 @@ function Tutors() {
 
 
 
-    const [Data, setDatas] = useState({
+    const [Data, setData] = useState({
         number: 0,
-        posts: []
+        tutors: []
     });
     
     useEffect(() => {
@@ -130,12 +130,14 @@ function Tutors() {
             }
             setValues(newValues);
 
-            setDatas(result.data);
+            console.log(result);
+            setData(result.data);
 
             set_footer_image(footer_images[Math.floor(Math.random() * num_footer_image)]);
         };
         fetchData();
     }, []);
+
     
     return (
         <div>
@@ -151,7 +153,7 @@ function Tutors() {
                     </div>
                     <Link to="/post-list" className="link446"><button className='button-18'>Danh sách bài đăng</button></Link>
                 </div>
-                {Data.posts.map(item => (
+                {Data.tutors.map(item => (
                     <TutorItem params={item}/>
                 ))}
                 <div className='footer-frame40'>
