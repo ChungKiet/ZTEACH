@@ -28,7 +28,7 @@ class Profile extends React.Component {
             {this.state.onClick && (<div class="menu447">
                 <h3>{JSON.parse(window.sessionStorage.getItem("user19120000")).username}</h3>
                 <div className="fix446">
-                    <Link to={"/profile/" + JSON.parse(window.sessionStorage.getItem("user19120000")).username} className="link447"><div className="fix447">Xem thông tin chi tiết</div></Link>
+                    <a href={"/profile/" + JSON.parse(window.sessionStorage.getItem("user19120000")).username} className="link447"><div className="fix447">Xem thông tin chi tiết</div></a>
                     <div className="fix447">Đổi mật khẩu</div>
                     <Link to="/login" className="link447" onClick={this.LogoutListener}><div className="fix447">Đăng xuất</div></Link>
                 </div>
