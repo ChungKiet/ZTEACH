@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
 import './PostItem.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -23,16 +22,16 @@ function PostItem(params) {
         <div className="post-item-frame40">
             <div className="post-item-grid-title40">
                 <div className="group-user-grid40">
-                    <Link to={'/profile/' + values.username}  className="bounder-user-img-post-item40">
+                    <a href={'/profile/' + values.username}  className="bounder-user-img-post-item40">
                         <img className="user-img-post-item40" src={values.image} />
-                    </Link>
-                    <Link to={'/profile/' + values.username}  class="username-post-item40">
+                    </a>
+                    <a href={'/profile/' + values.username}  class="username-post-item40">
                         {values.username}
-                    </Link>
+                    </a>
                 </div>
-                <Link to={'/post/' + values._id}  class="title-post-item40">
-                    {values.title.length<=45 ? values.title : values.title.substring(0, 42) + "..."}
-                </Link>
+                <a href={'/post/' + values._id}  class="title-post-item40">
+                    {values.title /*values.title.length<=45 ? values.title : values.title.substring(0, 42) + "..."*/}
+                </a>
             </div>
 
 
@@ -132,7 +131,7 @@ function PostItem(params) {
                     <div className="placeholder-text-container">
                         <div className="placeholder-text">
                             <div className="select-occupation">
-                                Học phí (VNĐ/buổi)
+                                Học phí (VNĐ/tháng)
                             </div>
                         </div>
                         <div className="placeholder-text-40">
