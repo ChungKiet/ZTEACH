@@ -16,7 +16,8 @@ function EditProfileTutor(){
   const submitForm = () => {
     console.log("Submitted");
   }
-  const { handleChange, handleSubmit, subjectChange,classesChange, salaryChange, handleChangeImage, values, errors } = useForm(
+  const { handleChange, handleSubmit, subjectChange,classesChange, salaryChange, handleChangeImage, handleUploadTutorImage
+    , values, errors } = useForm(
       submitForm,
       validateInfo
   );
@@ -192,9 +193,12 @@ function EditProfileTutor(){
                   </div> 
                 </label>
               <input id="file-input" 
+                required={true}
+                onChange={handleUploadTutorImage}
                 type="file" 
-                accept=".png,.jpg,.jpeg" multiple 
-                style={{display: 'none'}}/>
+                style={{display: 'none'}}
+                accept=".jpg, .jpeg, .png"
+                multiple />
             </div>
             <button 
               className='submit-btn' 
