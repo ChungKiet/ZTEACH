@@ -58,6 +58,13 @@
     background-color: #ED8201;
 }
 
+.star-user40{
+    display: flex;
+    flex-direction: row;
+    align-items: center;    
+}
+
+
 .grid-3x2-subitem40 {
     display: grid;
     grid-template-columns: 40% 60%;
