@@ -16,7 +16,7 @@ function EditProfileTutor(){
   const submitForm = () => {
     console.log("Submitted");
   }
-  const { handleChange, handleSubmit, subjectChange,classesChange, salaryChange, handleChangeImage, handleUploadTutorImage
+  const { handleChange, handleSubmit, subjectChange,classesChange, salaryChange, handleChangeCert
     , values, errors } = useForm(
       submitForm,
       validateInfo
@@ -37,30 +37,30 @@ function EditProfileTutor(){
       { name: "Giảng viên", id: "Giảng viên"}
     ],
     options: [
-      { label: "Lớp 1", value: "1" },
-      { label: "Lớp 2", value: "2" },
-      { label: "Lớp 3", value: "3" },
-      { label: "Lớp 4", value: "4" },
-      { label: "Lớp 5", value: "5" },
-      { label: "Lớp 6", value: "6" },
-      { label: "Lớp 7", value: "7" },
-      { label: "Lớp 8", value: "8" },
-      { label: "Lớp 9", value: "9" },
-      { label: "Lớp 10", value: "10" },
-      { label: "Lớp 11", value: "11" },
-      { label: "Lớp 12", value: "12" },
+        "Lớp 1", 
+        "Lớp 2", 
+        "Lớp 3",
+        "Lớp 4",
+        "Lớp 5",
+         "Lớp 6",
+       "Lớp 7",
+        "Lớp 8",
+       "Lớp 9",
+        "Lớp 10",
+        "Lớp 11",
+        "Lớp 12",
     ],
     subject: [
-      { label: "Toán", value: "Toán" },
-      { label: "Lý", value: "Lý" },
-      { label: "Hóa", value: "Hóa" },
-      { label: "Sinh", value: "Sinh" },
-      { label: "Văn", value: "Văn" },
-      { label: "Sử", value: "Sử" },
-      { label: "Địa", value: "Địa" },
-      { label: "Anh", value: "Anh" },
-      { label: "KHTN", value: "KHTN" },
-      { label: "KHXH", value: "KHXH" },
+       "Toán" ,
+        "Lý" ,
+       "Hóa" ,
+         "Sinh" ,
+       "Văn" ,
+         "Sử" ,
+         "Địa" ,
+         "Anh" ,
+        "KHTN" ,
+      "KHXH" ,
     ],
   }
   
@@ -88,8 +88,8 @@ function EditProfileTutor(){
             <div className='Avatar-tutor'>
               <label for="file-input">
                   <img src={values.image} className='Avatar_label'/>
-              </label>
-              <input id="file-input" type="file" onChange={handleChangeImage} className='Avatar-input'/>
+              </label> {/*onChange={handleChangeImage}*/}
+              <input id="file-input" type="file"  className='Avatar-input'/>
             </div>
             <div type='text' 
               className="user_type_user" 
@@ -187,14 +187,14 @@ function EditProfileTutor(){
               Cập nhật thông tin bằng cấp
             </div>
             <div className='cert-input'>
-                <label for="file-input">
+                <label for="input-cert">
                   <div className='cert-label'> 
                     Cập nhật thông tin bằng cấp, chứng chỉ
                   </div> 
                 </label>
-              <input id="file-input" 
+              <input id="input-cert" 
                 required={true}
-                onChange={handleUploadTutorImage}
+                onChange={handleChangeCert}
                 type="file" 
                 style={{display: 'none'}}
                 accept=".jpg, .jpeg, .png"

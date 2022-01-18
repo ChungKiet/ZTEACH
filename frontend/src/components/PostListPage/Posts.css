@@ -2,11 +2,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: min-content;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .posts-grid-main-layout40 {
-    position: static;
-    display: grid;
-    grid-template-columns: 25% 75%;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    top: 10%;
+    height: 90%;
 }

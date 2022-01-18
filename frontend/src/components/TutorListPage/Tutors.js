@@ -18,6 +18,9 @@ import footer_image5 from '../images/searchimg/img5.png';
 function Tutors() {
     var footer_images = [footer_image1, footer_image2, footer_image3, footer_image4, footer_image5];
     var num_footer_image = 5;
+    const [footer_image, set_footer_image] = useState(null);
+
+    const PPP = 10;     //num of posts per page
     
     const defaultValues = {
         unstable: false,
@@ -67,11 +70,12 @@ function Tutors() {
   
     const handleChangePage = e => {
       const { name, value } = e.target;
-      setValues({
-        ...values,
-        [name]: value,
-        unstable: true
-      });
+      if (0 < value && value <= Math.floor(Data.number / PPP) + 1)
+        setValues({
+            ...values,
+            [name]: value,
+            unstable: true
+        });
     };
     if (values.unstable) window.location.replace(makeURL());
 
@@ -115,12 +119,19 @@ function Tutors() {
             for (var i=0; i<keys.length; i++){
                 var key = keys[i];
                 var value = query[key];
+                if (key === "page"){
+                    if (value < 1)
+                        value = 1;
+                    if (value > Math.floor(result.data.number / PPP) + 1) 
+                        value = Math.floor(result.data.number / PPP) + 1;
+                }
                 newValues = {...newValues,[key]:value};
             }
             setValues(newValues);
 
-
             setDatas(result.data);
+
+            set_footer_image(footer_images[Math.floor(Math.random() * num_footer_image)]);
         };
         fetchData();
     }, []);
@@ -139,17 +150,19 @@ function Tutors() {
                     <TutorItem params={item}/>
                 ))}
                 <div className='footer-frame40'>
-                    <div className="footer-flex-row40">
-                        <div className='title2-40'>Trang </div>
-                        <input
-                            type="number"
-                            className="page-number40"
-                            name="page"
-                            value={values.page}
-                            onChange={handleChangePage}
-                        />
-                    </div>
-                    <img className="user-img-tutor-item40" src={footer_images[Math.floor(Math.random() * num_footer_image)]} />
+                    {Data.number > 1 ?
+                        <div className="footer-flex-row40">
+                            <div className='title2-40'>Trang </div>
+                            <input
+                                type="number"
+                                className="page-number40"
+                                name="page"
+                                value={values.page}
+                                onChange={handleChangePage}
+                            />
+                        </div>
+                    :<div/>}
+                    <img className="user-img-tutor-item40" src={footer_image} />
                 </div>
             </div>
         </div>

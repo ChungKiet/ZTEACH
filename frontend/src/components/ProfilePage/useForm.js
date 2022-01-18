@@ -31,6 +31,7 @@ const useForm = (callback, validate) => {
    email_secure: "Công khai",
    contact: "No Contact",
    contact_secure: "Công khai",
+   certificate: [],
  });
 
     // useEffect(()=>{
@@ -75,6 +76,7 @@ const useForm = (callback, validate) => {
   function Evaluate(){
     return (
       <div class="rate">
+        Đánh giá của bạn: 
         <input type="radio" id="star5" name="rate" value="5" />
         <label for="star5" title="text">5 stars</label>
         <input type="radio" id="star4" name="rate" value="4" />
@@ -113,6 +115,7 @@ const useForm = (callback, validate) => {
       var get_voting = data.voting;
       var get_image = data.image;
       var get_dayReg = data.timestamps;
+      var get_cert = data.certificate;
       // Toàn bộ check trong hàm này
       // Tùy vào người dùng sẽ được thiết lập khác nhau
       // Khi sang trang edit profile thì phải load lần nữa chính nó
@@ -124,7 +127,7 @@ const useForm = (callback, validate) => {
       if (!user) isLogin = false;
       else if (user.username === get_username) isYourSelf = true;
       // Xet login
-      if (!isLogin){
+      if (connectState!=2){
         // Neu chua login thì ko hien thi neu o che do "Bao mat"
         if (get_gender_secure==="Bảo mật"){
           get_gender = "Đã bị ẩn";
@@ -196,6 +199,7 @@ const useForm = (callback, validate) => {
         contact_secure: get_contact_secure,
         voting: get_voting,
         dayreg: get_dayReg,
+        certificate: get_cert,
       });
   }
   const [connectState, setConnectState] = useState(-1)
@@ -253,32 +257,33 @@ const useForm = (callback, validate) => {
 
   function RequestSummaryLine(props) {
     const { order, username, dayRequest } = props;
-    const user = window.sessionStorage.getItem("user19120000");
+    const user = JSON.parse(window.sessionStorage.getItem("user19120000"));
     return (
         <div className="flex-request-line-553">
             <div className="request-no-553">{order}</div>
             <div className="request-username-553">
                 <a href={`http://localhost:3000/profile/${username}`} style={{ 'textDecoration': 'none' }}>{username}</a>
             </div>
-            <div className="request-level-553">{dayRequest}</div>
+            <div className="request-time-553">{dayRequest}</div>
             <div className="request-accept-553">
                 <button className="button-request-accept-553" onClick={() => {
-                    axios.put("http://localhost:8000/connects/accept-connect", { user: user.username, tutor: username })
-                        .then(window.location.reload(`/users/${username}`)
+                    alert(username + user.username);
+                    axios.put("http://localhost:8000/connects/accept-connect", { user: username, tutor: user.username })
+                        .then(window.location.reload(`/profile/${username}`)
                         )
                 }} >
-                    <div className="request-button_553">
+                    <div className="request-button-553">
                         Chấp nhận
                     </div>
                 </button>
             </div>
             <div className="request-deny-553">
                 <button className="button-request-deny-553" onClick={() => {
-                    axios.delete("http://localhost:8000/connects/delete-tutor-connect", { user: user.username, tutor: username}).then(
+                    axios.delete("http://localhost:8000/connects/delete-tutor-connect",{data: { user:username, tutor: user.username}}).then(
                         res => {
                             if (res.data.result === 1) {
                                 alert('Đã xóa yêu cầu');
-                                window.location.reload(`/users/${username}`);
+                                window.location.reload(`/profile/${username}`);
                             } else {
                                 alert('Đã xảy ra lỗi khi xóa yêu cầu. Thử lại sau.');
                             }
@@ -307,14 +312,14 @@ function ButtonConnect() {
 
   else if (connectState === 2 || connectState === "2")
       return (
-          <button className="button-connected">
-              <div className="button-connect-text">
+        <div>
+           <Evaluate/>
+          <div className="button-connected-553">
+              <div className="button-connect-text-553">
                 Đã kết nối
               </div>
-              <div>
-                Đánh giá của bạn: <Evaluate/>
-              </div>
-          </button>
+          </div>
+          </div>
       )
   else if (connectState === 1 || connectState === "1")
       return (
@@ -333,6 +338,7 @@ function ButtonConnect() {
               <div className="button-connect-text-553">
                   Đang yêu cầu kết nối
               </div>
+              
           </button>
           
       );
@@ -377,7 +383,7 @@ function ButtonConnect() {
                     </div>
                     <div className="request-list-553">
                         {listRequest.map((v, index) => (
-                            <RequestSummaryLine order={index + 1} username={v.username} dayRequest={v.dayRequest}></RequestSummaryLine>))}
+                            <RequestSummaryLine order={index + 1} username={v.user} dayRequest={v.timer.substring(0, 10)}></RequestSummaryLine>))}
                     </div>
                 </div>
             </div>)
@@ -423,6 +429,7 @@ function ButtonConnect() {
     const fetchData = async() => {  
       axios.post('http://localhost:8000/connects/get-tutor-state', {tutor: username, user: user.username }).then(res => {//   https://localhost:8000/ + user_type + edit
       const data = res.data;
+
       setConnectState(data.state);
     })
   }

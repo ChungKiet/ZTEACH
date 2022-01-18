@@ -240,6 +240,23 @@ function Profile(){
               Hình ảnh các văn bằng
             </strong>
             </div>
+            <div class="scroll-container">
+              <div class="scroll-page" id="page-1">1</div>
+              <div class="scroll-page" id="page-2">2</div>
+              <div class="scroll-page" id="page-3">3</div>
+              <div class="scroll-page" id="page-1">1</div>
+              <div class="scroll-page" id="page-2">2</div>
+              <div class="scroll-page" id="page-3">3</div>
+              <div class="scroll-page" id="page-1">1</div>
+              <div class="scroll-page" id="page-2">2</div>
+              <div class="scroll-page" id="page-3">3</div>
+              <div class="scroll-page" id="page-1">1</div>
+              <div class="scroll-page" id="page-2">2</div>
+              <div class="scroll-page" id="page-3">3</div>
+              <div class="scroll-page" id="page-1">1</div>
+              <div class="scroll-page" id="page-2">2</div>
+              <div class="scroll-page" id="page-3">3</div>
+            </div>
           </div>
           }
           <div className='row'>

@@ -41,7 +41,7 @@
     object-fit: fill;
     height: 100%;
     width: 100%;
-    border-radius: 100px;
+    border-radius: 50%;
 }
 
 .bounder-user-img-tutor-item40 {
@@ -51,12 +51,19 @@
     padding: 5px;
     height: 200px;
     width: 200px;
-    border-radius: 100px;
+    border-radius: 50%;
     background-color: orange;
 }
 .bounder-user-img-tutor-item40:hover{
     background-color: #ED8201;
 }
+
+.star-user40{
+    display: flex;
+    flex-direction: row;
+    align-items: center;    
+}
+
 
 .grid-3x2-subitem40 {
     display: grid;
