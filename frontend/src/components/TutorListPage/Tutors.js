@@ -17,8 +17,8 @@ import footer_image5 from '../images/searchimg/img5.png';
 
 
 function Tutors() {
-    var footer_images = [footer_image1, footer_image2, footer_image3, footer_image4, footer_image5];
-    var num_footer_image = 5;
+    const footer_images = [footer_image1, footer_image2, footer_image3, footer_image4, footer_image5];
+    const num_footer_image = 5;
     const [footer_image, set_footer_image] = useState(null);
 
     const PPP = 10;     //num of posts per page
