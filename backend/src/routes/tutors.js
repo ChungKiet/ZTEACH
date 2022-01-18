@@ -16,7 +16,7 @@ route.put('/edit', tutorsController.edit_profile);
 route.delete('/delete', tutorsController.delete_tutor);
 
 // http://localhost:8000/tutors/add-certificate
-route.put('add-certificate', tutorsController.add_certificate);
+route.put('/add-certificate', tutorsController.add_certificate);
 
 // http://localhost:8000/tutors/remove-certificate
 route.put('/remove-certificate', tutorsController.remove_certificate);

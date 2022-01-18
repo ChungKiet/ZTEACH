@@ -1,16 +1,3 @@
-.text-search-frame40 {
-    display: inline-block;
-    font-size: 1rem;
-    color: #012345;
-}
-
-.text-item-search-frame40 {
-    display: inline-block;
-    font-size: 1rem;
-    color: #654321;
-}
-
-
 .search-input-haft {
     display: block;
     padding-left: 10px;

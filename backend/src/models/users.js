@@ -62,16 +62,16 @@ const User = mongoose.Schema({
         type: Number, required: false
     }, // mức lương
     subjects: {
-        type: Array, required: false
+        type: Array, of: String, required: false
     },
     classes: {
-        type: Array, require: false
+        type: Array, of: String, require: false
     }, // các lớp có thể dạy
     rate: {
         type: Number, required: false
     },
     certificate: {
-        type: Array, require: false
+        type: Array, of: String, require: false
     } // văn bằng, bằng cấp
 },
     {
