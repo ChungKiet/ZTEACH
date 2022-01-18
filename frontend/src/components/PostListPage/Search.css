@@ -13,8 +13,9 @@
 }
 
 .text-search-frame40 {
+    margin-top: 10px;
     display: inline-block;
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: #012345;
 }
 
@@ -27,7 +28,7 @@
 .search-grid-layout40 {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 20px 50px 75px 75px 75px 75px 20px 75px 80px;
+    grid-template-rows: 30px 50px 75px 75px 75px 75px 30px 75px 80px;
     align-items: center;
 }
 

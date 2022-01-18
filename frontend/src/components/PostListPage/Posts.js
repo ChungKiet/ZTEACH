@@ -71,7 +71,7 @@ function Posts() {
   
     const handleChangePage = e => {
       const { name, value } = e.target;
-      if (0 < value && value <= Math.floor(Data.number / PPP) + 1)
+      if (0 < value && value <= Math.ceil(Data.number / PPP))
         setValues({
             ...values,
             [name]: value,
@@ -128,8 +128,8 @@ function Posts() {
                 if (key === "page"){
                     if (value < 1)
                         value = 1;
-                    if (value > Math.floor(result.data.number / PPP) + 1) 
-                        value = Math.floor(result.data.number / PPP) + 1;
+                    if (value > Math.ceil(result.data.number / PPP)) 
+                        value = Math.ceil(result.data.number / PPP);
                 }
                 newValues = {...newValues,[key]:value};
             }
@@ -160,7 +160,7 @@ function Posts() {
                     <PostItem params={item}/>
                 ))}
                 <div className='footer-frame40'>
-                    {Data.number > 1 ?
+                    {Data.number > PPP ?
                         <div className="footer-flex-row40">
                             <div className='title2-40'>Trang </div>
                             <input
