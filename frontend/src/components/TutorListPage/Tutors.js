@@ -146,6 +146,7 @@ function Tutors() {
         </div>
         <div className='posts-grid-main-layout40'>
             <Search params={{handleChange, handleSubmit, handleDelete, values, errors}}/>
+            <div className='post-items-list-parent-layout40'>
             <div className='post-items-list-layout40'>
                 <div className='header-frame40'>
                     <div>
@@ -171,6 +172,7 @@ function Tutors() {
                     :<div/>}
                     <img className="user-img-tutor-item40" src={footer_image} />
                 </div>
+            </div>
             </div>
         </div>
         </div>
