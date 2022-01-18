@@ -20,7 +20,7 @@ const Connect = mongoose.Schema({
         type: Date, required: false
     },
     rate: {
-        type: Number, required: false
+        type: Number, required: true, default: -1.0
     }
 });
 
