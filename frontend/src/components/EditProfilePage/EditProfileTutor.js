@@ -16,7 +16,8 @@ function EditProfileTutor(){
   const submitForm = () => {
     console.log("Submitted");
   }
-  const { handleChange, handleSubmit, subjectChange,classesChange, salaryChange, handleChangeCert
+  const { handleChange, handleSubmit, subjectChange, classesChange, salaryChange, handleChangeCert,
+    subjectLabel, classesLabel
     , values, errors } = useForm(
       submitForm,
       validateInfo
@@ -37,30 +38,30 @@ function EditProfileTutor(){
       { name: "Giảng viên", id: "Giảng viên"}
     ],
     options: [
-        "Lớp 1", 
-        "Lớp 2", 
-        "Lớp 3",
-        "Lớp 4",
-        "Lớp 5",
-         "Lớp 6",
-       "Lớp 7",
-        "Lớp 8",
-       "Lớp 9",
-        "Lớp 10",
-        "Lớp 11",
-        "Lớp 12",
+      { label: "Lớp 1", value: "Lớp 1" },
+      { label: "Lớp 2", value: "Lớp 2" },
+      { label: "Lớp 3", value: "Lớp 3" },
+      { label: "Lớp 4", value: "Lớp 4" },
+      { label: "Lớp 5", value: "Lớp 5" },
+      { label: "Lớp 6", value: "Lớp 6" },
+      { label: "Lớp 7", value: "Lớp 7" },
+      { label: "Lớp 8", value: "Lớp 8" },
+      { label: "Lớp 9", value: "Lớp 9" },
+      { label: "Lớp 10", value: "Lớp 10" },
+      { label: "Lớp 11", value: "Lớp 11" },
+      { label: "Lớp 12", value: "Lớp 12" },
     ],
     subject: [
-       "Toán" ,
-        "Lý" ,
-       "Hóa" ,
-         "Sinh" ,
-       "Văn" ,
-         "Sử" ,
-         "Địa" ,
-         "Anh" ,
-        "KHTN" ,
-      "KHXH" ,
+      { label: "Toán", value: "Toán" },
+      { label: "Lý", value: "Lý" },
+      { label: "Hóa", value: "Hóa" },
+      { label: "Sinh", value: "Sinh" },
+      { label: "Văn", value: "Văn" },
+      { label: "Sử", value: "Sử" },
+      { label: "Địa", value: "Địa" },
+      { label: "Anh", value: "Anh" },
+      { label: "KHTN", value: "KHTN" },
+      { label: "KHXH", value: "KHXH" }
     ],
   }
   
@@ -240,7 +241,7 @@ function EditProfileTutor(){
             </div>
             <MultiSelect
               options={optionSelect.options}
-              value={values.classes}
+              value={classesLabel}
               name='classes'
               onChange={classesChange}
               labelledBy="Lớp"
@@ -251,7 +252,7 @@ function EditProfileTutor(){
             </div>
             <MultiSelect
               options={optionSelect.subject}
-              value={values.subjects}
+              value={subjectLabel}
               name='classes'
               onChange={subjectChange}
               labelledBy="Lớp"

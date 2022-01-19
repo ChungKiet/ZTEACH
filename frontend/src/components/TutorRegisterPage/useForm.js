@@ -39,10 +39,19 @@ const useForm = (callback, validate) => {
     });
   };
 
+  const ArrAdapter = (e) =>{
+    var res = [];
+    for (let i = 0; i < e.length; i++)
+      res.push(e[i]["values"]);
+    return res;
+  }
+
+  const [classesLabel, setClassLabel] = useState([]);
   const classesChange = e => {
+   setClassLabel(e);
    setValues({
      ...values,
-     ["classes"]: e
+     ["classes"]: ArrAdapter(e)
    });
  };
 
@@ -252,7 +261,7 @@ const handleChangeCert = e => {
    
 }, []);
 
-  return { handleChange, handleSubmit, classesChange,salaryChange, handleChangeImage,  values, errors };
+  return { handleChange, handleSubmit, classesChange,salaryChange, handleChangeImage, classesLabel,  values, errors };
 };
 
 export default useForm;

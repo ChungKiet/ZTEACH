@@ -207,7 +207,7 @@ function Profile(){
             <div className='info-user'>
               <img src={subject} className='icon-img'/>{
               "Môn học nhận dạy: " + values.subjects.map(v=>(
-                v.label + ' '
+                v + ' '
               ))}
             </div>
           </div>
@@ -217,7 +217,7 @@ function Profile(){
             <div className='info-user'>
               <img src={classImg} className='icon-img'/>{
               "Lớp nhận dạy: " + values.classes.map(v=>(
-                v.label + ' '
+                v + ' '
               ))
               }
             </div>
@@ -278,9 +278,7 @@ function Profile(){
             <RequestListConnect/>
           </div>
           }
-         {/* //listRequest */}
         </div>
-        {/* <div> oke</div> */}
         
         <div style={{marginTop: '2%'}}>
           <Footer/>

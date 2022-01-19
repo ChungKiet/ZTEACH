@@ -127,7 +127,9 @@ const useForm = (callback, validate) => {
       if (!user) isLogin = false;
       else if (user.username === get_username) isYourSelf = true;
       // Xet login
-      if (connectState!=2){
+      if (isHolderAccount)
+        isYourSelf = true;
+      else if (connectState!=2){
         // Neu chua login thì ko hien thi neu o che do "Bao mat"
         if (get_gender_secure==="Bảo mật"){
           get_gender = "Đã bị ẩn";
@@ -299,7 +301,18 @@ const useForm = (callback, validate) => {
     );
   }
 
-  
+  // Thêm ở giao diện hiện tại sẽ phải reload và cho load lại
+  // Khi load lại sẽ tạo lại id nên k phải lo
+  // Tạo list id để hiển thị = useEffect
+  // Nếu chỉ có xóa thì xóa ở backend = cách get Link
+  // Xóa ở fe = cách filter id
+
+  // Reload set 2 cái :
+  // values
+  // [listImage, setListImage]
+  const removeCert = () => {
+    
+  }
 function ButtonConnect() {
   if (user===null)
       return null;
