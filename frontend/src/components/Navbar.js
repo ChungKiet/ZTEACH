@@ -28,7 +28,6 @@ function Navbar() {
   window.addEventListener('resize', showButton);
 
   return (
-    <>
       <nav className='navbar447'>
         <div className='navbar-container'>
           <Link to='/' className='navbar-logo1' onClick={closeMobileMenu}>
@@ -53,7 +52,6 @@ function Navbar() {
           {(user !== null) && <Profile/>}
         </div>
       </nav>
-    </>
   );
 }
 

@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import './Posts.css';
+import Navbar from '../Navbar';
 import Search from './Search';
 import PostItem from './PostItem';
 import validate from './validateInfo';
@@ -16,8 +17,8 @@ import footer_image5 from '../images/searchimg/img5.png';
 
 
 function Posts() {
-    var footer_images = [footer_image1, footer_image2, footer_image3, footer_image4, footer_image5];
-    var num_footer_image = 5;
+    const footer_images = [footer_image1, footer_image2, footer_image3, footer_image4, footer_image5];
+    const num_footer_image = 5;
     const [footer_image, set_footer_image] = useState(footer_image1);
 
     const PPP = 10;     //num of posts per page
@@ -70,7 +71,7 @@ function Posts() {
   
     const handleChangePage = e => {
       const { name, value } = e.target;
-      if (0 < value && value <= Math.floor(Data.number / PPP) + 1)
+      if (0 < value && value <= Math.ceil(Data.number / PPP))
         setValues({
             ...values,
             [name]: value,
@@ -100,7 +101,7 @@ function Posts() {
 
 
 
-    const [Data, setDatas] = useState({
+    const [Data, setData] = useState({
         number: 0,
         posts: []
     });
@@ -127,14 +128,14 @@ function Posts() {
                 if (key === "page"){
                     if (value < 1)
                         value = 1;
-                    if (value > Math.floor(result.data.number / PPP) + 1) 
-                        value = Math.floor(result.data.number / PPP) + 1;
+                    if (value > Math.ceil(result.data.number / PPP)) 
+                        value = Math.ceil(result.data.number / PPP);
                 }
                 newValues = {...newValues,[key]:value};
             }
             setValues(newValues);
 
-            setDatas(result.data);
+            setData(result.data);
 
             set_footer_image(footer_images[Math.floor(Math.random() * num_footer_image)]);
         };
@@ -142,8 +143,13 @@ function Posts() {
     }, []);
     
     return (
+        <div>
+        <div style={{height: '10%', width: '100%', position: 'absolute'}}>
+            <Navbar/>
+        </div>
         <div className='posts-grid-main-layout40'>
             <Search params={{handleChange, handleSubmit, handleDelete, values, errors}}/>
+            <div className='post-items-list-parent-layout40'>
             <div className='post-items-list-layout40'>
                 <div className='header-frame40'>
                     <div>
@@ -155,7 +161,7 @@ function Posts() {
                     <PostItem params={item}/>
                 ))}
                 <div className='footer-frame40'>
-                    {Data.number > 0 ? 
+                    {Data.number > PPP ?
                         <div className="footer-flex-row40">
                             <div className='title2-40'>Trang </div>
                             <input
@@ -166,10 +172,12 @@ function Posts() {
                                 onChange={handleChangePage}
                             />
                         </div>
-                    :<div/>}                    
+                    :<div/>}
                     <img className="user-img-tutor-item40" src={footer_image} />
                 </div>
             </div>
+            </div>
+        </div>
         </div>
     )
 }

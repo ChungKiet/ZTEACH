@@ -13,14 +13,15 @@ import img_subject from '../images/postimg/subject.png';
 function TutorItem(params) {
     const values = params.params;
     var arr=[];
-    for (var i=0; i<values.rate; i++)
+    const rateX2 = Math.round(values.rate*2);
+    for (var i=1; i*2<=rateX2; i++)
         arr[i]=i;
 
     function handleString(params) {
         var res = "";
         for (var i = 0; i < params.length; i++){
             if (i > 0) res = res + ", ";
-            res = res += params[i].value;
+            res = res += params[i];
         }
         return res;
     }
@@ -43,8 +44,10 @@ function TutorItem(params) {
                 </a>
                 <div className="star-user40" id="myHTMLWrapper">
                     {arr.map(item  => (
-                        <div style={{color: '#ffc700', fontSize: '30px',marginTop: '-12px'}}> ★ </div>
+                        <div style={{color: 'rgb(255, 200, 0)', fontSize: '40px',marginTop: '-12px'}}> ★ </div>
                     ))}
+                    {rateX2 % 2 == 1 ? <div style={{color: 'rgb(255, 220, 100)', fontSize: '40px',marginTop: '-12px'}}> ★ </div> : <></>}
+                    
                 </div>
             </div>
 

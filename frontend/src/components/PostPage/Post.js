@@ -22,7 +22,6 @@ const optionSelect = GlobalVar.optionSelect;
 
 function Post() {
     const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
-    console.log(cookie);
     var currentUser = null;
     var userType = null;
     if (cookie !== null) {
@@ -50,7 +49,8 @@ function Post() {
         request: "",
         connect_state: "",
         request_list: "",
-        accepted_tutor: ""
+        accepted_tutor: "",
+        rate: "",
     });
 
 
@@ -65,30 +65,40 @@ function Post() {
                             axios.post("http://localhost:8000/connects/get-post-connect", { post: id }).then(
                                 res3 => {
                                     const dt3 = res3.data;
-                                    console.log("post connect = ");
+                                    console.log('dt3');
                                     console.log(dt3);
-                                    setValues({
-                                        username: dt.username,
-                                        image: dt.image,
-                                        title: dt.title,
-                                        information: dt.information,
-                                        subject: dt.subject,
-                                        grade: dt.grade,
-                                        study_form: dt.study_form,
-                                        start: dt.start,
-                                        literacy: dt.literacy,
-                                        gender: dt.gender,
-                                        fee: dt.fee,
-                                        request: dt.request,
-                                        lessons: dt.lessons,
-                                        time: dt.time,
-                                        connect_state: dt2.state,
-                                        request_list: dt3.requested,
-                                        accepted_tutor: dt3.tutor
-                                    });
+                                    axios.post("http://localhost:8000/connects/get-post-rate", { post: id }).then(
+                                        res4 => {
+                                            setValues({
+                                                username: dt.username,
+                                                image: dt.image,
+                                                title: dt.title,
+                                                information: dt.information,
+                                                subject: dt.subject,
+                                                grade: dt.grade,
+                                                study_form: dt.study_form,
+                                                start: dt.start,
+                                                literacy: dt.literacy,
+                                                gender: dt.gender,
+                                                fee: dt.fee,
+                                                request: dt.request,
+                                                lessons: dt.lessons,
+                                                time: dt.time,
+                                                //state
+                                                connect_state: dt2.state,
+                                                // con
+                                                request_list: dt3.requested,
+                                                accepted_tutor: dt3.tutor,
+                                                //rate: res4.data.rate
+                                                rate: dt3.accept.rate
+                                            })
+                                        }
+                                    )
 
                                 }
                             )
+
+
 
                         }
                     )
@@ -311,6 +321,7 @@ function Post() {
             </div>
 
             <RequestList />
+
             <EditAndRemove />
 
             <div style={{ position: 'relative', marginTop: "1%", marginBottom: "0px", bottom: "0", width: '100%' }}>
@@ -318,6 +329,8 @@ function Post() {
             </div>
         </div>
     );
+
+
 
     function ButtonConnect() {
         if (currentUser === null)
@@ -408,26 +421,50 @@ function Post() {
             // OWN - Accepted connection with a tutor
             // Others tutor - cannot do anything more, just see the tutor information
             return (
-                <div className="flex-row-tutor-accepted">
-                    <div className="accepted-label">Lớp đã được nhận dạy bởi: </div>
-                    <div className="overlap-group-user">
-                        <div className="box-user-head">
-                            <div className="flex-user">
-                                <div><img className="user-img-head" src={values.accepted_tutor.image} alt={values.username} /></div>
-                                <div className="text-username">
-                                    <a href={`http://localhost:3000/profile/${values.accepted_tutor.username}`}
-                                        style={{ 'textDecoration': 'none', 'fontSize': '30px', 'fontWeight': 'bold' }}>
-                                        {values.accepted_tutor.username}</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div>
+                    <AcceptedTutor />
+                    <UpdateRate />
                 </div>
             )
         else
             // The tutor that has been accepted
             return null;
 
+    }
+
+    function AcceptedTutor() {
+        return (
+            <div className="flex-row-tutor-accepted">
+                <div className="accepted-label">Được nhận dạy bởi: </div>
+
+                <div className="overlap-group-user">
+                    <div className="box-user-head">
+                        <div className="flex-user">
+                            <div><img className="user-img-head" src={values.accepted_tutor.image} alt={values.username} /></div>
+                            <div className="text-username">
+                                <a href={`http://localhost:3000/profile/${values.accepted_tutor.username}`}
+                                    style={{ 'textDecoration': 'none', 'fontSize': '30px', 'fontWeight': 'bold' }}>
+                                    {values.accepted_tutor.username}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <RatedStar />
+            </div>
+        )
+    }
+
+    function RatedStar() {
+        if (values.rate > 0)
+            return (
+                <div style={{ 'textAlign': 'center' }}>
+                    <div style={{ 'marginLeft': '5px', 'fontSize': '20px' }}>Đánh giá từ người học:
+                        <span style={{ 'marginLeft': '15px', 'fontSize': '40px' }}>{values.rate}&#11088;</span>
+                    </div>
+                </div>
+            )
+        else return null;
     }
 
     function RequestSummaryLine(props) {
@@ -522,6 +559,44 @@ function Post() {
             );
         else
             return null;
+    }
+
+    function UpdateRate() {
+        if (currentUser === values.username)
+            return (
+                <div className="flex-row-tutor-accepted">
+                    <div className="accepted-label">Cập nhật đánh giá: </div>
+                    <div className="overlap-group-rate">
+                        <div className="box-user-head"></div>
+                        <div className="flex-user">
+                            <RadioButtonRate star={1} />
+                            <RadioButtonRate star={2} />
+                            <RadioButtonRate star={3} />
+                            <RadioButtonRate star={4} />
+                            <RadioButtonRate star={5} />
+                        </div>
+                    </div>
+
+                </div>
+            )
+        else return null;
+    }
+
+    function RadioButtonRate(props) {
+        const star = props.star;
+        return (
+
+            <label className="label-radiobtn">
+                <input id={"rate" + star} value={star} name="radiobtn_rate" type="radio" onChange={() => {
+                    axios.put('http://localhost:8000/connects/new-tutor-rate',
+                        { user: currentUser, tutor: values.accepted_tutor.username, post: id, rate: star }).then(res => {
+                            window.location.reload('/post/' + id)
+                        })
+                }} />
+                {star}
+            </label>
+
+        )
     }
 }
 

@@ -101,16 +101,18 @@ class ConnectsController {
         const requested = await Tutor.find({ username: { $in: request } },
             'username name gender literacy ');
 
-        const accept = await Connect.findOne({ post: post, accept: true }, 'tutor');
+        // Nghia, get tutor and rate
+        // Modify return, always include accept -> avoid error
+        const accept = await Connect.findOne({ post: post, accept: true }, 'tutor rate user');
         if (!accept) {
-            res.json({ requested, tutor: null });
+            res.json({ requested, tutor: null, accept : {rate : -1} });
             return;
         }
         const tutor = await Tutor.findOne({ username: accept.tutor },
             // Nghia, add image in response
             'username image name gender literacy ');
 
-        res.json({ requested, tutor });
+        res.json({ requested, tutor, accept });
     }
 
     // [POST] /get-post-accept  --> Danh sách yêu cầu của bài đăng
@@ -173,13 +175,27 @@ class ConnectsController {
         }
     }
 
+    async get_post_rate(req, res, next) {
+        const post = req.body.post;
+        const rate = await Connect.findOne({ post, accept: true }, 'rate');
+        if (rate) {
+            res.json({ rate: rate.rate });
+        }
+        else {
+            res.json({ rate: 0 });
+        }
+    }
+
     // [POST] /get-tutor-state  --> đồng ý yêu cầu kết nối (cho cả bài đăng và yêu cầu trực tiếp đên gia sư)
     async accept_connect(req, res, next) {
         const { user, tutor } = req.body;
         const post = req.body.post || 'null';
         try {
-            const connect = await Connect.updateOne({ user, tutor, post }, { accept: true });
+            const connect = await Connect.updateOne({ user, tutor, post }, { accept: true, timea: Date.now() });
             if (connect.modifiedCount === 1) {
+                if (post !== 'null') {
+                    await Post.updateOne({ _id: post }, { accept: true });
+                }
                 res.json({ "result": 1, "message": "Accept request success." });
             }
             else {
@@ -195,19 +211,19 @@ class ConnectsController {
         }
     }
 
-    // [POST] /get-tutor-rate
+    // [PUT] /new-tutor-rate
     async new_tutor_rate(req, res, next) {
-        const { user, tutor, rate } = req.body;
+        const { user, tutor, post, rate } = req.body;
         try {
-            const connect = await Connect.updateOne({ user, tutor, accept: true, rate: -1.0 }, { rate: rate });
+            const connect = await Connect.updateOne({ user, tutor, post, accept: true }, { rate: rate });
             if (connect.modifiedCount === 1) {
                 const rates = (await Connect.find(
-                    { tutor: tutor, accept: true, rate: { $ne: -1.0 } },
+                    { tutor: tutor, accept: true, rate: { $ne: -1 } },
                     'rate')
                 ).map(({ rate }) => rate);
 
                 const avg = (rates.reduce((a, b) => a + b, 0) / rates.length) || 0.0;
-                await Tutor.updateOne({ tutor: tutor }, { rate: avg });
+                await Tutor.updateOne({ username: tutor }, { rate: avg });
 
                 res.json({ "result": 1, "message": "Rate tutor success." });
             }
@@ -226,8 +242,8 @@ class ConnectsController {
 
     // [POST] /get-tutor-rate
     async get_tutor_rate(req, res, next) {
-        const username = req.body.username;
-        const rate = await Tutor.findOne({ username }, 'username rate');
+        const tutor = req.body.tutor;
+        const rate = await Tutor.findOne({ username: tutor }, 'username rate');
         res.json(rate);
     }
 

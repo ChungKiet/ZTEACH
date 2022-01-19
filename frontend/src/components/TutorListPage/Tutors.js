@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import './Tutors.css';
+import Navbar from '../Navbar';
 import Search from './Search';
 import TutorItem from './TutorItem';
 import validate from './validateInfo';
@@ -16,8 +17,8 @@ import footer_image5 from '../images/searchimg/img5.png';
 
 
 function Tutors() {
-    var footer_images = [footer_image1, footer_image2, footer_image3, footer_image4, footer_image5];
-    var num_footer_image = 5;
+    const footer_images = [footer_image1, footer_image2, footer_image3, footer_image4, footer_image5];
+    const num_footer_image = 5;
     const [footer_image, set_footer_image] = useState(null);
 
     const PPP = 10;     //num of posts per page
@@ -70,7 +71,7 @@ function Tutors() {
   
     const handleChangePage = e => {
       const { name, value } = e.target;
-      if (0 < value && value <= Math.floor(Data.number / PPP) + 1)
+      if (0 < value && value <= Math.ceil(Data.number / PPP))
         setValues({
             ...values,
             [name]: value,
@@ -98,9 +99,9 @@ function Tutors() {
 
 
 
-    const [Data, setDatas] = useState({
+    const [Data, setData] = useState({
         number: 0,
-        posts: []
+        tutors: []
     });
     
     useEffect(() => {
@@ -122,23 +123,30 @@ function Tutors() {
                 if (key === "page"){
                     if (value < 1)
                         value = 1;
-                    if (value > Math.floor(result.data.number / PPP) + 1) 
-                        value = Math.floor(result.data.number / PPP) + 1;
+                    if (value > Math.ceil(result.data.number / PPP)) 
+                        value = Math.ceil(result.data.number / PPP);
                 }
                 newValues = {...newValues,[key]:value};
             }
             setValues(newValues);
 
-            setDatas(result.data);
+            console.log(result);
+            setData(result.data);
 
             set_footer_image(footer_images[Math.floor(Math.random() * num_footer_image)]);
         };
         fetchData();
     }, []);
+
     
     return (
+        <div>
+        <div style={{height: '10%', width: '100%', position: 'absolute'}}>
+            <Navbar/>
+        </div>
         <div className='posts-grid-main-layout40'>
             <Search params={{handleChange, handleSubmit, handleDelete, values, errors}}/>
+            <div className='post-items-list-parent-layout40'>
             <div className='post-items-list-layout40'>
                 <div className='header-frame40'>
                     <div>
@@ -146,23 +154,27 @@ function Tutors() {
                     </div>
                     <Link to="/post-list" className="link446"><button className='button-18'>Danh sách bài đăng</button></Link>
                 </div>
-                {Data.posts.map(item => (
+                {Data.tutors.map(item => (
                     <TutorItem params={item}/>
                 ))}
                 <div className='footer-frame40'>
-                    <div className="footer-flex-row40">
-                        <div className='title2-40'>Trang </div>
-                        <input
-                            type="number"
-                            className="page-number40"
-                            name="page"
-                            value={values.page}
-                            onChange={handleChangePage}
-                        />
-                    </div>
+                    {Data.number > PPP ?
+                        <div className="footer-flex-row40">
+                            <div className='title2-40'>Trang </div>
+                            <input
+                                type="number"
+                                className="page-number40"
+                                name="page"
+                                value={values.page}
+                                onChange={handleChangePage}
+                            />
+                        </div>
+                    :<div/>}
                     <img className="user-img-tutor-item40" src={footer_image} />
                 </div>
             </div>
+            </div>
+        </div>
         </div>
     )
 }
