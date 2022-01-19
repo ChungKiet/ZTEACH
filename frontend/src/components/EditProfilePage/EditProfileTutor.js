@@ -202,15 +202,15 @@ function EditProfileTutor(){
                 multiple />
             </div>
             <button 
-              className='submit-btn' 
+              className='submit-btn-553' 
               type="submit"
               onClick={handleSubmit}>
               Gửi
             </button>
-            <button 
+            <div 
               className='cancel-btn'>
-              Hủy
-            </button>
+              <a style={{textDecoration: 'none'}} href={'/profile/' + values.username}> Hủy </a>
+            </div>
           </Form.Group>
           <Form.Group>
             <div className='birth-day-label' >

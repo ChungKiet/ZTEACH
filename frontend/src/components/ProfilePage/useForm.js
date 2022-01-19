@@ -65,7 +65,7 @@ const useForm = (callback, validate) => {
       axios.post("http://localhost:8000/" + user_type + GlobalVar.user.username, values).then(res => {
         const { isSucceeded } = res.data;
         if (isSucceeded === true) {
-            alert("Thành công rồi nha!")
+            alert("Cập nhật thông tin thành công!")
         }
         else{
           alert("Thất bại!")
@@ -203,7 +203,84 @@ const useForm = (callback, validate) => {
         dayreg: get_dayReg,
         certificate: get_cert,
       });
+      var res = [];
+      // var temp = {id: -1, imgUrl: values.image}
+      for (let i = 0; i < get_cert.length; i++){
+        res.push({id: i + 1, imgUrl: get_cert[i]});
+      }
+      setPics(res);
   }
+
+  const [CertImage, setCertImage] = useState({
+    image: null,
+    url: values.image,
+    progress: 0
+  })
+
+  const handleChangeCert = e => {
+    if (e.target.files[0]) {
+        const image = e.target.files[0];
+        setCertImage({
+          ...CertImage,
+          ["image"]:image
+        })
+        const name = image.name + '-' + Date.now();
+        const uploadTask = storage.ref(`images/${name}`).put(image);
+        uploadTask.on('state_changed',
+        (snapshot) => {
+            // progrss function ....
+            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+            setCertImage({
+              ...CertImage,
+              ["progress"]:progress
+            })
+        },
+        (error) => {
+            // error function ....
+            console.log(error);
+        },
+        () => {
+            // complete function ....
+            storage.ref('images').child(name).getDownloadURL().then(url => {
+                setValues({
+                  ...values,
+                  ["certificate"]: values.certificate.push(url)
+                })
+                //http://localhost:8000/users/edit-image
+                axios.put('http://localhost:8000/tutors/add-certificate',{username: values.username, image: url}).then(res=>{
+                  const message = res.data;
+                  if (!message.error){
+                    alert('Cập nhật bằng cấp thành công')
+                    window.location.reload('/profile/' + user.username);
+                  //window.sessionStorage.setItem("user19120000", values);
+                  }
+                }
+                )
+            })
+        });
+        // Post then change 2 link
+    }
+  }
+
+  const removeImage = (id) => {
+    // this is the line that you are looking for
+    var item = "";
+    for (let i = 0; i < values.certificate.length; i++)
+      if (pics[i]["id"]===id || pics[i]["id"]===id.toString())
+        item = pics[i]["imgUrl"];
+    if (item!==""){
+      axios.put('http://localhost:8000/tutors/remove-certificate', {username: user.username, image: item}).then(res=>{
+        const err = res.data;
+        if (!err.error)
+          alert("Xóa image thành công!");
+          window.location.reload('/profile/' + user.username);
+      })
+    }
+
+    setPics((oldState) => oldState.filter((item) => item.id !== id));
+  };
+
+  const [pics, setPics] = useState([]);
   const [connectState, setConnectState] = useState(-1)
   
   function UserPost(props) {
@@ -269,7 +346,6 @@ const useForm = (callback, validate) => {
             <div className="request-time-553">{dayRequest}</div>
             <div className="request-accept-553">
                 <button className="button-request-accept-553" onClick={() => {
-                    alert(username + user.username);
                     axios.put("http://localhost:8000/connects/accept-connect", { user: username, tutor: user.username })
                         .then(window.location.reload(`/profile/${username}`)
                         )
@@ -325,14 +401,13 @@ function ButtonConnect() {
 
   else if (connectState === 2 || connectState === "2")
       return (
-        <div>
-           <Evaluate/>
+      
           <div className="button-connected-553">
               <div className="button-connect-text-553">
                 Đã kết nối
               </div>
           </div>
-          </div>
+          
       )
   else if (connectState === 1 || connectState === "1")
       return (
@@ -400,35 +475,13 @@ function ButtonConnect() {
                     </div>
                 </div>
             </div>)
-    // else if (values.connect_state === 3)
-    //     // OWN - Accepted connection with a tutor
-    //     // Others tutor - cannot do anything more, just see the tutor information
-    //     return (
-    //         <div className="flex-row-tutor-accepted-553">
-    //             <div className="accepted-label-553">Lớp đã được nhận dạy bởi: </div>
-    //             <div className="overlap-group-user-553">
-    //                 <div className="box-user-head-553">
-    //                     <div className="flex-user-553">
-    //                         <div><img className="user-img-head-553" src={values.accepted_tutor.image} alt={values.username} /></div>
-    //                         <div className="text-username-553">
-    //                             <a href={`http://localhost:3000/profile/${values.accepted_tutor.username}`}
-    //                                 style={{ 'textDecoration': 'none', 'fontSize': '30px', 'fontWeight': 'bold' }}>
-    //                                 {values.accepted_tutor.username}</a>
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         </div>
-    //     )
-    else
+        else
         // The tutor that has been accepted
         return null;
   }
 
-  //http://localhost:8000/connects/get-tutor-connect
   const [listRequest, setRequest] = useState([]);
   useEffect(()=>{
-    //http://localhost:8000/connects/get-tutor-state
     const URL = window.location.pathname;
     const tmp = URL.split('/');
     const username = tmp[tmp.length - 1];
@@ -468,12 +521,8 @@ function ButtonConnect() {
         data[i]["order"] = i + 1;
       }
       setRequest(data);
-      // setRequest(data.map(v => (
-      //   <RequestSummaryLine id={v._id} username={v.username} dayRequest={v.dayRequest} order={v.order}></RequestSummaryLine>
-      // )));
      })
-     // Cho chỉnh sửa hay ko là việc của UI
-     //
+     
      }
      fetchData();
   }, [])
@@ -583,7 +632,7 @@ function ButtonConnect() {
 }
 
 
-  return { handleSubmit , handleChangeImage, ButtonConnect, RequestListConnect, listPost, listRequest, values, errors };
+  return { handleSubmit , handleChangeImage, ButtonConnect, RequestListConnect, setPics, removeImage, handleChangeCert, pics, listPost, listRequest, values, errors };
 };
 
 export default useForm;

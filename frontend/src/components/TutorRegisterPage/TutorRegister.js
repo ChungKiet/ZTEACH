@@ -16,7 +16,7 @@ function TutorRegister(){
   const submitForm = () => {
     console.log("Submitted");
   }
-  const { handleChange, handleSubmit, classesChange, salaryChange, handleChangeImage, classesLabel, values, errors } = useForm(
+  const { handleChange, handleSubmit, classesChange, salaryChange, handleChangeImage, handleChangeCert, classesLabel, values, errors } = useForm(
       submitForm,
       validateInfo
   );
@@ -174,15 +174,18 @@ function TutorRegister(){
               Cập nhật thông tin bằng cấp
             </div>
             <div className='cert-input'>
-                <label for="file-input">
+                <label for="input-cert">
                   <div className='cert-label'> 
                     Cập nhật thông tin bằng cấp, chứng chỉ
                   </div> 
                 </label>
-              <input id="file-input" 
+              <input id="input-cert" 
+                required={true}
+                onChange={handleChangeCert}
                 type="file" 
-                accept=".png,.jpg,.jpeg" multiple 
-                style={{display: 'none'}}/>
+                style={{display: 'none'}}
+                accept=".jpg, .jpeg, .png"
+                multiple />
             </div>
             <Button 
               variant="warning" 

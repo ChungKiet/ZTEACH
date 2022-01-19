@@ -160,13 +160,14 @@ function EditProfile(){
             onChange={handleChange}>
             </Form.Control>
             <button variant="warning" 
-              className='student-submit-btn' type="submit"
+              className='student-submit-btn-553' type="submit"
               onClick={handleSubmit}>
               Gửi
             </button>
-            <button variant="dark" className='student-cancel-btn'>
-              Hủy
-            </button>
+            <div 
+              className='student-cancel-btn'>
+              <a style={{textDecoration: 'none'}} href={'/profile/' + values.username}> Hủy </a>
+            </div>
           </Form.Group>
           <Form.Group>
             <button variant="warning" className='update-to-tutor-btn'>

@@ -169,7 +169,6 @@ const handleChangeImage = e => {
   
   const [CertImage, setCertImage] = useState([]);
 const handleChangeCert = e => {
-  alert('Cập nhật bằng cấp thành công')
   if (e.target.files[0]) {
       const image = e.target.files[0];
       setCertImage({
@@ -198,12 +197,9 @@ const handleChangeCert = e => {
                 ...values,
                 ["certificate"]: values.certificate.push(url)
               })
-              alert(values.certificate)
-              alert(values.username)
               //http://localhost:8000/users/edit-image
               axios.put('http://localhost:8000/tutors/add-certificate',{username: values.username, image: url}).then(res=>{
                 const message = res.data;
-                alert(message.error)
                 if (!message.error){
                   alert('Cập nhật bằng cấp thành công')
                 //window.sessionStorage.setItem("user19120000", values);
@@ -215,6 +211,8 @@ const handleChangeCert = e => {
       // Post then change 2 link
   }
 }
+
+
   //console.log(user);
   useEffect(() => {
     //console.log(user);
@@ -261,7 +259,7 @@ const handleChangeCert = e => {
    
 }, []);
 
-  return { handleChange, handleSubmit, classesChange,salaryChange, handleChangeImage, classesLabel,  values, errors };
+  return { handleChange, handleSubmit, classesChange,salaryChange, handleChangeImage, handleChangeCert, classesLabel,  values, errors };
 };
 
 export default useForm;

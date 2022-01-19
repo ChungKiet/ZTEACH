@@ -101,7 +101,6 @@ const useForm = (callback, validate) => {
         else{
           alert("Cập nhật thất bại!");
         }
-        //alert(msg);
       })
     }
   };
@@ -158,7 +157,7 @@ const handleChangeImage = e => {
                   user.url = url;
                   //window.sessionStorage.setItem("user19120000", values);
                   //console.log(user);
-                  alert("Vô nhầm hàm!");
+                  alert("Cập nhật ảnh thành công!");
                 }
               }
               )
@@ -212,7 +211,6 @@ const handleChangeImage = e => {
 }, [errors]);
 
 const handleChangeCert = e => {
-  alert('Cập nhật bằng cấp thành công')
   if (e.target.files[0]) {
       const image = e.target.files[0];
       setCertImage({
@@ -241,12 +239,9 @@ const handleChangeCert = e => {
                 ...values,
                 ["certificate"]: values.certificate.push(url)
               })
-              alert(values.certificate)
-              alert(values.username)
               //http://localhost:8000/users/edit-image
               axios.put('http://localhost:8000/tutors/add-certificate',{username: values.username, image: url}).then(res=>{
                 const message = res.data;
-                alert(message.error)
                 if (!message.error){
                   alert('Cập nhật bằng cấp thành công')
                 //window.sessionStorage.setItem("user19120000", values);

@@ -32,43 +32,46 @@ function Profile(){
 
   var isLogin = true;
   
-  const { handleSubmit, handleChangeImage, ButtonConnect, RequestListConnect, listPost, listRequest, values, errors } = useForm(
+  const { handleSubmit, handleChangeImage, ButtonConnect, RequestListConnect,handleChangeCert,  setPics, removeImage, pics, listPost, listRequest, values, errors } = useForm(
       submitForm,
       validateInfo
   );
   
   // Create A Map For List Post
   
+  // Tạo 1 cái giống class để hiển thị và lưu gửi đi
+
 
   // Create Adapter
   // Add ID
+  // const certAdapter = ()=>{
+  //   var res = [];
+  //   var temp = {id: -1, imgUrl: values.image}
+  //   for (let i = 0; i < values.certificate.length; i++){
+  //     temp["id"] = i + 1;
+  //     temp["imgUrl"] = values.certificate[i];
+  //     res.push(temp);
+  //   }
+  //   return res;
+  // }
 
-  // const allImages = [
+  // const allImages = certAdapter();
+  //  [
   //   {
   //     id: 1,
-  //     imgUrl: "https://via.placeholder.com/100"
+  //     imgUrl: values.image
   //   },
   //   {
   //     id: 2,
-  //     imgUrl: "https://via.placeholder.com/100"
+  //     imgUrl: values.image
   //   },
   //   {
   //     id: 3,
-  //     imgUrl: "https://via.placeholder.com/100"
+  //     imgUrl: values.image
   //   }
   // ];
 
-  // const [pics, setPics] = useState([]);
-
-  // const removeImage = (id) => {
-  //   // this is the line that you are looking for
-  //   setPics((oldState) => oldState.filter((item) => item.id !== id));
-  // };
-
-  // useEffect(() => {
-  //   //fake fetch data
-  //   setPics(allImages);
-  // }, []);
+  
 
   const URL = window.location.pathname;
   const tmp = URL.split('/');
@@ -241,23 +244,61 @@ function Profile(){
             </strong>
             </div>
             <div class="scroll-container">
-              <div class="scroll-page" id="page-1">1</div>
-              <div class="scroll-page" id="page-2">2</div>
-              <div class="scroll-page" id="page-3">3</div>
-              <div class="scroll-page" id="page-1">1</div>
-              <div class="scroll-page" id="page-2">2</div>
-              <div class="scroll-page" id="page-3">3</div>
-              <div class="scroll-page" id="page-1">1</div>
-              <div class="scroll-page" id="page-2">2</div>
-              <div class="scroll-page" id="page-3">3</div>
-              <div class="scroll-page" id="page-1">1</div>
-              <div class="scroll-page" id="page-2">2</div>
-              <div class="scroll-page" id="page-3">3</div>
-              <div class="scroll-page" id="page-1">1</div>
-              <div class="scroll-page" id="page-2">2</div>
-              <div class="scroll-page" id="page-3">3</div>
+              {pics.map((pic) => {
+                return (
+                  <div className='scroll-page'>
+                  <div>
+                    {/* {pic.id} */}
+                    <img
+                      src={values.image}
+                      className="img-cert"
+                    />
+                    </div>
+                    { isHolderAccount &&
+                    <div style={{marginTop: "-40px"}}>
+                    <button className="remove-cert-btn" onClick={() => removeImage(pic.id)}>
+                      <div className='remove-btn-text-553'>
+                        Xóa ảnh
+                      </div>
+                    </button>
+                    </div>
+                    }
+                  </div>
+                );
+                })} 
+              {/* <div class="scroll-page" id="page-1">
+                <img className='img-cert ' src={values.image}/>
+              </div>
+              <div class="scroll-page" id="page-1">
+                <img className='img-cert ' src={values.image}/>
+              </div>
+              <div class="scroll-page" id="page-1">
+                <img className='img-cert ' src={values.image}/>
+              </div>
+              <div class="scroll-page" id="page-1">
+                <img className='img-cert ' src={values.image}/>
+              </div> */}
+             
             </div>
+            { isHolderAccount &&
+            <div className='pos-add-btn-553'>
+            <label for="input-cert">
+                  <div className='add-cert-btn-553'> 
+                    Thêm ảnh
+                  </div> 
+                </label>
+            <input id="input-cert" 
+                required={true}
+                onChange={handleChangeCert}
+                type="file" 
+                style={{display: 'none'}}
+                accept=".jpg, .jpeg, .png"
+                multiple />
+              {/* <button className='add-cert-btn-553' onClick={handleChangeCert}>Thêm ảnh</button> */}
+            </div>
+            }
           </div>
+                  
           }
           <div className='row'>
             <div className='tutor-cert-img' style={{width:"400px"}}>
