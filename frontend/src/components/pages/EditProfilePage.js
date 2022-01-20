@@ -5,7 +5,6 @@ import GlobalVar from '../../GlobalVar';
 function EditProfilePage() {
     var user = JSON.parse(window.sessionStorage.getItem("user19120000"));
     var isLogin = true;
-    console.log(user);
     if (!user) isLogin = false;
     return (
         <div>

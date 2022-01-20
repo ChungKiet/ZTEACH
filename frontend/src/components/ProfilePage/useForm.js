@@ -16,7 +16,7 @@ const useForm = (callback, validate) => {
    gender: "Nam",
    gender_secure: "Công khai",
    birthday: "2001-12-17",
-   voting: "4.5",
+   rate: "4.5",
    evaluate: "10",
    dayreg: "2022-01-04",
    birthday_secure: "Công khai",
@@ -112,7 +112,7 @@ const useForm = (callback, validate) => {
       var get_email_secure = data.email_secure;
       var get_contact = data.contact;
       var get_contact_secure = data.contact_secure;
-      var get_voting = data.voting;
+      var get_rate = data.rate;
       var get_image = data.image;
       var get_dayReg = data.timestamps;
       var get_cert = data.certificate;
@@ -166,16 +166,6 @@ const useForm = (callback, validate) => {
         }
       }
     }
-      // Xet da ket noi
-      // Neu da tung ket noi thi thay them btn danh gia
-      // Neu k phai chu tai khoan
-        // Neu chua ket noi --> ket noi or huy
-        // Neu da tung ket noi --> hien cai danh gia tung danh gia la bnhiu (DEFAULT: 4)
-      // Lay danh sach cac user da ket noi theo http:// something at backend
-      // for in list --> connected?
-      // if is connected --> can voting
-      // FILE PROFILE also check if is account holder
-      // It will hide or appear btn for edit + btn "Chinh sua trang ca nhan" + All info
 
       setValues({
         id: get_id,
@@ -199,7 +189,7 @@ const useForm = (callback, validate) => {
         email_secure: get_email_secure,
         contact: get_contact,
         contact_secure: get_contact_secure,
-        voting: get_voting,
+        rate: get_rate,
         dayreg: get_dayReg,
         certificate: get_cert,
       });
@@ -304,36 +294,7 @@ const useForm = (callback, validate) => {
     );
   }
 
-  // function RequestConnect(props) {
-  //   const {order, id, username, dayRequest} = props;
-  //   //const { order, username, level, gender } = props;
-
-  //   return (
-  //       <div className="flex-request-line-553">
-  //           <div className="request-no-553">{order}</div>
-  //           <div className="request-username-553">
-  //               <a href={'http://localhost:3000/post/' + id} style={{ 'text-decoration': 'none' }}>{username}</a>
-  //           </div>
-  //           <div className="request-level-553">{dayRequest}</div>
-  //           {/* <div className="request-gender-553">{gender}</div> */}
-  //           <div className="request-accept-553">
-  //               <button className="button-request-accept-553" type="submit" >
-  //                   <div className="request-button-553">
-  //                       Chấp nhận
-  //                   </div>
-  //               </button>
-  //           </div>
-  //           <div className="request-deny-553">
-  //               <button className="button-request-deny-553" type="submit" >
-  //                   <div className="request-button-553">
-  //                       Từ chối
-  //                   </div>
-  //               </button>
-  //           </div>
-  //       </div>
-  //   );
-  // }
-
+  
   function RequestSummaryLine(props) {
     const { order, username, dayRequest } = props;
     const user = JSON.parse(window.sessionStorage.getItem("user19120000"));
@@ -341,7 +302,7 @@ const useForm = (callback, validate) => {
         <div className="flex-request-line-553">
             <div className="request-no-553">{order}</div>
             <div className="request-username-553">
-                <a href={`http://localhost:3000/profile/${username}`} style={{ 'textDecoration': 'none' }}>{username}</a>
+                <a href={`http://localhost:3000/profile/${username}`} style={{marginLeft: "5%" , textDecoration: 'none' }}>{username}</a>
             </div>
             <div className="request-time-553">{dayRequest}</div>
             <div className="request-accept-553">
@@ -368,7 +329,7 @@ const useForm = (callback, validate) => {
                         }
                     );
                 }} >
-                    <div className="request-button_553">
+                    <div className="request-deny-553">
                         Từ chối
                     </div>
                 </button>
@@ -377,15 +338,6 @@ const useForm = (callback, validate) => {
     );
   }
 
-  // Thêm ở giao diện hiện tại sẽ phải reload và cho load lại
-  // Khi load lại sẽ tạo lại id nên k phải lo
-  // Tạo list id để hiển thị = useEffect
-  // Nếu chỉ có xóa thì xóa ở backend = cách get Link
-  // Xóa ở fe = cách filter id
-
-  // Reload set 2 cái :
-  // values
-  // [listImage, setListImage]
   const removeCert = () => {
     
   }
@@ -565,14 +517,12 @@ function ButtonConnect() {
     if (!data)
       return;
    checkValue(data);
-   console.log(res.data);
   })
    axios.post('http://localhost:8000/tutors/profile', {username: username }).then(res => {//   https://localhost:8000/ + user_type + edit
    const data = res.data;
    if (!data)
      return;
   checkValue(data);
-  console.log(res.data);
 })
    };
    fetchData();

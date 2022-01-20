@@ -2,7 +2,7 @@
    background-size: 100% 50%;
    background-position: center bottom;
    background-repeat: no-repeat;
-   min-height: 1000px;
+   min-height: fit-content;
    height: 100%;
  }
  
@@ -104,6 +104,22 @@ a:link {
    border-radius: 2%;
 }
 
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+.footer-profile {
+   position: absolute;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   padding: 1rem;
+   background-color: #efefef;
+   text-align: center;
+ }
+
 .user_name {
    width: 170px;
    height: 35px;
@@ -141,6 +157,7 @@ a:link {
 
 .tutor-dayreg { 
    margin-left: 43%;
+   margin-top: -1.5%;
 }
 
 .top-right-img {
@@ -161,7 +178,7 @@ a:link {
  .overlap-group-requests-553 {
    height: fit-content;
    max-height: fit-content;
-   width: 60%;
+   width: 65%;
    margin-left: 2%;
    position: relative;
    margin-top: 10px;
@@ -291,7 +308,7 @@ a:link {
    color: rgb(102, 102, 102);
    font-family: montserrat;
    font-size: 17px;
-   margin-left: 30px;
+   margin-left: 50px;
    font-weight: 400;
    font-style: normal;
  }
@@ -381,8 +398,8 @@ a:link {
    color: rgb(102, 102, 102);
    font-family: montserrat;
    font-size: 17px;
-   margin-left: 150px;
-
+   margin-left: 170px;
+   margin-right: 1%;
    font-weight: 400;
    font-style: normal;
  }
@@ -434,11 +451,13 @@ a:link {
  }
  
  .request-deny-553{
-   width: 15%;
-   color: rgb(102, 102, 102);
+   width: 80px;
+   height: fit-content;
+   color: white;
    font-family: montserrat;
-   font-size: 20px;
+   font-size: 17px;
    font-weight: 400;
+   margin-right: 1%;
    font-style: normal;
  }
  
@@ -460,6 +479,7 @@ a:link {
    height: 40px;
    width: fit-content;
    margin-left: 1%;
+   /* margin-bottom: 20px; */
    margin-top: .6%;
  }
  
@@ -475,12 +495,13 @@ a:link {
  
   .request-button-553 {
    letter-spacing: 0;
-   height: 100%;
+   height: fit-content;
    width: 130px;
    margin-top: auto;
    margin-bottom: auto;
    white-space: nowrap;
    text-align: center;
+   color: white;
    font-family:    Montserrat, sans-serif;
    font-size:      17px;
    font-weight:    bold;
@@ -557,7 +578,7 @@ a:link {
 
 .info-user {
    width: fit-content;
-   max-width: fit-content;
+   max-width: 500px;
 }
 
 .intro-user{

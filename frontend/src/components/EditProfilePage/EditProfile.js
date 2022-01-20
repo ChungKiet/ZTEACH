@@ -127,7 +127,7 @@ function EditProfile(){
               onChange={handleChange}
               type="date"
               name="birthday"
-              value={values.birthday}
+              value={values.birthday.substring(0, 10)}
               placeholder="Due date"
             />
             <div className='input-label'>
@@ -164,10 +164,9 @@ function EditProfile(){
               onClick={handleSubmit}>
               Gửi
             </button>
-            <div 
-              className='student-cancel-btn'>
-              <a style={{textDecoration: 'none'}} href={'/profile/' + values.username}> Hủy </a>
-            </div>
+            <button className='student-cancel-btn'>
+              <a style={{textDecoration: 'none', color: 'white'}} href={'/profile/' + values.username}> Hủy </a>
+            </button>
           </Form.Group>
           <Form.Group>
             <button variant="warning" className='update-to-tutor-btn'>

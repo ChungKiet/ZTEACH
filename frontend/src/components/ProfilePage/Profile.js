@@ -37,39 +37,6 @@ function Profile(){
       validateInfo
   );
   
-  // Create A Map For List Post
-  
-  // Tạo 1 cái giống class để hiển thị và lưu gửi đi
-
-
-  // Create Adapter
-  // Add ID
-  // const certAdapter = ()=>{
-  //   var res = [];
-  //   var temp = {id: -1, imgUrl: values.image}
-  //   for (let i = 0; i < values.certificate.length; i++){
-  //     temp["id"] = i + 1;
-  //     temp["imgUrl"] = values.certificate[i];
-  //     res.push(temp);
-  //   }
-  //   return res;
-  // }
-
-  // const allImages = certAdapter();
-  //  [
-  //   {
-  //     id: 1,
-  //     imgUrl: values.image
-  //   },
-  //   {
-  //     id: 2,
-  //     imgUrl: values.image
-  //   },
-  //   {
-  //     id: 3,
-  //     imgUrl: values.image
-  //   }
-  // ];
 
   
 
@@ -140,7 +107,7 @@ function Profile(){
           {values.user_type === "tutor" &&
           <div className='col'>
             <div className='tutor-literacy'>{"Trình độ: " + values.literacy + " " + values.major}</div>
-            <div className='tutor-voting'>{"Đánh giá: " + (!values.voting?"5":values.voting) + ' '} <div style={{color: '#ffc700', fontSize: '30px',marginTop: '-12px'}}> ★ </div> {  " (" + (!values.evaluate?"0":values.evaluate) + " bài đánh giá)"}</div>
+            <div className='tutor-voting'>{"Đánh giá: " + (values.rate) + ' '} <div style={{color: '#ffc700', fontSize: '30px',marginTop: '-12px'}}> ★ </div> </div>
             <div className='tutor-dayreg'>{"Ngày tham gia: " + "15/01/2022"}</div>
           </div>
           }
@@ -159,20 +126,6 @@ function Profile(){
           }
           {<ButtonConnect/>}
         </div>
-        {/* {pics.map((pic) => {
-        return (
-          <div style={{ marginBottom: "100px" }}>
-            {pic.id}
-            <img
-              src={pic.imgUrl}
-              width="100px"
-              height="100px"
-              alt="placeholder grey 100px"
-            />
-            <button onClick={() => removeImage(pic.id)}>X</button>
-          </div>
-        );
-      })} */}
         <div className='column-info'>
           <div className='name'>
             <strong>{values.name}</strong>
@@ -266,19 +219,6 @@ function Profile(){
                   </div>
                 );
                 })} 
-              {/* <div class="scroll-page" id="page-1">
-                <img className='img-cert ' src={values.image}/>
-              </div>
-              <div class="scroll-page" id="page-1">
-                <img className='img-cert ' src={values.image}/>
-              </div>
-              <div class="scroll-page" id="page-1">
-                <img className='img-cert ' src={values.image}/>
-              </div>
-              <div class="scroll-page" id="page-1">
-                <img className='img-cert ' src={values.image}/>
-              </div> */}
-             
             </div>
             { isHolderAccount &&
             <div className='pos-add-btn-553'>
@@ -294,7 +234,6 @@ function Profile(){
                 style={{display: 'none'}}
                 accept=".jpg, .jpeg, .png"
                 multiple />
-              {/* <button className='add-cert-btn-553' onClick={handleChangeCert}>Thêm ảnh</button> */}
             </div>
             }
           </div>
@@ -306,7 +245,6 @@ function Profile(){
               Danh sách các bài đã đăng
             </strong>
             </div>
-            {/* <div>{listPost}</div> */}
             <PostList />
           </div>
           { isHolderAccount &&
@@ -321,7 +259,7 @@ function Profile(){
           }
         </div>
         
-        <div style={{marginTop: '2%'}}>
+        <div style={{marginTop:'2%'}}>
           <Footer/>
         </div>
       </div>

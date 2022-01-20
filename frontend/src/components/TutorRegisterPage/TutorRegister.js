@@ -1,4 +1,3 @@
-import logo from '../images/logo.png';
 import background from '../images/background.png';
 import toprightimage from '../images/topRight.png';
 import bottomrightimage from '../images/bottomRight.png';

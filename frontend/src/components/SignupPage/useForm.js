@@ -31,7 +31,6 @@ const useForm = (callback, validate) => {
 
     setErrors(validate(values));
     setIsSubmitting(true);
-    //console.log(values);
     console.log(errors.isError);
     if(errors.isError === false){
       axios.post("http://localhost:8000/users/register", values).then(res=>{
@@ -39,8 +38,6 @@ const useForm = (callback, validate) => {
       if(msg === 1){
          window.sessionStorage.setItem("user19120000", JSON.stringify(values));
          const user = window.sessionStorage.getItem("user19120000");
-        //GlobalVar.changeLogin();
-        //GlobalVar.setUser(values);
         navigate('/editprofile');
       }
       else if(msg === 2){

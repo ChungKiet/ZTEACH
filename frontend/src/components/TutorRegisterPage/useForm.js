@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import GlobalVar from '../../GlobalVar';
 import { useNavigate } from 'react-router-dom';
 import { storage } from '../../firebase';
 
@@ -92,16 +91,12 @@ const useForm = (callback, validate) => {
 
     setErrors(validate(values));
     setIsSubmitting(true);
-    console.log(values);
-    //if(true){
     if (!errors.isError) {
-      //const usertype = GlobalVar.user.user_type === "Học viên"? "user" : "tutor";
       axios.put('http://localhost:8000/tutors/register', values).then(res => { // 'http://localhost:8000/' + usertype + '/edit', values
         const msg = res.data;
         if (!msg.error) {
           alert("Cập nhật thành công!");
           window.sessionStorage.setItem("user19120000", JSON.stringify(values));
-          //updateData(values);
           
           navigate('/profile/' + values.username);
         }
@@ -139,31 +134,25 @@ const handleChangeImage = e => {
       (error) => {
           // error function ....
           console.log(error);
-          console.log("Here");
       },
       () => {
           // complete function ....
           storage.ref('images').child(name).getDownloadURL().then(url => {
-              console.log(url);
               setValues({
                 ...values,
                 ["image"]: url
               })
-              //http://localhost:8000/users/edit-image
               axios.put('http://localhost:8000/users/edit-image', {username: values.username, image: url}).then(res=>{
                 const message = res.data;
                 if (!message.error){
                   const user = JSON.parse(window.sessionStorage.getItem("user19120000"));
                   user.url = url;
-                  //window.sessionStorage.setItem("user19120000", values);
-                  //console.log(user);
                   alert("Cập nhật ảnh thành công!");
                 }
               }
               )
           })
       });
-      // Post then change 2 link
   }
 }
   
@@ -208,26 +197,15 @@ const handleChangeCert = e => {
               )
           })
       });
-      // Post then change 2 link
   }
 }
 
 
-  //console.log(user);
   useEffect(() => {
-    //console.log(user);
      const fetchData = async() => {    
       const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
-      console.log(user);
       axios.post('http://localhost:8000/users/profile', {username: user.username }).then(res => {//   https://localhost:8000/ + user_type + edit
       const data = res.data;
-      // window.sessionStorage.setItem("user19120000", JSON.stringify(data));
-      
-      //("Im, here");
-
-      // if (!data)
-      //   return;
-      console.log(data);
       user.image = data.image;
       setValues({
         id: data._id,

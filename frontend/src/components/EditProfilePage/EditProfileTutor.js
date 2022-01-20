@@ -201,16 +201,18 @@ function EditProfileTutor(){
                 accept=".jpg, .jpeg, .png"
                 multiple />
             </div>
+             
             <button 
               className='submit-btn-553' 
               type="submit"
               onClick={handleSubmit}>
               Gửi
             </button>
-            <div 
-              className='cancel-btn'>
-              <a style={{textDecoration: 'none'}} href={'/profile/' + values.username}> Hủy </a>
-            </div>
+            <button className='cancel-btn'>
+              <a style={{textDecoration: 'none', color: 'white'}} href={'/profile/' + values.username}> Hủy </a>
+            </button>
+            
+            
           </Form.Group>
           <Form.Group>
             <div className='birth-day-label' >
@@ -221,7 +223,7 @@ function EditProfileTutor(){
               onChange={handleChange}
               type="date"
               name="birthday"
-              value={values.birthday}
+              value={values.birthday.substring(0, 10)}
               placeholder="Due date"
             />
             <div className='option-secure-label'>
