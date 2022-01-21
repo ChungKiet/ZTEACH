@@ -45,9 +45,10 @@
   width: 60vw;
   justify-content: end;
   /*margin-right: 2rem;*/
+  margin-bottom: 15px;
 }
 
-.nav-item {
+.nav-item447 {
   height: 100%;
 }
 
