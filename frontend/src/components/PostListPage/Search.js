@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import './Search.css';
-import Dropdown from '../Dropdown';
 import GlobalVar from '../../GlobalVar';
 
 
@@ -80,7 +79,7 @@ function Search(params) {
                 <div className='text-search-frame40'> Tìm kiếm lớp học </div>
                 <input
                     type="text"
-                    className="search-input-full"
+                    className="search-input40"
                     placeholder='VD: Luyện thi đại học'
                     name="title"
                     value={values.title}
@@ -89,32 +88,34 @@ function Search(params) {
                 <div className='search-sub-grid-layout40'>
                     <div>
                         <div className='text-item-search-frame40'> Môn học </div>
-                        {mySelect("subject", "Chọn môn", 'search-choice-haft40')}
+                        {mySelect("subject", "Chọn môn", 'search-choice40')}
                     </div>
+                    <div/>
                     <div>
                         <div className='text-item-search-frame40'> Lớp </div>
-                        {mySelect("grade", "Chọn lớp", 'search-choice-haft40')}
+                        {mySelect("grade", "Chọn lớp", 'search-choice40')}
                     </div>
                 </div>
                 <div>
                     <div className='text-item-search-frame40'> Địa điểm </div>
-                    {mySelect("study_form", "Chọn địa điểm", 'search-choice-full40')}
+                    {mySelect("study_form", "Chọn địa điểm", 'search-choice40')}
                 </div>
                 <div className='search-sub-grid-layout40'>
                     <div>
                         <div className='text-item-search-frame40'> Số buổi/tuần </div>
-                        {mySelect("lesson", "Chọn số buổi", 'search-choice-haft40')}
+                        {mySelect("lesson", "Chọn số buổi", 'search-choice40')}
                     </div>
+                    <div/>
                     <div>
                         <div className='text-item-search-frame40'> Thời lượng/buổi </div>
-                        {mySelect("time", "Chọn số giờ", 'search-choice-haft40')}
+                        {mySelect("time", "Chọn số giờ", 'search-choice40')}
                     </div>
                 </div>
                 <div>
                     <div className='text-item-search-frame40'> Học phí tối thiểu (VND/tháng) </div>
                     <input
                         type="text"
-                        className="search-input-full"
+                        className="search-input40"
                         placeholder='VNĐ'
                         name="fee"
                         value={values.fee}
@@ -125,11 +126,12 @@ function Search(params) {
                 <div className='search-sub-grid-layout40'>
                     <div>
                         <div className='text-item-search-frame40'> Giới tính </div>
-                        {mySelect("gender", "Chọn giới tính", 'search-choice-haft40')}
+                        {mySelect("gender", "Chọn giới tính", 'search-choice40')}
                     </div>
+                    <div/>
                     <div>
                         <div className='text-item-search-frame40'> Trình độ </div>
-                        {mySelect("literacy", "Chọn trình độ", 'search-choice-haft40')}
+                        {mySelect("literacy", "Chọn trình độ", 'search-choice40')}
                     </div>
                 </div>
                 <div className='search-sub-grid-layout40'>
@@ -138,6 +140,7 @@ function Search(params) {
                             Xoá
                         </div>
                     </button>
+                    <div/>
                     <button className="button-occupation-ok40" type="submit" >
                         <div className="search-button40">
                             Tìm

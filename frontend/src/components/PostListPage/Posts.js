@@ -141,6 +141,8 @@ function Posts() {
         };
         fetchData();
     }, []);
+    {/*
+     */}
     
     return (
         <div>

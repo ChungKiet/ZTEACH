@@ -1,6 +1,5 @@
 import React from 'react'
-import './Search.css';
-import Dropdown from '../Dropdown';
+import '../PostListPage/Search.css';
 import GlobalVar from '../../GlobalVar';
 
 
@@ -31,7 +30,7 @@ function Search(params) {
                 <div className='text-search-frame40'> Tìm kiếm gia sư </div>
                 <input
                         type="text"
-                        className="search-input-full"
+                        className="search-input40"
                         placeholder='Tên gia sư'
                         name="name"
                         value={values.name}
@@ -40,21 +39,23 @@ function Search(params) {
                 <div className='search-sub-grid-layout40'>
                     <div>
                         <div className='text-item-search-frame40'> Môn học </div>
-                        {mySelect("subject", "Chọn môn", 'search-choice-haft40')}
+                        {mySelect("subject", "Chọn môn", 'search-choice40')}
                     </div>
+                    <div/>
                     <div>
                         <div className='text-item-search-frame40'> Lớp </div>
-                        {mySelect("grade", "Chọn lớp", 'search-choice-haft40')}
+                        {mySelect("grade", "Chọn lớp", 'search-choice40')}
                     </div>
                 </div>
                 <div className='search-sub-grid-layout40'>
                     <div>
                         <div className='text-item-search-frame40'> Giới tính </div>
-                        {mySelect("gender", "Chọn giới tính", 'search-choice-haft40')}
+                        {mySelect("gender", "Chọn giới tính", 'search-choice40')}
                     </div>
+                    <div/>
                     <div>
                         <div className='text-item-search-frame40'> Trình độ </div>
-                        {mySelect("literacy", "Chọn trình độ", 'search-choice-haft40')}
+                        {mySelect("literacy", "Chọn trình độ", 'search-choice40')}
                     </div>
                 </div>
                 <div className='search-sub-grid-layout40'>
@@ -62,18 +63,19 @@ function Search(params) {
                         <div className='text-item-search-frame40'> Tuổi tối thiểu </div>
                         <input
                             type="number"
-                            className="search-input-haft"
+                            className="search-input40"
                             placeholder='0'
                             name="older"
                             value={values.older}
                             onChange={handleChange}
                         />
                     </div>
+                    <div/>
                     <div>
                         <div className='text-item-search-frame40'> Tuổi tối đa </div>
                         <input
                             type="number"
-                            className="search-input-haft"
+                            className="search-input40"
                             placeholder='99'
                             name="younger"
                             value={values.younger}
@@ -85,7 +87,7 @@ function Search(params) {
                     <div className='text-item-search-frame40'> Học phí tối đa (VND/tháng) </div>
                     <input
                         type="text"
-                        className="search-input-full"
+                        className="search-input40"
                         placeholder='VNĐ'
                         name="fee"
                         value={values.fee}
@@ -98,16 +100,17 @@ function Search(params) {
                         <div className='text-item-search-frame40'> Kinh nghiệm </div>
                         <input
                             type="number"
-                            className="search-input-haft"
+                            className="search-input40"
                             placeholder='Số học viên'
                             name="exp"
                             value={values.exp}
                             onChange={handleChange}
                         />
                     </div>
+                    <div/>
                     <div>
                         <div className='text-item-search-frame40'> Xếp hạng </div>
-                        {mySelect("rate", "Chọn số sao", 'search-choice-haft40')}
+                        {mySelect("rate", "Chọn số sao", 'search-choice40')}
                     </div>
                 </div>
                 <div className='search-sub-grid-layout40'>
@@ -116,6 +119,7 @@ function Search(params) {
                             Xoá
                         </div>
                     </button>
+                    <div/>
                     <button className="button-occupation-ok40" type="submit" >
                         <div className="search-button40">
                             Tìm
