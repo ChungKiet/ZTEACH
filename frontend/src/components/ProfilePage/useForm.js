@@ -397,7 +397,7 @@ function ButtonConnect() {
               );
           }}>
               <div className="button-connect-text-553">
-                  Kết nối
+                  Kết nối với gia sư này
               </div>
           </button>
       );

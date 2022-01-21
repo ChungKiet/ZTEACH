@@ -107,7 +107,7 @@ function Profile(){
           {values.user_type === "tutor" &&
           <div className='col'>
             <div className='tutor-literacy'>{"Trình độ: " + values.literacy + " " + values.major}</div>
-            <div className='tutor-voting'>{"Đánh giá: " + (values.rate) + ' '} <div style={{color: '#ffc700', fontSize: '30px',marginTop: '-12px'}}> ★ </div> </div>
+            <div className='tutor-voting'>{"Đánh giá: " + Math.round(values.rate*10)/10 + ' '} <div style={{color: '#ffc700', fontSize: '30px',marginTop: '-12px'}}> ★ </div> </div>
             <div className='tutor-dayreg'>{"Ngày tham gia: " + "15/01/2022"}</div>
           </div>
           }
