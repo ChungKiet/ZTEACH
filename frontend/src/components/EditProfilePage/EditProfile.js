@@ -95,7 +95,7 @@ function EditProfile(){
             onChange={handleChange}
             name='introduce'
             placeholder='Giới thiệu ngắn gọn về bản thân bạn' 
-            className='intro-student-control'>
+            className='intro-student_control'>
             </Form.Control>
             <div className='input-label'>
                Họ và tên
@@ -135,7 +135,7 @@ function EditProfile(){
             </div>
             <Form.Control type='text'
             placeholder='Nhập thông tin địa chỉ nơi bạn ở' 
-            className='address-student-control'
+            className='address-student_control'
             name='address'
             value={values.address}
             onChange={handleChange}>
@@ -144,7 +144,7 @@ function EditProfile(){
               Email
             </div>
             <Form.Control type='email' placeholder='example@gmail.com' 
-              className='email-student-control'
+              className='email-student_control'
               name='email'
               value={values.email}
               onChange={handleChange}>
@@ -154,7 +154,7 @@ function EditProfile(){
             </div>
             <Form.Control type='text'
             placeholder='Số điện thoại, link facebook, ...' 
-            className='other-info-student-control'
+            className='other-info-student_control'
             name='contact'
             value={values.contact}
             onChange={handleChange}>

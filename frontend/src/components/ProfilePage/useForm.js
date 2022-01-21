@@ -195,6 +195,8 @@ const useForm = (callback, validate) => {
       });
       var res = [];
       // var temp = {id: -1, imgUrl: values.image}
+      if (get_user_type!=="tutor")
+        return;
       for (let i = 0; i < get_cert.length; i++){
         res.push({id: i + 1, imgUrl: get_cert[i]});
       }

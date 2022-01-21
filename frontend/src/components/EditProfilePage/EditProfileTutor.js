@@ -93,16 +93,16 @@ function EditProfileTutor(){
               <input id="file-input" type="file"  className='Avatar-input'/>
             </div>
             <div type='text' 
-              className="user_type_user" 
+              className="user_type_553" 
               disabled>
                 {values.user_type === "student"? "Học viên": "Gia sư"}
             </div>
           </Form.Group>
           <Form.Group>
-            <div type='text' className="user_name_user" id='username' disabled>
+            <div type='text' className="user_name_553" id='username' disabled>
                {values.username}
             </div>
-            <div className='label_intro_user'>
+            <div className='label_intro_user-553'>
               Giới thiệu về bản thân bạn
             </div>
             <Form.Control type='text' 
@@ -110,7 +110,7 @@ function EditProfileTutor(){
             onChange={handleChange}
             name='introduce'
             placeholder='Giới thiệu ngắn gọn về bản thân bạn' 
-            className='intro-control'>
+            className='intro-control-553'>
             </Form.Control>
             <div className='input-label'>
                Họ và tên
@@ -139,7 +139,7 @@ function EditProfileTutor(){
             </div>
             <Form.Control type='text' 
             placeholder='Nhập chuyên ngành của bạn' 
-            className='major-control'
+            className='major-control-553'
             value={values.major}
             name='major'
             onChange={handleChange}>
@@ -152,7 +152,7 @@ function EditProfileTutor(){
               name='fee'
               onChange={salaryChange}
               value={values.fee}
-              className='salary_control'>
+              className='salary_control_553'>
             </Form.Control>
             <div className='input-label'>
               Địa chỉ
@@ -169,7 +169,7 @@ function EditProfileTutor(){
             </div>
             <Form.Control type='email' 
               placeholder='example@gmail.com' 
-              className='email_control'
+              className='email_control-553'
               name='email'
               value={values.email}
               onChange={handleChange}>
@@ -179,7 +179,7 @@ function EditProfileTutor(){
             </div>
             <Form.Control type='text'
             placeholder='Số điện thoại, link facebook, ...' 
-            className='other-info-control'
+            className='other-info-control-553'
             name='contact'
             value={values.contact}
             onChange={handleChange}>
@@ -187,7 +187,7 @@ function EditProfileTutor(){
             <div className='input-label'>
               Cập nhật thông tin bằng cấp
             </div>
-            <div className='cert-input'>
+            <div className='cert-input-553'>
                 <label for="input-cert">
                   <div className='cert-label'> 
                     Cập nhật thông tin bằng cấp, chứng chỉ
@@ -219,26 +219,26 @@ function EditProfileTutor(){
               Ngày tháng năm sinh
             </div>
             <Form.Control required controlId="duedate" 
-              className='birth-day-select'
+              className='birth-day-select-553'
               onChange={handleChange}
               type="date"
               name="birthday"
               value={values.birthday.substring(0, 10)}
               placeholder="Due date"
             />
-            <div className='option-secure-label'>
+            <div className='option-secure-label-553'>
               Trình độ
             </div>
             <div>
               <select id="gender" 
-                className='level_select'
+                className='level_select-553'
                 name='literacy'
                 value={values.literacy}
                 onChange={handleChange}>
                 {optionLevel}
               </select>
             </div>
-            <div className='class-select-label'>
+            <div className='class-select-label-553'>
               Lớp bạn có thể dạy
             </div>
             <MultiSelect
@@ -247,9 +247,9 @@ function EditProfileTutor(){
               name='classes'
               onChange={classesChange}
               labelledBy="Lớp"
-              className='option-multiple-select'
+              className='option-multiple-select-553'
             />
-            <div className='class-select-label'>
+            <div className='class-select-label-553'>
               Môn bạn có thể dạy
             </div>
             <MultiSelect
@@ -258,36 +258,36 @@ function EditProfileTutor(){
               name='classes'
               onChange={subjectChange}
               labelledBy="Lớp"
-              className='option-multiple-select'
+              className='option-multiple-select-553'
             />
-            <div className='option-secure-label'>
+            <div className='option-secure-label-553'>
                Trạng thái
             </div>
             <div>
-            <select id="gender" className='option-secure-select'
+            <select id="gender" className='option-secure-select-553'
               name='address_secure'
               value={values.address_secure}
               onChange={handleChange}>
               {optionSecure}
             </select>
             </div>
-            <div className='option-secure-label'>
+            <div className='option-secure-label-553'>
               Trạng thái
             </div>
             <div>
             <select id="gender" 
-              className='option-secure-select'
+              className='option-secure-select-553'
               name='email_secure'
               value={values.email_secure}
               onChange={handleChange}>
               {optionSecure}
             </select>
             </div>
-            <div className='option-secure-label'>
+            <div className='option-secure-label-553'>
               Trạng thái
             </div>
             <div>
-            <select id="gender" className='option-secure-select'
+            <select id="gender" className='option-secure-select-553'
               name='contact_secure'
               value={values.contact_secure}
               onChange={handleChange}>
