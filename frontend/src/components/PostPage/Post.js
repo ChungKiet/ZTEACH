@@ -324,7 +324,7 @@ function Post() {
 
             <EditAndRemove />
 
-            <div style={{ position: 'relative', marginTop: "1%", marginBottom: "0px", bottom: "0", width: '100%' }}>
+            <div style={{ position: 'relative', marginTop: "8%", marginBottom: "0px", bottom: "0", width: '100%' }}>
                 <Footer />
             </div>
         </div>
