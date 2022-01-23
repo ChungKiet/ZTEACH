@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import './Posts.css';
 import Navbar from '../Navbar';
@@ -19,7 +19,7 @@ import footer_image5 from '../images/searchimg/img5.png';
 function Posts() {
     const footer_images = [footer_image1, footer_image2, footer_image3, footer_image4, footer_image5];
     const num_footer_image = 5;
-    const [footer_image, set_footer_image] = useState(footer_image1);
+    const [footer_image, set_footer_image] = useState(null);
 
     const PPP = 10;     //num of posts per page
 
@@ -44,21 +44,47 @@ function Posts() {
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
   
-    function makeURL() {
+    function reload() {
         var url = '/post-list?';
-        if (values.title !== "") url = url + "title=" + values.title + "&";
-        if (values.subject !== "") url = url + "subject=" + values.subject + "&";
-        if (values.grade !== "") url = url + "grade=" + values.grade + "&";
-        if (values.study_form !== "") url = url + "study_form=" + values.study_form + "&";
-        if (values.lesson !== "") url = url + "lesson=" + values.lesson + "&";
-        if (values.time !== "") url = url + "time=" + values.time + "&";
-        if (values.fee !== "") url = url + "fee=" + values.fee + "&";
-        if (values.literacy !== "") url = url + "literacy=" + values.literacy + "&";
-        if (values.gender !== "") url = url + "gender=" + values.gender + "&";
-        if (values.page !== "") url = url + "page=" + values.page;
-        return url;
+
+        for (var key in values) {
+            if (key === "unstable") continue;
+
+            if (values[key] !== "") url = url + key + "=" + values[key] + "&";
+        }
+        
+        navigate(url);
+        fetchData();
     }
-  
+
+    const fetchData = async () => {
+        const searchURL = 'http://localhost:8000/posts' + window.location.search;
+
+        console.log(searchURL);
+        const result = await axios.get(searchURL);
+
+        
+        var url = require('url');
+        var url_parts = url.parse(searchURL, true);
+        var query = url_parts.query;
+        var newValues = values;
+        for (var key in query){
+            var value = query[key];
+            if (key === "page"){
+                if (value < 1)
+                    value = 1;
+                if (value > Math.ceil(result.data.number / PPP)) 
+                    value = Math.ceil(result.data.number / PPP);
+            }
+            newValues = {...newValues,[key]:value};
+        }
+        newValues = {...newValues,unstable:false};
+        setValues(newValues);
+
+        setData(result.data);
+
+        set_footer_image(footer_images[Math.floor(Math.random() * num_footer_image)]);
+    };
   
   
     const handleChange = e => {
@@ -78,10 +104,10 @@ function Posts() {
             unstable: true
         });
     };
-    if (values.unstable) window.location.replace(makeURL());
+    if (values.unstable) reload();
 
     const handleDelete = e => {
-      setValues({...defaultValues});
+      setValues(defaultValues);
     };
   
     const handleSubmit = e => {
@@ -90,13 +116,11 @@ function Posts() {
       setErrors(validate(values));
       setIsSubmitting(true);
 
-  
-  
-      window.location.replace(makeURL());
+      reload();
     };
 
 
-
+    
 
 
 
@@ -110,42 +134,12 @@ function Posts() {
 
 
     useEffect(() => {
-        const fetchData = async () => {
-            const searchURL = 'http://localhost:8000/posts' + window.location.search;
-
-            console.log(searchURL);
-            const result = await axios.get(searchURL);
-
-            
-            var url = require('url');
-            var url_parts = url.parse(searchURL, true);
-            var query = url_parts.query;
-            var newValues = values;
-            var keys = Object.keys(query);
-            for (var i=0; i<keys.length; i++){
-                var key = keys[i];
-                var value = query[key];
-                if (key === "page"){
-                    if (value < 1)
-                        value = 1;
-                    if (value > Math.ceil(result.data.number / PPP)) 
-                        value = Math.ceil(result.data.number / PPP);
-                }
-                newValues = {...newValues,[key]:value};
-            }
-            setValues(newValues);
-
-            setData(result.data);
-
-            set_footer_image(footer_images[Math.floor(Math.random() * num_footer_image)]);
-        };
         fetchData();
     }, []);
-    {/*
-     */}
     
     return (
         <div>
+        <title>ContactUs</title>
         <div style={{height: '10%', width: '100%', position: 'absolute'}}>
             <Navbar/>
         </div>
@@ -157,7 +151,7 @@ function Posts() {
                     <div>
                         <div className='title1-40'>Tìm thấy {Data.number} bài đăng</div>
                     </div>
-                    <Link to="/tutor-list" className="link446"><button className='button-18'>Danh sách gia sư</button></Link>
+                    <Link to="/tutor-list" className="transform-post-tutor-40">Chuyển đến danh sách gia sư</Link>
                 </div>                
                 {Data.posts.map(item => (
                     <PostItem params={item}/>

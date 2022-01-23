@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { BrowserRouter as Router, Switch, Route, Routes } from 'react-router-dom';
 import HomePage from './components/pages/HomePage';
 import LoginPage from './components/pages/LoginPage';
@@ -23,7 +23,12 @@ function App() {
   <script crossorigin src="..."></script>
   window.sessionStorage.setItem("isLogin", "false");
 
+  useEffect(() => {
+    document.title = "ZTeach"
+  }, []);
+
   return (
+    <div>
     <Router>
       <div className="App">
         <Routes>
@@ -43,6 +48,7 @@ function App() {
         </Routes>
       </div>
     </Router>
+    </div>
   );
 }
 
