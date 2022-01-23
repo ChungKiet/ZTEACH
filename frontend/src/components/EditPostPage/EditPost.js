@@ -1,5 +1,5 @@
 import React, { Component, useState, findDOMNode } from "react";
-import { BrowserRouter as Router, Switch, useLocation} from "react-router-dom";
+import { BrowserRouter as Router, Switch, useLocation, useNavigate} from "react-router-dom";
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -14,6 +14,7 @@ const optionSelect = GlobalVar.optionSelect;
 function EditPost() {   
     
     const location = useLocation();
+    const navigate = useNavigate();
     const v = location.state.values;
     const id = {id :location.state.id};
     const dt = {...v, ...id}
@@ -25,24 +26,7 @@ function EditPost() {
         validate,
         dt
     );
-    
-    
-    //console.log("values = \n");
-    //console.log(values);
-    /*
-    values.id = id;
-    values.subject = v.subject;
-    values.grade = v.grade;
-    values.study_form = v.study_form;
-    values.lessons = v.lessons;
-    values.time = v.time;
-    values.start = v.start;
-    values.title = v.title;
-    values.information = v.information;
-    values.literacy = v.literacy;
-    values.gender = v.gender;
-    values.fee = v.fee;
-    */
+
     return (
 
         <form className="new-post-page" onSubmit={handleSubmit}>
@@ -212,7 +196,9 @@ function EditPost() {
                         Cập nhật
                     </div>
                 </button>
-                <button className="button-occupation-cancel">
+                <button className="button-occupation-cancel" onClick={() =>{
+                    navigate('/post/' + id.id);
+                }}>
                     <div className="medium-button">
                         Hủy
                     </div>
