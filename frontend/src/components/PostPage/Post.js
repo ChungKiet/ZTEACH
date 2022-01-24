@@ -11,14 +11,14 @@ import img_grade from '../images/postimg/grade.png';
 import img_level from '../images/postimg/level.png';
 import img_place from '../images/postimg/place.png';
 import img_subject from '../images/postimg/subject.png';
-import GlobalVar from "../../GlobalVar";
+
 
 import './Post.css';
 
 import axios from "axios";
 
-const user = GlobalVar.user;
-const optionSelect = GlobalVar.optionSelect;
+
+
 
 function Post() {
     const cookie = JSON.parse(window.sessionStorage.getItem("user19120000"));
@@ -149,8 +149,7 @@ function Post() {
     return (
         <div className="Post">
             <Navbar />
-            {console.log("after all:"), console.log(values)}
-
+            {console.log(values)}
             <div className="frame-general">
                 <div className="title-container-head">
                     <div className="placeholder-title-head">
@@ -167,7 +166,7 @@ function Post() {
             <div className="flex-row">
                 {/* Subject */}
                 <div className="img-label-detail">
-                    <img className="img-post" src={img_subject} />
+                    <img className="img-post" src={img_subject} alt="img_subject"/>
                     <div className="placeholder-text-container">
                         <div className="placeholder-text">
                             <div className="select-occupation">
@@ -184,7 +183,7 @@ function Post() {
 
                 {/* Grade */}
                 <div className="img-label-detail">
-                    <img className="img-post" src={img_grade} />
+                    <img className="img-post" src={img_grade} alt="img_post"/>
                     <div className="placeholder-text-container">
                         <div className="placeholder-text">
                             <div className="select-occupation">
@@ -201,7 +200,7 @@ function Post() {
 
                 {/* Place */}
                 <div className="img-label-detail">
-                    <img className="img-post" src={img_place} />
+                    <img className="img-post" src={img_place} alt="img_place"/>
                     <div className="placeholder-text-container">
                         <div className="placeholder-text">
                             <div className="select-occupation">
@@ -218,7 +217,7 @@ function Post() {
 
                 {/* Place */}
                 <div className="img-label-detail">
-                    <img className="img-post" src={img_date} />
+                    <img className="img-post" src={img_date} alt="img_date"/>
                     <div className="placeholder-text-container">
                         <div className="placeholder-text">
                             <div className="select-occupation">
@@ -238,7 +237,7 @@ function Post() {
             <div className="flex-row">
                 {/* Level */}
                 <div className="img-label-detail">
-                    <img className="img-post" src={img_level} />
+                    <img className="img-post" src={img_level} alt="img_literacy"/>
                     <div className="placeholder-text-container">
                         <div className="placeholder-text">
                             <div className="select-occupation">
@@ -255,7 +254,7 @@ function Post() {
 
                 {/* Gender */}
                 <div className="img-label-detail">
-                    <img className="img-post" src={img_gender} />
+                    <img className="img-post" src={img_gender} alt="img_gender"/>
                     <div className="placeholder-text-container">
                         <div className="placeholder-text">
                             <div className="select-occupation">
@@ -272,7 +271,7 @@ function Post() {
 
                 {/* Fee */}
                 <div className="img-label-detail">
-                    <img className="img-post" src={img_fee} />
+                    <img className="img-post" src={img_fee} alt="img_fee"/>
                     <div className="placeholder-text-container">
                         <div className="placeholder-text">
                             <div className="select-occupation">
@@ -289,7 +288,7 @@ function Post() {
 
                 {/* Connected */}
                 <div className="img-label-detail">
-                    <img className="img-post" src={img_connected} />
+                    <img className="img-post" src={img_connected} alt="img_connect"/>
                     <div className="placeholder-text-container">
                         <div className="placeholder-text">
                             <div className="select-occupation">
