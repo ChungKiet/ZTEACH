@@ -41,7 +41,7 @@ const useForm = (callback, validate) => {
   const ArrAdapter = (e) =>{
     var res = [];
     for (let i = 0; i < e.length; i++)
-      res.push(e[i]["values"]);
+      res.push(e[i]["value"]);
     return res;
   }
 
