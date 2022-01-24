@@ -5,6 +5,10 @@ import { useNavigate } from 'react-router-dom';
 
 const useForm = (callback, validate) => {
   const navigate = useNavigate();
+  var today = new Date();
+  var month = today.getMonth()+1;  if(month < 10) month = '0' + month;
+  var date = today.getDate();  if(date < 10) date = '0' + date;
+  var defaultTime = today.getFullYear()+'-'+ month + '-' + date +'T00:00:00.000Z';
 
   const [values, setValues] = useState({
     subject: "",
@@ -12,7 +16,7 @@ const useForm = (callback, validate) => {
     study_form: "",
     lessons: "",
     time: "",
-    start: "",
+    start: defaultTime,
     title: "",
     information: "",
     literacy: "",
