@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const useForm = (callback, validate) => {
   const navigate = useNavigate();
   var today = new Date();
+  today.setDate(today.getDate() + 8);
   var month = today.getMonth()+1;  if(month < 10) month = '0' + month;
   var date = today.getDate();  if(date < 10) date = '0' + date;
   var defaultTime = today.getFullYear()+'-'+ month + '-' + date +'T00:00:00.000Z';
