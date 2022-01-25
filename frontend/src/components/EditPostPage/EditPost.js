@@ -80,7 +80,7 @@ function EditPost() {
 
                     <DropUpdate id="id-select-dpw"
                         className='text-occupation'
-                        values={optionSelect.lesson}
+                        values={optionSelect.lessons}
                         value={v.lessons}
                         name="lessons"
                         placeholder="Chọn số buổi/tuần"

@@ -530,10 +530,10 @@ function Post() {
                     axios.delete("http://localhost:8000/posts/delete", { data: { id: id } }).then(
                         res => {
                             if (res.data.result === 1) {
-                                alert('Đã bay màu T-T');
+                                alert('Đã xoá bài đăng');
                                 window.location.replace('/post-list');
                             } else {
-                                alert('Đã xảy ra lỗi khi xóa bài. Thử lại sau :))');
+                                alert('Đã xảy ra lỗi khi xóa bài. Thử lại sau.');
                             }
                         }
                     );
