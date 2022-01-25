@@ -30,7 +30,7 @@ function Posts() {
         subject: "",
         grade: "",
         study_form: "",
-        lesson: "",
+        lessons: "",
         time: "",
         fee: "",
         literacy: "",
@@ -104,7 +104,13 @@ function Posts() {
             unstable: true
         });
     };
-    if (values.unstable) reload();
+    if (values.unstable) {
+        setValues({
+            ...values,
+            unstable: false
+        });
+        reload();
+    }
 
     const handleDelete = e => {
       setValues(defaultValues);

@@ -55,7 +55,7 @@ function Search(params) {
                 <div className='search-sub-grid-layout40'>
                     <div>
                         <div className='text-item-search-frame40'> Số buổi/tuần </div>
-                        {mySelect("lesson", "Chọn số buổi", 'search-choice40')}
+                        {mySelect("lessons", "Chọn số buổi", 'search-choice40')}
                     </div>
                     <div/>
                     <div>

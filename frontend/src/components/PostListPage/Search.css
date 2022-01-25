@@ -47,10 +47,10 @@
     border-radius: 2px;
     height: 40px;
     width: 100%;
+    text-indent: 10px;
 }
 .search-input40::placeholder {
-    padding-left: 10px;
-    color: #595959;
+    color: #969699;
     font-size: 1rem;
 }
 

@@ -39,12 +39,12 @@ function Search(params) {
                 <div className='search-sub-grid-layout40'>
                     <div>
                         <div className='text-item-search-frame40'> Môn học </div>
-                        {mySelect("subject", "Chọn môn", 'search-choice40')}
+                        {mySelect("subjects", "Chọn môn", 'search-choice40')}
                     </div>
                     <div/>
                     <div>
                         <div className='text-item-search-frame40'> Lớp </div>
-                        {mySelect("grade", "Chọn lớp", 'search-choice40')}
+                        {mySelect("classes", "Chọn lớp", 'search-choice40')}
                     </div>
                 </div>
                 <div className='search-sub-grid-layout40'>
@@ -80,6 +80,7 @@ function Search(params) {
                             name="younger"
                             value={values.younger}
                             onChange={handleChange}
+                            defaultValue={99}
                         />
                     </div>
                 </div>

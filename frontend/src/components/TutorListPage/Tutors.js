@@ -28,8 +28,8 @@ function Tutors() {
         unstable: false,
         page: "1",
         name: "",
-        subject: "",
-        grade: "",
+        subjects: "",
+        classes: "",
         literacy: "",
         gender: "",
         older: "",
@@ -52,11 +52,7 @@ function Tutors() {
         for (var key in values) {
             if (key === "unstable") continue;
 
-            if (values[key] !== "") {
-                if (key === "subject") url = url + "subjects" + "=" + values[key] + "&";
-                if (key === "grade") url = url + "classes" + "=" + values[key] + "&";
-                else url = url + key + "=" + values[key] + "&";
-            }
+            if (values[key] !== "") url = url + key + "=" + values[key] + "&";
         }
         
         navigate(url);
