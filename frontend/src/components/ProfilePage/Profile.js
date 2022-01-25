@@ -253,7 +253,7 @@ function Profile(){
             </div>
             <PostList />
           </div>
-          { isHolderAccount &&
+          { isHolderAccount && values.user_type==="tutor" &&
           <div className='row'>
             <div className='tutor-cert-img' style={{width: '400px'}}>
             <strong>
