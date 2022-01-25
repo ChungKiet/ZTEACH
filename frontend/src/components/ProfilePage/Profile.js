@@ -180,12 +180,15 @@ function Profile(){
           </div>
           }
           <div className='row'>
+          { values.introduce!=="" &&
             <div className='intro-label'>
             <strong>
               Thông tin tự giới thiệu
             </strong>
             </div>
+          }
           </div>
+          
           <div className='intro-user'>
             {values.introduce}
           </div>
