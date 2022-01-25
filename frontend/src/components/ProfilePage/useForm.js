@@ -234,6 +234,7 @@ const useForm = (callback, validate) => {
             console.log(error);
         },
         () => {
+            // alert(name)
             // complete function ....
             storage.ref('images').child(name).getDownloadURL().then(url => {
                 setValues({
@@ -564,18 +565,21 @@ function ButtonConnect() {
         () => {
             // complete function ....
             storage.ref('images').child(name).getDownloadURL().then(url => {
-                setValues({
-                  ...values,
-                  ["image"]: url
-                })
-                const user = JSON.parse(window.sessionStorage.getItem("user19120000"));
-                user.url = url;
-                window.sessionStorage.setItem("user19120000", JSON.parse(values));
                 //http://localhost:8000/users/edit-image
                 axios.put('http://localhost:8000/users/edit-image', {username: values.username, image: url}).then(res=>{
                   const message = res.data;
-                  if (!message.error){
+                 if (!message.error){
+                  const user = JSON.parse(window.sessionStorage.getItem("user19120000"));
+                  user.image = url;
+                  
+                  setValues({
+                    ...values,
+                    ["image"]: url
+                  })
+                  window.sessionStorage.setItem("user19120000", JSON.parse(values));
+                  
                     
+                
                   alert("Cập nhật ảnh thành công!");
                   }
                 }
