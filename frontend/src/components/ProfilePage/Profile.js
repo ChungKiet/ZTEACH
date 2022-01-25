@@ -180,7 +180,8 @@ function Profile(){
           </div>
           }
           <div className='row'>
-          { values.introduce!=="" && values.introduce!==null &&
+          { values.introduce!=="" && values.introduce!==null  
+            && values.introduce!==" " &&
             <div className='intro-label'>
             <strong>
               Thông tin tự giới thiệu
@@ -192,7 +193,9 @@ function Profile(){
           <div className='intro-user'>
             {values.introduce}
           </div>
-          { values.user_type==="tutor" && (isHolderAccount || values.certificate!==[]) &&
+          { values.user_type==="tutor" && (isHolderAccount || values.certificate!==[] || 
+            values.certificate!==null || values.certificate!==" " ||
+            values.certificate) &&
           <div className='row'>
             <div className='tutor-cert-img'>
             <strong>
