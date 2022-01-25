@@ -116,6 +116,7 @@ const useForm = (callback, validate) => {
       var get_image = data.image;
       var get_dayReg = data.timestamps;
       var get_cert = data.certificate;
+      var get_created_at = data.createdAt;
       // Toàn bộ check trong hàm này
       // Tùy vào người dùng sẽ được thiết lập khác nhau
       // Khi sang trang edit profile thì phải load lần nữa chính nó
@@ -192,6 +193,7 @@ const useForm = (callback, validate) => {
         rate: get_rate,
         dayreg: get_dayReg,
         certificate: get_cert,
+        createdAt: get_created_at
       });
       var res = [];
       // var temp = {id: -1, imgUrl: values.image}
