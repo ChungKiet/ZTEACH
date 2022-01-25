@@ -163,7 +163,7 @@ function NewPost() {
                     <input id="id-salary"
                         type='text'
                         className="text-occupation"
-                        placeholder='Mức lương (/buổi)'
+                        placeholder='Mức lương (/tháng)'
                         name="fee"
                         onChange={handleChange}
                     >
