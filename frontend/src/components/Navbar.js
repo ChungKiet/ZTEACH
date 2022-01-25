@@ -31,7 +31,7 @@ function Navbar() {
       <nav className='navbar447'>
         <div className='navbar-container'>
           <Link to='/' className='navbar-logo1' onClick={closeMobileMenu}>
-            <img class="logo" src={logo} height="40px" width="40px"/>
+            <img class="logo" className="logo" src={logo} height="40px" width="40px"/>
             ZTEACH
           </Link>
           <div className='menu-icon' onClick={handleClick}>

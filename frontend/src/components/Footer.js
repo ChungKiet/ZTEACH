@@ -11,7 +11,7 @@ function Footer() {
         <div class='social-media-wrap'>
           <div class='footer-logo'>
             <Link to='/' className='social-logo'>
-              <img class="logo" src={logo} height="40px" width="40px"/>
+              <img class="logo" className="logo" src={logo} height="40px" width="40px"/>
               ZTEACH
             </Link>
           </div>

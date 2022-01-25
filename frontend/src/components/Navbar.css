@@ -29,6 +29,12 @@
   font-size: 2rem;
   display: flex;
   align-items: center;
+  height: 70px;
+}
+
+.logo {
+  height: 70px;
+  width: 70px;
 }
 
 .fa-typo3 {
