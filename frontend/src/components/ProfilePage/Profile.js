@@ -108,7 +108,7 @@ function Profile(){
           <div className='col'>
             <div className='tutor-literacy'>{"Trình độ: " + values.literacy + " " + values.major}</div>
             <div className='tutor-voting'>{"Đánh giá: " + Math.round(values.rate*10)/10 + ' '} <div style={{color: '#ffc700', fontSize: '30px',marginTop: '-12px'}}> ★ </div> </div>
-            <div className='tutor-dayreg'>{"Ngày tham gia: " + values.createdAt.substring(0, 10)}</div>
+            <div className='tutor-dayreg'>{"Ngày tham gia: " + (values.createdAt?values.createdAt.substring(0, 10):"27/01/2022")}</div>
           </div>
           }
           <div className='col'>
@@ -180,7 +180,7 @@ function Profile(){
           </div>
           }
           <div className='row'>
-          { values.introduce!=="" &&
+          { values.introduce!=="" && values.introduce!==null &&
             <div className='intro-label'>
             <strong>
               Thông tin tự giới thiệu
@@ -192,7 +192,7 @@ function Profile(){
           <div className='intro-user'>
             {values.introduce}
           </div>
-          { values.user_type==="tutor" &&
+          { values.user_type==="tutor" && (isHolderAccount || values.certificate!==[]) &&
           <div className='row'>
             <div className='tutor-cert-img'>
             <strong>
