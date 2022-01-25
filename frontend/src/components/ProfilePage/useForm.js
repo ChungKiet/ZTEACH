@@ -568,13 +568,14 @@ function ButtonConnect() {
                   ...values,
                   ["image"]: url
                 })
+                const user = JSON.parse(window.sessionStorage.getItem("user19120000"));
+                user.url = url;
+                window.sessionStorage.setItem("user19120000", JSON.parse(values));
                 //http://localhost:8000/users/edit-image
                 axios.put('http://localhost:8000/users/edit-image', {username: values.username, image: url}).then(res=>{
                   const message = res.data;
                   if (!message.error){
-                  const user = JSON.parse(window.sessionStorage.getItem("user19120000"));
-                  user.url = url;
-                  //window.sessionStorage.setItem("user19120000", values);
+                    
                   alert("Cập nhật ảnh thành công!");
                   }
                 }
