@@ -155,7 +155,7 @@ function Profile(){
           <div className='row'>
             <div className='info-user'>
               <img src={phonecall} className='icon-img'/>
-              {"SĐT liên hệ: " + values.contact}
+              {"Thông tin liên hệ: " + values.contact}
             </div>
           </div>
           { values.user_type==="tutor" && 
