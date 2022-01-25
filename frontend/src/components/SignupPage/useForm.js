@@ -32,13 +32,14 @@ const useForm = (callback, validate) => {
     setErrors(validate(values));
     setIsSubmitting(true);
     console.log(errors.isError);
-    if(errors.isError === false){
+    if(errors.isError !== true){
       axios.post("http://localhost:8000/users/register", values).then(res=>{
       const {msg} = res.data;
       if(msg === 1){
          window.sessionStorage.setItem("user19120000", JSON.stringify(values));
          const user = window.sessionStorage.getItem("user19120000");
         navigate('/editprofile');
+        alert("Đăng kí thành công, vui lòng cập nhật trang cá nhân!");
       }
       else if(msg === 2){
         alert("Email đã tồn tại!");
