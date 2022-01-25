@@ -35,7 +35,7 @@ function EditProfileTutor(){
     ],
     level: [
       { name: "Sinh viên", id: "Sinh viên"},
-      { name: "Giảng viên", id: "Giảng viên"}
+      { name: "Giáo viên", id: "Giáo viên"}
     ],
     options: [
       { label: "Lớp 1", value: "Lớp 1" },
