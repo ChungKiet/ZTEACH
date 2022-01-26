@@ -136,7 +136,7 @@ const useForm = (callback, validate) => {
       // Xet login
       if (isHolderAccount)
         isYourSelf = true;
-      else if (connectState!=2){
+      else if (connectState!==2){
         // Neu chua login thì ko hien thi neu o che do "Bao mat"
         if (get_gender_secure==="Bảo mật"){
           get_gender = "Đã bị ẩn";
