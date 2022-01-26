@@ -574,7 +574,7 @@ function ButtonConnect() {
                 //http://localhost:8000/users/edit-image
                 axios.put('http://localhost:8000/users/edit-image', {username: values.username, image: url}).then(res=>{
                   const message = res.data;
-                 if (!message.error){
+                //  if (!message.error){
                   const user = JSON.parse(window.sessionStorage.getItem("user19120000"));
                   user.image = url;
                   
@@ -582,13 +582,13 @@ function ButtonConnect() {
                     ...values,
                     ["image"]: url
                   })
-                  window.sessionStorage.setItem("user19120000", JSON.parse(values));
+                  window.sessionStorage.setItem("user19120000", JSON.stringify(user));
                   
                     
                 
                   alert("Cập nhật ảnh thành công!");
                   }
-                }
+                // }
                 )
             })
         });
