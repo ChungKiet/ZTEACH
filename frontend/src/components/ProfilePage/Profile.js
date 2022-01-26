@@ -209,7 +209,7 @@ function Profile(){
                   <div>
                     {/* {pic.id} */}
                     <img
-                      src={values.image}
+                      src={pic.imgUrl}
                       className="img-cert"
                     />
                     </div>
