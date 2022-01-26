@@ -121,26 +121,14 @@ const useForm = (callback, validate) => {
       // Tùy vào người dùng sẽ được thiết lập khác nhau
       // Khi sang trang edit profile thì phải load lần nữa chính nó
       // if ()
-      // 
-    const URL = window.location.pathname;
-    const tmp = URL.split('/');
-    const username = tmp[tmp.length - 1];
-    const user = JSON.parse(window.sessionStorage.getItem('user19120000'));
-    var isLogin = true;
-    var isYourSelf = false;
-    if (!user) isLogin = false;
-    else if (user.username === username) isYourSelf = true;
-    if (!isLogin) return;
-    if (isYourSelf) return;
-    const fetchData1 = async() => {  
-      axios.post('http://localhost:8000/connects/get-tutor-state', {tutor: username, user: user.username }).then(res => {//   https://localhost:8000/ + user_type + edit
-      const data = res.data;
-
-      setConnectState(data.state);
-    })
-  }
-  fetchData1();
+      //
       var isLogin = true;
+      if (!user){
+        isHolderAccount = false;
+      }
+      else if (user.username === username){
+        isHolderAccount = true;
+      }
       // const user = JSON.parse(window.sessionStorage.getItem("user19120000"));
       var isYourSelf = false;
       if (!user) isLogin = false;
