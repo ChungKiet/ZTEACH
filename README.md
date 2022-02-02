@@ -20,7 +20,7 @@ Therefore, we have built this web platform so that tutors and students can conne
   
 ## Future work
 - Admin Account:
-  -- User censorship
-  -- Post moderation
-  -- Manage and handle reports
+--User censorship
+--Post moderation
+--Manage and handle reports
 
