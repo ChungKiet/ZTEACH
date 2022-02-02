@@ -11,15 +11,15 @@ Therefore, we have built this web platform so that tutors and students can conne
 - Update and set information security modes
 - Rate tutor after connection
 ## My role in the project
-###Frontend dev: 
+### Frontend dev: 
 - Edit profile student / tutor
 - Profile (Update certificate image with tutors account)
 - Upgrade to a tutor account
-###Backend dev: 
+### Backend dev: 
 - Image controller (add, remove, update profile picture and certificate photo)
   
 ## Future work
-###Admin Account: 
+### Admin Account: 
 - User censorship
 - Post moderation
 - Manage and handle reports
